@@ -1,0 +1,130 @@
+{
+  "old_params": {
+    "sigma": 0.1419,
+    "exposure_R$_M": 8820,
+    "h_by_scenario": {
+      "Expansao": 0.3,
+      "Continuidade": 0.386,
+      "RollbackParcial": 0.617,
+      "RollbackTotal": 0.906
+    },
+    "premium_6m_R$_M": {
+      "Expansao": 18.9,
+      "Continuidade": 24.3,
+      "RollbackParcial": 38.9,
+      "RollbackTotal": 57.1
+    },
+    "var_95_6m_R$_M": 2080
+  },
+  "new_params": {
+    "sigma": 0.16,
+    "exposure_R$_M": 8820,
+    "h_by_scenario": {
+      "Expansao": 0.39,
+      "Continuidade": 0.46,
+      "RollbackParcial": 0.66,
+      "RollbackTotal": 0.93
+    },
+    "premium_6m_R$_M": {
+      "Expansao": 34.398,
+      "Continuidade": 40.572,
+      "RollbackParcial": 58.212,
+      "RollbackTotal": 82.02600000000001
+    },
+    "var_95_6m_R$_M": 2345.3136011275546
+  },
+  "sigma_change": {
+    "old": 0.1419,
+    "new": 0.16,
+    "ratio": 1.127554615926709
+  },
+  "var_change": {
+    "old": 2080,
+    "new": 2345.3136011275546,
+    "ratio": 1.127554615926709
+  },
+  "h_change": {
+    "Expansao": {
+      "old": 0.3,
+      "new": 0.39,
+      "ratio": 1.3
+    },
+    "Continuidade": {
+      "old": 0.386,
+      "new": 0.46,
+      "ratio": 1.1917098445595855
+    },
+    "RollbackParcial": {
+      "old": 0.617,
+      "new": 0.66,
+      "ratio": 1.0696920583468397
+    },
+    "RollbackTotal": {
+      "old": 0.906,
+      "new": 0.93,
+      "ratio": 1.0264900662251655
+    }
+  },
+  "premium_change": {
+    "Expansao": {
+      "old": 18.9,
+      "new": 34.398,
+      "ratio": 1.8200000000000003
+    },
+    "Continuidade": {
+      "old": 24.3,
+      "new": 40.572,
+      "ratio": 1.6696296296296298
+    },
+    "RollbackParcial": {
+      "old": 38.9,
+      "new": 58.212,
+      "ratio": 1.4964524421593832
+    },
+    "RollbackTotal": {
+      "old": 57.1,
+      "new": 82.02600000000001,
+      "ratio": 1.4365323992994747
+    }
+  },
+  "npv_change": {
+    "Expansao": {
+      "old": 8.485137885795055,
+      "new": -19.17333780347269,
+      "delta": -27.658475689267746
+    },
+    "Continuidade": {
+      "old": 73.8798264879614,
+      "new": 61.87462400977398,
+      "delta": -12.005202478187414
+    },
+    "RollbackParcial": {
+      "old": 318.83189167348746,
+      "new": 331.22427745048,
+      "delta": 12.392385776992512
+    },
+    "RollbackTotal": {
+      "old": 763.4333566429207,
+      "new": 808.3558879098529,
+      "delta": 44.9225312669322
+    }
+  },
+  "totals": {
+    "npv_old_total": 1164.6302126901646,
+    "npv_new_total": 1182.2814515666341,
+    "npv_delta_total": 17.651238876469506,
+    "cost_3y_old_total": 835.2,
+    "cost_3y_new_total": 1291.248,
+    "cost_delta": 456.048
+  },
+  "trigger_threshold_change": {
+    "old": {
+      "GREEN_max": 0.18,
+      "AMBER_max": 0.25
+    },
+    "new": {
+      "GREEN_max": 0.15,
+      "AMBER_max": 0.3
+    }
+  }
+}

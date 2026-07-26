@@ -1,0 +1,99 @@
+<!-- ============================== ANNEX B: INTERDEPENDENCY MATRIX ============================== -->
+<section class="section" id="annex-b">
+  <div class="sec-head">
+    <div class="sec-num">Anexo B</div>
+    <h2 class="sec-title">Matriz de Interdependência — 8 Acoplamentos S×S</h2>
+    <p class="sec-lede">Tabela consolidada dos 8 acoplamentos quantitativos do D3 v2.0. Cada acoplamento responde uma pergunta de decisão que o framework D2 deixava em aberto.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">B.1 — Os 8 Acoplamentos</div>
+    <table class="t" style="font-size:13px">
+      <thead>
+        <tr><th>#</th><th>Dims</th><th>Mecanismo</th><th>Magnitude</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>1</b></td>
+          <td>S1 ↔ S3</td>
+          <td>Hedge sizing depende do ViE (BNDES funding). h* = 30% (Expansão, ViE=25%) → 90.6% (RB Total, ViE=0). Constraint: VaR residual ≤ 20% margin buffer.</td>
+          <td>Curva monotônica h* vs ViE. Hedge cobre exposição VARIÁVEL, não fixa.</td>
+          <td class="amber"><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>2</b></td>
+          <td>S1 ↔ S2</td>
+          <td>Stress conjunto FX+Supply. 12 combinações (4 S3 × 3 S2). Supply VaR = 2.5× FX VaR em S2 RED. Hedge cobre só 1/3 do risco total em RED.</td>
+          <td>VaR total = VaR_FX + VaR_supply (não linear em RED)</td>
+          <td class="amber"><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>3</b></td>
+          <td>S1 ↔ S4</td>
+          <td>Hedge R$ 480/unit (margem) vs Defensivo R$ 4.500/unit (volume). Ratio ~9.4×. Hedge 9× mais eficiente que defensivo para proteger margem. Catalog-wide ROI −67%; targeted +233%.</td>
+          <td>R$ 480/unit vs R$ 4.500/unit</td>
+          <td class="green"><span class="status-green">GREEN</span></td>
+        </tr>
+        <tr>
+          <td><b>4</b></td>
+          <td>S3 ↔ S4</td>
+          <td>Defensivo make sense only if ViE &gt; 10% (Rollback Parcial). Catalog-wide destrói −67% em RB Total. Targeted sobrevive em todos os cenários. Break-even: ViE = 10%.</td>
+          <td>Catalog-wide proibido se ViE &lt; 10%</td>
+          <td class="amber"><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>5</b></td>
+          <td>S6 → Todas</td>
+          <td>Macro governor: multiplicador 1.0× (GREEN) / 1.5× (AMBER) / 2.0× (RED) reescala prescrições S1–S5. GREEN→AMBER é maior salto (+13pp composite). Trigger: 5min (GREEN→AMBER), 60min (AMBER→RED).</td>
+          <td>18 ações pré-mapeadas. Custo incremental: R$ 0 (GREEN), R$ 55–65M (AMBER), R$ 165–200M (RED)</td>
+          <td class="amber"><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>6</b></td>
+          <td>S7 → S3</td>
+          <td><span class="status-red">KILL SWITCH</span>: lista suja MTE (07/abr/2026) bloqueia BNDES funding R$ 800M+ independentemente do ViE. Composite = 95 fixo quando S7 RED. Qualquer ViE é irrelevante se lista suja = TRUE.</td>
+          <td>R$ 800M+ funding BLOQUEADO</td>
+          <td class="red"><span class="status-red">RED — KILL SWITCH</span></td>
+        </tr>
+        <tr>
+          <td><b>7</b></td>
+          <td>S8 ↔ S1</td>
+          <td>Exposição FX NÃO é constante. SKD 95% (2025) → 40% (2026) → 25% (Q4/2026). FX_exp: 90% → 56% → 45% do VGV. VaR 2025 real = VaR D2 × 1.55 (55% maior).</td>
+          <td>VaR 6m P95 recalibrado: R$ 2.27bi (D2) → R$ 3.5bi (2025 real)</td>
+          <td class="amber"><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>8</b></td>
+          <td>S10 ↔ S1</td>
+          <td><span class="status-red">DUPLO COST-SHOCK</span>: FX × Tariff é multiplicativo, não aditivo. BRL 6.0 + tariff 35% = VaR 6m P95 → R$ 4.5–5.0bi (+110% vs baseline). Não é 13%+21%=34% — é (1.13×1.35/1.14) = 1.34 = +34%.</td>
+          <td>VaR 6m P95: R$ 2.27bi → R$ 4.5–5.0bi</td>
+          <td class="amber"><span class="status-amber">AMBER</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">B.2 — Matriz visual S×S</div>
+    <p style="font-size:13px;color:var(--ink-3);margin-bottom:12px"><span style="color:var(--bad)">■</span> = acoplamento crítico &nbsp; <span style="color:var(--warn)">■</span> = acoplamento moderado &nbsp; <span style="color:var(--good)">■</span> = acoplamento otimizado</p>
+    <table class="t" style="font-size:12.5px">
+      <thead>
+        <tr><th></th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th><th>S7</th><th>S8</th><th>S9</th><th>S10</th><th>S11</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>S1 FX</b></td><td>—</td><td class="amber">■2</td><td class="amber">■1</td><td class="green">■3</td><td>—</td><td class="amber">■5</td><td>—</td><td class="amber">■7</td><td>—</td><td class="red">■8</td><td>—</td></tr>
+        <tr><td><b>S2 Supply</b></td><td class="amber">■2</td><td>—</td><td>—</td><td>—</td><td class="amber">■5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S3 Regulatory</b></td><td class="amber">■1</td><td>—</td><td>—</td><td class="amber">■4</td><td>—</td><td class="amber">■5</td><td class="red">■6</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S4 Pricing</b></td><td class="green">■3</td><td>—</td><td class="amber">■4</td><td>—</td><td>—</td><td class="amber">■5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S5 Partnership</b></td><td>—</td><td class="amber">■5</td><td>—</td><td>—</td><td>—</td><td class="amber">■5</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S6 Macro</b></td><td class="amber">■5</td><td class="amber">■5</td><td class="amber">■5</td><td class="amber">■5</td><td class="amber">■5</td><td>—</td><td class="red">■6</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S7 ESG</b></td><td>—</td><td>—</td><td class="red">■6</td><td>—</td><td>—</td><td class="red">■6</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S8 Ramp</b></td><td class="amber">■7</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S9 Demand</b></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S10 Tariff</b></td><td class="red">■8</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><b>S11 Competition</b></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--ink-3);margin-top:8px">Legenda: ■1–■8 = número do acoplamento na tabela B.1. Células vazias = sem acoplamento modelado.</p>
+  </div>
+</section>

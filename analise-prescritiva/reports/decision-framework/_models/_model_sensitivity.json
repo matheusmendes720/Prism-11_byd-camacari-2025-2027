@@ -1,0 +1,303 @@
+{
+  "baseline_by_scenario": {
+    "Expansao": 552.0064218028037,
+    "Continuidade": 1173.698392885979,
+    "RollbackParcial": 2091.5366169587996,
+    "RollbackTotal": 2993.157689010373
+  },
+  "baseline_total": 6810.399120657956,
+  "questions": [
+    {
+      "id": 1,
+      "name": "PTAX +20%",
+      "description": "BRL desvaloriza 20% (5.20 -> 6.24). Stress cambial.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 571.5537630198137,
+        "Continuidade": 1203.0194047114937,
+        "RollbackParcial": 2140.4049700013247,
+        "RollbackTotal": 3061.573383269908
+      },
+      "delta_by_scenario": {
+        "Expansao": 19.547341217009944,
+        "Continuidade": 29.321011825514688,
+        "RollbackParcial": 48.86835304252509,
+        "RollbackTotal": 68.41569425953503
+      },
+      "total_delta": 166.15240034458475
+    },
+    {
+      "id": 2,
+      "name": "PTAX -10%",
+      "description": "BRL valoriza 10% (5.20 -> 4.68). Alivio cambial.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 542.2327511942988,
+        "Continuidade": 1159.0378869732217,
+        "RollbackParcial": 2067.102440437537,
+        "RollbackTotal": 2958.9498418806056
+      },
+      "delta_by_scenario": {
+        "Expansao": -9.773670608504972,
+        "Continuidade": -14.660505912757344,
+        "RollbackParcial": -24.434176521262543,
+        "RollbackTotal": -34.20784712976729
+      },
+      "total_delta": -83.07620017229237
+    },
+    {
+      "id": 3,
+      "name": "BNDES funding -10pp",
+      "description": "ViE cai 10pp em todos os cenarios (categoria pior).",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 1173.698392885979,
+        "Continuidade": 2091.5366169587996,
+        "RollbackParcial": 2993.157689010373,
+        "RollbackTotal": 2993.157689010373
+      },
+      "delta_by_scenario": {
+        "Expansao": 621.6919710831753,
+        "Continuidade": 917.8382240728206,
+        "RollbackParcial": 901.6210720515733,
+        "RollbackTotal": 0
+      },
+      "total_delta": 2441.1512672075696
+    },
+    {
+      "id": 4,
+      "name": "Litio +50%",
+      "description": "Preco do litio sobe 50% (US$15k -> US$22.5k/t). Comprime margens BOM.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 541.4339415772577,
+        "Continuidade": 1161.5400406266008,
+        "RollbackParcial": 2078.3210166768667,
+        "RollbackTotal": 2986.9904088788044
+      },
+      "delta_by_scenario": {
+        "Expansao": -10.572480225546087,
+        "Continuidade": -12.158352259378262,
+        "RollbackParcial": -13.215600281932893,
+        "RollbackTotal": -6.167280131568532
+      },
+      "total_delta": -42.113712898426456
+    },
+    {
+      "id": 5,
+      "name": "Litio -30%",
+      "description": "Preco do litio cai 30% (US$15k -> US$10.5k/t). Alivio de supply.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 308.60443261022795,
+        "Continuidade": 808.5954090971152,
+        "RollbackParcial": 1483.03164397736,
+        "RollbackTotal": 2141.250726836358
+      },
+      "delta_by_scenario": {
+        "Expansao": -243.4019891925758,
+        "Continuidade": -365.10298378886387,
+        "RollbackParcial": -608.5049729814396,
+        "RollbackTotal": -851.906962174015
+      },
+      "total_delta": -2068.9169081368946
+    },
+    {
+      "id": 6,
+      "name": "Demand EV Brasil -15%",
+      "description": "Vendas EV caem 15% vs baseline. Volume de BYD tambem cai.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 541.4339415772577,
+        "Continuidade": 1161.5400406266008,
+        "RollbackParcial": 2078.3210166768667,
+        "RollbackTotal": 2986.9904088788044
+      },
+      "delta_by_scenario": {
+        "Expansao": -10.572480225546087,
+        "Continuidade": -12.158352259378262,
+        "RollbackParcial": -13.215600281932893,
+        "RollbackTotal": -6.167280131568532
+      },
+      "total_delta": -42.113712898426456
+    },
+    {
+      "id": 7,
+      "name": "IPCA +3pp",
+      "description": "IPCA sobe 4.5% -> 7.5%. Taxa de desconto nominal sobe para ~16%.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 507.0406740743779,
+        "Continuidade": 1096.9348886793227,
+        "RollbackParcial": 1967.8375497150355,
+        "RollbackTotal": 2823.312968961417
+      },
+      "delta_by_scenario": {
+        "Expansao": -44.96574772842587,
+        "Continuidade": -76.76350420665631,
+        "RollbackParcial": -123.69906724376415,
+        "RollbackTotal": -169.84472004895588
+      },
+      "total_delta": -415.27303922780266
+    },
+    {
+      "id": 8,
+      "name": "Tesla Model 2 antecipado 6m",
+      "description": "Tesla Model 2 entra Q3 2026 em vez de Q1 2027. Defensivo ativado antes.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 546.3677656825125,
+        "Continuidade": 1167.2139383476438,
+        "RollbackParcial": 2084.4882968084353,
+        "RollbackTotal": 2989.868472940203
+      },
+      "delta_by_scenario": {
+        "Expansao": -5.638656120291216,
+        "Continuidade": -6.484454538335285,
+        "RollbackParcial": -7.048320150364361,
+        "RollbackTotal": -3.289216070169914
+      },
+      "total_delta": -22.460646879160777
+    },
+    {
+      "id": 9,
+      "name": "FX shock conjunto",
+      "description": "PTAX +15% + litio +30% simultaneo. Compound stress.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 728.9349205106118,
+        "Continuidade": 1439.0911409476912,
+        "RollbackParcial": 2533.857863728319,
+        "RollbackTotal": 3612.4074344877013
+      },
+      "delta_by_scenario": {
+        "Expansao": 176.9284987078081,
+        "Continuidade": 265.39274806171215,
+        "RollbackParcial": 442.32124676951935,
+        "RollbackTotal": 619.2497454773284
+      },
+      "total_delta": 1503.892239016368
+    },
+    {
+      "id": 10,
+      "name": "Aprovacao R$ 800M atrasada",
+      "description": "Board global atrasa aprovacao do bridge financing 6m. Plano B indisponivel.",
+      "baseline": {
+        "Expansao": 552.0064218028037,
+        "Continuidade": 1173.698392885979,
+        "RollbackParcial": 2091.5366169587996,
+        "RollbackTotal": 2993.157689010373
+      },
+      "perturbed": {
+        "Expansao": 414.9557522123895,
+        "Continuidade": 954.417321541316,
+        "RollbackParcial": 1872.255545614137,
+        "RollbackTotal": 2746.466483747627
+      },
+      "delta_by_scenario": {
+        "Expansao": -137.05066959041426,
+        "Continuidade": -219.28107134466302,
+        "RollbackParcial": -219.28107134466268,
+        "RollbackTotal": -246.69120526274583
+      },
+      "total_delta": -822.3040175424867
+    }
+  ],
+  "tornado_ranking": [
+    {
+      "rank": 1,
+      "name": "BNDES funding -10pp",
+      "total_delta": 2441.1512672075696
+    },
+    {
+      "rank": 2,
+      "name": "Litio -30%",
+      "total_delta": -2068.9169081368946
+    },
+    {
+      "rank": 3,
+      "name": "FX shock conjunto",
+      "total_delta": 1503.892239016368
+    },
+    {
+      "rank": 4,
+      "name": "Aprovacao R$ 800M atrasada",
+      "total_delta": -822.3040175424867
+    },
+    {
+      "rank": 5,
+      "name": "IPCA +3pp",
+      "total_delta": -415.27303922780266
+    },
+    {
+      "rank": 6,
+      "name": "PTAX +20%",
+      "total_delta": 166.15240034458475
+    },
+    {
+      "rank": 7,
+      "name": "PTAX -10%",
+      "total_delta": -83.07620017229237
+    },
+    {
+      "rank": 8,
+      "name": "Litio +50%",
+      "total_delta": -42.113712898426456
+    },
+    {
+      "rank": 9,
+      "name": "Demand EV Brasil -15%",
+      "total_delta": -42.113712898426456
+    },
+    {
+      "rank": 10,
+      "name": "Tesla Model 2 antecipado 6m",
+      "total_delta": -22.460646879160777
+    }
+  ]
+}

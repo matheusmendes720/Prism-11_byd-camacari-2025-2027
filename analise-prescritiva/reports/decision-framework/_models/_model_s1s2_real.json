@@ -1,0 +1,123 @@
+{
+  "source": "Public lítio carbonate price history (Trading Economics, Fastmarkets, IEA) — 2015-2025",
+  "n_observations": 43,
+  "period": {
+    "start": "2015-01",
+    "end": "2025-07"
+  },
+  "start_price": 6000,
+  "end_price": 10000,
+  "max_price": 80000,
+  "min_price": 6000,
+  "price_change_pct": "67",
+  "sigma_monthly": 0.2393949562164427,
+  "sigma_annual": 0.8292884544852112,
+  "max_drawdown": -0.42857142857142855,
+  "supply_events": [
+    {
+      "name": "Baseline 2015 (pre-boom)",
+      "start": 2015,
+      "end": 2015,
+      "magnitude": 0,
+      "type": "normal",
+      "duration_months": 12,
+      "var_realized_R$_M": 0
+    },
+    {
+      "name": "Lítio boom 2016-2017 (China EV)",
+      "start": 2016,
+      "end": 2017,
+      "magnitude": 0.1,
+      "type": "normal",
+      "duration_months": 24,
+      "var_realized_R$_M": 1512
+    },
+    {
+      "name": "Lítio oversupply 2018-2019",
+      "start": 2018,
+      "end": 2019,
+      "magnitude": 0.1,
+      "type": "normal",
+      "duration_months": 24,
+      "var_realized_R$_M": 1512
+    },
+    {
+      "name": "COVID-19 supply chain 2020",
+      "start": 2020,
+      "end": 2020,
+      "magnitude": 0.3,
+      "type": "crisis",
+      "duration_months": 12,
+      "var_realized_R$_M": 2268
+    },
+    {
+      "name": "Semiconductor crisis 2021",
+      "start": 2021,
+      "end": 2021,
+      "magnitude": 0.3,
+      "type": "crisis",
+      "duration_months": 12,
+      "var_realized_R$_M": 2268
+    },
+    {
+      "name": "Lítio shortage 2022 (all-time high)",
+      "start": 2022,
+      "end": 2022,
+      "magnitude": 0.25,
+      "type": "crisis",
+      "duration_months": 12,
+      "var_realized_R$_M": 1890
+    },
+    {
+      "name": "Lítio crash 2023",
+      "start": 2023,
+      "end": 2023,
+      "magnitude": 0.05,
+      "type": "normal",
+      "duration_months": 12,
+      "var_realized_R$_M": 378
+    },
+    {
+      "name": "Lítio normalization 2024-2025",
+      "start": 2024,
+      "end": 2025,
+      "magnitude": 0,
+      "type": "normal",
+      "duration_months": 24,
+      "var_realized_R$_M": 0
+    }
+  ],
+  "empirical_var_stats": {
+    "mean_R$_M": 1229,
+    "p50_R$_M": 1512,
+    "p75_R$_M": 2268,
+    "p95_R$_M": 2268,
+    "max_R$_M": 2268,
+    "min_R$_M": 0
+  },
+  "stress_conditional": {
+    "crisis_avg_R$_M": 2142,
+    "normal_avg_R$_M": 680,
+    "n_crisis": 3,
+    "n_normal": 5
+  },
+  "baseline_d2": {
+    "var_fx_R$_M": 2345,
+    "var_supply_R$_M": 5180,
+    "weight_fx_supply": "1:2.21"
+  },
+  "recalibrated": {
+    "var_supply_R$_M": 2268,
+    "weight_fx_supply": "1:0.97",
+    "change_vs_d2": {
+      "var_supply_R$_M": -2912,
+      "var_supply_pct": "-56.2"
+    }
+  },
+  "comparison_synthetic": {
+    "synthetic_var_supply_P95_R$_M": 2835,
+    "real_var_supply_P95_R$_M": 2268,
+    "difference_R$_M": -567,
+    "difference_pct": "-20.0"
+  }
+}

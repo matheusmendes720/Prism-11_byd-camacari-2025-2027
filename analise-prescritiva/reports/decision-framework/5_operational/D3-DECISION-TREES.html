@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D3-DECISION-TREES v2.0 — Arvores de Decisao Visuais · BYD Camacari 2025-2027</title>
+  <meta name="description" content="6 arvores de decisao visuais para o framework D3 v2.0: CONTINUAR, MITIGAR, ABORTAR, GAME THEORY, STRESS SCENARIOS e MAIOR com T-MV1-T-MV5 triggers" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <style>
+    :root {
+      --bg: #0e1014; --bg-card: #161a21; --bg-deep: #080a0e;
+      --ink: #e6e8ec; --ink-2: #b0b6c2; --ink-3: #7a818f; --ink-4: #4a4f5a;
+      --line: #262b35; --line-2: #34394a;
+      --primary: #6b95f0; --primary-2: #8eb1ff; --accent: #e0a45e;
+      --chance-blue: #6b95f0; --decision-green: #4ade80; --terminal-gray: #7a818f;
+      --risk-high: #ff6b63; --risk-med: #ff9f43; --risk-low: #4ade80;
+      --good: #4ade80; --warn: #ff9f43; --bad: #ff6b63; --info: #6b95f0;
+      --nash-gold: #e0a45e;
+      --serif: 'Inter Tight','Inter',system-ui,sans-serif;
+      --sans: 'Inter',system-ui,sans-serif;
+      --mono: 'JetBrains Mono',ui-monospace,monospace;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+    ::selection{background:rgba(107,149,240,.32);color:#f1efe7}
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:5px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--ink-4)}
+    .cover{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:64px 80px 48px;background:linear-gradient(180deg,#07090d 0%,#0e1014 100%);color:#f1efe7;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .cover::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;pointer-events:none}
+    .cover-inner{position:relative;z-index:2}
+    .cover-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:#b8b3a3;text-transform:uppercase;margin-bottom:32px}
+    .cover-title{font-family:var(--serif);font-weight:800;font-size:clamp(36px,5vw,72px);line-height:.96;letter-spacing:-.02em;margin:0 0 24px;color:#f1efe7}
+    .cover-title em{font-style:normal;color:#e0a45e}
+    .cover-sub{font-size:17px;line-height:1.5;max-width:720px;color:#c8c4b6;font-weight:400}
+    .cover-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-top:1px solid rgba(255,255,255,.12);padding-top:28px}
+    .cover-meta-item{padding-right:28px}
+    .cover-meta-item+.cover-meta-item{border-left:1px solid rgba(255,255,255,.08);padding-left:28px}
+    .cover-meta-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8c8773}
+    .cover-meta-value{font-family:var(--serif);font-weight:700;font-size:26px;color:#f1efe7;margin-top:8px}
+    .cover-meta-note{font-size:12px;color:#8c8773;margin-top:4px}
+    .cover-foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:end;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6e6a5a;border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+    .wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+    .section{padding:72px 0 48px;border-top:1px solid var(--line)}
+    .section:first-of-type{border-top:none}
+    .sec-head{margin-bottom:40px}
+    .sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
+    .sec-title{font-family:var(--serif);font-weight:800;font-size:36px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 14px}
+    .sec-lede{font-size:16px;line-height:1.5;color:var(--ink-2);max-width:760px}
+    .tree-section{margin:48px 0;padding:32px;background:var(--bg-card);border:1px solid var(--line);border-radius:8px}
+    .tree-title{font-family:var(--serif);font-weight:700;font-size:22px;margin:0 0 8px;color:var(--ink)}
+    .tree-subtitle{font-size:13.5px;color:var(--ink-3);margin-bottom:24px}
+    .tree-svg{width:100%;height:auto;display:block;margin:24px 0}
+    .legend{display:flex;gap:32px;margin:24px 0;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+    .legend-circle{width:20px;height:20px;border-radius:50%}
+    .legend-diamond{width:16px;height:16px;transform:rotate(45deg)}
+    .legend-rect{width:20px;height:16px;border-radius:3px}
+    .chance-color{background:var(--chance-blue)}
+    .decision-color{background:var(--decision-green)}
+    .terminal-color{background:var(--terminal-gray)}
+    .insights{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:4px;padding:16px 20px;margin:20px 0;max-width:900px}
+    .insights h4{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
+    .insights ul{margin:0;padding-left:16px}
+    .insights li{margin-bottom:4px;font-size:14px;color:var(--ink-2)}
+    .footer{padding:24px 0;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+    table.t{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px}
+    table.t th{padding:12px 16px;text-align:left;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line);background:var(--bg-card)}
+    table.t td{padding:14px 16px;border-bottom:1px solid var(--line);color:var(--ink)}
+    table.t tr:last-child td{border-bottom:none}
+    @media(max-width:900px){.wrap{padding:0 20px}.cover{padding:40px 24px}.cover-meta{grid-template-columns:1fr 1fr}.sec-title{font-size:28px}}
+  </style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">D3-DECISION-TREES v2.0 · Arvores de Decisao Visuais · 21 de julho de 2026</div>
+    <h1 class="cover-title">De framework a <em>playbook</em><br/>em 6 arvores</h1>
+    <p class="cover-sub">Visualizacao decision-tree do framework D3 v2.0 para o Polo BYD Camacari 2025-2027. Cada arvore corresponde a um cenario: CONTINUAR, MITIGAR, ABORTAR, GAME THEORY (BYD vs Stellantis), STRESS SCENARIOS (4 choques simultaneos), e a MAIOR Consolidada com T-MV1-T-MV5 triggers.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Arvores</div>
+        <div class="cover-meta-value">6</div>
+        <div class="cover-meta-note">v0.6 + GAME THEORY + STRESS</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Dimensoes</div>
+        <div class="cover-meta-value">11 + 5</div>
+        <div class="cover-meta-note">S1-S11 + T-MV1-T-MV5</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Nash Eq.</div>
+        <div class="cover-meta-value" style="color:var(--nash-gold)">(Invest,Diff)</div>
+        <div class="cover-meta-note">BYD vs Stellantis</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Stress VaR</div>
+        <div class="cover-meta-value" style="color:var(--bad)">R$ 8.21bi</div>
+        <div class="cover-meta-note">4 choques combinados</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <span>BYD Camacari · 2025-2027</span>
+    <span>Decision Framework D3 v2.0</span>
+  </div>
+</section>
+
+<div class="wrap"><section class="section" id="tree-continue">
+  <div class="sec-head">
+    <div class="sec-num">01 · Arvore CONTINUAR</div>
+    <h2 class="sec-title">Prosseguir com o programa capex</h2>
+    <p class="sec-lede">Fluxo de decisao em 3 estadios: S7 ESG (kill switch gate) → S3 BNDES x S10 Tariff (combo) → S1 FX x S2 Supply (combo). Leaf nodes mostram NPV esperado por caminho.</p>
+  </div>
+
+  <div class="tree-section">
+    <h3 class="tree-title">CONTINUAR: 3 estadios (S7 → S3xS10 → S1xS2)</h3>
+    <p class="tree-subtitle">Nota: S7 RED (kill switch) sobrepoe todos os outros — se lista suja = TRUE, desce direto para ABORTAR.</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-circle chance-color"></div> No de Chance (probabilidade)</div>
+      <div class="legend-item"><div class="legend-diamond" style="background:var(--decision-green)"></div> No de Decisao</div>
+      <div class="legend-item"><div class="legend-rect terminal-color"></div> No Terminal (NPV / Payoff)</div>
+    </div>
+
+    <svg class="tree-svg" viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg">
+      <!-- STAGE 1: S7 ESG -->
+      <ellipse cx="550" cy="50" rx="90" ry="36" fill="#6b95f0" opacity="0.9"/>
+      <text x="550" y="46" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="600">S7 ESG</text>
+      <text x="550" y="62" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.8)">kill switch gate</text>
+
+      <line x1="550" y1="86" x2="320" y2="150" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="86" x2="780" y2="150" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="420" y="115" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#b0b6c2">FALSE</text>
+      <text x="420" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">P=0.25</text>
+
+      <text x="680" y="115" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b63" font-weight="600">TRUE</text>
+      <text x="680" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">P=0.75</text>
+
+      <!-- S7=FALSE -> S3 -->
+      <ellipse cx="320" cy="180" rx="80" ry="32" fill="#6b95f0" opacity="0.85"/>
+      <text x="320" y="176" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="600">S3 BNDES</text>
+      <text x="320" y="192" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">ViE status</text>
+
+      <!-- S7=TRUE -> KILL SWITCH -->
+      <rect x="730" y="160" width="100" height="40" rx="6" fill="#ff6b63" opacity="0.9"/>
+      <text x="780" y="178" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="700">KILL SWITCH</text>
+      <text x="780" y="193" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.85)">→ ABORTAR</text>
+
+      <!-- S3 branches -->
+      <line x1="320" y1="212" x2="160" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="320" y1="212" x2="320" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="320" y1="212" x2="480" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="235" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80">Expansao</text>
+      <text x="235" y="254" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">ViE=25%</text>
+      <text x="320" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43">Continuidade</text>
+      <text x="320" y="254" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">ViE=18%</text>
+      <text x="405" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63">RB Parcial</text>
+      <text x="405" y="254" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">ViE=10%</text>
+
+      <!-- S10 Tariff combo nodes -->
+      <ellipse cx="160" cy="310" rx="70" ry="28" fill="#6b95f0" opacity="0.85"/>
+      <text x="160" y="307" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="600">S10 Tariff</text>
+      <text x="160" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">combo</text>
+
+      <ellipse cx="320" cy="310" rx="70" ry="28" fill="#6b95f0" opacity="0.85"/>
+      <text x="320" y="307" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="600">S10 Tariff</text>
+      <text x="320" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">combo</text>
+
+      <ellipse cx="480" cy="310" rx="70" ry="28" fill="#6b95f0" opacity="0.85"/>
+      <text x="480" y="307" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="600">S10 Tariff</text>
+      <text x="480" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">combo</text>
+
+      <!-- Stage 3 branches to S1xS2 -->
+      <line x1="160" y1="338" x2="80" y2="400" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="160" y1="338" x2="240" y2="400" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="320" y1="338" x2="240" y2="400" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="320" y1="338" x2="400" y2="400" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="480" y1="338" x2="400" y2="400" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="480" y1="338" x2="560" y2="400" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="115" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">GREEN</text>
+      <text x="205" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43">AMBER</text>
+      <text x="365" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">RED</text>
+      <text x="525" y="366" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">RED</text>
+
+      <!-- S1xS2 nodes -->
+      <ellipse cx="80" cy="430" rx="60" ry="24" fill="#6b95f0" opacity="0.8"/>
+      <text x="80" y="428" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S1xS2</text>
+      <text x="80" y="442" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">FX+Supply</text>
+
+      <ellipse cx="240" cy="430" rx="60" ry="24" fill="#6b95f0" opacity="0.8"/>
+      <text x="240" y="428" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S1xS2</text>
+      <text x="240" y="442" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">FX+Supply</text>
+
+      <ellipse cx="400" cy="430" rx="60" ry="24" fill="#6b95f0" opacity="0.8"/>
+      <text x="400" y="428" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S1xS2</text>
+      <text x="400" y="442" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">FX+Supply</text>
+
+      <ellipse cx="560" cy="430" rx="60" ry="24" fill="#6b95f0" opacity="0.8"/>
+      <text x="560" y="428" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S1xS2</text>
+      <text x="560" y="442" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">FX+Supply</text>
+
+      <!-- Final branches -->
+      <line x1="80" y1="454" x2="80" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="240" y1="454" x2="200" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="240" y1="454" x2="280" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="400" y1="454" x2="360" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="400" y1="454" x2="440" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="560" y1="454" x2="520" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="560" y1="454" x2="600" y2="490" stroke="#4a4f5a" stroke-width="1.5"/>
+
+      <!-- TERMINAL NODES -->
+      <rect x="30" y="495" width="100" height="50" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="80" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#4ade80" font-weight="700">NPV +R$ 1.2bi</text>
+      <text x="80" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Expansao</text>
+
+      <rect x="150" y="495" width="100" height="50" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="200" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff9f43" font-weight="700">NPV +R$ 700M</text>
+      <text x="200" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Exp+Amber</text>
+
+      <rect x="230" y="495" width="100" height="50" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="280" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#4ade80" font-weight="700">NPV +R$ 550M</text>
+      <text x="280" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Cont+Green</text>
+
+      <rect x="310" y="495" width="100" height="50" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="360" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff9f43" font-weight="700">NPV +R$ 200M</text>
+      <text x="360" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Cont+Amber</text>
+
+      <rect x="390" y="495" width="100" height="50" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="440" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b63" font-weight="700">NPV -R$ 300M</text>
+      <text x="440" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">RB+Amber</text>
+
+      <rect x="470" y="495" width="100" height="50" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="520" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b63" font-weight="700">NPV -R$ 800M</text>
+      <text x="520" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">RB+RED</text>
+
+      <rect x="550" y="495" width="100" height="50" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="600" y="518" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b63" font-weight="700">NPV -R$ 1.5bi</text>
+      <text x="600" y="534" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">RB Total</text>
+
+      <text x="550" y="565" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">ESTAGIO 1: S7 ESG</text>
+      <text x="320" y="585" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">ESTAGIO 2: S3 x S10</text>
+      <text x="320" y="600" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">ESTAGIO 3: S1 x S2</text>
+    </svg>
+
+    <div class="insights">
+      <h4>Analise da arvore CONTINUAR</h4>
+      <ul>
+        <li><strong>S7 = TRUE (kill switch)</strong>: P=0.75 — desvia direto para ABORTAR. NPV irrelevante pois capex e bloqueado pelo BNDES.</li>
+        <li><strong>Caminho viavel</strong>: S7=FALSE (P=0.25) x S3=Expansao/Continuidade x S10=AMBER/GREEN = NPV +R$ 550M-1.2bi</li>
+        <li><strong>Caminho critico</strong>: S7=FALSE x S3=RB Parcial x S10=RED = NPV -R$ 800M (divida estrutural)</li>
+        <li><strong>Recomendacao</strong>: hedge S7 status mensalmente. Se P(kill switch) &gt; 0.6, antecipar decisao ABORTAR.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tree-mitigate">
+  <div class="sec-head">
+    <div class="sec-num">02 · Arvore MITIGAR</div>
+    <h2 class="sec-title">Resposta defensiva ao risco composto</h2>
+    <p class="sec-lede">Fluxo em 3 estadios: S4 Defensivo tier → S8 Ramp acceleration vs status quo → S11 Competition response. Ativada quando S3 <= Continuidade ou composite >= 73.</p>
+  </div>
+
+  <div class="tree-section">
+    <h3 class="tree-title">MITIGAR: 3 estadios (S4 → S8 → S11)</h3>
+    <p class="tree-subtitle">Trigger: S3=Continuidade/RB Parcial ou composite >= 73. Acao: defensivo targeted + ramp acceleration + competition response.</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-circle chance-color"></div> No de Chance (probabilidade)</div>
+      <div class="legend-item"><div class="legend-diamond" style="background:var(--decision-green)"></div> No de Decisao</div>
+      <div class="legend-item"><div class="legend-rect terminal-color"></div> No Terminal (Payoff)</div>
+    </div>
+
+    <svg class="tree-svg" viewBox="0 0 1100 600" xmlns="http://www.w3.org/2000/svg">
+      <!-- STAGE 1: S4 DEFENSIVO TIER -->
+      <rect x="475" y="20" width="150" height="50" rx="6" fill="#4ade80" opacity="0.9"/>
+      <text x="550" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#fff" font-weight="700">S4 DEFENSIVO</text>
+      <text x="550" y="60" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">tier system</text>
+
+      <line x1="550" y1="70" x2="240" y2="140" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="70" x2="550" y2="140" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="70" x2="860" y2="140" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="380" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63">Tier 3</text>
+      <text x="380" y="114" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">cut 40-60%</text>
+      <text x="550" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43">Tier 2</text>
+      <text x="550" y="114" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">cut 20-30%</text>
+      <text x="720" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80">Tier 1</text>
+      <text x="720" y="114" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">hold</text>
+
+      <!-- Tier decision nodes -->
+      <rect x="175" y="150" width="130" height="45" rx="6" fill="#4ade80" opacity="0.85"/>
+      <text x="240" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="600">Tier 3: R$ 22.5M</text>
+      <text x="240" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">5k unidades</text>
+
+      <rect x="485" y="150" width="130" height="45" rx="6" fill="#4ade80" opacity="0.85"/>
+      <text x="550" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="600">Tier 2: R$ 15M</text>
+      <text x="550" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">trims mid</text>
+
+      <rect x="795" y="150" width="130" height="45" rx="6" fill="#4ade80" opacity="0.85"/>
+      <text x="860" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="600">Tier 1: R$ 7.5M</text>
+      <text x="860" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">trims altos</text>
+
+      <!-- S8 RAMP branches -->
+      <line x1="240" y1="195" x2="160" y2="260" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="240" y1="195" x2="320" y2="260" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="195" x2="470" y2="260" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="195" x2="630" y2="260" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="860" y1="195" x2="780" y2="260" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="860" y1="195" x2="940" y2="260" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="235" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">ACCEL</text>
+      <text x="285" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">SQ</text>
+      <text x="545" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">ACCEL</text>
+      <text x="595" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">SQ</text>
+      <text x="855" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">ACCEL</text>
+      <text x="905" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">SQ</text>
+
+      <!-- S8 ACCEL nodes -->
+      <ellipse cx="160" cy="290" rx="65" ry="26" fill="#6b95f0" opacity="0.85"/>
+      <text x="160" y="287" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 ACCEL</text>
+      <text x="160" y="302" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">+R$ 50M capex</text>
+
+      <ellipse cx="470" cy="290" rx="65" ry="26" fill="#6b95f0" opacity="0.85"/>
+      <text x="470" y="287" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 ACCEL</text>
+      <text x="470" y="302" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">+R$ 50M capex</text>
+
+      <ellipse cx="780" cy="290" rx="65" ry="26" fill="#6b95f0" opacity="0.85"/>
+      <text x="780" y="287" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 ACCEL</text>
+      <text x="780" y="302" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">+R$ 50M capex</text>
+
+      <!-- S8 SQ nodes -->
+      <ellipse cx="320" cy="290" rx="60" ry="26" fill="#6b95f0" opacity="0.75"/>
+      <text x="320" y="287" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 SQ</text>
+      <text x="320" y="302" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">baseline</text>
+
+      <ellipse cx="630" cy="290" rx="60" ry="26" fill="#6b95f0" opacity="0.75"/>
+      <text x="630" y="287" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 SQ</text>
+      <text x="630" y="302" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">baseline</text>
+
+      <ellipse cx="940" cy="290" rx="60" ry="26" fill="#6b95f0" opacity="0.75"/>
+      <text x="940" y="287" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 SQ</text>
+      <text x="940" y="302" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.8)">baseline</text>
+
+      <!-- STAGE 3: S11 COMPETITION -->
+      <line x1="160" y1="316" x2="100" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="160" y1="316" x2="220" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="320" y1="316" x2="260" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="320" y1="316" x2="380" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="470" y1="316" x2="410" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="470" y1="316" x2="530" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="630" y1="316" x2="570" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="630" y1="316" x2="690" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="780" y1="316" x2="720" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="780" y1="316" x2="840" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="940" y1="316" x2="880" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="940" y1="316" x2="1000" y2="370" stroke="#4a4f5a" stroke-width="1.5"/>
+
+      <text x="155" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">price war</text>
+      <text x="195" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">differentiate</text>
+      <text x="315" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">price war</text>
+      <text x="355" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">differentiate</text>
+      <text x="465" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">price war</text>
+      <text x="505" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">differentiate</text>
+      <text x="625" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">price war</text>
+      <text x="665" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">differentiate</text>
+      <text x="775" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">price war</text>
+      <text x="815" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">differentiate</text>
+      <text x="935" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">price war</text>
+      <text x="975" y="340" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">differentiate</text>
+
+      <!-- TERMINAL NODES MITIGAR -->
+      <rect x="50" y="375" width="100" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="100" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">-R$ 180M</text>
+      <text x="100" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T3+ACCEL+PW</text>
+
+      <rect x="170" y="375" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="220" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">+R$ 350M</text>
+      <text x="220" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T3+ACCEL+Dif</text>
+
+      <rect x="210" y="375" width="100" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="260" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">-R$ 220M</text>
+      <text x="260" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T3+SQ+PW</text>
+
+      <rect x="330" y="375" width="100" height="42" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="380" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">+R$ 120M</text>
+      <text x="380" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T3+SQ+Dif</text>
+
+      <rect x="360" y="375" width="100" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="410" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">-R$ 130M</text>
+      <text x="410" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T2+ACCEL+PW</text>
+
+      <rect x="480" y="375" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="530" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">+R$ 280M</text>
+      <text x="530" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T2+ACCEL+Dif</text>
+
+      <rect x="520" y="375" width="100" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="570" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">-R$ 160M</text>
+      <text x="570" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T2+SQ+PW</text>
+
+      <rect x="640" y="375" width="100" height="42" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="690" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">+R$ 80M</text>
+      <text x="690" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T2+SQ+Dif</text>
+
+      <rect x="670" y="375" width="100" height="42" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="720" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">+R$ 50M</text>
+      <text x="720" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T1+ACCEL+PW</text>
+
+      <rect x="790" y="375" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="840" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">+R$ 220M</text>
+      <text x="840" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T1+ACCEL+Dif</text>
+
+      <rect x="830" y="375" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="880" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">+R$ 180M</text>
+      <text x="880" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T1+SQ+PW</text>
+
+      <rect x="950" y="375" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="1000" y="393" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">+R$ 350M</text>
+      <text x="1000" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">T1+SQ+Dif</text>
+
+      <text x="550" y="445" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80">ESTAGIO 1: S4 DEFENSIVO TIER</text>
+      <text x="550" y="460" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">ESTAGIO 2: S8 RAMP</text>
+      <text x="550" y="475" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">ESTAGIO 3: S11 COMPETITION</text>
+
+      <text x="50" y="545" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">ACCEL = S8 ramp acceleration (+R$ 50M EVE partnership)</text>
+      <text x="50" y="560" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">SQ = Status Quo (no acceleration)</text>
+      <text x="50" y="575" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">PW = Price war (P&gt;60%); Dif = Differentiate (BYD LFP moat)</text>
+    </svg>
+
+    <div class="insights">
+      <h4>Analise da arvore MITIGAR</h4>
+      <ul>
+        <li><strong>Melhor payoff</strong>: Tier 1 + SQ + Differentiate = +R$ 350M (BYD verticalizacao LFP como moat)</li>
+        <li><strong>Pior payoff</strong>: Tier 3 + SQ + Price War = -R$ 220M (defensivo caro + guerra de preco)</li>
+        <li><strong>Recomendacao</strong>: ativar Tier 1 (hold) + ACCEL (EVE partnership R$ 50M) + Differentiate = +R$ 220M</li>
+        <li><strong>Break-even</strong>: Tier 2 + ACCEL + Differentiate = +R$ 280M — cobre custo de acceleration</li>
+        <li><strong>S11 RED (price war P&gt;60%)</strong>: combinar com Tier 1 minimum defensivo para sobreviver</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tree-abort">
+  <div class="sec-head">
+    <div class="sec-num">03 · Arvore ABORTAR</div>
+    <h2 class="sec-title">Exit strategy e valor residual</h2>
+    <p class="sec-lede">Fluxo em 2 estadios: S6 Triggers (roll-back conditions) → Exit cost vs sunk cost. Ativada quando kill switch ativo (S7=TRUE) ou composite >= 93.</p>
+  </div>
+
+  <div class="tree-section">
+    <h3 class="tree-title">ABORTAR: 2 estadios (S6 → Exit Cost / Sunk Cost)</h3>
+    <p class="tree-subtitle">Trigger: S7 RED (kill switch) ou composite >= 93. Exit cost = custo de saida ordenado. Sunk cost = investimento ja feito.</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-circle chance-color"></div> No de Chance (probabilidade)</div>
+      <div class="legend-item"><div class="legend-diamond" style="background:var(--decision-green)"></div> No de Decisao</div>
+      <div class="legend-item"><div class="legend-rect terminal-color"></div> No Terminal (Valor Residual)</div>
+    </div>
+
+    <svg class="tree-svg" viewBox="0 0 1100 500" xmlns="http://www.w3.org/2000/svg">
+      <!-- STAGE 1: ABORTAR root -->
+      <rect x="450" y="20" width="200" height="55" rx="8" fill="#ff6b63" opacity="0.9"/>
+      <text x="550" y="45" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#fff" font-weight="700">ABORTAR</text>
+      <text x="550" y="63" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">kill switch OR composite >= 93</text>
+
+      <line x1="550" y1="75" x2="220" y2="150" stroke="#4a4f5a" stroke-width="2.5"/>
+      <line x1="550" y1="75" x2="880" y2="150" stroke="#4a4f5a" stroke-width="2.5"/>
+
+      <text x="365" y="110" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b63" font-weight="600">S7 RED</text>
+      <text x="365" y="125" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">kill switch</text>
+      <text x="735" y="110" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff9f43">S6 RED</text>
+      <text x="735" y="125" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">composite >= 93</text>
+
+      <!-- S7 RED Branch -->
+      <ellipse cx="220" cy="180" rx="110" ry="35" fill="#ff6b63" opacity="0.85"/>
+      <text x="220" y="177" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="700">S7 KILL SWITCH</text>
+      <text x="220" y="194" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">lista suja MTE + BNDES</text>
+      <text x="220" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">bloqueado</text>
+
+      <line x1="220" y1="215" x2="100" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="220" y1="215" x2="220" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="220" y1="215" x2="340" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="155" y="245" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">&lt;90 dias</text>
+      <text x="220" y="245" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43">90-180 dias</text>
+      <text x="285" y="245" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">&gt;180 dias</text>
+
+      <rect x="40" y="285" width="120" height="42" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="100" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">R$ 650M</text>
+      <text x="100" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">revogavel</text>
+
+      <rect x="160" y="285" width="120" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="220" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">R$ 350M</text>
+      <text x="220" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">reestrut.</text>
+
+      <rect x="280" y="285" width="120" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="2"/>
+      <text x="340" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">R$ 50M</text>
+      <text x="340" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">hibernacao</text>
+
+      <!-- S6 RED Branch -->
+      <ellipse cx="880" cy="180" rx="100" ry="35" fill="#ff9f43" opacity="0.85"/>
+      <text x="880" y="177" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="700">S6 RED</text>
+      <text x="880" y="194" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">composite >= 93</text>
+      <text x="880" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">multiplier 2.0x</text>
+
+      <line x1="880" y1="215" x2="720" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="880" y1="215" x2="880" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="880" y1="215" x2="1040" y2="280" stroke="#4a4f5a" stroke-width="2"/>
+
+      <text x="795" y="245" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">freezedisp.</text>
+      <text x="880" y="245" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43">bridgefin.</text>
+      <text x="965" y="245" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">selltopeer</text>
+
+      <rect x="660" y="285" width="120" height="42" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="720" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">R$ 480M</text>
+      <text x="720" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">freeze+wait</text>
+
+      <rect x="820" y="285" width="120" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="880" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">R$ 620M</text>
+      <text x="880" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">bridge+rev.</text>
+
+      <rect x="980" y="285" width="120" height="42" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="1040" y="303" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">R$ 280M</text>
+      <text x="1040" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">sellto peer</text>
+
+      <!-- STAGE 2: Exit vs Sunk -->
+      <line x1="100" y1="327" x2="100" y2="365" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="220" y1="327" x2="220" y2="365" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="340" y1="327" x2="340" y2="365" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="720" y1="327" x2="720" y2="365" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="880" y1="327" x2="880" y2="365" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="1040" y1="327" x2="1040" y2="365" stroke="#4a4f5a" stroke-width="1.5"/>
+
+      <text x="550" y="370" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff9f43">ESTAGIO 2: EXIT COST vs SUNK COST</text>
+
+      <line x1="100" y1="375" x2="80" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="100" y1="375" x2="120" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="220" y1="375" x2="200" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="220" y1="375" x2="240" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="340" y1="375" x2="320" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="340" y1="375" x2="360" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="720" y1="375" x2="700" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="720" y1="375" x2="740" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="880" y1="375" x2="860" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="880" y1="375" x2="900" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="1040" y1="375" x2="1020" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="1040" y1="375" x2="1060" y2="410" stroke="#4a4f5a" stroke-width="1"/>
+
+      <text x="95" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">exit</text>
+      <text x="115" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">sunk</text>
+      <text x="195" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">exit</text>
+      <text x="235" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">sunk</text>
+      <text x="335" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">exit</text>
+      <text x="355" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">sunk</text>
+      <text x="715" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">exit</text>
+      <text x="735" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">sunk</text>
+      <text x="875" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">exit</text>
+      <text x="895" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">sunk</text>
+      <text x="1035" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">exit</text>
+      <text x="1055" y="395" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">sunk</text>
+
+      <!-- TERMINAL NODES -->
+      <rect x="40" y="415" width="80" height="38" rx="4" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="80" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80" font-weight="700">VR=R$ 720M</text>
+      <text x="80" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">revogavel</text>
+
+      <rect x="80" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="120" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 50M</text>
+      <text x="120" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sunk</text>
+
+      <rect x="160" y="415" width="80" height="38" rx="4" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="200" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43" font-weight="700">VR=R$ 420M</text>
+      <text x="200" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">exit</text>
+
+      <rect x="200" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="240" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 200M</text>
+      <text x="240" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sunk</text>
+
+      <rect x="280" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="320" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 150M</text>
+      <text x="320" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">exit</text>
+
+      <rect x="320" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="2"/>
+      <text x="360" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 0</text>
+      <text x="360" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sunk</text>
+
+      <rect x="660" y="415" width="80" height="38" rx="4" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="700" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43" font-weight="700">VR=R$ 380M</text>
+      <text x="700" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">freeze</text>
+
+      <rect x="700" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="740" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 180M</text>
+      <text x="740" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sunk</text>
+
+      <rect x="820" y="415" width="80" height="38" rx="4" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="860" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80" font-weight="700">VR=R$ 680M</text>
+      <text x="860" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">bridge</text>
+
+      <rect x="860" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="900" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 350M</text>
+      <text x="900" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sunk</text>
+
+      <rect x="980" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="1020" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 320M</text>
+      <text x="1020" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sell</text>
+
+      <rect x="1020" y="415" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="2"/>
+      <text x="1060" y="432" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">VR=R$ 0</text>
+      <text x="1060" y="446" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">sunk</text>
+    </svg>
+
+    <div class="insights">
+      <h4>Analise da arvore ABORTAR</h4>
+      <ul>
+        <li><strong>Best case (S7 &lt;90 dias, exit)</strong>: VR = R$ 720M — kill switch revogavel se remediacao funcionar</li>
+        <li><strong>Worst case (S7 &gt;180 dias, sunk)</strong>: VR = R$ 0 — investimento completamente perdido</li>
+        <li><strong>S6 RED + bridge financing</strong>: VR = R$ 680M (best among S6 scenarios)</li>
+        <li><strong>Decision principle</strong>: se VR(exit) &gt; VR(sunk), fazer exit. Sempre.</li>
+        <li><strong>Recomendacao</strong>: preparar exit plan agora (buyer list, valuation) mesmo sem ativar — custo de opcao.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tree-gametheory">
+  <div class="sec-head">
+    <div class="sec-num">04 · Arvore GAME THEORY (v2.0 NOVO)</div>
+    <h2 class="sec-title">BYD vs Stellantis — Jogo Sequencial</h2>
+    <p class="sec-lede">Game tree estatico: Stellantis move primeiro (leader) — Invest ou Wait. BYD move segundo (follower) — Differentiate, Price War, ou Exit. Highlight do Nash equilibrium (Invest, Differentiate).</p>
+  </div>
+
+  <div class="tree-section">
+    <h3 class="tree-title">GAME THEORY: BYD vs Stellantis (Nash Equilibrio)</h3>
+    <p class="tree-subtitle">Sequential game: Stellantis (leader) move 1st — Invest/Wait. BYD (follower) move 2nd — Differentiate/Price War/Exit. Payoffs: (BYD, Stellantis). Highlight: Nash (Invest, Differentiate).</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-circle" style="background:#6b95f0"></div> Stellantis Decision Node (leader)</div>
+      <div class="legend-item"><div class="legend-circle" style="background:#4ade80"></div> BYD Decision Node (follower)</div>
+      <div class="legend-item"><div class="legend-rect" style="background:#e0a45e"></div> Nash Equilibrium highlight</div>
+      <div class="legend-item"><div class="legend-rect terminal-color"></div> Terminal Node (payoffs)</div>
+    </div>
+
+    <svg class="tree-svg" viewBox="0 0 1100 680" xmlns="http://www.w3.org/2000/svg">
+      <!-- Title -->
+      <text x="550" y="20" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7a818f">SEQUENTIAL GAME: STELLANTIS (leader) moves first — BYD (follower) moves second</text>
+
+      <!-- ===== STELLANTIS NODE (LEADER) ===== -->
+      <ellipse cx="550" cy="60" rx="100" ry="38" fill="#6b95f0" opacity="0.95"/>
+      <text x="550" y="56" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#fff" font-weight="700">STELLANTIS</text>
+      <text x="550" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">leader — move 1</text>
+
+      <!-- Branches from Stellantis -->
+      <line x1="550" y1="98" x2="240" y2="175" stroke="#4a4f5a" stroke-width="3"/>
+      <line x1="550" y1="98" x2="860" y2="175" stroke="#4a4f5a" stroke-width="3"/>
+
+      <text x="385" y="130" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#4ade80" font-weight="600">INVEST</text>
+      <text x="385" y="146" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">R$ 3.2bi capex</text>
+      <text x="385" y="160" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">move 2</text>
+
+      <text x="715" y="130" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#ff9f43" font-weight="600">WAIT</text>
+      <text x="715" y="146" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">P=0.3 resolve</text>
+      <text x="715" y="160" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">move 2</text>
+
+      <!-- ===== STELLANTIS = INVEST — BYD RESPONDS ===== -->
+      <ellipse cx="240" cy="195" rx="90" ry="32" fill="#4ade80" opacity="0.9"/>
+      <text x="240" y="192" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="700">BYD RESPONDS</text>
+      <text x="240" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.85)">Dif / Price War / Exit</text>
+
+      <!-- BYD branches from Invest node -->
+      <line x1="240" y1="227" x2="80" y2="305" stroke="#4a4f5a" stroke-width="2.5"/>
+      <line x1="240" y1="227" x2="240" y2="305" stroke="#4a4f5a" stroke-width="2.5"/>
+      <line x1="240" y1="227" x2="400" y2="305" stroke="#4a4f5a" stroke-width="2.5"/>
+
+      <text x="155" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#4ade80" font-weight="600">DIFFERENTIATE</text>
+      <text x="155" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">LFP moat</text>
+
+      <text x="240" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff6b63" font-weight="600">PRICE WAR</text>
+      <text x="240" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">P=0.5 Stellantis</text>
+
+      <text x="325" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7a818f" font-weight="600">EXIT</text>
+      <text x="325" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">VR=0</text>
+
+      <!-- ===== NASH EQUILIBRIUM BOX: (INVEST, DIFFERENTIATE) ===== -->
+      <!-- Gold highlight border for Nash -->
+      <rect x="25" y="315" width="170" height="75" rx="8" fill="#e0a45e" opacity="0.15" stroke="#e0a45e" stroke-width="2.5" stroke-dasharray="6,3"/>
+
+      <!-- Terminal: (Invest, Differentiate) — NASH -->
+      <rect x="35" y="325" width="150" height="55" rx="6" fill="#2d4a22" stroke="#e0a45e" stroke-width="2"/>
+      <text x="110" y="347" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#e0a45e" font-weight="700">NASH EQ.</text>
+      <text x="110" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">(Invest, Diff)</text>
+      <text x="110" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">BYD +R$ 1.2bi | Stl +R$ 800M</text>
+
+      <!-- Terminal: (Invest, Price War) -->
+      <rect x="195" y="325" width="130" height="55" rx="6" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="260" y="347" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">(Invest, PW)</text>
+      <text x="260" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">BYD -R$ 400M</text>
+      <text x="260" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Stl -R$ 200M</text>
+
+      <!-- Terminal: (Invest, Exit) -->
+      <rect x="335" y="325" width="130" height="55" rx="6" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="400" y="347" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">(Invest, Exit)</text>
+      <text x="400" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">BYD R$ 0</text>
+      <text x="400" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Stl monopoliza</text>
+
+      <!-- ===== STELLANTIS = WAIT — BYD RESPONDS ===== -->
+      <ellipse cx="860" cy="195" rx="90" ry="32" fill="#4ade80" opacity="0.9"/>
+      <text x="860" y="192" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="700">BYD RESPONDS</text>
+      <text x="860" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.85)">Dif / Price War / Exit</text>
+
+      <!-- BYD branches from Wait node -->
+      <line x1="860" y1="227" x2="700" y2="305" stroke="#4a4f5a" stroke-width="2.5"/>
+      <line x1="860" y1="227" x2="860" y2="305" stroke="#4a4f5a" stroke-width="2.5"/>
+      <line x1="860" y1="227" x2="1020" y2="305" stroke="#4a4f5a" stroke-width="2.5"/>
+
+      <text x="775" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#4ade80" font-weight="600">DIFFERENTIATE</text>
+      <text x="775" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">1st mover adv</text>
+
+      <text x="860" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff9f43" font-weight="600">WAIT TOO</text>
+      <text x="860" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">P=0.3</text>
+
+      <text x="945" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7a818f" font-weight="600">EXIT</text>
+      <text x="945" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">VR=0</text>
+
+      <!-- Terminal: (Wait, Differentiate) -->
+      <rect x="650" y="325" width="130" height="55" rx="6" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="715" y="347" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80" font-weight="700">(Wait, Diff)</text>
+      <text x="715" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">BYD +R$ 600M</text>
+      <text x="715" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Stl +R$ 200M</text>
+
+      <!-- Terminal: (Wait, Wait) — War of Attrition -->
+      <rect x="790" y="325" width="130" height="55" rx="6" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="855" y="347" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">(Wait, Wait)</text>
+      <text x="855" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">WAR OF ATTRITION</text>
+      <text x="855" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">BYD wins (LFP) | GM exits</text>
+
+      <!-- Terminal: (Wait, Exit) -->
+      <rect x="930" y="325" width="130" height="55" rx="6" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="995" y="347" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">(Wait, Exit)</text>
+      <text x="995" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">BYD R$ 0</text>
+      <text x="995" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">Stl +R$ 100M</text>
+
+      <!-- ===== WAR OF ATTRITION DETAIL NODE ===== -->
+      <text x="855" y="420" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ff9f43">WAR OF ATTRITION: quem aguenta mais?</text>
+
+      <line x1="855" y1="425" x2="710" y2="480" stroke="#ff9f43" stroke-width="1.5"/>
+      <line x1="855" y1="425" x2="855" y2="480" stroke="#ff9f43" stroke-width="1.5"/>
+      <line x1="855" y1="425" x2="1000" y2="480" stroke="#ff9f43" stroke-width="1.5"/>
+
+      <text x="775" y="450" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">GM exits</text>
+      <text x="855" y="450" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80">BYD LFP moat</text>
+      <text x="935" y="450" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43">BYD holds</text>
+
+      <!-- War outcomes -->
+      <rect x="660" y="488" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="710" y="506" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80" font-weight="700">+R$ 900M</text>
+      <text x="710" y="520" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">BYD wins</text>
+
+      <rect x="805" y="488" width="100" height="42" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="855" y="506" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43" font-weight="700">+R$ 400M</text>
+      <text x="855" y="520" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">standoff</text>
+
+      <rect x="950" y="488" width="100" height="42" rx="5" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="1000" y="506" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80" font-weight="700">+R$ 1.1bi</text>
+      <text x="1000" y="520" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">BYD wins+</text>
+
+      <!-- Payoff legend -->
+      <text x="550" y="570" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b95f0">PAYOFF FORMAT: (BYD, Stellantis) em R$ bilhoes</text>
+      <text x="550" y="585" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Nash equililibrium: (Invest, Differentiate) — iterada por backward induction</text>
+      <text x="550" y="600" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#e0a45e">Nash highlighted: gold border + dashed stroke</text>
+    </svg>
+
+    <div class="insights">
+      <h4>Analise Game Theory — BYD vs Stellantis</h4>
+      <ul>
+        <li><strong>Nash Equilibrium: (Invest, Differentiate)</strong> — Stellantis Invest (R$ 3.2bi capex), BYD Differentiate (LFP moat). Ambos tem incentive a nao desviar unilateralmente.</li>
+        <li><strong>War of Attrition (Wait, Wait)</strong>: BYD tem moat de LFP verticalizado — custo marginal menor. Stellantis/GM sai primeiro (P&gt;0.6 sai em &lt;18 meses).</li>
+        <li><strong>BYD Exit subgame</strong>: se Stellantis Invest e BYD Exit, Stellantis monopoliza mercado BR EV. BYD nao tem incentivo a Exit se Differentiate available.</li>
+        <li><strong>Price War punishing</strong>: (Invest, Price War) = BYD -R$ 400M, Stellantis -R$ 200M. Destruidor para ambos vs Differentiate.</li>
+        <li><strong>Implicacao estrategica</strong>: BYD deve investir em Differentiate (LFP, verticalizacao) para manter Nash equilibrium favoravel. Se Wait, BYD perde 1st mover advantage.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tree-stress">
+  <div class="sec-head">
+    <div class="sec-num">05 · Arvore STRESS SCENARIOS (v2.0 NOVO)</div>
+    <h2 class="sec-title">4 Choques Simultaneos — Stress Testing</h2>
+    <p class="sec-lede">Stress test com 4 choques simultaneos: FX (BRL/USD +13%), Tariff (SKD/CKD 35%), Lithium (US$ 22-26k/t), e Demand (EV share static). VaR = R$ 8.21bi, CVaR = R$ 10.14bi. T-MV1 trigger no combined stress.</p>
+  </div>
+
+  <div class="tree-section">
+    <h3 class="tree-title">STRESS SCENARIOS: 4 Choques Simultaneos</h3>
+    <p class="tree-subtitle">VaR R$ 8.21bi | CVaR R$ 10.14bi | T-MV1 trigger: combined stress activa protocolo de emergencia</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-circle" style="background:#ff6b63"></div> Shock Node (impacto)</div>
+      <div class="legend-item"><div class="legend-circle" style="background:#ff9f43"></div> Combined Node</div>
+      <div class="legend-item"><div class="legend-rect" style="background:#ff6b63"></div> Terminal (VaR/CVaR)</div>
+      <div class="legend-item"><div class="legend-rect" style="background:#e0a45e"></div> T-MV1 Trigger</div>
+    </div>
+
+    <svg class="tree-svg" viewBox="0 0 1100 680" xmlns="http://www.w3.org/2000/svg">
+      <!-- Title -->
+      <text x="550" y="20" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7a818f">STRESS TESTING: 4 SIMULTANEOUS SHOCKS — Monte Carlo 10,000 iterations | VaR 95% | CVaR 97.5%</text>
+
+      <!-- ===== STRESS ROOT ===== -->
+      <rect x="420" y="35" width="260" height="50" rx="8" fill="#ff6b63" opacity="0.9"/>
+      <text x="550" y="55" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#fff" font-weight="700">4 SHOCKS SIMULTANEOUS</text>
+      <text x="550" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">Stress testing 2026-2027</text>
+
+      <!-- 4 shock branches -->
+      <line x1="550" y1="85" x2="120" y2="155" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="85" x2="370" y2="155" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="85" x2="620" y2="155" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="85" x2="870" y2="155" stroke="#4a4f5a" stroke-width="2"/>
+
+      <!-- ===== NODE 1: FX SHOCK ===== -->
+      <rect x="40" y="160" width="160" height="55" rx="6" fill="#ff6b63" opacity="0.85"/>
+      <text x="120" y="180" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="700">1. FX SHOCK</text>
+      <text x="120" y="196" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">BRL/USD +13%</text>
+      <text x="120" y="210" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">P(shock)=0.15 | impact: -R$ 1.8bi</text>
+
+      <!-- ===== NODE 2: TARIFF SHOCK ===== -->
+      <rect x="290" y="160" width="160" height="55" rx="6" fill="#ff6b63" opacity="0.85"/>
+      <text x="370" y="180" text-anchor="middle" font-family="Jet Mono Mono,monospace" font-size="12" fill="#fff" font-weight="700">2. TARIFF SHOCK</text>
+      <text x="370" y="196" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">SKD/CKD 35%</text>
+      <text x="370" y="210" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">P(shock)=0.20 | impact: -R$ 2.4bi</text>
+
+      <!-- ===== NODE 3: LITHIUM SHOCK ===== -->
+      <rect x="540" y="160" width="160" height="55" rx="6" fill="#ff6b63" opacity="0.85"/>
+      <text x="620" y="180" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="700">3. LITHIUM SHOCK</text>
+      <text x="620" y="196" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">US$ 22-26k/t</text>
+      <text x="620" y="210" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">P(shock)=0.25 | impact: -R$ 1.6bi</text>
+
+      <!-- ===== NODE 4: DEMAND SHOCK ===== -->
+      <rect x="790" y="160" width="160" height="55" rx="6" fill="#ff6b63" opacity="0.85"/>
+      <text x="870" y="180" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#fff" font-weight="700">4. DEMAND SHOCK</text>
+      <text x="870" y="196" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">EV share static</text>
+      <text x="870" y="210" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">P(shock)=0.30 | impact: -R$ 2.2bi</text>
+
+      <!-- Branches to combined -->
+      <line x1="120" y1="215" x2="120" y2="280" stroke="#ff6b63" stroke-width="1.5"/>
+      <line x1="370" y1="215" x2="370" y2="280" stroke="#ff6b63" stroke-width="1.5"/>
+      <line x1="620" y1="215" x2="620" y2="280" stroke="#ff6b63" stroke-width="1.5"/>
+      <line x1="870" y1="215" x2="870" y2="280" stroke="#ff6b63" stroke-width="1.5"/>
+
+      <!-- ===== COMBINED STRESS NODE ===== -->
+      <rect x="340" y="285" width="420" height="60" rx="8" fill="#ff9f43" opacity="0.9"/>
+      <text x="550" y="305" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#fff" font-weight="700">COMBINED STRESS OUTCOME</text>
+      <text x="550" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">P(all 4 shocks)=0.15x0.20x0.25x0.30 = 0.225% | correlation: rho=0.4</text>
+      <text x="550" y="338" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="rgba(255,255,255,0.85)">Combined impact: -R$ 8.21bi (VaR 95%)</text>
+
+      <!-- Branches to terminal nodes -->
+      <line x1="550" y1="345" x2="280" y2="415" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="345" x2="420" y2="415" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="345" x2="550" y2="415" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="345" x2="680" y2="415" stroke="#4a4f5a" stroke-width="2"/>
+      <line x1="550" y1="345" x2="820" y2="415" stroke="#4a4f5a" stroke-width="2"/>
+
+      <!-- Shock count labels -->
+      <text x="345" y="378" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43">1 shock</text>
+      <text x="420" y="378" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43">2 shocks</text>
+      <text x="550" y="378" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63">3 shocks</text>
+      <text x="680" y="378" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63">4 shocks</text>
+      <text x="820" y="378" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43">tail</text>
+
+      <!-- ===== TERMINAL NODES: VaR/CVaR outcomes ===== -->
+      <!-- 1 shock -->
+      <rect x="200" y="420" width="130" height="50" rx="5" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="265" y="440" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff9f43" font-weight="700">VaR: -R$ 2.1bi</text>
+      <text x="265" y="455" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">1 shock only</text>
+      <text x="265" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.5)">P=~30%</text>
+
+      <!-- 2 shocks -->
+      <rect x="345" y="420" width="130" height="50" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="410" y="440" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">VaR: -R$ 4.5bi</text>
+      <text x="410" y="455" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">2 shocks</text>
+      <text x="410" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.5)">P=~12%</text>
+
+      <!-- 3 shocks — T-MV1 TRIGGER -->
+      <rect x="470" y="420" width="160" height="60" rx="6" fill="#ff6b63" opacity="0.9" stroke="#e0a45e" stroke-width="2.5"/>
+      <text x="550" y="438" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#e0a45e" font-weight="700">T-MV1 TRIGGER</text>
+      <text x="550" y="453" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff">VaR: -R$ 8.21bi</text>
+      <text x="550" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">3+ shocks combined</text>
+      <text x="550" y="481" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.5)">P=~2.5%</text>
+
+      <!-- 4 shocks -->
+      <rect x="625" y="420" width="130" height="50" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="2"/>
+      <text x="690" y="440" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">CVaR: -R$ 10.14bi</text>
+      <text x="690" y="455" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">4 shocks</text>
+      <text x="690" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.5)">P=&lt;0.5%</text>
+
+      <!-- tail -->
+      <rect x="770" y="420" width="130" height="50" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="835" y="440" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">CVaR: -R$ 10.14bi</text>
+      <text x="835" y="455" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,0.7)">tail extreme</text>
+      <text x="835" y="468" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.5)">P=&lt;0.1%</text>
+
+      <!-- ===== SHOCK DETAIL PANELS ===== -->
+      <rect x="40" y="495" width="230" height="110" rx="5" fill="#161a21" stroke="#262b35"/>
+      <text x="55" y="515" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="600">1. FX SHOCK</text>
+      <text x="55" y="532" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">BRL/USD +13% (5.20 -&gt; 5.88)</text>
+      <text x="55" y="547" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Import cost +R$ 1.8bi</text>
+      <text x="55" y="562" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">SKD CBU margins: -18%</text>
+      <text x="55" y="577" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Hedge effectiveness: 35% only</text>
+      <text x="55" y="592" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff9f43">Trigger: BRL/USD &gt; 5.50</text>
+
+      <rect x="290" y="495" width="230" height="110" rx="5" fill="#161a21" stroke="#262b35"/>
+      <text x="305" y="515" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="600">2. TARIFF SHOCK</text>
+      <text x="305" y="532" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">SKD/CKD duty: 35% (from 20%)</text>
+      <text x="305" y="547" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Impact: -R$ 2.4bi margin</text>
+      <text x="305" y="562" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">CKD pathway blocked</text>
+      <text x="305" y="577" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">CBU pricing gap: +R$ 18k/unit</text>
+      <text x="305" y="592" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff9f43">Trigger: Politica industrial BR</text>
+
+      <rect x="540" y="495" width="230" height="110" rx="5" fill="#161a21" stroke="#262b35"/>
+      <text x="555" y="515" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="600">3. LITHIUM SHOCK</text>
+      <text x="555" y="532" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Li carbonate: US$ 22-26k/t</text>
+      <text x="555" y="547" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">(+80% vs 2024 baseline)</text>
+      <text x="555" y="562" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Impact: -R$ 1.6bi EVE cost</text>
+      <text x="555" y="577" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">LFP cell cost: +12%</text>
+      <text x="555" y="592" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff9f43">Trigger: CLNo. 5 supply constraint</text>
+
+      <rect x="790" y="495" width="230" height="110" rx="5" fill="#161a21" stroke="#262b35"/>
+      <text x="805" y="515" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="600">4. DEMAND SHOCK</text>
+      <text x="805" y="532" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">EV share static: 12% (no grow)</text>
+      <text x="805" y="547" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">BYD volume: -22% (130k->100k)</text>
+      <text x="805" y="562" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Impact: -R$ 2.2bi revenue</text>
+      <text x="805" y="577" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Utilization: 58% (below BEP)</text>
+      <text x="805" y="592" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff9f43">Trigger: Subsidy cut + competing ICE</text>
+
+      <!-- T-MV1 annotation -->
+      <text x="550" y="640" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#e0a45e">T-MV1 = combined 3-4 shocks trigger — activa protocolo de emergencia: freeze capex + hedge + renegociar contrato EVE</text>
+      <text x="550" y="656" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7a818f">Monte Carlo 10k iterations | VaR 95% = R$ 8.21bi | CVaR 97.5% = R$ 10.14bi | Correlation matrix: FX-Tariff 0.6, FX-Li 0.3, Demand-FX -0.2</text>
+    </svg>
+
+    <div class="insights">
+      <h4>Analise Stress Scenarios</h4>
+      <ul>
+        <li><strong>VaR R$ 8.21bi (95%)</strong>: perda maxima esperada em 95% dos cenários com 4 choques simultâneos.</li>
+        <li><strong>CVaR R$ 10.14bi (97.5%)</strong>: perda esperada no tail (pior 2.5%) — mascara cenário catastrófico.</li>
+        <li><strong>T-MV1 Trigger</strong>: 3+ choques combinados ativa protocolo de emergência — freeze capex, hedge agressivo, renegociar EVE.</li>
+        <li><strong>Worst case correlated</strong>: FX + Tariff tem rho=0.6 (sincronizam em crise de confiança). Lithium shock é parcialmente independent.</li>
+        <li><strong>Hedge residual</strong>: hedge FX cobre apenas 35% do impacto — R$ 630M gap. Recomenda-se comprar proteção adicional em USD calls.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tree-major">
+  <div class="sec-head">
+    <div class="sec-num">06 · Arvore Consolidada MAIOR (v2.0 atualizada)</div>
+    <h2 class="sec-title">As 11 dimensoes + T-MV1-T-MV5 triggers</h2>
+    <p class="sec-lede">Fluxo completo: S1 FX → S2 Supply → S3 BNDES → S4 Pricing → S5 Partnerships → S6 Macro → S7 ESG → S8 Ramp → S9 Demand → S10 Tariff → S11 Competition + T-MV1-T-MV5 stress triggers. Triggers de stress em destaque.</p>
+  </div>
+
+  <div class="tree-section">
+    <h3 class="tree-title">Consolidada MAIOR: 11 dimensoes + T-MV1-T-MV5 (v2.0)</h3>
+    <p class="tree-subtitle">T-MV1: 3+ shocks combined | T-MV2: FX &gt;5.50 | T-MV3: Lithium &gt;US$ 24k/t | T-MV4: EV share &lt;10% | T-MV5: composite &gt;95. Triggers em destaque dourado.</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-circle chance-color"></div> No de Chance</div>
+      <div class="legend-item"><div class="legend-diamond" style="background:var(--decision-green)"></div> No de Decisao</div>
+      <div class="legend-item"><div class="legend-rect terminal-color"></div> No Terminal (NPV/Payoff)</div>
+      <div class="legend-item"><div class="legend-circle" style="background:#e0a45e"></div> T-MV Trigger</div>
+    </div>
+
+    <svg class="tree-svg" viewBox="0 0 1200 450" xmlns="http://www.w3.org/2000/svg">
+      <!-- STAGE 1: S1 FX -->
+      <ellipse cx="80" cy="55" rx="65" ry="28" fill="#6b95f0" opacity="0.9"/>
+      <text x="80" y="51" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#fff" font-weight="700">S1 FX</text>
+      <text x="80" y="65" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.18</text>
+      <line x1="80" y1="83" x2="40" y2="115" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="80" y1="83" x2="80" y2="115" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="80" y1="83" x2="120" y2="115" stroke="#4a4f5a" stroke-width="1.5"/>
+      <text x="55" y="98" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">G P=0.30</text>
+      <text x="80" y="98" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff9f43">A P=0.40</text>
+      <text x="105" y="98" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">R P=0.30</text>
+
+      <!-- STAGE 2: S2 Supply -->
+      <ellipse cx="40" cy="140" rx="50" ry="22" fill="#6b95f0" opacity="0.85"/>
+      <text x="40" y="137" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S2 w:0.16</text>
+      <ellipse cx="80" cy="140" rx="50" ry="22" fill="#6b95f0" opacity="0.85"/>
+      <text x="80" y="137" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S2 w:0.16</text>
+      <ellipse cx="120" cy="140" rx="50" ry="22" fill="#6b95f0" opacity="0.85"/>
+      <text x="120" y="137" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S2 w:0.16</text>
+
+      <!-- STAGE 3: S3 BNDES -->
+      <line x1="40" y1="162" x2="20" y2="190" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="40" y1="162" x2="60" y2="190" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="80" y1="162" x2="60" y2="190" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="80" y1="162" x2="100" y2="190" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="120" y1="162" x2="100" y2="190" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="120" y1="162" x2="140" y2="190" stroke="#4a4f5a" stroke-width="1.5"/>
+
+      <ellipse cx="20" cy="210" rx="45" ry="18" fill="#6b95f0" opacity="0.85"/>
+      <text x="20" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S3</text>
+      <text x="20" y="220" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.8)">Expans</text>
+      <ellipse cx="60" cy="210" rx="45" ry="18" fill="#6b95f0" opacity="0.85"/>
+      <text x="60" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S3</text>
+      <text x="60" y="220" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.8)">Contin</text>
+      <ellipse cx="100" cy="210" rx="45" ry="18" fill="#6b95f0" opacity="0.85"/>
+      <text x="100" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S3</text>
+      <text x="100" y="220" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.8)">RB Par</text>
+      <ellipse cx="140" cy="210" rx="45" ry="18" fill="#6b95f0" opacity="0.85"/>
+      <text x="140" y="208" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#fff" font-weight="600">S3</text>
+      <text x="140" y="220" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.8)">RB Tot</text>
+
+      <!-- STAGE 4: S4 Pricing -->
+      <line x1="20" y1="228" x2="20" y2="255" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="60" y1="228" x2="60" y2="255" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="100" y1="228" x2="100" y2="255" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="140" y1="228" x2="140" y2="255" stroke="#4a4f5a" stroke-width="1"/>
+
+      <rect x="5" y="258" width="30" height="22" rx="3" fill="#4ade80" opacity="0.85"/>
+      <text x="20" y="271" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">T1</text>
+      <rect x="45" y="258" width="30" height="22" rx="3" fill="#4ade80" opacity="0.85"/>
+      <text x="60" y="271" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">T2</text>
+      <rect x="85" y="258" width="30" height="22" rx="3" fill="#4ade80" opacity="0.85"/>
+      <text x="100" y="271" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">T2</text>
+      <rect x="125" y="258" width="30" height="22" rx="3" fill="#4ade80" opacity="0.85"/>
+      <text x="140" y="271" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">T3</text>
+
+      <!-- STAGE 5: S5 Partnerships -->
+      <line x1="20" y1="280" x2="20" y2="305" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="60" y1="280" x2="60" y2="305" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="100" y1="280" x2="100" y2="305" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="140" y1="280" x2="140" y2="305" stroke="#4a4f5a" stroke-width="1"/>
+
+      <ellipse cx="20" cy="320" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="20" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S5</text>
+      <ellipse cx="60" cy="320" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="60" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S5</text>
+      <ellipse cx="100" cy="320" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="100" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S5</text>
+      <ellipse cx="140" cy="320" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="140" y="318" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S5</text>
+
+      <!-- STAGE 6: S6 Macro -->
+      <line x1="20" y1="334" x2="20" y2="355" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="60" y1="334" x2="60" y2="355" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="100" y1="334" x2="100" y2="355" stroke="#4a4f5a" stroke-width="1"/>
+      <line x1="140" y1="334" x2="140" y2="355" stroke="#4a4f5a" stroke-width="1"/>
+
+      <ellipse cx="20" cy="370" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="20" y="368" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S6</text>
+      <ellipse cx="60" cy="370" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="60" y="368" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S6</text>
+      <ellipse cx="100" cy="370" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="100" y="368" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S6</text>
+      <ellipse cx="140" cy="370" rx="35" ry="14" fill="#6b95f0" opacity="0.8"/>
+      <text x="140" y="368" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#fff">S6</text>
+
+      <!-- Stage labels -->
+      <text x="8" y="55" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">S1</text>
+      <text x="8" y="145" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">S2</text>
+      <text x="8" y="215" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">S3</text>
+      <text x="8" y="270" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#4ade80">S4</text>
+      <text x="8" y="325" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">S5</text>
+      <text x="8" y="375" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">S6</text>
+
+      <!-- STAGE 7: S7 ESG KILL SWITCH -->
+      <line x1="20" y1="384" x2="20" y2="405" stroke="#ff6b63" stroke-width="2"/>
+      <line x1="60" y1="384" x2="60" y2="405" stroke="#ff6b63" stroke-width="2"/>
+      <line x1="100" y1="384" x2="100" y2="405" stroke="#ff6b63" stroke-width="2"/>
+      <line x1="140" y1="384" x2="140" y2="405" stroke="#ff6b63" stroke-width="2"/>
+
+      <rect x="5" y="408" width="30" height="20" rx="3" fill="#ff6b63" opacity="0.9"/>
+      <text x="20" y="421" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#fff">S7</text>
+      <rect x="45" y="408" width="30" height="20" rx="3" fill="#ff6b63" opacity="0.9"/>
+      <text x="60" y="421" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#fff">S7</text>
+      <rect x="85" y="408" width="30" height="20" rx="3" fill="#ff6b63" opacity="0.9"/>
+      <text x="100" y="421" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#fff">S7</text>
+      <rect x="125" y="408" width="30" height="20" rx="3" fill="#ff6b63" opacity="0.9"/>
+      <text x="140" y="421" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#fff">S7</text>
+
+      <text x="8" y="420" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63">S7</text>
+
+      <!-- KILL SWITCH OVERRIDE -->
+      <line x1="20" y1="428" x2="100" y2="470" stroke="#ff6b63" stroke-width="2"/>
+      <line x1="60" y1="428" x2="100" y2="470" stroke="#ff6b63" stroke-width="2"/>
+      <line x1="100" y1="428" x2="100" y2="470" stroke="#ff6b63" stroke-width="2"/>
+      <line x1="140" y1="428" x2="100" y2="470" stroke="#ff6b63" stroke-width="2"/>
+
+      <rect x="45" y="475" width="110" height="40" rx="5" fill="#4a2020" stroke="#ff6b63" stroke-width="2"/>
+      <text x="100" y="492" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#ff6b63" font-weight="700">KILL SWITCH</text>
+      <text x="100" y="507" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">→ ABORTAR</text>
+
+      <!-- RIGHT SIDE: S8 S9 S10 S11 -->
+      <ellipse cx="250" cy="55" rx="55" ry="22" fill="#6b95f0" opacity="0.85"/>
+      <text x="250" y="52" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S8 Ramp</text>
+      <text x="250" y="65" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 AMBER</text>
+      <line x1="250" y1="77" x2="220" y2="110" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="250" y1="77" x2="280" y2="110" stroke="#4a4f5a" stroke-width="1.5"/>
+      <text x="232" y="94" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">GREEN</text>
+      <text x="268" y="94" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">RED</text>
+
+      <!-- S9 Demand -->
+      <ellipse cx="220" cy="130" rx="55" ry="22" fill="#4ade80" opacity="0.85"/>
+      <text x="220" y="127" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S9 Demand</text>
+      <text x="220" y="140" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 GREEN</text>
+      <ellipse cx="280" cy="130" rx="55" ry="22" fill="#ff9f43" opacity="0.85"/>
+      <text x="280" y="127" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S9 Demand</text>
+      <text x="280" y="140" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 AMBER</text>
+      <line x1="220" y1="152" x2="220" y2="185" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="280" y1="152" x2="280" y2="185" stroke="#4a4f5a" stroke-width="1.5"/>
+
+      <!-- S10 Tariff -->
+      <ellipse cx="220" cy="205" rx="55" ry="22" fill="#ff9f43" opacity="0.85"/>
+      <text x="220" y="202" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S10 Tariff</text>
+      <text x="220" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 AMBER</text>
+      <ellipse cx="280" cy="205" rx="55" ry="22" fill="#ff6b63" opacity="0.85"/>
+      <text x="280" y="202" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S10 Tariff</text>
+      <text x="280" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 RED</text>
+      <line x1="220" y1="227" x2="220" y2="260" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="280" y1="227" x2="280" y2="260" stroke="#4a4f5a" stroke-width="1.5"/>
+
+      <!-- S11 Competition -->
+      <ellipse cx="220" cy="280" rx="55" ry="22" fill="#ff6b63" opacity="0.85"/>
+      <text x="220" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S11 Comp.</text>
+      <text x="220" y="290" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 RED</text>
+      <ellipse cx="280" cy="280" rx="55" ry="22" fill="#ff6b63" opacity="0.85"/>
+      <text x="280" y="277" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#fff" font-weight="600">S11 Comp.</text>
+      <text x="280" y="290" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.8)">w:0.05 RED</text>
+      <line x1="220" y1="302" x2="200" y2="340" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="220" y1="302" x2="240" y2="340" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="280" y1="302" x2="260" y2="340" stroke="#4a4f5a" stroke-width="1.5"/>
+      <line x1="280" y1="302" x2="300" y2="340" stroke="#4a4f5a" stroke-width="1.5"/>
+      <text x="218" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">PW</text>
+      <text x="238" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">Dif</text>
+      <text x="258" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">PW</text>
+      <text x="298" y="322" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">Dif</text>
+
+      <!-- TERMINAL NODES -->
+      <rect x="160" y="345" width="80" height="38" rx="4" fill="#2d4a22" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="200" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#4ade80" font-weight="700">+R$ 1.2bi</text>
+      <text x="200" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">best</text>
+
+      <rect x="200" y="345" width="80" height="38" rx="4" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="240" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43" font-weight="700">+R$ 400M</text>
+      <text x="240" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">mixed</text>
+
+      <rect x="220" y="345" width="80" height="38" rx="4" fill="#4a2020" stroke="#ff6b63" stroke-width="1.5"/>
+      <text x="260" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63" font-weight="700">-R$ 600M</text>
+      <text x="260" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">worst</text>
+
+      <rect x="260" y="345" width="80" height="38" rx="4" fill="#3d3520" stroke="#ff9f43" stroke-width="1.5"/>
+      <text x="300" y="362" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff9f43" font-weight="700">-R$ 200M</text>
+      <text x="300" y="376" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,0.7)">S8+Ramp</text>
+
+      <!-- WEIGHT LEGEND + T-MV TRIGGERS -->
+      <rect x="380" y="20" width="260" height="240" rx="5" fill="#161a21" stroke="#262b35"/>
+      <text x="395" y="40" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#e6e8ec" font-weight="600">WEIGHTS v2.0 + T-MV TRIGGERS</text>
+      <text x="395" y="58" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#7a818f">composite score + stress triggers</text>
+      <text x="395" y="76" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b95f0">S1 FX ......... 0.18</text>
+      <text x="395" y="91" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b95f0">S2 Supply ... 0.16</text>
+      <text x="395" y="106" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b95f0">S3 BNDES ... 0.18</text>
+      <text x="395" y="121" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">S4 Pricing ... 0.16</text>
+      <text x="395" y="136" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b95f0">S5 Partner ... 0.10</text>
+      <text x="395" y="151" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b95f0">S6 Macro ... 0.10</text>
+      <text x="395" y="166" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">S7 ESG ....... 0.05</text>
+      <text x="395" y="181" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b95f0">S8 Ramp ...... 0.05</text>
+      <text x="395" y="196" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#4ade80">S9 Demand .. 0.05</text>
+      <text x="395" y="211" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff9f43">S10 Tariff ... 0.05</text>
+      <text x="395" y="226" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">S11 Comp ... 0.05</text>
+
+      <!-- T-MV TRIGGERS -->
+      <text x="395" y="246" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="9" fill="#e0a45e" font-weight="600">T-MV TRIGGERS (v2.0):</text>
+      <text x="395" y="261" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#e0a45e">T-MV1: 3+ shocks combined (VaR&gt;R$ 8.21bi)</text>
+      <text x="395" y="274" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#e0a45e">T-MV2: BRL/USD &gt; 5.50 (FX gate)</text>
+      <text x="395" y="287" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#e0a45e">T-MV3: Li carbonate &gt; US$ 24k/t</text>
+      <text x="395" y="300" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#e0a45e">T-MV4: EV share &lt; 10% (demand)</text>
+      <text x="395" y="313" text-anchor="start" font-family="JetBrains Mono,monospace" font-size="8" fill="#ff6b63">T-MV5: composite &gt; 95 (kill switch)</text>
+
+      <!-- COMPOSITE SCORE BAR -->
+      <text x="280" y="420" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6b95f0">COMPOSITE SCORE: 93 (RED) — kill switch override ativo</text>
+      <rect x="80" y="430" width="400" height="18" rx="3" fill="#1a1e26"/>
+      <rect x="80" y="430" width="160" height="18" rx="3" fill="#2d4a22" opacity="0.7"/>
+      <rect x="240" y="430" width="160" height="18" fill="#3d3520" opacity="0.7"/>
+      <rect x="400" y="430" width="80" height="18" rx="3" fill="#4a2020" opacity="0.7"/>
+      <text x="160" y="443" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.7)">GREEN 0-40</text>
+      <text x="320" y="443" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.7)">AMBER 40-73</text>
+      <text x="440" y="443" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(255,255,255,0.7)">RED 73-100</text>
+      <line x1="320" y1="428" x2="320" y2="450" stroke="#ff6b63" stroke-width="2"/>
+      <circle cx="320" cy="428" r="4" fill="#ff6b63"/>
+      <text x="320" y="465" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ff6b63">current: 93</text>
+    </svg>
+
+    <div class="insights">
+      <h4>Analise da arvore Consolidada MAIOR (v2.0)</h4>
+      <ul>
+        <li><strong>Current score: 93</strong> (RED zone) — S7 kill switch + S3 Rollback Total + S6 RED driving composite.</li>
+        <li><strong>T-MV5 trigger (composite &gt; 95)</strong>: kill switch override total — programa capex cancelado independente de todas as outras dimensoes.</li>
+        <li><strong>T-MV1 trigger (3+ shocks)</strong>: stress test combinado — VaR &gt; R$ 8.21bi ativa protocolo de emergencia.</li>
+        <li><strong>T-MV2/T-MV3/T-MV4</strong>: gates autonomos para FX, Lithium e Demand. Cada um tem threshold explicito.</li>
+        <li><strong>Caminho para GREEN</strong>: S7=FALSE + S3=Continuidade + S6=GREEN = composite ~65 (GREEN).</li>
+        <li><strong>T-MV1-T-MV5 em v2.0</strong>: 5 novos triggers de stress que se sobrepoem ao composite score original S1-S11.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="summary">
+  <div class="sec-head">
+    <div class="sec-num">07 · Resumo Comparativo</div>
+    <h2 class="sec-title">As 6 arvores lado a lado</h2>
+    <p class="sec-lede">Comparacao estrutural das 6 arvores: CONTINUAR, MITIGAR, ABORTAR, GAME THEORY, STRESS SCENARIOS e MAIOR. Estagios, gates, e payoff ranges.</p>
+  </div>
+
+  <table class="t" style="width:100%;border-collapse:collapse;margin:24px 0;font-size:13px">
+    <thead>
+      <tr style="background:var(--bg-card)">
+        <th style="padding:12px 16px;text-align:left;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)">Arvore</th>
+        <th style="padding:12px 16px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)">Estagios</th>
+        <th style="padding:12px 16px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)">Gate(s)</th>
+        <th style="padding:12px 16px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)">Melhor Payoff</th>
+        <th style="padding:12px 16px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)">Pior Payoff</th>
+        <th style="padding:12px 16px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--line)">Status Atual</th>
+      </tr>
+    </thead>
+    <tbody style="color:var(--ink)">
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:14px 16px;font-weight:600">CONTINUAR</td>
+        <td style="padding:14px 16px;text-align:center">3 (S7-&gt;S3xS10-&gt;S1xS2)</td>
+        <td style="padding:14px 16px;text-align:center">S7 ESG kill switch</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--good)">+R$ 1.2bi</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--bad)">-R$ 1.5bi</td>
+        <td style="padding:14px 16px;text-align:center"><span style="color:var(--bad);font-weight:600">kill switch ATIVO</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:14px 16px;font-weight:600">MITIGAR</td>
+        <td style="padding:14px 16px;text-align:center">3 (S4-&gt;S8-&gt;S11)</td>
+        <td style="padding:14px 16px;text-align:center">S4 Defensivo tier</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--good)">+R$ 350M</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--bad)">-R$ 220M</td>
+        <td style="padding:14px 16px;text-align:center"><span style="color:var(--warn);font-weight:600">ativar se composite 73+</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:14px 16px;font-weight:600">ABORTAR</td>
+        <td style="padding:14px 16px;text-align:center">2 (S6-&gt;exit)</td>
+        <td style="padding:14px 16px;text-align:center">S7 OR S6 RED</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--good)">+R$ 720M (exit)</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--bad)">R$ 0 (sunk)</td>
+        <td style="padding:14px 16px;text-align:center"><span style="color:var(--bad);font-weight:600">PREPARAR JA</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:14px 16px;font-weight:600">GAME THEORY (v2.0)</td>
+        <td style="padding:14px 16px;text-align:center">2-player sequential</td>
+        <td style="padding:14px 16px;text-align:center">Nash equilibrium</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--nash-gold)">(Invest,Diff)=+R$ 1.2bi</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--bad)">(Invest,PW)=-R$ 400M</td>
+        <td style="padding:14px 16px;text-align:center"><span style="color:var(--nash-gold);font-weight:600">Nash: (Invest,Diff)</span></td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--line)">
+        <td style="padding:14px 16px;font-weight:600">STRESS (v2.0)</td>
+        <td style="padding:14px 16px;text-align:center">4 shocks parallel</td>
+        <td style="padding:14px 16px;text-align:center">T-MV1 trigger</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--warn)">1 shock: -R$ 2.1bi</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--bad)">CVaR: -R$ 10.14bi</td>
+        <td style="padding:14px 16px;text-align:center"><span style="color:var(--bad);font-weight:600">VaR R$ 8.21bi</span></td>
+      </tr>
+      <tr>
+        <td style="padding:14px 16px;font-weight:600">MAIOR (11D+v2.0)</td>
+        <td style="padding:14px 16px;text-align:center">11+5 (S1-&gt;S11+T-MV1-5)</td>
+        <td style="padding:14px 16px;text-align:center">S7-&gt;S3-&gt;S6 + T-MV1-5</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--good)">+R$ 1.2bi</td>
+        <td style="padding:14px 16px;text-align:center;color:var(--bad)">-R$ 600M</td>
+        <td style="padding:14px 16px;text-align:center"><span style="color:var(--bad);font-weight:600">composite=93</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insights" style="margin-top:32px">
+    <h4>Decisao imediata recomendada (v2.0)</h4>
+    <ul>
+      <li><strong>S7 kill switch ativo (lista suja MTE TRUE)</strong>: ABORTAR e a decisao forcada. Preparar exit plan enquanto se trabalha remediacao ESG.</li>
+      <li><strong>Se S7 sair da lista suja em &lt;90 dias</strong>: VR exit = R$ 720M. Desvio para CONTINUAR/MITIGAR.</li>
+      <li><strong>Game Theory: manter Nash (Invest, Differentiate)</strong>: BYD deve investir em LFP moat para manter equililibrio vs Stellantis.</li>
+      <li><strong>Stress: hedge T-MV1-T-MV5</strong>: VaR R$ 8.21bi requer hedge adicional em FX (apenas 35% coberto). T-MV2 (BRL/USD &gt;5.50) requer acao imediata.</li>
+      <li><strong>MITIGAR como fallback</strong>: ativado se composite &gt;= 73 E S7=FALSE. Tier 1 + ACCEL + Differentiate = +R$ 220M.</li>
+      <li><strong>6 decisoes criticas para Conselho</strong>: (1) reverter kill switch S7, (2) exit plan, (3) EVE partnership R$ 50M, (4) BNDES bridge R$ 800M, (5) hedge FX adicional, (6) game theory strategy (Invest/Differentiate).</li>
+    </ul>
+  </div>
+</section>
+
+<div class="footer">
+  <span>BYD Camacari · 2025-2027 · Decision Framework D3 v2.0</span>
+  <span>D3-DECISION-TREES.html · 21/jul/2026</span>
+</div>
+</div>
+</body>
+</html>

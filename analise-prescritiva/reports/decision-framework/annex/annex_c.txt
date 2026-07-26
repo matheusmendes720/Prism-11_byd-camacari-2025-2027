@@ -1,0 +1,118 @@
+<!-- ============================== ANNEX C: DECISION TREE ============================== -->
+<section class="section" id="annex-c">
+  <div class="sec-head">
+    <div class="sec-num">Anexo C</div>
+    <h2 class="sec-title">Árvore de Decisão Consolidada</h2>
+    <p class="sec-lede">Todos os paths de decisão (Continuar / Mitigar / Abortar) consolidados a partir das 11 dimensões. Estrutura: Gate → Status → Ação → Próximo Gate.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">C.1 — Gate Principal: S7 ESG (kill switch)</div>
+    <table class="t">
+      <thead>
+        <tr><th>Gate</th><th>Condição</th><th>Decisão</th><th>Ação imediata</th><th>Próximo passo</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>S7 Gate</b></td>
+          <td><code>lista_suja == TRUE</code></td>
+          <td class="red"><span class="status-red">ABORTAR default</span></td>
+          <td>Pausar capex novo. Revisar covenants. Comunicar Conselho. Engajar MPT/MTE (90d).</td>
+          <td>Decisão estratégica: reverter / reestruturar / hibernar (90d)</td>
+        </tr>
+        <tr>
+          <td><b>S7 Gate</b></td>
+          <td><code>lista_suja == FALSE</code></td>
+          <td class="green"><span class="status-green">CONTINUAR para gates seguintes</span></td>
+          <td>Nenhum block. Avançar para gate S3.</td>
+          <td>Gate S3 (BNDES/ViE)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">C.2 — Gate S3: BNDES / ViE (4 cenários)</div>
+    <table class="t">
+      <thead>
+        <tr><th>Cenário</th><th>ViE</th><th>Prob (v2.0)</th><th>BNDES funding</th><th>Hedge</th><th>Defensivo</th><th>Continuar/Mitigar/Abortar</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Expansão</b></td><td class="num">≥ 18%</td><td class="num green">72%</td><td>R$ 800M+ OK</td><td class="num">30%</td><td>Não necessário (S9 GREEN)</td><td class="green"><span class="status-green">CONTINUAR</span> — fase 2 acelerada</td>
+        </tr>
+        <tr>
+          <td><b>Continuidade</b></td><td class="num">15–18%</td><td class="num amber">19%</td><td>Parcialmente acessível</td><td class="num">38.6%</td><td>Tier 1–2 se S11 RED</td><td class="amber"><span class="status-amber">MITIGAR</span> — targeted defensivo</td>
+        </tr>
+        <tr>
+          <td><b>Rollback Parcial</b></td><td class="num">10–15%</td><td class="num amber">7%</td><td>Limitado</td><td class="num">61.7%</td><td>Tier 2 apenas</td><td class="amber"><span class="status-amber">MITIGAR</span> — hedge elevado + plano B</td>
+        </tr>
+        <tr>
+          <td><b>Rollback Total</b></td><td class="num">&lt; 10%</td><td class="num red">2%</td><td>Bloqueado</td><td class="num">90.6%</td><td>Tier 0 (mínimo)</td><td class="red"><span class="status-red">MITIGAR/ABORTAR</span> — bridge financing R$ 800M, pivot PHEV</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">C.3 — Gate S6: Macro Governor (reescala S1–S5)</div>
+    <table class="t">
+      <thead>
+        <tr><th>Status</th><th>Multiplicador</th><th>Ações</th><th>Latência</th><th>Decisão</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="status-green">GREEN</span></td><td class="num">1.0×</td><td>Execução baseline. Monitoramento mensal.</td><td>—</td><td class="green"><span class="status-green">CONTINUAR</span> — seguir playbook</td>
+        </tr>
+        <tr>
+          <td><span class="status-amber">AMBER</span></td><td class="num">1.5×</td><td>+10pp hedge, +30d safety stock, dobrar advocacy (R$ 24M), defensivo sobe 1 tier</td><td>5 min para reagir</td><td class="amber"><span class="status-amber">MITIGAR</span> — ativar instrumentos de stress moderado</td>
+        </tr>
+        <tr>
+          <td><span class="status-red">RED</span></td><td class="num">2.0×</td><td>Hedge teto 95%, plano B supply, bridge R$ 800M, Tier 3 + comms, freeze despesas</td><td>60 min (comitê crise)</td><td class="red"><span class="status-red">MITIGAR</span> — resposta estrutural + crise</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">C.4 — Gate S10+S1: Duplo Cost-Shock</div>
+    <table class="t">
+      <thead>
+        <tr><th>Cenário</th><th>BRL/USD</th><th>Tariff SKD/CKD</th><th>VaR 6m P95</th><th>Hedge necessário</th><th>Margin estimada</th><th>Decisão</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Baseline</b></td><td class="num">5.30</td><td class="num">14%</td><td class="num">R$ 2.27bi</td><td class="num">46%</td><td class="num">~22%</td><td class="green"><span class="status-green">CONTINUAR</span></td>
+        </tr>
+        <tr>
+          <td><b>Stress FX</b></td><td class="num">6.00</td><td class="num">14%</td><td class="num amber">R$ 3.92bi</td><td class="num">80–95%</td><td class="num">~15%</td><td class="amber"><span class="status-amber">MITIGAR</span> — hedge elevado</td>
+        </tr>
+        <tr>
+          <td><b>Stress Tariff</b></td><td class="num">5.30</td><td class="num amber">35%</td><td class="num amber">R$ 3.92bi</td><td class="num">80–95%</td><td class="num">~12%</td><td class="amber"><span class="status-amber">MITIGAR</span> — nacionalização acelerada</td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>DUPLO SHOCK</b></td><td class="num red">6.00</td><td class="num red">35%</td><td class="num red">R$ 4.5–5.0bi</td><td class="num">95%</td><td class="num">5–8%</td><td class="red"><span class="status-red">MITIGAR/ESTRUTURAL</span> — NPV pode virar negativo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">C.5 — Resumo: 37 ações por gate</div>
+    <table class="t" style="font-size:13px">
+      <thead>
+        <tr><th>Gate</th><th>Ações</th><th>Ongoing</th><th>Conditional</th><th>Planned</th><th>Status especial</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>S1 Hedge</b></td><td>5</td><td>1</td><td>0</td><td>4</td><td>—</td></tr>
+        <tr><td><b>S2 Supply</b></td><td>5</td><td>1</td><td>2</td><td>2</td><td>—</td></tr>
+        <tr><td><b>S3 Regulatory</b></td><td>5</td><td>2</td><td>1</td><td>2</td><td>—</td></tr>
+        <tr><td><b>S4 Pricing</b></td><td>5</td><td>1</td><td>1</td><td>2</td><td>1 REMOVIDA (catalog-wide)</td></tr>
+        <tr><td><b>S5 Partnership</b></td><td>5</td><td>0</td><td>3</td><td>2</td><td>—</td></tr>
+        <tr><td><b>S6 Framework</b></td><td>6</td><td>1</td><td>0</td><td>5</td><td>—</td></tr>
+        <tr style="background:rgba(255,107,99,0.06)"><td><b>S7 ESG kill switch</b></td><td>6</td><td>1</td><td>0</td><td>4</td><td class="red"><span class="status-red">KILL SWITCH ATIVO</span> — 1 ação ACTIVE</td></tr>
+        <tr><td><b>TOTAL</b></td><td><b>37</b></td><td><b>7</b></td><td><b>7</b></td><td><b>21</b></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>

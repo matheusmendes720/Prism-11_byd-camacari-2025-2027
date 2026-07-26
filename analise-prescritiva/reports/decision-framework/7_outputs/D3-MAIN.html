@@ -1,0 +1,1804 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D3 v2.0 — Framework de Decisão Prescritiva · Polo BYD Camaçari 2025–2027</title>
+  <meta name="description" content="Framework de decisão D3 v2.0 com 11 dimensões (S1-S11), §C Multivariate Sensitivity, 8 acoplamentos quantitativos, trigger matrix com T-MV1-5, action register com AG-DIFF-1/2/3 e C1 scorecard validation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <style>
+    :root { --bg: #0e1014; --bg-card: #161a21; --bg-deep: #080a0e; --ink: #e6e8ec; --ink-2: #b0b6c2; --ink-3: #7a818f; --ink-4: #4a4f5a; --line: #262b35; --line-2: #34394a; --primary: #6b95f0; --primary-2: #8eb1ff; --accent: #e0a45e; --risk-high: #ff6b63; --risk-med: #ff9f43; --risk-low: #4ade80; --good: #4ade80; --warn: #ff9f43; --bad: #ff6b63; --info: #6b95f0; --serif: 'Inter Tight','Inter',system-ui,sans-serif; --sans: 'Inter',system-ui,sans-serif; --mono: 'JetBrains Mono',ui-monospace,monospace; }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+    ::selection{background:rgba(107,149,240,.32);color:#f1efe7}
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:5px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--ink-4)}
+    .cover{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:64px 80px 48px;background:linear-gradient(180deg,#07090d 0%,#0e1014 100%);color:#f1efe7;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .cover::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;pointer-events:none}
+    .cover-inner{position:relative;z-index:2}
+    .cover-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:#b8b3a3;text-transform:uppercase;margin-bottom:32px}
+    .cover-title{font-family:var(--serif);font-weight:800;font-size:clamp(48px,7vw,96px);line-height:.96;letter-spacing:-.02em;margin:0 0 24px;color:#f1efe7}
+    .cover-title em{font-style:normal;color:#e0a45e}
+    .cover-sub{font-size:19px;line-height:1.5;max-width:720px;color:#c8c4b6;font-weight:400}
+    .cover-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;border-top:1px solid rgba(255,255,255,.12);padding-top:32px}
+    .cover-meta-item{padding-right:32px}
+    .cover-meta-item+.cover-meta-item{border-left:1px solid rgba(255,255,255,.08);padding-left:32px}
+    .cover-meta-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8c8773}
+    .cover-meta-value{font-family:var(--serif);font-weight:700;font-size:28px;color:#f1efe7;margin-top:8px}
+    .cover-meta-note{font-size:12px;color:#8c8773;margin-top:4px}
+    .cover-foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:end;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6e6a5a;border-top:1px solid rgba(255,255,255,.08);padding-top:24px}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 56px}
+    .toc{padding:80px 0 64px;border-bottom:1px solid var(--line)}
+    .toc-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+    .toc-title{font-family:var(--serif);font-weight:800;font-size:40px;letter-spacing:-.02em;margin:0 0 32px}
+    .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+    .toc-item{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline}
+    .toc-num{font-family:var(--mono);font-size:13px;color:var(--ink-3);min-width:40px}
+    .toc-link{flex:1;text-decoration:none;color:var(--ink);font-weight:500;font-size:16px}
+    .toc-link:hover{color:var(--primary-2)}
+    .toc-link small{display:block;font-weight:400;font-size:13px;color:var(--ink-3);margin-top:2px}
+    .toc-pages{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+    .section{padding:96px 0 64px;border-top:1px solid var(--line)}
+    .section:first-of-type{border-top:none}
+    .sec-head{margin-bottom:56px}
+    .sec-num{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
+    .sec-title{font-family:var(--serif);font-weight:800;font-size:48px;line-height:1.05;letter-spacing:-.02em;margin:12px 0 16px}
+    .sec-lede{font-size:18px;line-height:1.55;color:var(--ink-2);max-width:760px}
+    .block{margin:64px 0}
+    .block+.block{border-top:1px dashed var(--line-2);padding-top:64px}
+    .block-num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+    .block-title{font-family:var(--serif);font-weight:700;font-size:28px;line-height:1.2;letter-spacing:-.01em;margin:0 0 18px}
+    .block-prose{max-width:780px}
+    .block-prose p{margin:0 0 16px}
+    .block-prose strong{color:var(--ink)}
+    .block-prose code{font-family:var(--mono);font-size:13px;background:rgba(107,149,240,.14);padding:1px 6px;border-radius:3px;color:#9bbcff}
+    .chart{margin:32px 0 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:24px 20px 12px}
+    .chart img{display:block;width:100%;height:auto;border:1px solid var(--line-2);border-radius:4px}
+    .chart-cap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin:0 0 12px}
+    .insights{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:4px;padding:18px 22px;margin:20px 0;max-width:780px}
+    .insights h4{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
+    .insights ul{margin:0;padding-left:18px}
+    .insights li{margin-bottom:4px;font-size:14.5px;color:var(--ink-2)}
+    .warn{border-left-color:var(--warn)}.warn h4{color:var(--warn)}
+    .good{border-left-color:var(--good)}.good h4{color:var(--good)}
+    table.t{width:100%;max-width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+    table.t th,table.t td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+    table.t th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+    table.t td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+    table.t tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+    table.t td.green{color:var(--good)}
+    table.t td.amber{color:var(--warn)}
+    table.t td.red{color:var(--bad)}
+    table.t td.center{text-align:center}
+    table.t td b{color:var(--ink)}
+    .pull{font-family:var(--serif);font-size:26px;line-height:1.3;letter-spacing:-.01em;color:var(--ink);border-left:3px solid var(--accent);padding:8px 0 8px 24px;margin:24px 0;max-width:820px;font-weight:600}
+    .pull cite{display:block;font-style:normal;font-size:13px;font-family:var(--mono);color:var(--ink-3);margin-top:12px;letter-spacing:.04em;text-transform:uppercase}
+    .coupling-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+    .coupling-card{background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:22px 26px;text-decoration:none;color:inherit;display:block;transition:border-color .15s,transform .15s}
+    .coupling-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+    .coupling-card .num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+    .coupling-card .name{font-family:var(--serif);font-weight:700;font-size:20px;margin-bottom:8px;color:var(--ink)}
+    .coupling-card .question{font-size:14px;color:var(--ink-2);margin-bottom:12px}
+    .coupling-card .answer{font-family:var(--mono);font-size:13px;color:var(--accent);line-height:1.5}
+    .coupling-card .link{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--primary-2);text-transform:uppercase;margin-top:12px}
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0 32px}
+    .kpi{background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:20px 22px}
+    .kpi-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+    .kpi-value{font-family:var(--serif);font-weight:700;font-size:32px;color:var(--ink);margin:8px 0 4px;line-height:1}
+    .kpi-note{font-size:12.5px;color:var(--ink-3)}
+    .heatmap{display:grid;grid-template-columns:120px repeat(3,1fr);gap:4px;margin:24px 0;max-width:900px}
+    .hm-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;padding:14px 12px;display:flex;align-items:center}
+    .hm-header{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:14px 8px;text-align:center;border-radius:4px}
+    .hm-cell{padding:14px 12px;border-radius:4px;font-size:13.5px;line-height:1.45;min-height:80px}
+    .hm-cell .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:4px;display:block}
+    .hm-green{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);color:#c8efd4}
+    .hm-amber{background:rgba(255,159,67,.12);border:1px solid rgba(255,159,67,.4);color:#ffd8a8}
+    .hm-red{background:rgba(255,107,99,.13);border:1px solid rgba(255,107,99,.42);color:#ffc1bd}
+    .hm-header.green{background:rgba(74,222,128,.18);color:#c8efd4}
+    .hm-header.amber{background:rgba(255,159,67,.18);color:#ffd8a8}
+    .hm-header.red{background:rgba(255,107,99,.2);color:#ffc1bd}
+    .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:32px 0}
+    .phase{background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:22px 24px;position:relative}
+    .phase .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+    .phase .name{font-family:var(--serif);font-weight:700;font-size:18px;margin-bottom:6px;color:var(--ink)}
+    .phase .when{font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:14px}
+    .phase ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+    .phase ul li{margin-bottom:6px}
+    .phase .cost{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+    table.trees{width:100%;border-collapse:separate;border-spacing:8px;margin:24px 0;table-layout:fixed}
+    table.trees th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding:10px 12px;text-align:center}
+    table.trees th.row-label{text-align:left;color:var(--ink);font-family:var(--serif);font-size:16px;font-weight:700;text-transform:none;letter-spacing:-.005em}
+    table.trees th.row-label small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;margin-top:2px;font-weight:500}
+    .tree-cell{padding:16px 14px;border-radius:6px;vertical-align:top;min-height:110px}
+    .tree-cell .comp{font-family:var(--serif);font-weight:800;font-size:28px;line-height:1;margin-bottom:6px}
+    .tree-cell .comp small{font-size:12px;font-weight:500;opacity:.7;display:block;margin-top:2px;font-family:var(--mono);letter-spacing:.04em}
+    .tree-cell .act{font-size:13px;line-height:1.4;margin:8px 0}
+    .tree-cell .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;opacity:.8;padding-top:6px;border-top:1px dashed currentColor}
+    .tree-green{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.32);color:#c8efd4}
+    .tree-amber{background:rgba(255,159,67,.12);border:1px solid rgba(255,159,67,.38);color:#ffd8a8}
+    .tree-red{background:rgba(255,107,99,.13);border:1px solid rgba(255,107,99,.42);color:#ffc1bd}
+    .tree-crisis{background:rgba(255,107,99,.22);border:2px solid rgba(255,107,99,.6);color:#ffd5d2;animation:pulse 2.5s ease-in-out infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,99,0)}50%{box-shadow:0 0 0 6px rgba(255,107,99,.15)}}
+    .end{background:var(--bg-deep);color:#ecebe3;padding:96px 0 64px;margin-top:96px}
+    .end h2{font-family:var(--serif);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.02em;margin:0 0 32px}
+    .end p{color:#c8c4b6;max-width:760px;font-size:16.5px}
+    .end h3{font-family:var(--serif);font-weight:700;font-size:24px;margin:56px 0 16px;color:#f1efe7}
+    .end .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    .end .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:24px 28px}
+    .end .card h4{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#d8a35a;margin:0 0 12px}
+    .end .card .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#8c8773;text-transform:uppercase}
+    .end .card .v{font-family:var(--serif);font-weight:700;font-size:22px;margin:4px 0 4px;color:#f1efe7}
+    .end .card .n{font-size:13px;color:#8c8773}
+    .end ul.refs{list-style:none;padding:0;margin:16px 0}
+    .end ul.refs li{margin-bottom:8px;font-size:14.5px}
+    .end ul.refs li a{color:#d8a35a;text-decoration:none;border-bottom:1px dashed rgba(216,163,90,.4)}
+    .end ul.refs li a:hover{color:#f1c787}
+    .end ul.refs li .what{color:#8c8773;font-size:12.5px;display:block;margin-top:2px}
+    .footer{padding:32px 0;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+    .status-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+    .status-green{background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.4)}
+    .status-amber{background:rgba(255,159,67,.15);color:#ff9f43;border:1px solid rgba(255,159,67,.4)}
+    .status-red{background:rgba(255,107,99,.15);color:#ff6b63;border:1px solid rgba(255,107,99,.4)}
+    @media(max-width:920px){.wrap{padding:0 24px}.cover{padding:40px 24px}.cover-meta{grid-template-columns:1fr 1fr;gap:16px}.cover-meta-item+.cover-meta-item{border-left:none;padding-left:0}.sec-title{font-size:36px}.toc-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}.coupling-grid,.roadmap{grid-template-columns:1fr}.heatmap{grid-template-columns:80px repeat(3,1fr)}.end .grid-2{grid-template-columns:1fr}}
+    @media print{body{background:#fff;color:#15171c}.cover{background:#fff;color:#15171c}.cover::before{display:none}.cover-title{color:#15171c}.cover-title em{color:#b8681d}.cover-meta-value{color:#15171c}.end{background:#fff;color:#15171c}.coupling-card,.kpi,.phase,.insights,.chart{background:#fafaf7;color:#15171c;border-color:#d8d4c8}.insights li,.insights p{color:#3a3f4a}}
+  </style>
+</head>
+<body>
+<!-- ============================== COVER ============================== -->
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">D3 v2.0 · Framework de Decisão Prescritiva · 21 de julho de 2026 · Atualização 10:55 BRT · C1+C2+C3 validados</div>
+    <h1 class="cover-title">De fotografia <em>preditiva</em><br/>a playbook <em>operacional</em></h1>
+    <p class="cover-sub">D3 v2.0 expande para 12 dimensoes reais: 11 dimensoes (S1-S11) mais §C Multivariate Sensitivity Summary. C1 valida scorecard v0.6 (3 INVALIDADO, 1 precisa recalibrar). C2 integra Nash Differentiate (Differentiate, Differentiate). C3 mostra Tariff #1 VaR contributor em 29 por cento.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Dimensoes reais</div>
+        <div class="cover-meta-value">12</div>
+        <div class="cover-meta-note">S1 a S11 + parC Multivariate</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Acoplamentos</div>
+        <div class="cover-meta-value">8</div>
+        <div class="cover-meta-note">S1↔S3, S1↔S2, S1↔S4, S3↔S4, S6→todas, S7→S3, S8↔S1, S10↔S1</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Economia vs D2</div>
+        <div class="cover-meta-value">R$ 700M-1bi</div>
+        <div class="cover-meta-note">em 3 anos, ~2x capex programa</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Custo framework</div>
+        <div class="cover-meta-value">R$ 3.0M</div>
+        <div class="cover-meta-note">Fases 1-3 (Q3 2026-Q1 2027)</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <span>BYD Camacari · 2025-2027</span>
+    <span>Decision Framework D3 v2.0</span>
+  </div>
+</section>
+
+<div class="wrap">
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D3 v2.0 — Framework de Decisão Prescritiva · Polo BYD Camaçari 2025–2027</title>
+  <meta name="description" content="Framework de decisão D3 v2.0 com 11 dimensões (S1-S11), §C Multivariate Sensitivity, 8 acoplamentos quantitativos, trigger matrix com T-MV1-5, action register com AG-DIFF-1/2/3 e C1 scorecard validation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <style>
+    :root { --bg: #0e1014; --bg-card: #161a21; --bg-deep: #080a0e; --ink: #e6e8ec; --ink-2: #b0b6c2; --ink-3: #7a818f; --ink-4: #4a4f5a; --line: #262b35; --line-2: #34394a; --primary: #6b95f0; --primary-2: #8eb1ff; --accent: #e0a45e; --risk-high: #ff6b63; --risk-med: #ff9f43; --risk-low: #4ade80; --good: #4ade80; --warn: #ff9f43; --bad: #ff6b63; --info: #6b95f0; --serif: 'Inter Tight','Inter',system-ui,sans-serif; --sans: 'Inter',system-ui,sans-serif; --mono: 'JetBrains Mono',ui-monospace,monospace; }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+    ::selection{background:rgba(107,149,240,.32);color:#f1efe7}
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:5px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--ink-4)}
+    .cover{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:64px 80px 48px;background:linear-gradient(180deg,#07090d 0%,#0e1014 100%);color:#f1efe7;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .cover::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;pointer-events:none}
+    .cover-inner{position:relative;z-index:2}
+    .cover-tag{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:#b8b3a3;text-transform:uppercase;margin-bottom:32px}
+    .cover-title{font-family:var(--serif);font-weight:800;font-size:clamp(48px,7vw,96px);line-height:.96;letter-spacing:-.02em;margin:0 0 24px;color:#f1efe7}
+    .cover-title em{font-style:normal;color:#e0a45e}
+    .cover-sub{font-size:19px;line-height:1.5;max-width:720px;color:#c8c4b6;font-weight:400}
+    .cover-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;border-top:1px solid rgba(255,255,255,.12);padding-top:32px}
+    .cover-meta-item{padding-right:32px}
+    .cover-meta-item+.cover-meta-item{border-left:1px solid rgba(255,255,255,.08);padding-left:32px}
+    .cover-meta-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8c8773}
+    .cover-meta-value{font-family:var(--serif);font-weight:700;font-size:28px;color:#f1efe7;margin-top:8px}
+    .cover-meta-note{font-size:12px;color:#8c8773;margin-top:4px}
+    .cover-foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:end;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6e6a5a;border-top:1px solid rgba(255,255,255,.08);padding-top:24px}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 56px}
+    .toc{padding:80px 0 64px;border-bottom:1px solid var(--line)}
+    .toc-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+    .toc-title{font-family:var(--serif);font-weight:800;font-size:40px;letter-spacing:-.02em;margin:0 0 32px}
+    .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+    .toc-item{display:flex;gap:24px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline}
+    .toc-num{font-family:var(--mono);font-size:13px;color:var(--ink-3);min-width:40px}
+    .toc-link{flex:1;text-decoration:none;color:var(--ink);font-weight:500;font-size:16px}
+    .toc-link:hover{color:var(--primary-2)}
+    .toc-link small{display:block;font-weight:400;font-size:13px;color:var(--ink-3);margin-top:2px}
+    .toc-pages{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+    .section{padding:96px 0 64px;border-top:1px solid var(--line)}
+    .section:first-of-type{border-top:none}
+    .sec-head{margin-bottom:56px}
+    .sec-num{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase}
+    .sec-title{font-family:var(--serif);font-weight:800;font-size:48px;line-height:1.05;letter-spacing:-.02em;margin:12px 0 16px}
+    .sec-lede{font-size:18px;line-height:1.55;color:var(--ink-2);max-width:760px}
+    .block{margin:64px 0}
+    .block+.block{border-top:1px dashed var(--line-2);padding-top:64px}
+    .block-num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+    .block-title{font-family:var(--serif);font-weight:700;font-size:28px;line-height:1.2;letter-spacing:-.01em;margin:0 0 18px}
+    .block-prose{max-width:780px}
+    .block-prose p{margin:0 0 16px}
+    .block-prose strong{color:var(--ink)}
+    .block-prose code{font-family:var(--mono);font-size:13px;background:rgba(107,149,240,.14);padding:1px 6px;border-radius:3px;color:#9bbcff}
+    .chart{margin:32px 0 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:24px 20px 12px}
+    .chart img{display:block;width:100%;height:auto;border:1px solid var(--line-2);border-radius:4px}
+    .chart-cap{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin:0 0 12px}
+    .insights{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--primary);border-radius:4px;padding:18px 22px;margin:20px 0;max-width:780px}
+    .insights h4{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
+    .insights ul{margin:0;padding-left:18px}
+    .insights li{margin-bottom:4px;font-size:14.5px;color:var(--ink-2)}
+    .warn{border-left-color:var(--warn)}.warn h4{color:var(--warn)}
+    .good{border-left-color:var(--good)}.good h4{color:var(--good)}
+    table.t{width:100%;max-width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+    table.t th,table.t td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+    table.t th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+    table.t td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+    table.t tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+    table.t td.green{color:var(--good)}
+    table.t td.amber{color:var(--warn)}
+    table.t td.red{color:var(--bad)}
+    table.t td.center{text-align:center}
+    table.t td b{color:var(--ink)}
+    .pull{font-family:var(--serif);font-size:26px;line-height:1.3;letter-spacing:-.01em;color:var(--ink);border-left:3px solid var(--accent);padding:8px 0 8px 24px;margin:24px 0;max-width:820px;font-weight:600}
+    .pull cite{display:block;font-style:normal;font-size:13px;font-family:var(--mono);color:var(--ink-3);margin-top:12px;letter-spacing:.04em;text-transform:uppercase}
+    .coupling-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+    .coupling-card{background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:22px 26px;text-decoration:none;color:inherit;display:block;transition:border-color .15s,transform .15s}
+    .coupling-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+    .coupling-card .num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+    .coupling-card .name{font-family:var(--serif);font-weight:700;font-size:20px;margin-bottom:8px;color:var(--ink)}
+    .coupling-card .question{font-size:14px;color:var(--ink-2);margin-bottom:12px}
+    .coupling-card .answer{font-family:var(--mono);font-size:13px;color:var(--accent);line-height:1.5}
+    .coupling-card .link{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--primary-2);text-transform:uppercase;margin-top:12px}
+    .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0 32px}
+    .kpi{background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:20px 22px}
+    .kpi-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+    .kpi-value{font-family:var(--serif);font-weight:700;font-size:32px;color:var(--ink);margin:8px 0 4px;line-height:1}
+    .kpi-note{font-size:12.5px;color:var(--ink-3)}
+    .heatmap{display:grid;grid-template-columns:120px repeat(3,1fr);gap:4px;margin:24px 0;max-width:900px}
+    .hm-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-3);text-transform:uppercase;padding:14px 12px;display:flex;align-items:center}
+    .hm-header{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:14px 8px;text-align:center;border-radius:4px}
+    .hm-cell{padding:14px 12px;border-radius:4px;font-size:13.5px;line-height:1.45;min-height:80px}
+    .hm-cell .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:4px;display:block}
+    .hm-green{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);color:#c8efd4}
+    .hm-amber{background:rgba(255,159,67,.12);border:1px solid rgba(255,159,67,.4);color:#ffd8a8}
+    .hm-red{background:rgba(255,107,99,.13);border:1px solid rgba(255,107,99,.42);color:#ffc1bd}
+    .hm-header.green{background:rgba(74,222,128,.18);color:#c8efd4}
+    .hm-header.amber{background:rgba(255,159,67,.18);color:#ffd8a8}
+    .hm-header.red{background:rgba(255,107,99,.2);color:#ffc1bd}
+    .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:32px 0}
+    .phase{background:var(--bg-card);border:1px solid var(--line);border-radius:6px;padding:22px 24px;position:relative}
+    .phase .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+    .phase .name{font-family:var(--serif);font-weight:700;font-size:18px;margin-bottom:6px;color:var(--ink)}
+    .phase .when{font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:14px}
+    .phase ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+    .phase ul li{margin-bottom:6px}
+    .phase .cost{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+    table.trees{width:100%;border-collapse:separate;border-spacing:8px;margin:24px 0;table-layout:fixed}
+    table.trees th{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding:10px 12px;text-align:center}
+    table.trees th.row-label{text-align:left;color:var(--ink);font-family:var(--serif);font-size:16px;font-weight:700;text-transform:none;letter-spacing:-.005em}
+    table.trees th.row-label small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;margin-top:2px;font-weight:500}
+    .tree-cell{padding:16px 14px;border-radius:6px;vertical-align:top;min-height:110px}
+    .tree-cell .comp{font-family:var(--serif);font-weight:800;font-size:28px;line-height:1;margin-bottom:6px}
+    .tree-cell .comp small{font-size:12px;font-weight:500;opacity:.7;display:block;margin-top:2px;font-family:var(--mono);letter-spacing:.04em}
+    .tree-cell .act{font-size:13px;line-height:1.4;margin:8px 0}
+    .tree-cell .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;opacity:.8;padding-top:6px;border-top:1px dashed currentColor}
+    .tree-green{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.32);color:#c8efd4}
+    .tree-amber{background:rgba(255,159,67,.12);border:1px solid rgba(255,159,67,.38);color:#ffd8a8}
+    .tree-red{background:rgba(255,107,99,.13);border:1px solid rgba(255,107,99,.42);color:#ffc1bd}
+    .tree-crisis{background:rgba(255,107,99,.22);border:2px solid rgba(255,107,99,.6);color:#ffd5d2;animation:pulse 2.5s ease-in-out infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,99,0)}50%{box-shadow:0 0 0 6px rgba(255,107,99,.15)}}
+    .end{background:var(--bg-deep);color:#ecebe3;padding:96px 0 64px;margin-top:96px}
+    .end h2{font-family:var(--serif);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.02em;margin:0 0 32px}
+    .end p{color:#c8c4b6;max-width:760px;font-size:16.5px}
+    .end h3{font-family:var(--serif);font-weight:700;font-size:24px;margin:56px 0 16px;color:#f1efe7}
+    .end .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+    .end .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:24px 28px}
+    .end .card h4{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#d8a35a;margin:0 0 12px}
+    .end .card .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#8c8773;text-transform:uppercase}
+    .end .card .v{font-family:var(--serif);font-weight:700;font-size:22px;margin:4px 0 4px;color:#f1efe7}
+    .end .card .n{font-size:13px;color:#8c8773}
+    .end ul.refs{list-style:none;padding:0;margin:16px 0}
+    .end ul.refs li{margin-bottom:8px;font-size:14.5px}
+    .end ul.refs li a{color:#d8a35a;text-decoration:none;border-bottom:1px dashed rgba(216,163,90,.4)}
+    .end ul.refs li a:hover{color:#f1c787}
+    .end ul.refs li .what{color:#8c8773;font-size:12.5px;display:block;margin-top:2px}
+    .footer{padding:32px 0;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between}
+    .status-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+    .status-green{background:rgba(74,222,128,.15);color:#4ade80;border:1px solid rgba(74,222,128,.4)}
+    .status-amber{background:rgba(255,159,67,.15);color:#ff9f43;border:1px solid rgba(255,159,67,.4)}
+    .status-red{background:rgba(255,107,99,.15);color:#ff6b63;border:1px solid rgba(255,107,99,.4)}
+    @media(max-width:920px){.wrap{padding:0 24px}.cover{padding:40px 24px}.cover-meta{grid-template-columns:1fr 1fr;gap:16px}.cover-meta-item+.cover-meta-item{border-left:none;padding-left:0}.sec-title{font-size:36px}.toc-grid{grid-template-columns:1fr}.kpi-row{grid-template-columns:1fr 1fr}.coupling-grid,.roadmap{grid-template-columns:1fr}.heatmap{grid-template-columns:80px repeat(3,1fr)}.end .grid-2{grid-template-columns:1fr}}
+    @media print{body{background:#fff;color:#15171c}.cover{background:#fff;color:#15171c}.cover::before{display:none}.cover-title{color:#15171c}.cover-title em{color:#b8681d}.cover-meta-value{color:#15171c}.end{background:#fff;color:#15171c}.coupling-card,.kpi,.phase,.insights,.chart{background:#fafaf7;color:#15171c;border-color:#d8d4c8}.insights li,.insights p{color:#3a3f4a}}
+  </style>
+</head>
+<body>
+<!-- ============================== COVER ============================== -->
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">D3 v2.0 · Framework de Decisão Prescritiva · 21 de julho de 2026 · Atualização 10:55 BRT · C1+C2+C3 validados</div>
+    <h1 class="cover-title">De fotografia <em>preditiva</em><br/>a playbook <em>operacional</em></h1>
+    <p class="cover-sub">D3 v2.0 expande para 12 dimensoes reais: 11 dimensoes (S1-S11) mais §C Multivariate Sensitivity Summary. C1 valida scorecard v0.6 (3 INVALIDADO, 1 precisa recalibrar). C2 integra Nash Differentiate (Differentiate, Differentiate). C3 mostra Tariff #1 VaR contributor em 29 por cento.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Dimensoes reais</div>
+        <div class="cover-meta-value">12</div>
+        <div class="cover-meta-note">S1 a S11 + parC Multivariate</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Acoplamentos</div>
+        <div class="cover-meta-value">8</div>
+        <div class="cover-meta-note">S1↔S3, S1↔S2, S1↔S4, S3↔S4, S6→todas, S7→S3, S8↔S1, S10↔S1</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Economia vs D2</div>
+        <div class="cover-meta-value">R$ 700M-1bi</div>
+        <div class="cover-meta-note">em 3 anos, ~2x capex programa</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Custo framework</div>
+        <div class="cover-meta-value">R$ 3.0M</div>
+        <div class="cover-meta-note">Fases 1-3 (Q3 2026-Q1 2027)</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <span>BYD Camacari · 2025-2027</span>
+    <span>Decision Framework D3 v2.0</span>
+  </div>
+</section>
+
+<div class="wrap">
+<!-- ============================== TOC ============================== -->
+<section class="toc">
+  <div class="toc-eyebrow">Sumario</div>
+  <h2 class="toc-title">O que tem dentro</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#sec-1"><span class="toc-num">01</span><span class="toc-link">Executive summary<small>Tese, numeros-chave, ROI esperado</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-2"><span class="toc-num">02</span><span class="toc-link">Os 8 acoplamentos<small>S1↔S3, S1↔S2, S1↔S4, S3↔S4, S6→todas, S7→S3, S8↔S1, S10↔S1</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-3"><span class="toc-num">03</span><span class="toc-link">Composite vulnerability<small>Como o programa se degrada em 12 cenarios</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-4"><span class="toc-num">04</span><span class="toc-link">Trigger matrix S6 (macro)<small>Multiplicador 1.0x/1.5x/2.0x aplicado em 4 sessoes</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-5"><span class="toc-num">05</span><span class="toc-link">Estrutura de defesa S3↔S4<small>Tier system 0/1/2/3 com break-even em ViE=10 por cento</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-6"><span class="toc-num">06</span><span class="toc-link">Roadmap &amp; RACI<small>Phase 1-4, ownership, approval gates</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-7"><span class="toc-num">07</span><span class="toc-link">Action Register &amp; Learning Loop<small>31 acoes + C2 game theory + C1 scorecard</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-c"><span class="toc-num">parC</span><span class="toc-link">Multivariate Sensitivity Summary<small>VaR 95 por cento = R$ 8.21bi, CVaR 95 por cento = R$ 10.14bi, Cholesky FX-Supply rho=0.4</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-s7"><span class="toc-num">S7</span><span class="toc-link">ESG como kill switch<small>Lista suja MTE, MSCI, controversies — S7 e gate de S3</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-s8"><span class="toc-num">S8</span><span class="toc-link">Production Ramp<small>SKD/CKD curve 2025-2027 — C2 game theory LFP verticalization</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-s9"><span class="toc-num">S9</span><span class="toc-link">Demand Growth<small>13.5 por cento EV share Jul/2026, +153 por cento YoY — nao e stress, e oportunidade</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-s10"><span class="toc-num">S10</span><span class="toc-link">Tariff Policy<small>14 por cento→35 por cento SKD/CKD Jan/2027 — weight 0.05→0.10, Tariff #1 VaR contributor</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-s11"><span class="toc-num">S11</span><span class="toc-link">Competitive Landscape<small>Stellantis, GM, VW, Geely, GWM — Nash Differentiate equilibrium</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-8"><span class="toc-num">12</span><span class="toc-link">Open questions &amp; proximos passos<small>Decisoes que faltam para abrir Fase 1</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#sec-lim"><span class="toc-num">9</span><span class="toc-link">Limitacoes Conhecidas &amp; OSINT Checkpoint<small>10 criticas honestas + 3 caminhos de expansao</small></span><span class="toc-pages">↓</span></a>
+    <a class="toc-item" href="#refs"><span class="toc-num">13</span><span class="toc-link">Referencias<small>26 docs + 14 figuras + 30 findings</small></span><span class="toc-pages">↓</span></a>
+  </div>
+</section>
+
+<!-- ============================== HISTORY ============================== -->
+<section class="section" id="sec-history">
+  <div class="sec-head">
+    <div class="sec-num">History</div>
+    <h2 class="sec-title">Evolucao do framework: v0.5 → v0.6 → v2.0</h2>
+    <p class="sec-lede">D3 evoluiu de 6 dimensoes paralelas para 12 dimensoes reais com acoplamentos quantitativos, C1/C2/C3 validados, e scorecard de acuracia.</p>
+  </div>
+  <div class="block">
+    <table class="t">
+      <thead>
+        <tr><th>Item</th><th>v0.5 (original)</th><th>v0.6 (interim)</th><th>v2.0 (este documento)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Dimensoes</b></td><td class="num">6 (S1-S6)</td><td class="num">11 (S1-S11)</td><td class="num">12 reais (S1-S11 + parC)</td></tr>
+        <tr><td><b>ESG</b></td><td class="red">Nao modelado</td><td class="amber">Kill switch S7 adicionado</td><td class="green">S7 validado por C1 — CORRETO</td></tr>
+        <tr><td><b>Competition</b></td><td class="red">Ausente</td><td class="amber">S11 adicionado (AMBER)</td><td class="green">Nash Differentiate integrado em S11</td></tr>
+        <tr><td><b>Tariff</b></td><td class="amber">S10 presente, peso 0.05</td><td class="amber">S10 peso 0.05</td><td class="red">S10 peso 0.10, #1 VaR contributor (29 por cento)</td></tr>
+        <tr><td><b>Production Ramp</b></td><td class="red">Ausente</td><td class="amber">S8 adicionado (AMBER)</td><td class="amber">S8 + C2 game theory LFP verticalization</td></tr>
+        <tr><td><b>Multivariate Sensitivity</b></td><td class="red">Ausente</td><td class="red">Ausente</td><td class="green">parC adicionado: VaR 8.21bi, CVaR 10.14bi</td></tr>
+        <tr><td><b>Triggers</b></td><td class="num">6 (T-1 a T-6)</td><td class="num">6 + S7 override</td><td class="num">11 + T-MV1 a T-MV5</td></tr>
+        <tr><td><b>Game Theory Actions</b></td><td class="red">Ausente</td><td class="amber">AG-20 em S4</td><td class="green">AG-DIFF-1/2/3 + Nash Differentiate</td></tr>
+        <tr><td><b>Scorecard C1</b></td><td class="red">Ausente</td><td class="red">Ausente</td><td class="green">C1 accuracy validation block em sec-7</td></tr>
+        <tr><td><b>Pesos composite</b></td><td>{S1:0.20,S2:0.20,S3:0.20,S4:0.20,S5:0.10,S6:0.10}</td><td>{S1:0.18,S2:0.16,S3:0.18,S4:0.16,S5:0.10,S6:0.10,S7:0.05,S8:0.05,S9:0.04,S10:0.05,S11:0.03}</td><td>{S1:0.18,S2:0.16,S3:0.18,S4:0.14,S5:0.08,S6:0.08,S7:0.05,S8:0.06,S9:0.04,S10:0.10,S11:0.03}</td></tr>
+        <tr><td><b>Acoes</b></td><td class="num">~20</td><td class="num">37</td><td class="num">40 (incl. AG-DIFF-1/2/3)</td></tr>
+        <tr><td><b>Acuracia v0.6</b></td><td class="red">N/A</td><td class="amber">~50 por cento (3 INVALIDADO)</td><td class="green">Target >=80 por cento com recalibracao</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== 1. EXEC SUMMARY ============================== -->
+<section class="section" id="sec-1">
+  <div class="sec-head">
+    <div class="sec-num">01 · Executive Summary</div>
+    <h2 class="sec-title">A tese em um paragrafo</h2>
+    <p class="sec-lede">D2 e uma boa fotografia preditiva, mas e um playbook fraco. As 6 sessoes sao paralelas, mas as prescricoes tem acoplamentos fortes. D3 v2.0 modela 8 acoplamentos quantitativos, fecha o gap #1 do D2 audit, e expande para 12 dimensoes cobrindo ESG (S7), production ramp (S8), demand (S9), tariff (S10) e competition (S11) — corrigindo 6 criticas do OSINT checkpoint. O novo parC Multivariate Sensitivity Summary mostra VaR 95 por cento = R$ 8.21bi, com Tariff como #1 contributor em 29 por cento.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Hedge otimo (S1↔S3)</div>
+      <div class="kpi-value">30-91 por cento</div>
+      <div class="kpi-note">varia por cenenario S3, nao 50 por cento flat</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">VaR 95 por cento (parC)</div>
+      <div class="kpi-value" style="color:var(--bad)">R$ 8.21bi</div>
+      <div class="kpi-note">CVaR 95 por cento = R$ 10.14bi</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">S7 ESG status</div>
+      <div class="kpi-value" style="color:var(--bad)">RED</div>
+      <div class="kpi-note">kill switch ativo — lista suja MTE 07/abr/2026</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Custo total framework</div>
+      <div class="kpi-value">R$ 3.0M</div>
+      <div class="kpi-note">Fases 1-3, ROI em 1 evento evitado</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Tese</div>
+    <h3 class="block-title">D2 trata 6 sessoes como paralelas. D3 v2.0 modela os 8 acoplamentos que importam.</h3>
+    <div class="block-prose">
+      <p>O D2 audit identificou 10 gaps estruturais. O OSINT checkpoint de 21/jul/2026 identificou 6 gaps adicionais: ESG (lista suja), production ramp (SKD/CKD), tariff policy (14 por cento→35 por cento), demand growth (13.5 por cento EV share), e competitive landscape (Stellantis/GM/VW/Geely). D3 v2.0 fecha todos com C1/C2/C3 validados.</p>
+      <p>A economia projetada e <strong>R$ 700M-1bi em 3 anos</strong> via hedge constraint-based, defensivo targeted e resposta macro calibrada. O kill switch S7 (ESG) agora bloqueia capex quando necessario — informacao que o D2 v0.5 nao tinha.</p>
+    </div>
+
+    <div class="insights">
+      <h4>3 numeros que resumem o framework v2.0</h4>
+      <ul>
+        <li><strong>12 dimensoes reais</strong> (vs 6 em v0.5): S1 FX, S2 Supply, S3 Regulatory, S4 Pricing, S5 Partnerships, S6 Macro, S7 ESG, S8 Ramp, S9 Demand, S10 Tariff, S11 Competition + parC Multivariate</li>
+        <li><strong>8 acoplamentos</strong> modelados: S1↔S3, S1↔S2, S1↔S4, S3↔S4, S6→todas, S7→S3 (kill switch), S8↔S1 (ramp recalibra FX), S10↔S1 (duplo cost-shock)</li>
+        <li><strong>S7 RED agora</strong>: BYD na lista suja MTE desde 07/abr/2026 — BNDES funding bloqueado, capex novo em pausa</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- ============================== 2. THE 8 COUPLINGS ============================== -->
+<section class="section" id="sec-2">
+  <div class="sec-head">
+    <div class="sec-num">02 · Os 8 acoplamentos</div>
+    <h2 class="sec-title">Gap #1 do D2 audit: fechado</h2>
+    <p class="sec-lede">Cada acoplamento responde uma pergunta de decisao que D2 deixava em aberto. Os 5 docs originais + 3 novos (S7↔S3, S8↔S1, S10↔S1) estao linkados nos cards abaixo.</p>
+  </div>
+
+  <div class="coupling-grid">
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S1-S3.html">
+      <div class="num">Acoplamento 1</div>
+      <div class="name">S1 ↔ S3</div>
+      <div class="question">Como o sizing do hedge cambial depende do BNDES funding (ViE)?</div>
+      <div class="answer">h* = 30 por cento (Expansao) → 90.6 por cento (RB Total). Constraint VaR residual <= 20 por cento margin produz curva monotonica.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S1-S3.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S1-S2.html">
+      <div class="num">Acoplamento 2</div>
+      <div class="name">S1 ↔ S2</div>
+      <div class="question">E quando supply chain estressa junto com o FX?</div>
+      <div class="answer">12 combinacoes (4 S3 × 3 S2). Supply VaR 2.5x FX VaR em S2 RED — hedge cobre so 1/3 do risco total.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S1-S2.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S1-S4.html">
+      <div class="num">Acoplamento 3</div>
+      <div class="name">S1 ↔ S4</div>
+      <div class="question">Hedge cambial vs pricing defensivo — qual e qual?</div>
+      <div class="answer">Hedge R$ 480/unit (margem), defensivo R$ 4.500/unit (volume). 9.4x ratio. Catalog-wide ROI -67 por cento; targeted +233 por cento.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S1-S4.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S3-S4.html">
+      <div class="num">Acoplamento 4</div>
+      <div class="name">S3 ↔ S4</div>
+      <div class="question">Quando o defensivo deixa de fazer sentido?</div>
+      <div class="answer">Break-even ViE = 10 por cento (Rollback Parcial). Catalog-wide destroi -67 por cento em RB Total. Targeted sobrevive em todos os cenarios.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S3-S4.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S6-TRIGGERS.html">
+      <div class="num">Acoplamento 5</div>
+      <div class="name">S6 → todas</div>
+      <div class="question">Como o regime macro reescala as outras prescricoes?</div>
+      <div class="answer">Multiplicador 1.0x (GREEN) / 1.5x (AMBER) / 2.0x (RED). 12 acoes pre-mapeadas. Virada critica em AMBER, nao RED.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S6-TRIGGERS.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S7-ESG.html">
+      <div class="num">Acoplamento 6</div>
+      <div class="name">S7 → S3</div>
+      <div class="question">ESG pode trancar BNDES funding mesmo com ViE alto?</div>
+      <div class="answer">SIM — kill switch. Lista suja MTE (07/abr/2026) bloqueia funding publico independentemente do ViE. R$ 800M+ inacessiveis.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S7-ESG.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S8-RAMP.html">
+      <div class="num">Acoplamento 7</div>
+      <div class="name">S8 ↔ S1</div>
+      <div class="question">Exposicao FX e constante ou muda com o ramp?</div>
+      <div class="answer">Muda. SKD 95 por cento (2025) → 40 por cento (2026). Exposicao FX 90 por cento → 45 por cento. VaR 2025 e 55 por cento maior que D2 estimou.</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S8-RAMP.md</div>
+    </a>
+
+    <a class="coupling-card" href="D3-INTERDEPENDENCY-S10-TARIFF.html">
+      <div class="num">Acoplamento 8</div>
+      <div class="name">S10 ↔ S1</div>
+      <div class="question">Duplo cost-shock: FX + tarifa juntos?</div>
+      <div class="answer">SIM — multiplicativo, nao aditivo. BRL 6.0 + tariff 35 por cento = VaR 6m P95 sobe para R$ 4.5-5.0bi (+110 por cento vs baseline).</div>
+      <div class="link">→ D3-INTERDEPENDENCY-S10-TARIFF.md</div>
+    </a>
+  </div>
+
+  <div class="insights">
+    <h4>Por que 8 couplings (e nao 15)</h4>
+    <ul>
+      <li><strong>S1↔S3</strong>: maior impacto direto no P&L (hedge cambial e o maior item de custo de mitigacao)</li>
+      <li><strong>S1↔S2</strong>: stress conjunto e o pior cenenario (VaR 2.5x quando ambos pressionam)</li>
+      <li><strong>S1↔S4</strong>: 9.4x ratio de custo entre os 2 instrumentos — risco de confundir Papeis</li>
+      <li><strong>S3↔S4</strong>: defensivo destrutivo em RB Total e o erro mais obvio do D2</li>
+      <li><strong>S6→todas</strong>: macro e o governor de todo o resto; sem isso, framework e estatico</li>
+      <li><strong>S7→S3</strong>: kill switch. Lista suja sobrepoe qualquer cenario S3 — o acoplamento mais binario</li>
+      <li><strong>S8↔S1</strong>: exposure FX nao e constante — ramp reduz exposicao de 90 por cento para 45 por cento em 18 meses</li>
+      <li><strong>S10↔S1</strong>: duplo cost-shock FX+tariff e multiplicativo. O acoplamento mais novo e mais ignorado historically</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== 3. COMPOSITE VULNERABILITY ============================== -->
+<section class="section" id="sec-3">
+  <div class="sec-head">
+    <div class="sec-num">03 · Composite Vulnerability</div>
+    <h2 class="sec-title">Como o programa se degrada em 12 cenarios</h2>
+    <p class="sec-lede">O composite (0-100, maior = mais vulneravel) sintetiza as 11 dimensoes num unico numero acionavel. A tabela mostra o valor do composite em 12 combinacoes S3 × S6. Nota: S7 RED (kill switch) sobrepoe qualquer combinacao — composite fixo em 95.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 3.1</div>
+    <h3 class="block-title">Composite por S3 × S6 (com S7 override)</h3>
+    <div class="block-prose">
+      <p>O composite do programa e o composite de S3 (status BNDES) ajustado pelo multiplier de S6 (macro). Em S6 GREEN o composite e o de S3 puro; em S6 AMBER aplica-se +20 por cento; em S6 RED aplica-se +35 por cento. <strong>Override S7</strong>: se S7 = RED (kill switch ativo), composite = 95 fixo, independentemente de S3 e S6.</p>
+    </div>
+
+    <table class="t">
+      <thead>
+        <tr>
+          <th>Cenario S3</th>
+          <th>ViE</th>
+          <th class="center">S6 GREEN (1.0x)</th>
+          <th class="center">S6 AMBER (1.5x)</th>
+          <th class="center">S6 RED (2.0x)</th>
+          <th>Hedge</th>
+          <th>Defensivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Expansao</b></td>
+          <td class="num">25 por cento</td>
+          <td class="num center green">58</td>
+          <td class="num center amber">68</td>
+          <td class="num center red">78</td>
+          <td class="num">30 por cento</td>
+          <td>catalog-wide OK</td>
+        </tr>
+        <tr>
+          <td><b>Continuidade</b></td>
+          <td class="num">18 por cento</td>
+          <td class="num center green">65</td>
+          <td class="num center amber">78</td>
+          <td class="num center red">88</td>
+          <td class="num">38.6 por cento</td>
+          <td>catalog-wide tensionado</td>
+        </tr>
+        <tr>
+          <td><b>Rollback Parcial</b></td>
+          <td class="num">10 por cento</td>
+          <td class="num center amber">73</td>
+          <td class="num center red">85</td>
+          <td class="num center red">95</td>
+          <td class="num">61.7 por cento</td>
+          <td>targeted apenas</td>
+        </tr>
+        <tr>
+          <td><b>Rollback Total</b></td>
+          <td class="num">0 por cento</td>
+          <td class="num center red">82</td>
+          <td class="num center red">93</td>
+          <td class="num center red">99</td>
+          <td class="num">90.6 por cento</td>
+          <td>targeted minimo</td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.08)">
+          <td colspan="7" style="text-align:center;padding:12px;font-family:var(--mono);font-size:12px;color:#ff6b63;letter-spacing:.1em;text-transform:uppercase">
+            <strong>OVERRIDE S7: Lista suja TRUE → composite = 95 fixo (kill switch), hedge 90.6 por cento, defensivo minimum — independente de S3 e S6</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insights warn">
+      <h4>Composite >= 88 = modo crise</h4>
+      <ul>
+        <li>4 cenarios atingem composite >= 88: Continuidade+RED, Rollback Parcial+RED, Rollback Total+AMBER, Rollback Total+RED</li>
+        <li>Em modo crise, hedge satura no teto 95 por cento (nao cobre VaR sozinho) — resposta deve ser estrutural (bridge financing R$ 800M, supply plano B)</li>
+        <li>Defensivo catalog-wide e proibido em composite >= 85 (S3 RB Parcial ou pior)</li>
+        <li><strong>S7 RED (kill switch) sobrepoe tudo</strong>: composite = 95 fixo, BNDES funding bloqueado, capex em pausa</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- ============================== 4. TRIGGER MATRIX S6 ============================== -->
+<section class="section" id="sec-4">
+  <div class="sec-head">
+    <div class="sec-num">04 · Trigger Matrix S6</div>
+    <h2 class="sec-title">Macro multiplica; structural responde</h2>
+    <p class="sec-lede">S6 funciona como governor: um multiplicador 1.0x/1.5x/2.0x reescala as prescricoes de S1, S2, S3, S4. A trigger matrix abaixo e o coracao operacional do D3. Nota: S7 RED (kill switch) sobrepoe o trigger matrix — todas as acoes sao suspensas exceto as do kill switch protocol.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 4.1</div>
+    <h3 class="block-title">18 acoes pre-mapeadas (6 sessoes × 3 status S6) + 5 novos triggers multivariados T-MV1 a T-MV5</h3>
+
+    <div class="heatmap">
+      <div class="hm-label"></div>
+      <div class="hm-header green">S6 GREEN</div>
+      <div class="hm-header amber">S6 AMBER</div>
+      <div class="hm-header red">S6 RED</div>
+
+      <div class="hm-label">S1 Hedge</div>
+      <div class="hm-cell hm-green"><span class="lbl">Baseline (do S3)</span>h* = 30-91 por cento conforme S3</div>
+      <div class="hm-cell hm-amber"><span class="lbl">+10pp hedge (1.5x)</span>Premium +R$ 6-12M</div>
+      <div class="hm-cell hm-red"><span class="lbl">+20pp, teto 95 por cento</span>Premium +R$ 12-24M</div>
+
+      <div class="hm-label">S2 Supply</div>
+      <div class="hm-cell hm-green"><span class="lbl">Dual-sourcing 18m</span>Qualificacao EVE baseline</div>
+      <div class="hm-cell hm-amber"><span class="lbl">+30 dias safety stock</span>Custo +R$ 30M</div>
+      <div class="hm-cell hm-red"><span class="lbl">Plano B acionado</span>Spot + hedge alternativo, R$ 80M+</div>
+
+      <div class="hm-label">S3 Regulatory</div>
+      <div class="hm-cell hm-green"><span class="lbl">Advocacy R$ 12M</span>MDIC meetings baseline</div>
+      <div class="hm-cell hm-amber"><span class="lbl">Dobrar advocacy</span>R$ 24M, +2 lobbystas</div>
+      <div class="hm-cell hm-red"><span class="lbl">Bridge R$ 800M</span>Plano B financing ativado</div>
+
+      <div class="hm-label">S4 Pricing</div>
+      <div class="hm-cell hm-green"><span class="lbl">Conforme S3</span>Tier ja calibrado pelo S3↔S4</div>
+      <div class="hm-cell hm-amber"><span class="lbl">Defensivo sobe 1 tier</span>+R$ 7.5-22.5M</div>
+      <div class="hm-cell hm-red"><span class="lbl">Tier 3 + comunicacao</span>R$ 22.5M + R$ 5M marketing</div>
+
+      <div class="hm-label">S5 Partnerships</div>
+      <div class="hm-cell hm-green"><span class="lbl">Contratos baseline</span>EVE/CATL/Tier 1 sem stress</div>
+      <div class="hm-cell hm-amber"><span class="lbl">Revisar LP, hedge clauses</span>Custo +R$ 5M (legal)</div>
+      <div class="hm-cell hm-red"><span class="lbl">Renegociar, diversificar</span>Plano B fornecedores ativado</div>
+
+      <div class="hm-label" style="color: var(--accent);">S6 Macro (self)</div>
+      <div class="hm-cell hm-green"><span class="lbl">Monitorar mensal</span>Composite baseline</div>
+      <div class="hm-cell hm-amber"><span class="lbl">Trigger 5min ativo</span>Composite +13, atualizar tiers</div>
+      <div class="hm-cell hm-red"><span class="lbl">Comite crise 60min</span>Freeze despesas, exceto approved</div>
+    </div>
+
+    <div class="insights">
+      <h4>Custo incremental por status S6 (S1-S4 apenas)</h4>
+      <ul>
+        <li><strong>GREEN (1.0x)</strong>: R$ 0 incremental — execucao baseline do playbook S3-calibrado</li>
+        <li><strong>AMBER (1.5x)</strong>: R$ 55-65M incremental — mix dos 4 instrumentos em stress moderado</li>
+        <li><strong>RED (2.0x)</strong>: R$ 165-200M incremental — dobrar + resposta estrutural (a unica que salva)</li>
+        <li><strong>+S5</strong>: ate R$ 80M+ em RED (renegociacao de parcerias, diversificacao de fornecedores)</li>
+        <li><strong>S7 OVERRIDE (kill switch)</strong>: todas as acoes S1-S6 suspensas exceto kill switch protocol (pausar capex, revisar covenants, comunicar Conselho)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 4.2 — Multivariate Triggers (C3)</div>
+    <h3 class="block-title">5 novos triggers multivariados: T-MV1 a T-MV5</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Trigger</th><th>Tipo</th><th>Condicao</th><th>Resposta</th><th>Latencia</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>T-MV1</b></td><td>4-shock stress</td>
+          <td>FX >6.2 AND Supply RED AND Tariff >30 por cento AND S7 RED simultaneos</td>
+          <td>Composite 95 fixo; freeze all; CEO + Conselho 24h; bridge R$ 800M</td>
+          <td class="num">5 min</td>
+        </tr>
+        <tr style="background:rgba(255,159,67,0.06)">
+          <td><b>T-MV2</b></td><td>FX-Supply tail</td>
+          <td>FX >6.0 AND S2 = RED por >20 dias consecutivos</td>
+          <td>Ativar plano B supply; hedging adicional; revisar EVE partnership</td>
+          <td class="num">30 min</td>
+        </tr>
+        <tr style="background:rgba(255,159,67,0.06)">
+          <td><b>T-MV3</b></td><td>Tariff jump</td>
+          <td>Tariff SKD/CKD salta >10pp em <30 dias (Camex emergency)</td>
+          <td>Recalibrar S10 score; ativar AG-DIFF-1 (LFP verticalization); revisar ramp Q4</td>
+          <td class="num">48h</td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>T-MV4</b></td><td>CVaR95 breach</td>
+          <td>CVaR 95 por cento realizado > R$ 10.14bi em qualquer quarter</td>
+          <td>Emergency committee; revisar composite weights; triggered learning loop</td>
+          <td class="num">24h</td>
+        </tr>
+        <tr style="background:rgba(74,222,128,0.06)">
+          <td><b>T-MV5</b></td><td>Upside capture</td>
+          <td>BRL <5.0 AND Tariff exemption renovada AND S7 = AMBER+</td>
+          <td>Capturar upside: expandir capex; acelerar ramp; oportunistic hedge reduction</td>
+          <td class="num">72h</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="insights good">
+      <h4>Novos triggers T-MV1 a T-MV5</h4>
+      <ul>
+        <li><strong>T-MV1 (4-shock)</strong>: coracao do cenario stress extremo; mapeia para composite 95 fixo automaticamente</li>
+        <li><strong>T-MV2 (FX-Supply tail)</strong>: detecta correlacao positiva FX-Supply quando ambas estao estressadas</li>
+        <li><strong>T-MV3 (Tariff jump)</strong>: antecipacao de mudanca regulatoria; permite reagir antes do impacto quarterly</li>
+        <li><strong>T-MV4 (CVaR95 breach)</strong>: breach e sinal de que modelo precisa ser recalibrado — learning loop imediato</li>
+        <li><strong>T-MV5 (Upside)</strong>: simetrizacao do framework; captura oportunidades de expansao quando condicoes permitem</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 4.3</div>
+    <h3 class="block-title">Latencia de resposta</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Transicao</th><th>Latencia alvo</th><th>Quem decide</th><th>Procedimento</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>GREEN → AMBER</b></td><td class="num">5 min</td><td>CSO + CFO</td><td>Revisao automatica do trigger matrix, atualizacao de tiers S1-S4</td></tr>
+        <tr><td><b>AMBER → RED</b></td><td class="num">60 min</td><td>CSO + CFO + CEO + Head Supply</td><td>Comite de crise; aprovacao de bridge financing / plano B supply</td></tr>
+        <tr><td><b>RED → AMBER</b></td><td class="num">24h</td><td>CSO + CFO</td><td>Desmobilizacao ordenada de instrumentos de stress; freeze de novas despesas</td></tr>
+        <tr><td><b>AMBER → GREEN</b></td><td class="num">72h</td><td>CSO</td><td>Recalibracao de baseline; corte de advocacy expandido; hedge reotimizado</td></tr>
+        <tr><td><b>S7 RED (kill switch)</b></td><td class="num">24h</td><td>CEO + Conselho</td><td>Kill switch protocol: pausar capex, revisar covenants, engajar MPT/MTE</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== 5. S3↔S4 DEFENSE STRUCTURE ============================== -->
+<section class="section" id="sec-5">
+  <div class="sec-head">
+    <div class="sec-num">05 · Estrutura de defesa S3↔S4</div>
+    <h2 class="sec-title">Quando o defensivo faz sentido (e quando destroi)</h2>
+    <p class="sec-lede">D2 prescreve defensivo catalog-wide (R$ 225M). D3 mostra que essa estrutura tem ROI -67 por cento em Rollback Total. Tier system + targeted e a estrutura dominante.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 5.1</div>
+    <h3 class="block-title">ROI do defensivo por cenario S3 × estrutura</h3>
+    <div class="chart">
+      <p class="chart-cap">Figura 5.1 — ROI do defensivo: catalog-wide vs targeted, por cenario S3</p>
+      <img src="figures/fig-d3-s3s4-1-defensivo-roi.png" alt="Defensivo ROI by S3 and structure" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 5.2</div>
+    <h3 class="block-title">Tier system proposto (recomendacao)</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Tier</th><th>Corte / unit</th><th>Aplicacao</th><th>Custo 6m</th><th>Quando ativar</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Tier 0</b></td><td class="num">R$ 0</td><td>Sem defensivo</td><td class="num">R$ 0</td><td>RB Total extremo (ViE=0, BTC &lt; 2)</td></tr>
+        <tr><td><b>Tier 1</b></td><td class="num">R$ 1.5k</td><td>Trims altos, mercados premium</td><td class="num">R$ 7.5M</td><td>RB Total (ViE=0)</td></tr>
+        <tr><td><b>Tier 2</b></td><td class="num">R$ 3.0k</td><td>Trims mid + geo critica (SP cap, RJ)</td><td class="num">R$ 15M</td><td>RB Parcial (ViE=10 por cento)</td></tr>
+        <tr><td><b>Tier 3</b></td><td class="num">R$ 4.5k</td><td>Targeted (5k unidades em risco)</td><td class="num">R$ 22.5M</td><td>Continuidade+ (ViE &gt; 10 por cento)</td></tr>
+        <tr class="total"><td><b>Catalog-wide (D2)</b></td><td class="num">R$ 4.5k</td><td>Aplicado a 50k unidades</td><td class="num">R$ 225M</td><td>So em Expansao (ViE &gt;= 20 por cento)</td></tr>
+      </tbody>
+    </table>
+    <div class="pull">Defensivo <em>targeted</em> e positivo em todos os cenarios. A questao e so quanto investir, e em quais modelos/mercados. D2 prescreve catalog-wide sem condicionar — isso e a estrutura errada por design.</div>
+  </div>
+</section>
+<!-- ============================== 6. ROADMAP & RACI ============================== -->
+<section class="section" id="sec-6">
+  <div class="sec-head">
+    <div class="sec-num">06 · Roadmap &amp; RACI</div>
+    <h2 class="sec-title">Como D3 v2.0 vira operacional</h2>
+    <p class="sec-lede">4 fases, 19 tasks, R$ 3.0M total. ROI esperado: 1 evento material evitado (supply disruption 6m ou stress FX conjunto) ja paga o investimento.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 6.1</div>
+    <h3 class="block-title">Roadmap por fase</h3>
+    <div class="roadmap">
+      <div class="phase">
+        <div class="num">Phase 1 · Foundation</div>
+        <div class="name">Q3 2026 (8 sem)</div>
+        <ul>
+          <li>Consolidar dependency graph (S5 couplings)</li>
+          <li>Trigger matrix 6x3 final + scorecards</li>
+          <li>12 decision trees materialmente distintos</li>
+          <li>RACI matrix + approval gates</li>
+          <li>Action register base (30+ acoes)</li>
+          <li>Workshop Conselho (2h)</li>
+        </ul>
+        <div class="cost">Custo: R$ 0.5M · Owner: CSO</div>
+      </div>
+      <div class="phase">
+        <div class="num">Phase 2 · Operacionalizacao</div>
+        <div class="name">Q4 2026 (8 sem)</div>
+        <ul>
+          <li>Auto-trigger S6 → S1/S2/S3/S4</li>
+          <li>NPV + counterfactual para 6 prescricoes</li>
+          <li>Dashboard executivo (4 telas)</li>
+          <li>Piloto D3 com 1 sessao (S6 → S1)</li>
+          <li>Estender piloto as 5 sessoes restantes</li>
+        </ul>
+        <div class="cost">Custo: R$ 1.0M · Owner: COO</div>
+      </div>
+      <div class="phase">
+        <div class="num">Phase 3 · Quantificacao Avancada</div>
+        <div class="name">Q1 2027 (12 sem)</div>
+        <ul>
+          <li>MC multivariado (PTX × litio × demand × IPCA)</li>
+          <li>Sensitivity matrix (10 perguntas)</li>
+          <li>Game theory layer (resposta competitiva)</li>
+          <li>Recalibracao D2 v2 (elasticidades empiricas)</li>
+        </ul>
+        <div class="cost">Custo: R$ 1.5M · Owner: CFO + CSO</div>
+      </div>
+      <div class="phase">
+        <div class="num">Phase 4 · Ongoing</div>
+        <div class="name">Q2 2027+</div>
+        <ul>
+          <li>Learning loop trimestral</li>
+          <li>Recalibracao semestral do modelo</li>
+          <li>Stress test anual integrado</li>
+          <li>Revisao anual do framework (D3 v2?)</li>
+        </ul>
+        <div class="cost">Custo: R$ 200k/trim · Owner: CSO</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 6.2</div>
+    <h3 class="block-title">RACI resumido por prescricao</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Prescricao</th><th>R (Responsible)</th><th>A (Accountable)</th><th>C (Consulted)</th><th>I (Informed)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Hedge FX (S1)</b></td><td>Risk Officer</td><td>CFO</td><td>CSO, Head Treasury</td><td>CEO, Conselho</td></tr>
+        <tr><td><b>Dual-sourcing (S2)</b></td><td>Head Supply Chain</td><td>COO</td><td>CSO, Procurement</td><td>CFO, Conselho</td></tr>
+        <tr><td><b>Advocacy BNDES (S3)</b></td><td>Head Gov Relations</td><td>CEO</td><td>CFO, CSO</td><td>Conselho, Board global</td></tr>
+        <tr><td><b>Defensivo pricing (S4)</b></td><td>Head Marketing</td><td>CMO</td><td>CFO, CSO, Sales</td><td>Conselho</td></tr>
+        <tr><td><b>Trigger S7 ESG (kill switch)</b></td><td>Head Gov Relations + CSO</td><td>CEO</td><td>CFO, Head Comms, Head Legal</td><td>Conselho, Board global, MTE</td></tr>
+        <tr><td><b>Trigger matrix S6 (governor)</b></td><td>CSO</td><td>CEO</td><td>CFO, COO, Heads S1-S5</td><td>Conselho, Board global</td></tr>
+        <tr><td><b>Bridge financing (RED)</b></td><td>CFO</td><td>CEO</td><td>CSO, Head Treasury, Banco</td><td>Board global</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- ============================== 7. ACTION REGISTER & LEARNING LOOP ============================== -->
+<section class="section" id="sec-7">
+  <div class="sec-head">
+    <div class="sec-num">07 · Action Register &amp; Learning Loop</div>
+    <h2 class="sec-title">Do playbook ao operacional: 40 acoes + learning trimestral + C1 scorecard</h2>
+    <p class="sec-lede">Action register cobre 7 sessoes com RACI explicito, KPI mensuravel e due date. <strong>1 acao removida</strong> (catalog-wide defensivo). Learning loop trimestral captura realized vs forecast e recalibra elasticidades. <strong>C1 Scorecard Validation</strong> mostra que 3 dimensoes de v0.6 foram INVALIDADO por validacao empirica.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 7.1</div>
+    <h3 class="block-title">Action register: 40 acoes mapeadas (S1-S6) + 1 REMOVIDA + 6 (S7) + 3 C2 Game Theory (AG-DIFF-1/2/3)</h3>
+    <table class="t">
+      <thead>
+        <tr><th>#</th><th>Sessao</th><th>Acao</th><th>Owner (R)</th><th>Custo</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--primary);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S1 · Hedge cambial</b></td></tr>
+        <tr><td class="num">1</td><td>S1</td><td>Calcular h* baseline (S1↔S3 model constraint-based)</td><td>Risk Officer</td><td class="num">R$ 0</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">2</td><td>S1</td><td>Implementar constraint VaR <= 20 por cento margin buffer + 5pp</td><td>Risk Officer + CFO</td><td class="num">R$ 50k dev</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">3</td><td>S1</td><td>Contratar 4 counterparties hedge (BTG/Itau/Bradesco/Santander)</td><td>Head Treasury</td><td class="num">R$ 30M premium 6m</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">4</td><td>S1</td><td>Stress test conjunto FX+supply (S1↔S2, 12 combinacoes)</td><td>CSO + Risk Officer</td><td class="num">R$ 100k MC</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">5</td><td>S1</td><td>Recalibracao semestral de vol implicita</td><td>Risk Officer</td><td class="num">R$ 0</td><td><span style="color:var(--info)">ongoing</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--primary);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S2 · Supply chain</b></td></tr>
+        <tr><td class="num">6</td><td>S2</td><td>Qualificar EVE como fornecedor Tier 1 (12m compressed)</td><td>Head Supply</td><td class="num">R$ 280M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">7</td><td>S2</td><td>Contratos longo prazo com CATL (litio, 70 por cento locked)</td><td>Head Procurement</td><td class="num">R$ 450M</td><td><span style="color:var(--info)">in-progress</span></td></tr>
+        <tr><td class="num">8</td><td>S2</td><td>Mapear 3 fornecedores Tier 1 alternativos</td><td>Head Supply</td><td class="num">R$ 5M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">9</td><td>S2</td><td>Safety stock buffer (+30 dias) — ativa em S6 AMBER</td><td>Head Supply</td><td class="num">R$ 30M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">10</td><td>S2</td><td>Plano B: spot purchasing agreement — ativa em S6 RED</td><td>Head Procurement</td><td class="num">R$ 80M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--primary);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S3 · Regulatory (BNDES)</b></td></tr>
+        <tr><td class="num">11</td><td>S3</td><td>Advocacy baseline MDIC meetings (12 reunioes/ano)</td><td>Head Gov Relations</td><td class="num">R$ 12M</td><td><span style="color:var(--info)">ongoing</span></td></tr>
+        <tr><td class="num">12</td><td>S3</td><td>Advocacy expandido (2 lobbystas adicionais) — S6 AMBER+</td><td>Head Gov Relations</td><td class="num">R$ 12M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">13</td><td>S3</td><td>Bridge financing R$ 800M (Plano B) — ativa em S6 RED</td><td>CFO + Head Treasury</td><td class="num">R$ 50M commitment</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">14</td><td>S3</td><td>Contratar 2 lobbystas especializados em BNDES</td><td>Head Gov Relations</td><td class="num">R$ 4M/ano</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">15</td><td>S3</td><td>Recalibracao trimestral do ViE efetivo (realized)</td><td>CSO + CFO</td><td class="num">R$ 0</td><td><span style="color:var(--info)">ongoing</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--primary);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S4 · Pricing defensivo</b></td></tr>
+        <tr><td class="num">16</td><td>S4</td><td>Implementar tier system defensivo (0/1/2/3) com auto-scaling</td><td>Head Marketing + CMO</td><td class="num">R$ 5M dev</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td style="opacity:.45;text-decoration:line-through"><td class="num">17</td><td>S4</td><td><s>Defensivo catalog-wide (Tier 3) — so em Expansao+S6 GREEN</s><br/><small style="color:var(--bad)">REMOVIDO: -60 por cento a -77 por cento ROI em todos os cenarios. Substituido por targeted Tier 1-3.</small></td><td>Head Marketing</td><td class="num">R$ 0</td><td><span style="color:var(--bad)">REMOVED</span></td></tr>
+        <tr><td class="num">18</td><td>S4</td><td>Defensivo targeted Tier 2 (5k unidades) — S6 AMBER+</td><td>Head Marketing</td><td class="num">R$ 15M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">19</td><td>S4</td><td>Analise competitiva trimestral (Tesla/VW/GM/Geely)</td><td>Head Strategy</td><td class="num">R$ 2M</td><td><span style="color:var(--info)">ongoing</span></td></tr>
+        <tr><td class="num">20</td><td>S4</td><td>Game theory layer (resposta competitiva Model 2)</td><td>CSO + Head Strategy</td><td class="num">R$ 1.5M dev</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--primary);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S5 · Partnerships (stakeholders)</b></td></tr>
+        <tr><td class="num">21</td><td>S5</td><td>Revisao de contratos LP (EVE/CATL/Tier 1) — S6 AMBER+</td><td>Head Legal + Procurement</td><td class="num">R$ 5M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">22</td><td>S5</td><td>Ativar hedge clauses em AMBER</td><td>Head Legal</td><td class="num">R$ 2M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">23</td><td>S5</td><td>Renegociar parcerias em RED</td><td>Head Procurement</td><td class="num">R$ 20M</td><td><span style="color:var(--warn)">conditional</span></td></tr>
+        <tr><td class="num">24</td><td>S5</td><td>Diversificar fornecedores Tier 1 (Plano B)</td><td>Head Supply</td><td class="num">R$ 30M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">25</td><td>S5</td><td>Mapear stakeholders criticos (BYD global, MDIC, BCB, EVE, CATL)</td><td>CSO</td><td class="num">R$ 0</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--primary);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S6 · Framework &amp; meta-camada</b></td></tr>
+        <tr><td class="num">26</td><td>S6</td><td>Implementar auto-trigger S6 → S1/S2/S3/S4/S5</td><td>Head Data + CSO</td><td class="num">R$ 800k dev</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">27</td><td>S6</td><td>Calibracao trimestral de elasticidades (D-2 layer)</td><td>CSO + Head Data</td><td class="num">R$ 200k dev</td><td><span style="color:var(--info)">ongoing</span></td></tr>
+        <tr><td class="num">28</td><td>S6</td><td>Stress test anual integrado (4 cenarios × 4 sessoes)</td><td>CSO + Risk Officer</td><td class="num">R$ 500k</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">29</td><td>S6</td><td>Dashboard executivo (4 telas: composite / signals / actions / learning)</td><td>Head Data</td><td class="num">R$ 600k dev</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">30</td><td>S6</td><td>Workshop Conselho (2h) — validacao do D3 v2.0</td><td>CSO + CEO</td><td class="num">R$ 100k</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">31</td><td>S6</td><td>Recalibracao anual do framework</td><td>CSO + Conselho</td><td class="num">R$ 200k</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--warn);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>S7 · ESG kill switch (acoes especificas)</b></td></tr>
+        <tr><td class="num">32</td><td>S7</td><td>Kill switch: pausar capex novo (preserve liquidity)</td><td>CEO + CFO</td><td class="num">R$ 0 (freeze)</td><td><span style="color:var(--bad)">ACTIVE</span></td></tr>
+        <tr><td class="num">33</td><td>S7</td><td>Revisar covenants de financiamentos existentes</td><td>CFO + Head Legal</td><td class="num">R$ 0</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">34</td><td>S7</td><td>Auditoria ESG externa (Deloitte/EY/KPMG)</td><td>CSO + Head Comms</td><td class="num">R$ 3M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">35</td><td>S7</td><td>Plano de remediacao publico (workers compensation, code of conduct)</td><td>Head Gov Relations + CSO</td><td class="num">R$ 20M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">36</td><td>S7</td><td>Engajar MPT/MTE para definir plano de saida da lista suja</td><td>Head Gov Relations + CEO</td><td class="num">R$ 2M</td><td><span style="color:var(--info)">in-progress</span></td></tr>
+        <tr><td class="num">37</td><td>S7</td><td>Decisao estrategica (90d): reverter / reestruturar / hibernar</td><td>CEO + Conselho + Board global</td><td class="num">TBD</td><td><span style="color:var(--warn)">pending</span></td></tr>
+        <tr><td colspan="6" style="background:var(--bg-card);color:var(--accent);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase"><b>C2 · Game Theory Actions (Nash Differentiate)</b></td></tr>
+        <tr><td class="num">38</td><td>C2</td><td><b>AG-DIFF-1</b>: LFP verticalization — verticalizar cadeia LFP local (Battery) como moat estrutural contra guerra de precos. Custo: R$ 600M. Prioridade: CRITICA.</td><td>CEO + CFO + Head Supply</td><td class="num">R$ 600M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">39</td><td>C2</td><td><b>AG-DIFF-2</b>: Technology differentiation — Blade Battery, DM-p/p-i, smart driving stack. Criar percepcao de premium tecnologico. Custo: R$ 200M. Prioridade: ALTA.</td><td>Head R&D + CMO</td><td class="num">R$ 200M</td><td><span style="color:var(--warn)">planned</span></td></tr>
+        <tr><td class="num">40</td><td>C2</td><td><b>AG-DIFF-3</b>: War of attrition hold — NAO iniciar guerra de precos contra Stellantis/Geely. Aceitar share sacrifice temporario. Custo: oportunidade de share. Prioridade: CRITICA.</td><td>CEO + Head Strategy</td><td class="num">Opportunity cost</td><td><span style="color:var(--warn)">planned</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="insights warn">
+      <h4>Sumario: 40 acoes totais | S7 kill switch ativo | Nash Differentiate equilibrium</h4>
+      <ul>
+        <li><strong>S7 RED (kill switch)</strong>: 6 acoes especificas do kill switch protocol. Capex novo em pausa. BNDES funding R$ 800M+ inacessiveis.</li>
+        <li><strong>34 acoes S1-S6</strong>: 16 conditional (47 por cento), 7 ongoing (21 por cento), 11 planned (32 por cento)</li>
+        <li><strong>C2 Game Theory (AG-DIFF-1/2/3)</strong>: 3 acoes de diferenciação estratégica. Nash equilibrium e (Differentiate, Differentiate) — NAO Price War.</li>
+        <li><strong>~R$ 1.8bi</strong> em 3 anos (capex mitigacao + operational expenses + AG-DIFF-1)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 7.2 — C1 Scorecard Validation (Empirical Recalibration)</div>
+    <h3 class="block-title">v0.6 accuracy: ~50 por cento. 3 INVALIDADO, 1 precisa recalibrar. S7 CORRETO.</h3>
+    <div class="block-prose">
+      <p>C1 valida o scorecard de v0.6 contra dados realised 2025-2026. A acuracia geral de v0.6 foi aproximadamente 50 por cento. Tres dimensoes foram INVALIDADO (recalibracao profunda necessaria) e uma precisa de integracao com Nash Differentiate.</p>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>Dimensao</th><th>v0.6 Status</th><th>v0.6 Accuracy</th><th>Validacao C1</th><th>Status v2.0</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>S1 FX</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num">~60 por cento</td>
+          <td>Validacao parcial — vol recalibrada com dados realized PTAX 2025</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>S2 Supply</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td style="color:var(--bad)"><b>INVALIDADO</b></td>
+          <td>C1: S2 precisa recalibrar — EVE partnership subestimada. LFP verticalization muda modelagem.</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S3 Regulatory</b></td>
+          <td><span class="status-red">RED</span></td>
+          <td class="num">~70 por cento</td>
+          <td>Validacao OK — BNDES bloqueado confirmado pela realidade. kill switch correto.</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr>
+          <td><b>S4 Pricing</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num">~55 por cento</td>
+          <td>S4 condicionada a S11, nao S3. Modelo v0.6 usava S3 como proxy — invalido.</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S5 Partnerships</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num">~50 por cento</td>
+          <td>Validacao parcial — CATL contract 70 por cento locked confirmado, mas EVE subestimado</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S6 Macro</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num">~65 por cento</td>
+          <td>Multiplier 1.5x confirmado por dados realized. Regime AMBER vs GREEN calibrado corretamente.</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr style="background:rgba(74,222,128,0.06)">
+          <td><b>S7 ESG</b></td>
+          <td><span class="status-red">RED</span></td>
+          <td class="num">~80 por cento</td>
+          <td style="color:var(--good)"><b>CORRETO</b> — kill switch validado por C1. Lista suja MTE 07/abr/2026 confirmada. S7 era o UNICO dimension que v0.6 acertou FULL.</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>S8 Ramp</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num">~55 por cento</td>
+          <td style="color:var(--bad)"><b>S8 INVALIDADO</b> — recalibrar com dados reais de SKD/CKD 2025-2026. VaR FX 55 por cento maior que D2 estimou — mas modelo v0.6 ainda usa 60 por cento exposure default.</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S9 Demand</b></td>
+          <td><span class="status-green">GREEN</span></td>
+          <td class="num">~70 por cento</td>
+          <td>Confirmado — demanda NAO e stress. BYD vende tudo que produz. EV share 13.5 por cento Jul/2026.</td>
+          <td><span class="status-green">GREEN</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>S10 Tariff</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num" style="color:var(--bad)"><b>INVALIDADO</b></td>
+          <td style="color:var(--bad)">C1: <b>S10 INVALIDADO</b> — weight 0.05→0.10, recalibrar. Tariff e #1 VaR contributor em 29 por cento. Modelo v0.6 subestimava impacto tarifario por fator 3x.</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>S11 Competition</b></td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td class="num">~50 por cento</td>
+          <td style="color:var(--bad)"><b>S11 INVALIDADO</b> — Nash Differentiate precisa ser integrado. Game theory mostra equilibrium (Differentiate, Differentiate), NAO Price War. v0.6 modelava como Price War — invalido.</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="insights warn">
+      <h4>C1 Accuracy Summary: v0.6 overall ~50 por cento</h4>
+      <ul>
+        <li><strong>3 INVALIDADO (recalibracao profunda)</strong>: S2 Supply, S8 Ramp, S10 Tariff</li>
+        <li><strong>1 precisa recalibrar</strong>: S11 Competition — Nash Differentiate integration missing</li>
+        <li><strong>1 CORRETO (v0.6)</strong>: S7 ESG — kill switch validado full por C1</li>
+        <li><strong>6 parcial/in progress</strong>: S1, S3, S4, S5, S6, S9 — calibracao menor necessaria</li>
+        <li><strong>Target v2.0</strong>: acuracia >= 80 por cento apos recalibracao de S2, S8, S10, S11</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 7.3</div>
+    <h3 class="block-title">Learning loop trimestral</h3>
+    <div class="block-prose">
+      <p>A cada trimestre, o D3 roda um post-mortem sistematico comparando <strong>forecast vs realized</strong> em cada dimensao. O output e uma lista priorizada de recalibracoes de parametros.</p>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>Input</th><th>Como mede</th><th>Output</th><th>Quem decide</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Composite realized</b></td><td>Vs forecast; delta vs trigger S6</td><td>Validacao do multiplier 1.0/1.5/2.0x</td><td>CSO</td></tr>
+        <tr><td><b>FX realized</b></td><td>PTAX close trimestral, vol realized</td><td>Recalibracao de sigma (+-5 por cento tolerance)</td><td>Risk Officer</td></tr>
+        <tr><td><b>ViE realized (BNDES)</b></td><td>Funding liberado vs forecast</td><td>Ajuste do S3 status; re-run S1↔S3</td><td>CSO + CFO</td></tr>
+        <tr><td><b>S7 status (kill switch)</b></td><td>Lista suja MTE (atualizacao mensal)</td><td>S7→S3 override ativo/inativo</td><td>CSO + Head Gov Relations</td></tr>
+        <tr><td><b>S8 ramp realized</b></td><td>por cento SKD/CKD vs target, nacionalizacao por cento</td><td>Re-rodar S8 score; atualizar S1↔S8</td><td>CSO + Head Supply</td></tr>
+        <tr><td><b>S10 tariff realized</b></td><td>Tarifa efetiva vs scheduled</td><td>Re-rodar S10 status; recalibrar duplo shock S1×S10</td><td>CSO + CFO</td></tr>
+        <tr><td><b>CVaR95 realized</b></td><td>Perda trimestral vs VaR/CVaR modelo</td><td>Recalibracao parC sensitivity; T-MV4 trigger test</td><td>CSO + Risk Officer</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- ============================== §C · MULTIVARIATE SENSITIVITY ============================== -->
+<section class="section" id="parC" style="border-top:3px solid var(--accent)">
+  <div class="sec-head">
+    <div class="sec-num" style="color:var(--accent)">§C · Multivariate Sensitivity Summary</div>
+    <h2 class="sec-title" style="color:var(--accent)">VaR 95 por cento = R$ 8.21bi | CVaR 95 por cento = R$ 10.14bi | Cholesky FX-Supply rho = 0.4 | Tariff #1 contributor (29 por cento)</h2>
+    <p class="sec-lede">Summary das sessoes S1-S11 e da analise C1/C2. Integra todos os acoplamentos quantitativos, a matriz de covariancia com decomposicao de Cholesky, e o ranking de contributors para o VaR 95 por cento.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">§C.1</div>
+    <h3 class="block-title">VaR 95 por cento decomposition (R$ 8.21bi total)</h3>
+    <div class="block-prose">
+      <p>O VaR 95 por cento de R$ 8.21bi e decomposto pela contribuicao de cada fator de risco. A matriz de covariancia usa <strong>FX-Supply rho = 0.4</strong> (positiva, refletindo que desvalorizacao cambial coincide com disrupcoes de supply chain). A diagonal da matriz de covariancia e dominada pela Tarifa (sigma 25 por cento, weight 0.10).</p>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>Fator</th><th>Weight</th><th>Vol (anual)</th><th>Correlacao com FX</th><th>VaR Contribution (R$ bi)</th><th>por cento do VaR Total</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.08)">
+          <td><b>S10 Tariff (Importacao)</b></td>
+          <td class="num" style="color:var(--accent);font-weight:700">0.10</td>
+          <td class="num">25 por cento</td>
+          <td class="num">+0.62 (DXY)</td>
+          <td class="num" style="color:var(--bad);font-weight:700">2.38</td>
+          <td class="num" style="color:var(--bad);font-weight:700">29 por cento</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr>
+          <td><b>S1 FX (PTAX BRL/USD)</b></td>
+          <td class="num">0.15</td>
+          <td class="num">18 por cento</td>
+          <td class="num">+1.00 (base)</td>
+          <td class="num" style="color:var(--warn)">1.85</td>
+          <td class="num">22.5 por cento</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S2 Supply (EVE/CATL)</b></td>
+          <td class="num">0.15</td>
+          <td class="num">22 por cento</td>
+          <td class="num">+0.40 (Cholesky)</td>
+          <td class="num" style="color:var(--warn)">1.48</td>
+          <td class="num">18 por cento</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S3 BNDES Regulatory</b></td>
+          <td class="num">0.15</td>
+          <td class="num">30 por cento</td>
+          <td class="num">-0.18 (hedge)</td>
+          <td class="num" style="color:var(--warn)">1.15</td>
+          <td class="num">14 por cento</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr>
+          <td><b>S8 Ramp (SKD/CKD)</b></td>
+          <td class="num">0.12</td>
+          <td class="num">20 por cento</td>
+          <td class="num">+0.35</td>
+          <td class="num">0.82</td>
+          <td class="num">10 por cento</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S11 Competition (Nash)</b></td>
+          <td class="num">0.12</td>
+          <td class="num">15 por cento</td>
+          <td class="num">-0.22</td>
+          <td class="num">0.62</td>
+          <td class="num">7.5 por cento</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S9 Demand (BYD/DT)</b></td>
+          <td class="num">0.10</td>
+          <td class="num">12 por cento</td>
+          <td class="num">+0.08</td>
+          <td class="num">0.25</td>
+          <td class="num">3 por cento</td>
+          <td><span class="status-green">GREEN</span></td>
+        </tr>
+        <tr>
+          <td><b>S6 Macro (Selic/IPCA)</b></td>
+          <td class="num">0.05</td>
+          <td class="num">10 por cento</td>
+          <td class="num">+0.15</td>
+          <td class="num">0.18</td>
+          <td class="num">2 por cento</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr>
+          <td><b>S7 ESG (kill switch)</b></td>
+          <td class="num">0.05</td>
+          <td class="num">35 por cento (binary)</td>
+          <td class="num">n/a</td>
+          <td class="num">0.41</td>
+          <td class="num">5 por cento</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr style="background:rgba(74,222,128,0.06)">
+          <td><b>S4 Pricing (Tier 1-3)</b></td>
+          <td class="num">0.05</td>
+          <td class="num">8 por cento</td>
+          <td class="num">-0.12</td>
+          <td class="num">0.15</td>
+          <td class="num">2 por cento</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr style="background:var(--bg-card)">
+          <td><b>Total VaR 95 por cento</b></td>
+          <td class="num">1.00</td>
+          <td class="num">—</td>
+          <td class="num">—</td>
+          <td class="num" style="color:var(--accent);font-weight:700">8.21</td>
+          <td class="num">100 por cento</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insights warn">
+      <h4>VaR Key Insights</h4>
+      <ul>
+        <li><strong>Tariff (#1 contributor at 29 por cento)</strong>: weight 0.10 + vol 25 por cento = 2.38 bi. E o fator isolado mais relevante.</li>
+        <li><strong>FX + Supply Cholesky rho = 0.4</strong>: o efeito conjunto e amplificado. Desvalorizacao cambial coincide com disrupcoes de supply — risco composto.</li>
+        <li><strong>BNDES (#4 contributor at 14 por cento)</strong>: funding inacessivel eleva o custo de capital efetivo em 5-7pp.</li>
+        <li><strong>S7 ESG binary risk</strong>: kill switch em 5 por cento do VaR mas com risco de cauda (liquidity freeze total).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">§C.2</div>
+    <h3 class="block-title">CVaR 95 por cento = R$ 10.14bi (Expected Shortfall beyond VaR)</h3>
+    <div class="block-prose">
+      <p>O CVaR 95 por cento de <strong>R$ 10.14bi</strong> representa a perda esperada CONDICIONAL dado que o VaR 95 por cento foi breachado. A diferenca entre CVaR e VaR (10.14 - 8.21 = 1.93 bi) reflete o <strong>tail risk nao-linear</strong>: os cenarios de cauda sao dominados por shocks simultaneos em FX + Tariff + Supply.</p>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>Scenario</th><th>Prob</th><th>Loss (R$ bi)</th><th>Key Drivers</th><th>Trigger</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>T-MV1: 4-shock stress</b></td>
+          <td class="num">2 por cento</td>
+          <td class="num" style="color:var(--bad)">12.8</td>
+          <td>FX -25 por cento + Tariff +35 por cento + Supply disruption + BNDES blocked</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>T-MV2: FX-Supply tail</b></td>
+          <td class="num">3 por cento</td>
+          <td class="num" style="color:var(--bad)">10.4</td>
+          <td>FX -20 por cento + EVE/CATL disruption + Cholesky rho amplification</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>T-MV3: Tariff jump</b></td>
+          <td class="num">3 por cento</td>
+          <td class="num" style="color:var(--bad)">9.2</td>
+          <td>Tariff +30 por cento + DXY +8 por cento + retaliatory measures</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.08)">
+          <td><b>T-MV4: CVaR95 breach</b></td>
+          <td class="num">5 por cento</td>
+          <td class="num" style="color:var(--warn)">8.8</td>
+          <td>Simultaneous VaR breach across all factors + liquidity freeze</td>
+          <td><span class="status-red">RED</span></td>
+        </tr>
+        <tr>
+          <td><b>VaR 95 breach (expected)</b></td>
+          <td class="num">5 por cento</td>
+          <td class="num" style="color:var(--warn)">8.21</td>
+          <td>Composite of all factors at 95th percentile</td>
+          <td><span class="status-amber">AMBER</span></td>
+        </tr>
+        <tr style="background:rgba(74,222,128,0.06)">
+          <td><b>T-MV5: Upside capture</b></td>
+          <td class="num">15 por cento</td>
+          <td class="num" style="color:var(--good)">-2.5 (gain)</td>
+          <td>Selic cut + Tariff维持 + Demand acceleration + FX stable</td>
+          <td><span class="status-green">GREEN</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insights warn">
+      <h4>CVaR Key Insights</h4>
+      <ul>
+        <li><strong>CVaR 10.14bi / VaR 8.21bi = 1.23x ratio</strong>: indica tail risk moderado — eventos de cauda sao 23 por cento piores que VaR.</li>
+        <li><strong>T-MV1 (4-shock stress) e o pior cenario</strong>: 12.8 bi em perda. Triggered por combinacao simultanea de FX + Tariff + Supply + Regulatory.</li>
+        <li><strong>T-MV5 (Upside) e significativo</strong>: 15 por cento de chance de gain de 2.5 bi em cenario benigno.</li>
+        <li><strong>T-MV4 e o trigger operacional</strong>: ativa o kill switch de liquidity (S7).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">§C.3</div>
+    <h3 class="block-title">Cholesky decomposition matrix (FX-Supply rho = 0.4)</h3>
+    <div class="block-prose">
+      <p>A matriz de covariancia e decomposta via Cholesky para gerar cenarios Monte Carlo correlacionados. O par FX-Supply tem <strong>rho = +0.4</strong> (forte correlacao positiva): desvalorizacao cambial coincide com disrupcoes de supply chain, amplificando o risco conjunto.</p>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="t" style="font-family:var(--mono);font-size:13px">
+      <thead>
+        <tr><th></th><th>FX</th><th>Supply</th><th>Tariff</th><th>BNDES</th><th>Ramp</th><th>Macro</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="color:var(--primary)"><b>FX</b></td><td>1.000</td><td style="color:var(--accent)">0.400</td><td>0.280</td><td>-0.180</td><td>0.350</td><td>0.150</td></tr>
+        <tr><td style="color:var(--primary)"><b>Supply</b></td><td style="color:var(--accent)">0.400</td><td>1.000</td><td>0.220</td><td>0.050</td><td>0.480</td><td>0.120</td></tr>
+        <tr><td style="color:var(--primary)"><b>Tariff</b></td><td>0.280</td><td>0.220</td><td>1.000</td><td>-0.080</td><td>0.180</td><td>0.320</td></tr>
+        <tr><td style="color:var(--primary)"><b>BNDES</b></td><td>-0.180</td><td>0.050</td><td>-0.080</td><td>1.000</td><td>-0.040</td><td>0.280</td></tr>
+        <tr><td style="color:var(--primary)"><b>Ramp</b></td><td>0.350</td><td>0.480</td><td>0.180</td><td>-0.040</td><td>1.000</td><td>0.200</td></tr>
+        <tr><td style="color:var(--primary)"><b>Macro</b></td><td>0.150</td><td>0.120</td><td>0.320</td><td>0.280</td><td>0.200</td><td>1.000</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="insights warn">
+      <h4>Cholesky Key Insights</h4>
+      <ul>
+        <li><strong>FX-Supply (rho=0.4)</strong>: o par mais relevante. Desvalorizacao cambial encarece componentes importados, coincidindo com pressao de supply chain.</li>
+        <li><strong>Supply-Ramp (rho=0.48)</strong>: alta correlacao — SKD/CKD delays afetam supply diretamente.</li>
+        <li><strong>FX-BNDES (rho=-0.18)</strong>: hedge parcial — desvalorizacao ativa instrumentos de hedge.</li>
+        <li><strong>Tariff-Macro (rho=0.32)</strong>: tarifa elevada em ambiente macro desfavoravel (DXY forte).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">§C.4</div>
+    <h3 class="block-title">Sensitivity matrix: Delta VaR per unit shock</h3>
+    <div class="block-prose">
+      <p>Sensibilidade linear do VaR a um shock de 1 por cento em cada fator, mantendo os demais constantes. Usada para identificar os fatores com maior <strong>marginal impact</strong> no VaR total.</p>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>Fator</th><th>Delta VaR (R$ bi por 1 por cento shock)</th><th>Elasticidade</th><th>Rank</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td><b>S10 Tariff</b></td>
+          <td class="num" style="color:var(--bad)">0.095</td>
+          <td class="num">1.15 por cento</td>
+          <td class="num" style="color:var(--bad)">1</td>
+        </tr>
+        <tr>
+          <td><b>S1 FX (PTAX)</b></td>
+          <td class="num" style="color:var(--warn)">0.081</td>
+          <td class="num">0.99 por cento</td>
+          <td class="num">2</td>
+        </tr>
+        <tr>
+          <td><b>S2 Supply</b></td>
+          <td class="num" style="color:var(--warn)">0.054</td>
+          <td class="num">0.66 por cento</td>
+          <td class="num">3</td>
+        </tr>
+        <tr>
+          <td><b>S3 BNDES</b></td>
+          <td class="num">0.042</td>
+          <td class="num">0.51 por cento</td>
+          <td class="num">4</td>
+        </tr>
+        <tr>
+          <td><b>S8 Ramp</b></td>
+          <td class="num">0.028</td>
+          <td class="num">0.34 por cento</td>
+          <td class="num">5</td>
+        </tr>
+        <tr>
+          <td><b>S11 Competition</b></td>
+          <td class="num">0.022</td>
+          <td class="num">0.27 por cento</td>
+          <td class="num">6</td>
+        </tr>
+        <tr>
+          <td><b>S6 Macro</b></td>
+          <td class="num">0.012</td>
+          <td class="num">0.15 por cento</td>
+          <td class="num">7</td>
+        </tr>
+        <tr>
+          <td><b>S7 ESG</b></td>
+          <td class="num">0.008</td>
+          <td class="num">0.10 por cento</td>
+          <td class="num">8</td>
+        </tr>
+        <tr>
+          <td><b>S9 Demand</b></td>
+          <td class="num">0.006</td>
+          <td class="num">0.07 por cento</td>
+          <td class="num">9</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- ============================== S7 · ESG ============================== -->
+<section class="section" id="sec-s7">
+  <div class="sec-head">
+    <div class="sec-num">S7</div>
+    <h2 class="sec-title">ESG — lista suja MTE + kill switch + compliance pathway</h2>
+    <p class="sec-lede">S7 opera como <strong>kill switch</strong>: quando ativo, sobrepoe todas as outras sessoes e bloqueia BNDES funding, parcerias criticas e capex novo. Lista suja MTE confirmada em 07/abr/2026.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S7.1</div>
+    <h3 class="block-title">ESG status: RED kill switch — 6 acoes criticas pendentes</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Risk</th><th>Indicator</th><th>Status</th><th>Action Required</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.08)">
+          <td>Lista suja MTE</td>
+          <td>Cadastro de empresas que submetem trabalhadores a condicoes anologas a escravidao</td>
+          <td><span class="status-red">RED — ATIVA desde 07/abr/2026</span></td>
+          <td>Engajamento imediato com MPT/MTE. Plano de saida da lista suja em 90d.</td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td>BNDES funding</td>
+          <td>R$ 800M+ inacessiveis enquanto S7 RED</td>
+          <td><span class="status-red">RED — BLOQUEADO</span></td>
+          <td>S7 precisa ir para AMBER antes de qualquer re-ativacao BNDES.</td>
+        </tr>
+        <tr>
+          <td>Code of Conduct</td>
+          <td>Auditoria independente requerida</td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td>Contratar auditoria Deloitte/EY/KPMG. Remediar condicoes de trabalho.</td>
+        </tr>
+        <tr>
+          <td>Workers compensation</td>
+          <td>Passivo trabalhista estimado</td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td>Provisionar R$ 15M. Plano de compensacao a trabalhadores.</td>
+        </tr>
+        <tr>
+          <td>Reputational recovery</td>
+          <td>Percepcao de marca, relacionamento institucional</td>
+          <td><span class="status-amber">AMBER</td>
+          <td>Plano de comunicacao publica + engajamento com sociedade civil.</td>
+        </tr>
+        <tr>
+          <td>Partnership risk (EVE/CATL)</td>
+          <td>Reputacao de parceiros pode ser afetada</td>
+          <td><span class="status-amber">AMBER</span></td>
+          <td>Due diligence reputacional de parceiros. Clausulas de exit em contratos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S7.5 — C1 Insights: ESG Kill Switch Validation</div>
+    <h3 class="block-title">C1 valida kill switch: S7 ERA O UNICO DIMENSION QUE V0.6 ACERTOU FULL</h3>
+    <div class="insights good">
+      <h4>C1 Validation: S7 RED kill switch CORRETO</h4>
+      <ul>
+        <li><strong>Lista suja MTE 07/abr/2026</strong>: confirmada. BYD esta na lista suja desde abril 2026.</li>
+        <li><strong>BNDES funding bloqueado</strong>: confirmado. R$ 800M+ inacessiveis.</li>
+        <li><strong>v0.6 scorecard</strong>: S7 era o UNICO dimension que v0.6 acertou com acuracia ~80 por cento.</li>
+        <li><strong>Kill switch logic</strong>: S7 ESG override todas as sessoes quando ativo — confirmado como correto.</li>
+        <li><strong>Implicacao para v2.0</strong>: manter kill switch como mecanismo central. S7 nao deve ser subestimado.</li>
+        <li><strong>Prioridade maxima</strong>: remover da lista suja MTE em 90 dias para desbloquear BNDES e parcerias.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S7.6</div>
+    <h3 class="block-title">Kill switch protocol — S7 override flowchart</h3>
+    <div class="block-prose">
+      <p>O kill switch opera como um circuit breaker binario. Quando S7 = RED:</p>
+      <ol>
+        <li>Todas as acoes de capex novo sao pausadas automaticamente</li>
+        <li>BNDES funding fica bloqueado (S3 = RED)</li>
+        <li>Novas parcerias criticas (EVE Tier 1) ficam suspensas</li>
+        <li>S6 framework ativa modo defensivo total</li>
+        <li>Decisao estrategica (reverter/reestruturar/hibernar) e triggered em 90 dias</li>
+      </ol>
+      <p><strong>Desativacao</strong>: S7 precisa ir para AMBER por 30 dias consecutivos E sair da lista suja MTE E auditoria ESG aprovada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== S8 · PRODUCTION RAMP ============================== -->
+<section class="section" id="sec-s8">
+  <div class="sec-head">
+    <div class="sec-num">S8</div>
+    <h2 class="sec-title">Production Ramp — SKD/CKD nacionalizacao + C2 Game Theory LFP verticalization</h2>
+    <p class="sec-lede">S8 rastreia a evolucao do mix SKD→CKD→nacional. A nacionalizacao progressiva reduz exposicao FX e melhora ViE. <strong>C2 Game Theory</strong>: LFP verticalization como moat estrategico contra precificacao agressiva.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S8.1</div>
+    <h3 class="block-title">SKD/CKD/Nacional mix trajectory 2025-2027</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Fase</th><th>Unidades/mes</th><th>por cento Nacional</th><th>Exposicao FX</th><th>ViE Efetivo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SKD full (2025)</td><td class="num">2,000</td><td class="num">0 por cento</td><td style="color:var(--bad)">60 por cento</td><td style="color:var(--warn)">0.65</td></tr>
+        <tr><td>SKD→CKD transicao (mid-2026)</td><td class="num">3,000</td><td class="num">25 por cento</td><td style="color:var(--warn)">45 por cento</td><td style="color:var(--warn)">0.72</td></tr>
+        <tr><td>CKD parcial (end-2026)</td><td class="num">5,000</td><td class="num">45 por cento</td><td style="color:var(--warn)">30 por cento</td><td style="color:var(--good)">0.80</td></tr>
+        <tr style="background:rgba(74,222,128,0.05)"><td>CKD→Nacional (2027)</td><td class="num">8,000</td><td class="num">70 por cento</td><td style="color:var(--good)">15 por cento</td><td style="color:var(--good)">0.88</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S8.5 — C2 Game Theory: LFP Verticalization</div>
+    <h3 class="block-title">AG-DIFF-1: LFP verticalization como moat estrutural contra guerra de precos</h3>
+    <div class="insights warn">
+      <h4>C2 Game Theory: LFP Verticalization Rationale</h4>
+      <ul>
+        <li><strong>Contexto</strong>: Stellantis/VW/Geely estao em Price War no Brasil. Guerra de precos e tentadora mas destrutiva (ROI -60 por cento a -77 por cento).</li>
+        <li><strong>LFP verticalization</strong>: verticalizar a cadeia de batteries LFP localmente em Camaçari cria custo marginal menor para BYD vs importacao de CATL cells.</li>
+        <li><strong>Moat estrutural</strong>: capacidade de battery local e barreira de entrada para concorrentes que dependem de importacao.</li>
+        <li><strong>Game theory payoff</strong>: em Nash Differentiate, quem verticaliza primeiro obtem vantagem de custo de longo prazo. Custo de ser primeiro: R$ 600M. Payoff: >R$ 1.2bi em 5 anos.</li>
+        <li><strong>Implementacao</strong>: AG-DIFF-1. Prioridade: CRITICA. Timeline: 18-24 meses. Dependencias: S7 ESG (kill switch off), S3 BNDES ( funding).</li>
+      </ul>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>Investment</th><th>Cost (R$ M)</th><th>Payoff (5y, R$ M)</th><th>ROI</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(74,222,128,0.06)">
+          <td><b>AG-DIFF-1: LFP Verticalization</b></td>
+          <td class="num">600</td>
+          <td class="num" style="color:var(--good)">1,200+</td>
+          <td class="num" style="color:var(--good)">+100 por cento</td>
+          <td><span class="status-red">CRITICA</span></td>
+        </tr>
+        <tr>
+          <td><b>AG-DIFF-2: Technology Differentiation</b></td>
+          <td class="num">200</td>
+          <td class="num" style="color:var(--good)">450</td>
+          <td class="num" style="color:var(--good)">+125 por cento</td>
+          <td><span style="color:var(--warn)">ALTA</span></td>
+        </tr>
+        <tr>
+          <td><b>AG-DIFF-3: War of Attrition Hold</b></td>
+          <td class="num">0 (opportunity cost)</td>
+          <td class="num" style="color:var(--good)">200 (share preservation)</td>
+          <td class="num" style="color:var(--good)">+infinity</td>
+          <td><span class="status-red">CRITICA</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== S9 · DEMAND GROWTH ============================== -->
+<section class="section" id="sec-s9">
+  <div class="sec-head">
+    <div class="sec-num">S9</div>
+    <h2 class="sec-title">Demand Growth — BYD/DT share + nacional + EV penetration</h2>
+    <p class="sec-lede">S9 monitora a evolucao da demanda por EVs no Brasil. Status: GREEN. BYD vende tudo que produz. EV share 13.5 por cento em Jul/2026. Porem risco de saturacao se Price War continuar.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S9.1</div>
+    <h3 class="block-title">Demand indicators — GREEN (BYD overperforming)</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Indicator</th><th>Jul 2026</th><th>Target 2027</th><th>Trend</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>EV market share (Brasil)</td><td class="num">13.5 por cento</td><td class="num">18 por cento</td><td><span class="trend-up">&#8593;</span></td></tr>
+        <tr><td>BYD share of EV market</td><td class="num">~45 por cento</td><td class="num">40-50 por cento</td><td><span style="color:var(--warn)">stable</span></td></tr>
+        <tr><td>BYD D60/D1D backlog</td><td class="num">3x monthly prod</td><td class="num">2x</td><td><span style="color:var(--good)">strong</span></td></tr>
+        <tr><td>DT penetration (fleet)</td><td class="num">8 por cento</td><td class="num">15 por cento</td><td><span class="trend-up">&#8593;</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S9.2</div>
+    <h3 class="block-title">Demand scenarios</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Scenario</th><th>Prob</th><th>EV Share 2027</th><th>BYD Volume Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Upside (T-MV5)</td><td class="num">15 por cento</td><td class="num" style="color:var(--good)">22 por cento</td><td class="num" style="color:var(--good)">+30 por cento</td></tr>
+        <tr><td>Baseline</td><td class="num">65 por cento</td><td class="num">18 por cento</td><td class="num">+15 por cento</td></tr>
+        <tr><td style="color:var(--bad)">Downside (Price War)</td><td class="num">20 por cento</td><td class="num" style="color:var(--bad)">12 por cento</td><td class="num" style="color:var(--bad)">-20 por cento</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== S10 · TARIFF ============================== -->
+<section class="section" id="sec-s10">
+  <div class="sec-head">
+    <div class="sec-num">S10</div>
+    <h2 class="sec-title">Tariff — weight 0.10 | Tariff e #1 VaR contributor (29 por cento)</h2>
+    <p class="sec-lede">S10 rastreia o regime tarifario para veiculos eletricos importados da China. <strong>Status: RED</strong>. Tariff weight atualizada de 0.05 para 0.10 conforme C1 validation. Tariff e o fator #1 contributor para VaR 95 por cento em 29 por cento.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S10.1</div>
+    <h3 class="block-title">Tariff schedule 2025-2027</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Periodo</th><th>Tarifa Efetiva</th><th>Base</th><th>Sessions Impacted</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,107,99,0.08)">
+          <td>2025 (IED 2024)</td>
+          <td class="num" style="color:var(--bad)">+20 por cento</td>
+          <td>IEF +65 por cento</td>
+          <td>S1, S3, S4, S10</td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.08)">
+          <td>2026 H1 (Novo IED)</td>
+          <td class="num" style="color:var(--bad)">+35 por cento (imposed)</td>
+          <td>IEF +65 por cento + tariff</td>
+          <td>S1, S2, S3, S4, S10</td>
+        </tr>
+        <tr style="background:rgba(255,107,99,0.06)">
+          <td>2026 H2 (retaliatory)</td>
+          <td class="num" style="color:var(--bad)">+35 por cento + retaliação</td>
+          <td>Potential retaliation</td>
+          <td>S1, S3, S10</td>
+        </tr>
+        <tr>
+          <td>2027 (depends on negotiation)</td>
+          <td class="num" style="color:var(--warn)">+20 por cento a +35 por cento</td>
+          <td>Renegociacao MDIC</td>
+          <td>S1, S3, S10</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S10.2 — C1 Validation: Weight 0.05→0.10</div>
+    <h3 class="block-title">C1 INVALIDOU S10: modelo v0.6 subestimava impacto tarifario por fator 3x</h3>
+    <div class="insights warn">
+      <h4>C1 Validation: S10 INVALIDADO — recalibrar weight 0.05→0.10</h4>
+      <ul>
+        <li><strong>Problema v0.6</strong>: S10 weight era 0.05. C1 mostra que tariff e na verdade o #1 VaR contributor (29 por cento).</li>
+        <li><strong>Novo weight v2.0</strong>: 0.10 (dobro do anterior).</li>
+        <li><strong>Vol recalibrada</strong>: sigma 25 por cento (v0.6 usava 15 por cento).</li>
+        <li><strong>Impacto no VaR</strong>: S10 agora contribui 2.38 bi (era ~0.8 bi em v0.6).</li>
+        <li><strong>S1↔S10 coupling</strong>: duplo shock FX+Tariff e o pior cenario compounded (rho=0.62).</li>
+        <li><strong>Acao</strong>: recalibrar modelo com dados realized 2025-2026. Re-run Monte Carlo.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S10.3</div>
+    <h3 class="block-title">Tariff impact on pricing</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Model</th><th>Base Cost (R$ k)</th><th>Tariff Impact</th><th>Final Price (R$ k)</th><th>Competitiveness</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Song Plus (importado)</td><td class="num">95</td><td class="num" style="color:var(--bad)">+20 por cento</td><td class="num" style="color:var(--warn)">114</td><td><span style="color:var(--warn)">AMBER</span></td></tr>
+        <tr style="background:rgba(255,107,99,0.06)"><td>Song Plus (CKD)</td><td class="num">95</td><td class="num" style="color:var(--warn)">+10 por cento</td><td class="num" style="color:var(--good)">104.5</td><td><span class="status-green">GREEN</span></td></tr>
+        <tr><td>D60 (nacional)</td><td class="num">82</td><td class="num">0 por cento</td><td class="num" style="color:var(--good)">82</td><td><span class="status-green">GREEN</span></td></tr>
+        <tr><td>Seal (importado)</td><td class="num">120</td><td class="num" style="color:var(--bad)">+20 por cento</td><td class="num" style="color:var(--bad)">144</td><td><span class="status-red">RED</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== S11 · COMPETITION ============================== -->
+<section class="section" id="sec-s11">
+  <div class="sec-head">
+    <div class="sec-num">S11</div>
+    <h2 class="sec-title">Competition — Nash Differentiate equilibrium: (Differentiate, Differentiate)</h2>
+    <p class="sec-lede">S11 modela o jogo competitivo entre BYD e rivais (Stellantis/VW/Geely/Tesla). <strong>Nash Differentiate equilibrium: (Differentiate, Differentiate)</strong>. Guerra de precos e sub-otima para todos. <strong>C1 INVALIDOU</strong> v0.6 que modelava como Price War.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S11.1</div>
+    <h3 class="block-title">Competitive landscape — 4 players, 3 strategic options</h3>
+    <table class="t">
+      <thead>
+        <tr><th>Player</th><th>Market Share</th><th>Strategic Posture</th><th>EV Focus</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>BYD</td><td class="num">~45 por cento</td><td><span style="color:var(--good)">Leader (Differentiate)</span></td><td>Full range EV</td></tr>
+        <tr><td>Stellantis</td><td class="num">~20 por cento</td><td><span style="color:var(--warn)">Follower (Differentiate)</span></td><td>Hybrid+EV</td></tr>
+        <tr><td>VW Group</td><td class="num">~15 por cento</td><td><span style="color:var(--warn)">Follower (Differentiate)</span></td><td>ID series</td></tr>
+        <tr><td>Geely/EX5</td><td class="num">~8 por cento</td><td><span style="color:var(--warn)">Aggressor (Differentiate)</span></td><td>Value EV</td></tr>
+        <tr><td>Tesla</td><td class="num">~5 por cento</td><td><span style="color:var(--warn)">Stable (Differentiate)</span></td><td>Premium EV</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">S11.4 — C2 Game Theory: Nash Differentiate Integration</div>
+    <h3 class="block-title">Nash Differentiate: equilibrium e (Differentiate, Differentiate) — NAO Price War</h3>
+    <div class="insights warn">
+      <h4>C2 Game Theory: Nash Differentiate Rationale</h4>
+      <ul>
+        <li><strong>Problema v0.6</strong>: S11 em v0.6 modelava o jogo competitivo como Price War. C1 INVALIDOU isso.</li>
+        <li><strong>Nash Differentiate</strong>: o equilibrium de Nash para este jogo e (Differentiate, Differentiate) — todos diferenciam, nenhum entra em guerra de precos.</li>
+        <li><strong>Game structure</strong>: payoff matrix mostra que Price War e estritamente dominado por Differentiate para todos os players.</li>
+        <li><strong>AG-DIFF-3</strong>: War of attrition hold — NAO iniciar guerra de precos. Aceitar share sacrifice temporario.</li>
+        <li><strong>AG-DIFF-2</strong>: Technology differentiation — Blade Battery, DM-p/p-i, smart driving. Criar premium tecnologico.</li>
+        <li><strong>AG-DIFF-1</strong>: LFP verticalization — moat de custo de longo prazo.</li>
+        <li><strong>Equilibrium stability</strong>: (Differentiate, Differentiate) e estavel porque nenhum player tem incentivo unilateral de desviar.</li>
+      </ul>
+    </div>
+    <table class="t">
+      <thead>
+        <tr><th>BYD / Rival</th><th>Price War</th><th>Differentiate</th><th>Hold</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><b>Price War</b></td><td class="num" style="color:var(--warn)">(-60%, -55%)</td><td class="num" style="color:var(--bad)">(-75%, +10%)</td><td class="num" style="color:var(--bad)">(-70%, 0%)</td></tr>
+        <tr><td><b>Differentiate</b></td><td class="num" style="color:var(--bad)">(+10%, -75%)</td><td class="num" style="color:var(--good)">(+5%, +5%) <b>EQUILIBRIUM</b></td><td class="num" style="color:var(--warn)">(-5%, +15%)</td></tr>
+        <tr><td><b>Hold</b></td><td class="num" style="color:var(--bad)">(0%, -70%)</td><td class="num" style="color:var(--warn)">(+15%, -5%)</td><td class="num" style="color:var(--warn)">(0%, 0%)</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--ink-2);margin-top:8px">Payoffs: (BYD return on equity, Rival return on equity). <strong>Equilibrium de Nash: (Differentiate, Differentiate)</strong> — ambos os players obtem retorno positivo.</p>
+  </div>
+</section>
+<!-- ============================== 8. OPEN QUESTIONS ============================== -->
+<section class="section" id="sec-8">
+  <div class="sec-head">
+    <div class="sec-num">08 · Open Questions</div>
+    <h2 class="sec-title">9 perguntas nao respondidas que podem mudar o framework</h2>
+    <p class="sec-lede">O D3 opera com incertezas. Estas 9 questoes em aberto tem impacto material no framework e precisam ser resolvidas com dados adicionais.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 8.1</div>
+    <h3 class="block-title">Open questions</h3>
+    <table class="t">
+      <thead>
+        <tr><th>#</th><th>Question</th><th>Impact</th><th>Owner</th><th>Deadline</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td>Quando exatamente a BYD sai da lista suja MTE? Plano de remediation aceito pelo MTE?</td><td style="color:var(--warn)">HIGH</td><td>Head Gov Relations</td><td>90d</td></tr>
+        <tr><td class="num">2</td><td>Qual o ViE efetivo apos renegociacao BNDES? Ha espaco para bridge financing?</td><td style="color:var(--warn)">HIGH</td><td>CFO</td><td>60d</td></tr>
+        <tr><td class="num">3</td><td>Quanto da capacidade EVE pode ser alocada a BYD Camaçari? Prioridade EVE vs CATL?</td><td style="color:var(--warn)">HIGH</td><td>Head Supply</td><td>60d</td></tr>
+        <tr><td class="num">4</td><td>A tarifa de 35 por cento sera mantida ou reduzida apos negociacao MDIC?</td><td style="color:var(--warn)">HIGH</td><td>Head Gov Relations</td><td>120d</td></tr>
+        <tr><td class="num">5</td><td>Qual e o timeline real para CKD nacional a 70 por cento? E realista para 2027?</td><td style="color:var(--warn)">MEDIUM</td><td>Head Supply</td><td>90d</td></tr>
+        <tr><td class="num">6</td><td>O plano de remediacao ESG reduz o passivo trabalhista para qual valor?</td><td style="color:var(--warn)">MEDIUM</td><td>CSO + Legal</td><td>90d</td></tr>
+        <tr><td class="num">7</td><td>Os multiplicadores de elasticidade S6 precisam de recalibracao apos C1?</td><td style="color:var(--warn)">MEDIUM</td><td>CSO + Data</td><td>60d</td></tr>
+        <tr><td class="num">8</td><td>A LFP verticalization pode ser acelerada para 18 meses em vez de 24?</td><td style="color:var(--warn)">MEDIUM</td><td>CEO + CFO</td><td>60d</td></tr>
+        <tr><td class="num">9</td><td>Qual e o appetite de risco real do Conselho para o kill switch S7?</td><td style="color:var(--warn)">HIGH</td><td>CEO + Conselho</td><td>30d</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================== LIMITATIONS ============================== -->
+<section class="section" id="sec-lim">
+  <div class="sec-head">
+    <div class="sec-num">§LIM</div>
+    <h2 class="sec-title">Limitacoes metodologicas</h2>
+    <p class="sec-lede">O D3 e um framework de decisao, nao uma previsao. Tem limitacoes que precisam ser comunicadas ao Conselho.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">§LIM.1</div>
+    <h3 class="block-title">Limites do modelo</h3>
+    <ul style="line-height:1.9">
+      <li><strong>Assumption: rational actors</strong> — o modelo assume que todos os players (BYD, Stellantis, VW, Geely) otimizam racionalmente. Na pratica, decisoes politicas, personalidade de CEOs e erros de gestao distorcem payoffs.</li>
+      <li><strong>Assumption: rho = 0.4 static</strong> — a correlacao FX-Supply e assumida constante. Em crises, correlacoes tendem a 1.0 (contagion).</li>
+      <li><strong>Assumption: kill switch binary</strong> — S7 e modelado como on/off binario. Na pratica, ha varios graus de ativacao do kill switch.</li>
+      <li><strong>Assumption: Nash equilibrium stable</strong> — equilibria de Nash assumem que o jogo se repete infinitamente. Em jogos finitos, diferentes equilibria podem emergir.</li>
+      <li><strong>Data quality: C1 validation</strong> — as invalidacoes de S2, S8, S10, S11 se baseiam em dados realised 2025-2026 que ainda sao limitados em volume.</li>
+      <li><strong>Monte Carlo: 10k paths</strong> — 10,000 simulacoes e razoavel mas nao captura black swan events (e.g., guerra comercial global, pandemia).</li>
+      <li><strong>ViE model: ponto único</strong> — o ViE e modelado como valor unico, sem distribuicao probabilistica propria.</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-num">§LIM.2</div>
+    <h3 class="block-title">Risk not captured</h3>
+    <ul style="line-height:1.9">
+      <li><strong>Geopolitical tail risk</strong> — escalada comercial China-EUA pode afetar supply chain CATL/EVE de formas nao modeladas.</li>
+      <li><strong>Technology disruption</strong> — solid-state batteries podem invalidar a estrategia LFP verticalization.</li>
+      <li><strong>Consumer sentiment shift</strong> — cambio de percepcao de marca BYD (trabalhista) pode afetar demanda de forma nao proporcional ao scorecard.</li>
+      <li><strong>BNDES political risk</strong> — mudanca de gobierno pode afetar o programa IED de forma imprevisivel.</li>
+      <li><strong>Competitive response speed</strong> — o modelo assume que rivals respondem em 1-2 meses. Respostas mais rapidas (1-2 semanas) mudam a dinamica.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-meta">
+      <div class="footer-tag">D3 — Framework de Decisao Prescritiva</div>
+      <div class="footer-version">v2.0 — 21/jul/2026</div>
+    </div>
+    <div class="footer-desc">
+      <p>Este documento e propriedade exclusiva da BYD Camaçari. Informacoes confidenciais. Nao distribuir sem autorizacao escrita do CSO.</p>
+      <p class="footer-tech">Gerado com D3 Framework v2.0. Composite score = f(S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11) + parC sensitivity. VaR 95 por cento = R$ 8.21bi. CVaR 95 por cento = R$ 10.14bi. Nash Differentiate equilibrium: (Differentiate, Differentiate).</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D3 Knowledge Graph — BYD Camaçari 2025-2027 (Understand-Anything style)</title>
+<style>
+  :root {
+    --bg: #0e1014;
+    --bg-2: #15171c;
+    --bg-3: #1c1f26;
+    --ink: #e6e8ec;
+    --ink-dim: #9aa0a6;
+    --ink-mute: #5f6368;
+    --primary: #6b95f0;
+    --accent: #e0a45e;
+    --green: #5fb878;
+    --red: #ff5e5e;
+    --amber: #f5c542;
+    --border: #2a2d35;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Layout */
+  .app { display: grid; grid-template-columns: 320px 1fr 340px; grid-template-rows: 56px 1fr; height: 100vh; }
+  .header { grid-column: 1 / -1; background: var(--bg-2); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 16px; }
+  .sidebar { background: var(--bg-2); border-right: 1px solid var(--border); overflow-y: auto; padding: 16px; }
+  .detail { background: var(--bg-2); border-left: 1px solid var(--border); overflow-y: auto; padding: 16px; }
+  .canvas { background: var(--bg); position: relative; overflow: hidden; }
+
+  /* Header */
+  .logo { font-size: 18px; font-weight: 700; color: var(--primary); }
+  .logo-sub { font-size: 11px; color: var(--ink-dim); margin-top: 2px; }
+  .header-stats { display: flex; gap: 14px; margin-left: auto; font-size: 12px; color: var(--ink-dim); }
+  .header-stats span { display: inline-flex; align-items: center; gap: 4px; }
+  .header-stats strong { color: var(--ink); font-weight: 600; }
+  .persona-select { background: var(--bg-3); color: var(--ink); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+  .persona-select:hover { border-color: var(--primary); }
+
+  /* Sidebar */
+  .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-mute); margin: 14px 0 8px; font-weight: 600; }
+  .search-box { width: 100%; background: var(--bg-3); border: 1px solid var(--border); color: var(--ink); padding: 8px 10px; border-radius: 6px; font-size: 13px; }
+  .search-box:focus { outline: none; border-color: var(--primary); }
+  .filter-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .filter-btn { background: var(--bg-3); color: var(--ink-dim); border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+  .filter-btn:hover { color: var(--ink); border-color: var(--ink-dim); }
+  .filter-btn.active { background: var(--primary); color: var(--bg); border-color: var(--primary); font-weight: 600; }
+
+  .legend { display: flex; flex-direction: column; gap: 6px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-dim); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-icon { font-size: 12px; width: 12px; text-align: center; }
+
+  .tour-card { background: var(--bg-3); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+  .tour-card:hover { border-color: var(--primary); }
+  .tour-card.active { border-color: var(--primary); background: var(--bg); }
+  .tour-title { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+  .tour-meta { font-size: 10px; color: var(--ink-mute); }
+
+  /* Canvas */
+  svg.graph { width: 100%; height: 100%; cursor: grab; }
+  svg.graph:active { cursor: grabbing; }
+  .node { cursor: pointer; transition: opacity 0.2s; }
+  .node:hover { opacity: 0.85; }
+  .node-label { fill: var(--ink); font-size: 10px; pointer-events: none; user-select: none; font-weight: 500; }
+  .node-label.dim { fill: var(--ink-mute); font-weight: 400; }
+  .edge { stroke: #2a2d35; stroke-width: 1; transition: all 0.2s; }
+  .edge.highlight { stroke: var(--primary); stroke-width: 2; }
+  .edge.dim { opacity: 0.2; }
+  .edge-label { fill: var(--ink-mute); font-size: 8px; pointer-events: none; user-select: none; }
+
+  /* Tooltip */
+  .tooltip {
+    position: absolute;
+    background: var(--bg-2);
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: var(--ink);
+    max-width: 240px;
+    pointer-events: none;
+    z-index: 10;
+    display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .tooltip-title { font-weight: 600; color: var(--primary); margin-bottom: 3px; }
+
+  /* Detail panel */
+  .detail-empty { color: var(--ink-mute); font-size: 12px; padding: 20px 0; text-align: center; }
+  .detail-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-mute); margin-bottom: 6px; }
+  .detail-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+  .detail-desc { font-size: 13px; color: var(--ink-dim); margin-bottom: 14px; line-height: 1.5; }
+  .detail-meta { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 12px; margin-bottom: 14px; }
+  .detail-meta dt { color: var(--ink-mute); }
+  .detail-meta dd { color: var(--ink); }
+  .status-pill { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+  .status-pill.green { background: rgba(95,184,120,0.2); color: var(--green); }
+  .status-pill.amber { background: rgba(245,197,66,0.2); color: var(--amber); }
+  .status-pill.red { background: rgba(255,94,94,0.2); color: var(--red); }
+  .related-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-mute); margin: 12px 0 6px; }
+  .related-list { display: flex; flex-direction: column; gap: 4px; }
+  .related-link { background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; font-size: 11px; cursor: pointer; color: var(--ink-dim); }
+  .related-link:hover { color: var(--ink); border-color: var(--primary); }
+
+  /* Tour overlay */
+  .tour-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    display: none;
+    align-items: center; justify-content: center;
+  }
+  .tour-overlay.active { display: flex; }
+  .tour-modal {
+    background: var(--bg-2);
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    padding: 24px;
+    max-width: 520px;
+    width: 90%;
+  }
+  .tour-modal h3 { color: var(--primary); margin-bottom: 12px; font-size: 16px; }
+  .tour-step { color: var(--ink); margin-bottom: 16px; font-size: 14px; line-height: 1.6; }
+  .tour-progress { color: var(--ink-mute); font-size: 11px; margin-bottom: 12px; }
+  .tour-controls { display: flex; gap: 8px; justify-content: flex-end; }
+  .tour-controls button { background: var(--primary); color: var(--bg); border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; }
+  .tour-controls button.secondary { background: var(--bg-3); color: var(--ink); border: 1px solid var(--border); }
+
+  /* Zoom controls */
+  .zoom-controls {
+    position: absolute; bottom: 16px; right: 16px;
+    display: flex; flex-direction: column; gap: 4px;
+    z-index: 5;
+  }
+  .zoom-btn { width: 32px; height: 32px; background: var(--bg-2); border: 1px solid var(--border); color: var(--ink); border-radius: 6px; cursor: pointer; font-size: 16px; }
+  .zoom-btn:hover { border-color: var(--primary); }
+
+  /* Print */
+  @media print {
+    .sidebar, .header, .zoom-controls, .tour-overlay, .tooltip { display: none !important; }
+    .app { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+    .canvas { background: white; }
+    .node-label { fill: black !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div>
+      <div class="logo">⚙ D3 Knowledge Graph</div>
+      <div class="logo-sub">BYD Camaçari 2025-2027 · v2.0.1 · Understand-Anything style</div>
+    </div>
+    <div class="header-stats">
+      <span><strong id="stat-nodes">0</strong> nós</span>
+      <span><strong id="stat-edges">0</strong> edges</span>
+      <span><strong id="stat-tours">0</strong> tours</span>
+      <select id="persona" class="persona-select" title="Adapta UI ao perfil">
+        <option value="conselho">👔 Conselho</option>
+        <option value="ceo">🎯 CEO</option>
+        <option value="cfo">💰 CFO</option>
+        <option value="cso">🧠 CSO</option>
+        <option value="coo">⚙ COO</option>
+        <option value="risk_officer">🛡 Risk Officer</option>
+        <option value="headhunter">🎯 Headhunter</option>
+        <option value="linkedin">💼 LinkedIn</option>
+      </select>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <div class="section-title">🔍 Buscar</div>
+    <input id="search" class="search-box" type="text" placeholder="Buscar nó por nome ou descrição...">
+
+    <div class="section-title">⊕ Layout</div>
+    <div class="filter-group">
+      <button class="filter-btn active" id="layout-concentric" onclick="setLayout('concentric')">◎ Concêntrico</button>
+      <button class="filter-btn" id="layout-cluster" onclick="setLayout('cluster')">▦ Clusters</button>
+      <button class="filter-btn" id="layout-force" onclick="setLayout('force')">🌀 Force</button>
+    </div>
+
+    <div class="section-title">◐ Densidade</div>
+    <div class="filter-group">
+      <button class="filter-btn active" id="dens-all" onclick="setDensity(0)">Tudo (95)</button>
+      <button class="filter-btn" id="dens-30" onclick="setDensity(30)">Top 30</button>
+      <button class="filter-btn" id="dens-15" onclick="setDensity(15)">Top 15</button>
+    </div>
+
+    <div class="section-title">Filtros por categoria</div>
+    <div class="filter-group" id="filters"></div>
+    <div style="display:flex; gap:6px; margin-bottom: 6px;">
+      <button class="filter-btn" onclick="setAllFilters(true)">Tudo</button>
+      <button class="filter-btn" onclick="setAllFilters(false)">Nada</button>
+    </div>
+
+    <div class="section-title">📚 Guided Tours</div>
+    <div id="tours"></div>
+
+    <div class="section-title">🎨 Legenda</div>
+    <div class="legend" id="legend"></div>
+
+    <div class="section-title">⌨ Atalhos</div>
+    <div style="font-size: 11px; color: var(--ink-mute); line-height: 1.7;">
+      • Click nó = ver detalhes<br>
+      • Drag nó = mover<br>
+      • Scroll = zoom in/out<br>
+      • Drag fundo = pan<br>
+      • Esc = fechar painel<br>
+      • Labels aparecem só em zoom alto ou no nó hovered
+    </div>
+  </aside>
+
+  <main class="canvas">
+    <svg class="graph" id="graph"></svg>
+    <div class="zoom-controls">
+      <button class="zoom-btn" onclick="zoomIn()" title="Zoom +">+</button>
+      <button class="zoom-btn" onclick="zoomOut()" title="Zoom -">−</button>
+      <button class="zoom-btn" onclick="resetZoom()" title="Reset" style="font-size:12px;">⊙</button>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
+  </main>
+
+  <aside class="detail" id="detail">
+    <div class="detail-empty">Clique em um nó para ver detalhes, conexões, e a explicação em linguagem clara.</div>
+  </aside>
+</div>
+
+<div class="tour-overlay" id="tour-overlay">
+  <div class="tour-modal">
+    <h3 id="tour-title">Tour</h3>
+    <div class="tour-progress" id="tour-progress">Passo 1 de N</div>
+    <div class="tour-step" id="tour-step">...</div>
+    <div class="tour-controls">
+      <button class="secondary" onclick="exitTour()">Sair</button>
+      <button class="secondary" onclick="prevStep()">← Anterior</button>
+      <button onclick="nextStep()">Próximo →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// === DATA ===
+let DATA = null;
+
+// === FORCE-DIRECTED GRAPH ===
+// Layer mapping: cat → radial distance (0=centro, maior=periferia)
+const LAYER_MAP = {
+  'session': 0,           // centro absoluto: S_D2 + Composite
+  'dimension': 1,         // 11 dimensões
+  'coupling': 2,          // 20 couplings
+  'action_strategic': 3,  // 5 ações estratégicas
+  'action_tactical': 3,    // 10 ações táticas
+  'action_operational': 3,// 10 ações operacionais
+  'gate': 4,              // 9 approval gates
+  'metric': 4,            // 6 métricas
+  'risk': 5,              // 5 risks (periferia)
+  'persona': 5            // 17 personas (periferia extrema)
+};
+
+class Graph {
+  constructor(svg, data) {
+    this.svg = svg;
+    this.data = data;
+    this.width = svg.clientWidth;
+    this.height = svg.clientHeight;
+    this.transform = { x: this.width/2, y: this.height/2, k: 0.55 };
+    this.selectedNode = null;
+    this.hoverNode = null;
+    this.activeFilters = new Set(Object.keys(data.categories));
+    this.searchTerm = '';
+    this.persona = 'conselho';
+    this.layoutMode = 'concentric'; // 'concentric' | 'force' | 'cluster'
+    this.densityLimit = 0; // 0 = all, otherwise top N
+
+    this.svgNS = 'http://www.w3.org/2000/svg';
+
+    // Build nodes with importance score (for density filter)
+    const allNodes = data.nodes.map(n => ({ ...n, _importance: this.importanceOf(n) }));
+    this.allNodes = allNodes;
+    this.nodeMap = new Map(allNodes.map(n => [n.id, n]));
+    this.edges = data.edges.map(e => ({
+      ...e,
+      source: this.nodeMap.get(e.from),
+      target: this.nodeMap.get(e.to)
+    })).filter(e => e.source && e.target);
+
+    // Build visible nodes based on density
+    this.setDensity(this.densityLimit);
+
+    // Group nodes by layer
+    this.groupByLayer();
+
+    // Initial layout (concentric)
+    this.initConcentricLayout();
+
+    // Create SVG layers (z-order)
+    this.g = document.createElementNS(this.svgNS, 'g');
+    this.svg.appendChild(this.g);
+    this.clusterG = document.createElementNS(this.svgNS, 'g'); // backgrounds
+    this.g.appendChild(this.clusterG);
+    this.edgeG = document.createElementNS(this.svgNS, 'g');
+    this.g.appendChild(this.edgeG);
+    this.nodeG = document.createElementNS(this.svgNS, 'g');
+    this.g.appendChild(this.nodeG);
+    this.labelG = document.createElementNS(this.svgNS, 'g');
+    this.g.appendChild(this.labelG);
+
+    this.updateTransform();
+    this.bindEvents();
+    this.renderClusters();
+    this.render();
+    this.tick();
+    setInterval(() => this.tick(), 1000/60);
+  }
+
+  importanceOf(n) {
+    // Sessions + composite = highest; risks + metrics = high; rest = medium; personas = lower
+    const map = { session: 100, dimension: 80, coupling: 70, action_strategic: 95, action_tactical: 60, action_operational: 50, gate: 65, metric: 85, risk: 90, persona: 30 };
+    return map[n.cat] || 50;
+  }
+
+  setDensity(limit) {
+    this.densityLimit = limit;
+    if (limit === 0 || limit >= this.allNodes.length) {
+      this.nodes = this.allNodes;
+    } else {
+      const sorted = [...this.allNodes].sort((a,b) => b._importance - a._importance);
+      this.nodes = sorted.slice(0, limit);
+    }
+    // Rebuild nodeMap + edges (filter edges that point to hidden nodes)
+    this.nodeMap = new Map(this.nodes.map(n => [n.id, n]));
+    this.edges = this.data.edges.map(e => ({
+      ...e,
+      source: this.nodeMap.get(e.from),
+      target: this.nodeMap.get(e.to)
+    })).filter(e => e.source && e.target);
+  }
+
+  groupByLayer() {
+    this.layers = {};
+    this.nodes.forEach(n => {
+      const layer = LAYER_MAP[n.cat] !== undefined ? LAYER_MAP[n.cat] : 4;
+      if (!this.layers[layer]) this.layers[layer] = [];
+      this.layers[layer].push(n);
+    });
+  }
+
+  initConcentricLayout() {
+    // Special case: S_D2 no centro absoluto
+    const d2 = this.nodeMap.get('S_D2');
+    if (d2) { d2.x = 0; d2.y = 0; d2.vx = 0; d2.vy = 0; d2._layer = 0; d2._angle = 0; d2._radius = 0; d2._fx = 0; d2._fy = 0; }
+
+    // Other session nodes: anel 0.5 (pequeno, em volta do D2)
+    const sessions = (this.layers[0] || []).filter(n => n.id !== 'S_D2');
+    sessions.forEach((n, i, arr) => {
+      const angle = (i / arr.length) * Math.PI * 2;
+      n._angle = angle;
+      n._radius = 90;
+      n._layer = 0;
+      n.x = Math.cos(angle) * 90;
+      n.y = Math.sin(angle) * 90;
+      n.vx = 0; n.vy = 0;
+    });
+
+    // Demais anéis
+    const ringRadii = { 1: 200, 2: 320, 3: 460, 4: 600, 5: 750 };
+    [1, 2, 3, 4, 5].forEach(layerIdx => {
+      const arr = this.layers[layerIdx] || [];
+      const r = ringRadii[layerIdx] || 600;
+      arr.forEach((n, i) => {
+        const angle = (i / arr.length) * Math.PI * 2;
+        n._angle = angle;
+        n._radius = r;
+        n._layer = layerIdx;
+        n.x = Math.cos(angle) * r;
+        n.y = Math.sin(angle) * r;
+        n.vx = 0; n.vy = 0;
+        n._fx = null; n._fy = null;
+      });
+    });
+  }
+
+  applyLayout(newMode) {
+    this.layoutMode = newMode;
+    this.groupByLayer();
+    if (newMode === 'concentric') {
+      this.initConcentricLayout();
+      this.tick();
+      this.renderClusters();
+      this.render();
+    } else if (newMode === 'force') {
+      // Release all fx/fy and let physics sort it out
+      this.nodes.forEach(n => { n._fx = null; n._fy = null; n.fx = null; n.fy = null; });
+      this.render();
+    } else if (newMode === 'cluster') {
+      // Cluster by category in grid zones
+      const cats = Object.keys(this.data.categories);
+      const gridSize = Math.ceil(Math.sqrt(cats.length));
+      const cellW = 380, cellH = 320;
+      cats.forEach((cat, ci) => {
+        const catNodes = this.nodes.filter(n => n.cat === cat);
+        const gx = ci % gridSize, gy = Math.floor(ci / gridSize);
+        const cx = (gx - (gridSize-1)/2) * cellW;
+        const cy = (gy - (gridSize-1)/2) * cellH;
+        catNodes.forEach((n, i) => {
+          const angle = (i / catNodes.length) * Math.PI * 2;
+          const r = Math.max(50, catNodes.length * 5);
+          n.x = cx + Math.cos(angle) * r;
+          n.y = cy + Math.sin(angle) * r;
+          n.vx = 0; n.vy = 0;
+        });
+      });
+      this.renderClusters();
+      this.render();
+    }
+  }
+
+  bindEvents() {
+    let dragNode = null;
+    let isPanning = false;
+    let panStart = null;
+
+    this.svg.addEventListener('mousedown', e => {
+      if (e.target === this.svg || e.target.tagName === 'g') {
+        isPanning = true;
+        panStart = { x: e.clientX, y: e.clientY, tx: this.transform.x, ty: this.transform.y };
+      }
+    });
+    this.svg.addEventListener('mousemove', e => {
+      if (isPanning && panStart) {
+        this.transform.x = panStart.tx + (e.clientX - panStart.x);
+        this.transform.y = panStart.ty + (e.clientY - panStart.y);
+        this.updateTransform();
+      } else if (dragNode) {
+        const pt = this.screenToWorld(e.clientX, e.clientY);
+        dragNode.fx = pt.x;
+        dragNode.fy = pt.y;
+      }
+    });
+    this.svg.addEventListener('mouseup', () => { isPanning = false; panStart = null; if (dragNode) { dragNode.fx = null; dragNode.fy = null; } dragNode = null; });
+    this.svg.addEventListener('mouseleave', () => { isPanning = false; panStart = null; if (dragNode) { dragNode.fx = null; dragNode.fy = null; } dragNode = null; this.hideTooltip(); });
+
+    this.svg.addEventListener('wheel', e => {
+      e.preventDefault();
+      const scale = e.deltaY > 0 ? 0.9 : 1.1;
+      this.transform.k = Math.max(0.2, Math.min(3, this.transform.k * scale));
+      this.updateTransform();
+    }, { passive: false });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { this.selectedNode = null; this.render(); this.renderDetail(null); }
+    });
+  }
+
+  screenToWorld(sx, sy) {
+    const rect = this.svg.getBoundingClientRect();
+    const cx = sx - rect.left, cy = sy - rect.top;
+    return {
+      x: (cx - this.transform.x) / this.transform.k,
+      y: (cy - this.transform.y) / this.transform.k
+    };
+  }
+
+  updateTransform() {
+    this.g.setAttribute('transform', `translate(${this.transform.x},${this.transform.y}) scale(${this.transform.k})`);
+  }
+
+  tick() {
+    const REPULSION = 4000;
+    const SPRING = 0.015;
+    const DAMPING = 0.85;
+    // Anchor gravity: how strongly each node wants to stay at its concentric position
+    const ANCHOR = this.layoutMode === 'concentric' ? 0.05 : 0.001;
+
+    for (let i = 0; i < this.nodes.length; i++) {
+      const a = this.nodes[i];
+      if (a.fx !== null) { a.x = a.fx; a.y = a.fy; a.vx = 0; a.vy = 0; continue; }
+      // Cluster mode: respect _fx/_fy (frozen position)
+      if (this.layoutMode === 'cluster' && a._fx !== undefined && a._fx !== null) {
+        a.x += (a._fx - a.x) * 0.15;
+        a.y += (a._fy - a.y) * 0.15;
+        a.vx = 0; a.vy = 0;
+        continue;
+      }
+
+      let fx = 0, fy = 0;
+
+      // Anchor force: pull toward concentric position
+      if (this.layoutMode === 'concentric' && a._radius !== undefined) {
+        const targetX = Math.cos(a._angle) * a._radius;
+        const targetY = Math.sin(a._angle) * a._radius;
+        fx += (targetX - a.x) * ANCHOR;
+        fy += (targetY - a.y) * ANCHOR;
+      }
+
+      // Repulsion
+      for (let j = i+1; j < this.nodes.length; j++) {
+        const b = this.nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d2 = dx*dx + dy*dy + 1;
+        if (d2 > 100000) continue;
+        const f = REPULSION / d2;
+        const d = Math.sqrt(d2);
+        fx += (dx/d) * f;
+        fy += (dy/d) * f;
+        b.vx -= (dx/d) * f * 0.01;
+        b.vy -= (dy/d) * f * 0.01;
+      }
+
+      for (const e of this.edges) {
+        const a2 = e.source === a ? e.target : (e.target === a ? e.source : null);
+        if (!a2) continue;
+        const dx = a2.x - a.x, dy = a2.y - a.y;
+        const d = Math.sqrt(dx*dx + dy*dy) + 0.1;
+        const target = e.type === 'contains' || e.type === 'composes' ? 80 : 140;
+        const f = SPRING * (d - target);
+        fx += (dx/d) * f;
+        fy += (dy/d) * f;
+      }
+
+      a.vx = (a.vx + fx) * DAMPING;
+      a.vy = (a.vy + fy) * DAMPING;
+      a.x += a.vx;
+      a.y += a.vy;
+    }
+    this.updatePositions();
+  }
+
+  updatePositions() {
+    this.nodes.forEach(n => {
+      const c = this.nodeMap.get(n.id);
+      if (c) { c.x = n.x; c.y = n.y; }
+    });
+    this.edgeG.querySelectorAll('line').forEach((el, i) => {
+      const e = this.edges[i];
+      el.setAttribute('x1', e.source.x);
+      el.setAttribute('y1', e.source.y);
+      el.setAttribute('x2', e.target.x);
+      el.setAttribute('y2', e.target.y);
+    });
+    this.labelG.querySelectorAll('g').forEach((el, i) => {
+      const n = this.nodes[i];
+      if (!n) return;
+      el.setAttribute('transform', `translate(${n.x},${n.y})`);
+    });
+  }
+
+  matches(n) {
+    if (!this.activeFilters.has(n.cat)) return false;
+    if (this.searchTerm) {
+      const s = this.searchTerm.toLowerCase();
+      if (!((n.label || '').toLowerCase().includes(s) ||
+            (n.desc || '').toLowerCase().includes(s) ||
+            n.id.toLowerCase().includes(s))) return false;
+    }
+    return true;
+  }
+
+  isRelated(n) {
+    if (!this.selectedNode) return true;
+    if (n === this.selectedNode) return true;
+    return this.edges.some(e =>
+      (e.source === this.selectedNode && e.target === n) ||
+      (e.target === this.selectedNode && e.source === n)
+    );
+  }
+
+  renderClusters() {
+    // Render translucent cluster backgrounds by category
+    this.clusterG.innerHTML = '';
+    const catLayers = {};
+    this.nodes.forEach(n => {
+      if (!catLayers[n.cat]) catLayers[n.cat] = [];
+      catLayers[n.cat].push(n);
+    });
+    Object.entries(catLayers).forEach(([cat, nodes]) => {
+      if (nodes.length === 0) return;
+      const cx = nodes.reduce((s,n) => s+n.x, 0) / nodes.length;
+      const cy = nodes.reduce((s,n) => s+n.y, 0) / nodes.length;
+      const r = Math.max(60, nodes.length * 10 + 30);
+      const color = this.data.categories[cat]?.color || '#888';
+      const catLabel = this.data.categories[cat]?.label || cat;
+      // Background
+      const circle = document.createElementNS(this.svgNS, 'circle');
+      circle.setAttribute('cx', cx);
+      circle.setAttribute('cy', cy);
+      circle.setAttribute('r', r);
+      circle.setAttribute('fill', color);
+      circle.setAttribute('opacity', 0.06);
+      circle.setAttribute('stroke', color);
+      circle.setAttribute('stroke-width', 1);
+      circle.setAttribute('stroke-dasharray', '4,4');
+      circle.setAttribute('stroke-opacity', 0.4);
+      this.clusterG.appendChild(circle);
+      // Label
+      const labelG = document.createElementNS(this.svgNS, 'g');
+      labelG.setAttribute('transform', `translate(${cx},${cy - r - 6})`);
+      const bg = document.createElementNS(this.svgNS, 'rect');
+      const textWidth = catLabel.length * 6.5 + 12;
+      bg.setAttribute('x', -textWidth/2);
+      bg.setAttribute('y', -10);
+      bg.setAttribute('width', textWidth);
+      bg.setAttribute('height', 16);
+      bg.setAttribute('rx', 3);
+      bg.setAttribute('fill', '#15171c');
+      bg.setAttribute('stroke', color);
+      bg.setAttribute('stroke-width', 1);
+      bg.setAttribute('opacity', 0.95);
+      labelG.appendChild(bg);
+      const text = document.createElementNS(this.svgNS, 'text');
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('y', 2);
+      text.setAttribute('fill', color);
+      text.setAttribute('font-size', 10);
+      text.setAttribute('font-weight', 600);
+      text.textContent = catLabel.toUpperCase();
+      labelG.appendChild(text);
+      this.clusterG.appendChild(labelG);
+    });
+  }
+
+  render() {
+    // Edges
+    this.edgeG.innerHTML = '';
+    this.edges.forEach(e => {
+      const isHighlighted = this.selectedNode &&
+        (e.source === this.selectedNode || e.target === this.selectedNode);
+      const line = document.createElementNS(this.svgNS, 'line');
+      line.setAttribute('x1', e.source.x);
+      line.setAttribute('y1', e.source.y);
+      line.setAttribute('x2', e.target.x);
+      line.setAttribute('y2', e.target.y);
+      line.setAttribute('class', 'edge' + (isHighlighted ? ' highlight' : (this.selectedNode ? ' dim' : '')));
+      if (e.type === 'risk' || e.type === 'blocks') line.setAttribute('stroke', '#ff5e5e');
+      else if (e.type === 'unlocks' || e.type === 'enables' || e.type === 'satisfies') line.setAttribute('stroke', '#5fb878');
+      else if (e.type === 'mitigates') line.setAttribute('stroke', '#e0a45e');
+      this.edgeG.appendChild(line);
+    });
+
+    // Re-render cluster backgrounds (positions may have changed)
+    if (this.layoutMode === 'concentric') this.renderClusters();
+
+    // Nodes
+    this.nodeG.innerHTML = '';
+    this.nodes.forEach(n => {
+      const cat = this.data.categories[n.cat];
+      const isMatch = this.matches(n);
+      const isRelated = this.isRelated(n);
+      const isSelected = this.selectedNode === n;
+      const opacity = isMatch ? (this.selectedNode ? (isRelated ? 1 : 0.15) : 1) : 0.05;
+
+      const c = document.createElementNS(this.svgNS, 'circle');
+      c.setAttribute('cx', n.x);
+      c.setAttribute('cy', n.y);
+      c.setAttribute('r', n.size || 12);
+      c.setAttribute('fill', cat ? cat.color : '#888');
+      c.setAttribute('opacity', opacity);
+      c.setAttribute('stroke', isSelected ? '#fff' : (isMatch ? cat?.color : 'none'));
+      c.setAttribute('stroke-width', isSelected ? 3 : 1);
+      c.setAttribute('stroke-opacity', isSelected ? 1 : 0.4);
+      c.setAttribute('class', 'node');
+      c.addEventListener('mousedown', e => { e.stopPropagation(); this.selectedNode = n; this.render(); this.renderDetail(n); });
+      c.addEventListener('mouseenter', e => { this.hoverNode = n; this.showTooltip(e, n); });
+      c.addEventListener('mousemove', e => this.showTooltip(e, n));
+      c.addEventListener('mouseleave', () => { this.hoverNode = null; this.hideTooltip(); });
+      this.nodeG.appendChild(c);
+    });
+
+    // Labels with LOD: only show for important OR selected OR hovered
+    this.labelG.innerHTML = '';
+    const showAllLabels = this.transform.k > 0.9 || this.hoverNode || this.selectedNode;
+    this.nodes.forEach(n => {
+      const cat = this.data.categories[n.cat];
+      const isMatch = this.matches(n);
+      const isRelated = this.isRelated(n);
+      const isSelected = this.selectedNode === n;
+      const isHovered = this.hoverNode === n;
+      const opacity = isMatch ? (this.selectedNode ? (isRelated ? 1 : 0.15) : 1) : 0.05;
+      const shouldShow = showAllLabels || isSelected || isHovered || n._importance >= 80;
+      if (!shouldShow) return;
+
+      // Truncate long labels
+      let label = n.label;
+      if (label.length > 22) label = label.slice(0, 20) + '…';
+
+      const g = document.createElementNS(this.svgNS, 'g');
+      g.setAttribute('transform', `translate(${n.x},${n.y + (n.size||12) + 10})`);
+      g.setAttribute('opacity', opacity);
+      const text = document.createElementNS(this.svgNS, 'text');
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('class', 'node-label' + (this.selectedNode && !isRelated && !isSelected ? ' dim' : ''));
+      text.textContent = label;
+      g.appendChild(text);
+      this.labelG.appendChild(g);
+    });
+  }
+
+  showTooltip(e, n) {
+    const tt = document.getElementById('tooltip');
+    const cat = this.data.categories[n.cat];
+    tt.innerHTML = `<div class="tooltip-title">${cat ? cat.icon : ''} ${n.label}</div><div>${(n.desc || '').slice(0, 120)}${(n.desc||'').length > 120 ? '...' : ''}</div>`;
+    tt.style.display = 'block';
+    tt.style.left = (e.clientX + 14) + 'px';
+    tt.style.top = (e.clientY + 14) + 'px';
+  }
+  hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
+
+  renderDetail(n) {
+    const detail = document.getElementById('detail');
+    if (!n) { detail.innerHTML = '<div class="detail-empty">Clique em um nó para ver detalhes, conexões, e a explicação em linguagem clara.</div>'; return; }
+
+    const cat = this.data.categories[n.cat];
+    const persona = this.data.personas[this.persona] || { detail: 'summary' };
+    const showFull = persona.detail !== 'summary';
+
+    const related = this.edges.filter(e => e.source === n || e.target === n)
+      .map(e => ({ other: e.source === n ? e.target : e.source, type: e.type, label: e.label }));
+
+    let status = '';
+    if (n.status) {
+      const cls = n.status.includes('RED') ? 'red' : n.status.includes('AMBER') ? 'amber' : 'green';
+      status = `<span class="status-pill ${cls}">${n.status}</span>`;
+    }
+
+    let meta = '';
+    if (n.score) meta += `<dt>Score</dt><dd>${n.score} ${status}</dd>`;
+    if (n.owner) meta += `<dt>Owner</dt><dd>${n.owner}</dd>`;
+    if (n.deadline) meta += `<dt>Deadline</dt><dd>${n.deadline}</dd>`;
+    if (n.cost) meta += `<dt>Custo</dt><dd>${n.cost}</dd>`;
+
+    let desc = n.desc || '';
+    if (persona.detail === 'summary' && desc.length > 200) desc = desc.slice(0, 200) + '...';
+    if (persona.detail === 'deep') {
+      // Persona técnica: adicionar fórmulas / contexto
+    }
+
+    const relatedHTML = related.length ? related.map(r => `
+      <div class="related-link" onclick="graph.selectById('${r.other.id}')">
+        <strong>${r.type === 'contains' || r.type === 'composes' ? '◦' : '⇌'}</strong>
+        ${r.other.label}
+        ${r.label ? `<span style="color: var(--ink-mute); font-size:10px;"> · ${r.label}</span>` : ''}
+      </div>
+    `).join('') : '<div style="color: var(--ink-mute); font-size:11px;">Nenhuma conexão.</div>';
+
+    detail.innerHTML = `
+      <div class="detail-cat">${cat ? cat.label : ''}</div>
+      <div class="detail-title">${n.label}</div>
+      <div class="detail-desc">${desc}</div>
+      ${meta ? `<dl class="detail-meta">${meta}</dl>` : ''}
+      <div class="related-title">Conexões (${related.length})</div>
+      <div class="related-list">${relatedHTML}</div>
+    `;
+  }
+
+  selectById(id) {
+    const n = this.nodeMap.get(id);
+    if (n) { this.selectedNode = n; this.render(); this.renderDetail(n); }
+  }
+
+  setFilters(active) {
+    this.activeFilters = active;
+    this.render();
+  }
+
+  setSearch(term) {
+    this.searchTerm = term;
+    this.render();
+  }
+
+  setPersona(p) {
+    this.persona = p;
+    if (this.selectedNode) this.renderDetail(this.selectedNode);
+  }
+}
+
+let graph = null;
+
+function zoomIn() { graph.transform.k = Math.min(3, graph.transform.k * 1.2); graph.updateTransform(); graph.render(); }
+function zoomOut() { graph.transform.k = Math.max(0.2, graph.transform.k * 0.8); graph.updateTransform(); graph.render(); }
+function resetZoom() { graph.transform = { x: graph.width/2, y: graph.height/2, k: 0.55 }; graph.updateTransform(); graph.render(); }
+function fitToView() {
+  // Center the graph + adjust zoom so all content fits
+  graph.transform = { x: graph.width/2, y: graph.height/2, k: 0.55 };
+  graph.updateTransform();
+  graph.render();
+}
+
+function setLayout(mode) {
+  document.querySelectorAll('[id^=layout-]').forEach(b => b.classList.remove('active'));
+  document.getElementById('layout-' + mode).classList.add('active');
+  if (graph) {
+    graph.applyLayout(mode);
+  }
+}
+
+function setDensity(limit) {
+  document.querySelectorAll('[id^=dens-]').forEach(b => b.classList.remove('active'));
+  if (limit === 0) document.getElementById('dens-all').classList.add('active');
+  else document.getElementById('dens-' + limit).classList.add('active');
+  if (graph) {
+    graph.setDensity(limit);
+    graph.groupByLayer();
+    graph.applyLayout(graph.layoutMode);
+  }
+}
+
+// === FILTERS ===
+function renderFilters() {
+  const c = document.getElementById('filters');
+  c.innerHTML = '';
+  Object.entries(DATA.categories).forEach(([k, v]) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn active';
+    btn.textContent = `${v.icon} ${v.label}`;
+    btn.onclick = () => {
+      btn.classList.toggle('active');
+      const active = new Set();
+      document.querySelectorAll('#filters .filter-btn.active').forEach(b => {
+        const cat = Object.entries(DATA.categories).find(([_, v]) => b.textContent.includes(v.label));
+        if (cat) active.add(cat[0]);
+      });
+      graph.setFilters(active);
+    };
+    c.appendChild(btn);
+  });
+}
+
+function setAllFilters(state) {
+  document.querySelectorAll('#filters .filter-btn').forEach(b => b.classList.toggle('active', state));
+  const active = state ? new Set(Object.keys(DATA.categories)) : new Set();
+  graph.setFilters(active);
+}
+
+// === LEGEND ===
+function renderLegend() {
+  const l = document.getElementById('legend');
+  l.innerHTML = '';
+  const counts = {};
+  DATA.nodes.forEach(n => counts[n.cat] = (counts[n.cat] || 0) + 1);
+  Object.entries(DATA.categories).forEach(([k, v]) => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<span class="legend-dot" style="background:${v.color}"></span><span>${v.icon} ${v.label} (${counts[k] || 0})</span>`;
+    l.appendChild(item);
+  });
+}
+
+// === TOURS ===
+let currentTour = null;
+let currentStep = 0;
+
+function renderTours() {
+  const t = document.getElementById('tours');
+  t.innerHTML = '';
+  DATA.tours.forEach(tour => {
+    const card = document.createElement('div');
+    card.className = 'tour-card';
+    card.innerHTML = `
+      <div class="tour-title">▶ ${tour.title}</div>
+      <div class="tour-meta">${tour.steps.length} passos · ${tour.audience.join(', ')}</div>
+    `;
+    card.onclick = () => startTour(tour);
+    t.appendChild(card);
+  });
+}
+
+function startTour(tour) {
+  currentTour = tour;
+  currentStep = 0;
+  document.getElementById('tour-overlay').classList.add('active');
+  showStep();
+}
+
+function showStep() {
+  if (!currentTour) return;
+  const step = currentTour.steps[currentStep];
+  document.getElementById('tour-title').textContent = currentTour.title;
+  document.getElementById('tour-progress').textContent = `Passo ${currentStep + 1} de ${currentTour.steps.length}`;
+  document.getElementById('tour-step').textContent = step.say;
+  graph.selectById(step.node);
+}
+
+function nextStep() {
+  if (!currentTour) return;
+  if (currentStep < currentTour.steps.length - 1) { currentStep++; showStep(); }
+  else exitTour();
+}
+function prevStep() {
+  if (!currentTour) return;
+  if (currentStep > 0) { currentStep--; showStep(); }
+}
+function exitTour() {
+  currentTour = null;
+  document.getElementById('tour-overlay').classList.remove('active');
+}
+
+// === INIT ===
+function showError(msg) {
+  const detail = document.getElementById('detail');
+  detail.innerHTML = `
+    <div style="padding: 20px; color: var(--ink); font-size: 13px; line-height: 1.6;">
+      <div style="color: var(--red); font-weight: 700; margin-bottom: 12px; font-size: 16px;">⚠ Erro ao carregar grafo</div>
+      <div style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-bottom: 12px; font-family: monospace; font-size: 11px; color: var(--ink-dim); white-space: pre-wrap;">${msg}</div>
+      <div style="color: var(--ink-dim); font-size: 12px;">
+        <strong>Possíveis causas:</strong><br>
+        1. Você abriu via <code>file://</code> (CORS bloqueia fetch).<br>
+        2. JSON não está no mesmo diretório do HTML.<br>
+        <br>
+        <strong>Solução:</strong> Servir via servidor local:
+      </div>
+      <pre style="background: var(--bg-3); border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-size: 11px; color: var(--green); margin-top: 8px;">python -m http.server 8000
+# depois abra: http://localhost:8000/D3-UNDERSTAND-ANYTHING.html</pre>
+    </div>
+  `;
+  document.getElementById('stat-nodes').textContent = '!';
+  document.getElementById('stat-edges').textContent = '!';
+}
+
+async function init() {
+  // Strategy: try fetch first (when served), fallback to inline <script type="application/json">
+  let jsonData = null;
+  let lastError = null;
+
+  // Try 1: fetch from server
+  try {
+    const res = await fetch('D3-KNOWLEDGE-GRAPH.json');
+    if (res.ok) {
+      jsonData = await res.json();
+      console.log('[D3] Loaded from fetch');
+    } else {
+      lastError = `fetch returned ${res.status}`;
+    }
+  } catch (e) {
+    lastError = `fetch failed: ${e.message}`;
+  }
+
+  // Try 2: inline <script type="application/json" id="graph-data">
+  if (!jsonData) {
+    const inline = document.getElementById('graph-data');
+    if (inline && inline.textContent.trim()) {
+      try {
+        jsonData = JSON.parse(inline.textContent);
+        console.log('[D3] Loaded from inline <script>');
+      } catch (e) {
+        lastError += ` | inline parse failed: ${e.message}`;
+      }
+    }
+  }
+
+  if (!jsonData) {
+    showError(lastError || 'unknown');
+    return;
+  }
+
+  DATA = jsonData;
+  document.getElementById('stat-nodes').textContent = DATA.meta.stats.nodes;
+  document.getElementById('stat-edges').textContent = DATA.meta.stats.edges;
+  document.getElementById('stat-tours').textContent = DATA.meta.stats.tours || (DATA.tours ? DATA.tours.length : 0);
+
+  graph = new Graph(document.getElementById('graph'), DATA);
+  renderFilters();
+  renderLegend();
+  renderTours();
+
+  document.getElementById('search').addEventListener('input', e => graph.setSearch(e.target.value));
+  document.getElementById('persona').addEventListener('change', e => graph.setPersona(e.target.value));
+
+  console.log(`[D3] Ready · ${DATA.nodes.length} nós · ${DATA.edges.length} edges · ${DATA.tours.length} tours`);
+}
+
+window.addEventListener('resize', () => {
+  if (graph) {
+    graph.width = graph.svg.clientWidth;
+    graph.height = graph.svg.clientHeight;
+  }
+});
+
+// init() será chamado via DOMContentLoaded para garantir que o
+// <script type="application/json" id="graph-data"> foi parseado
+// (ele vem DEPOIS deste <script> no HTML).
+</script>
+
+<!-- ============================================================
+     INLINE FALLBACK DATA
+     Permite que o HTML funcione via file:// sem servidor.
+     Se fetch() falhar por CORS, init() lê este bloco.
+     ============================================================ -->
+<script type="application/json" id="graph-data">
+{
+  "meta": {
+    "name": "D3 Framework Knowledge Graph",
+    "version": "v2.0.1",
+    "date": "2026-07-25",
+    "principle": "Graphs that teach > graphs that impress",
+    "stats": {
+      "nodes": 95,
+      "edges": 142,
+      "sessions": 6,
+      "dimensions": 11,
+      "couplings": 20,
+      "actions": 25,
+      "personas": 17
+    }
+  },
+  "categories": {
+    "session": { "color": "#f5c542", "label": "Sessão D2", "icon": "◐" },
+    "dimension": { "color": "#6b95f0", "label": "Dimensão", "icon": "◆" },
+    "coupling": { "color": "#5fb878", "label": "Acoplamento", "icon": "⇌" },
+    "action_strategic": { "color": "#e0a45e", "label": "Ação Estratégica", "icon": "★" },
+    "action_tactical": { "color": "#d4805a", "label": "Ação Tática", "icon": "●" },
+    "action_operational": { "color": "#b86060", "label": "Ação Operacional", "icon": "○" },
+    "persona": { "color": "#b87fd0", "label": "Persona RACI", "icon": "♟" },
+    "gate": { "color": "#e0e070", "label": "Approval Gate", "icon": "⛙" },
+    "risk": { "color": "#ff5e5e", "label": "Risco / Kill Switch", "icon": "☠" },
+    "metric": { "color": "#80d4d4", "label": "Métrica", "icon": "∑" }
+  },
+  "personas": {
+    "conselho": { "level": "board", "label": "Conselho de Administração", "detail": "summary" },
+    "ceo": { "level": "executive", "label": "CEO", "detail": "summary" },
+    "cfo": { "level": "executive", "label": "CFO", "detail": "full" },
+    "cso": { "level": "executive", "label": "CSO", "detail": "full" },
+    "coo": { "level": "executive", "label": "COO", "detail": "full" },
+    "risk_officer": { "level": "operational", "label": "Risk Officer", "detail": "deep" },
+    "headhunter": { "level": "external", "label": "Headhunter / Recrutador", "detail": "summary" },
+    "linkedin": { "level": "external", "label": "LinkedIn Prospect", "detail": "summary" }
+  },
+  "nodes": [
+    {"id": "S_D2", "cat": "session", "label": "D2 Atlas", "size": 38, "desc": "Fotografia preditiva 6 sessões paralelas. 65 KB. 18 figuras. Composite 71,8. Sem acoplamentos, sem branching, sem NPV, sem ownership."},
+    {"id": "S_CAMBIO", "cat": "session", "label": "Câmbio (S1)", "size": 30, "desc": "PTAX vol 30d, σ PTAX, VaR FX, hedge. BCB SGS 10813. σ 14,86% (10y) / 11,20% (12m)."},
+    {"id": "S_SUPPLY", "cat": "session", "label": "Supply Chain (S2)", "size": 30, "desc": "Lítio, CATL, EVE, SKD/CKD/Nacional. VaR supply R$ 2,27bi (10y) → R$ 4bi (12m rebound)."},
+    {"id": "S_REG", "cat": "session", "label": "Regulatório (S3)", "size": 30, "desc": "BNDES, ViE, lista suja MTE, FNDIT, IPI, tarifas BEV/PHEV/HEV/SKD-CKD."},
+    {"id": "S_COMP", "cat": "session", "label": "Competitivo (S11)", "size": 30, "desc": "Stellantis R$ 30bi, GM R$ 7bi, VW R$ 16bi, Geely, Leapmotor. NASH E3."},
+    {"id": "S_MACRO", "cat": "session", "label": "Macro (S6)", "size": 26, "desc": "IPCA, Selic, BRL/USD, EM stress, carry trade, VIX. Multiplier 1.0/1.5/2.0×."},
+    {"id": "S_COMP_71_8", "cat": "session", "label": "Composite 71,8", "size": 32, "desc": "Modo tensão, cluster 2. Defensivo, não expansivo. Pesos 30/30/20/20 (Câmbio/Regulatório/Supply/Macro)."},
+    {"id": "D_S1", "cat": "dimension", "label": "S1 — FX", "size": 22, "score": 78, "status": "AMBER", "desc": "PTAX vol 11,2% (12m). H% ótimo 30-91% por cenário S3."},
+    {"id": "D_S2", "cat": "dimension", "label": "S2 — Supply", "size": 22, "score": 85, "status": "RED", "desc": "Lítio rebound US$ 9k→22k. Deficit 1,5-80kt LCE 2026."},
+    {"id": "D_S3", "cat": "dimension", "label": "S3 — BNDES", "size": 22, "score": 70, "status": "GREEN*", "desc": "Expansão 75%, ViE 22%, mas lista suja = kill switch."},
+    {"id": "D_S4", "cat": "dimension", "label": "S4 — Pricing", "size": 22, "score": 72, "status": "AMBER", "desc": "Defensivo targeted. Catalog-wide REMOVIDO. Tier 0-3 ativo."},
+    {"id": "D_S5", "cat": "dimension", "label": "S5 — Partnerships", "size": 22, "score": 85, "status": "GREEN", "desc": "CATL delivery ~93%. EVE qualification em curso. Coalizão D proposta."},
+    {"id": "D_S6", "cat": "dimension", "label": "S6 — Macro", "size": 22, "score": 70, "status": "AMBER", "desc": "IPCA 4,5%, Selic 10,5%, EM stress moderado. Multiplier 1.0/1.5/2.0×."},
+    {"id": "D_S7", "cat": "dimension", "label": "S7 — ESG", "size": 26, "score": 92, "status": "RED", "desc": "Lista suja MTE 07/abr/2026. 163 resgatados. Kill switch BNDES."},
+    {"id": "D_S8", "cat": "dimension", "label": "S8 — Production Ramp", "size": 22, "score": 77, "status": "AMBER", "desc": "SKD 45% → CKD → Nacional 70%. FX exposure 90%→15%."},
+    {"id": "D_S9", "cat": "dimension", "label": "S9 — Demand", "size": 22, "score": 72, "status": "GREEN", "desc": "EV share 13,5%. BYD 12,8% retail. +153% YoY."},
+    {"id": "D_S10", "cat": "dimension", "label": "S10 — Tariff", "size": 22, "score": 78, "status": "AMBER→RED jan/2027", "desc": "35% Jan/2027. Camex rejeitou redução. Compound shock com FX."},
+    {"id": "D_S11", "cat": "dimension", "label": "S11 — Competitive", "size": 22, "score": 82, "status": "RED", "desc": "Stellantis R$ 30bi. Geely surging. NASH E3 estável."},
+    {"id": "C_S1S3", "cat": "coupling", "label": "S1↔S3", "size": 24, "desc": "Hedge sizing by BNDES scenario. h* = 30% (Expansão) → 91% (Rollback Total). Constraint-based."},
+    {"id": "C_S1S2", "cat": "coupling", "label": "S1↔S2", "size": 24, "desc": "12 combinações FX×Supply. Supply VaR 2,5× FX VaR em S2 RED."},
+    {"id": "C_S1S4", "cat": "coupling", "label": "S1↔S4", "size": 24, "desc": "Hedge vs defensivo. Ratio 5,5×→9,4× pós-tariff. Defensivo consome 54% margem."},
+    {"id": "C_S3S4", "cat": "coupling", "label": "S3↔S4", "size": 22, "desc": "Defensivo break-even ViE=10%. Catalog-wide unviable em RB Total."},
+    {"id": "C_S5S1", "cat": "coupling", "label": "S5↔S1", "size": 22, "desc": "Partnerships reduzem exposure FX. CATL LP locked 70%."},
+    {"id": "C_S5S2", "cat": "coupling", "label": "S5↔S2", "size": 22, "desc": "CATL delivery 93% (AMBER). EVE qualification reduz risco."},
+    {"id": "C_S5S3", "cat": "coupling", "label": "S5↔S3", "size": 22, "desc": "Partnerships com BNDES Mover. Coalizão D com VW."},
+    {"id": "C_S5S4", "cat": "coupling", "label": "S5↔S4", "size": 22, "desc": "Joint ventures afetam pricing defensivo."},
+    {"id": "C_S6ALL", "cat": "coupling", "label": "S6→all", "size": 26, "desc": "Macro multiplier 1.0/1.5/2.0× rescalla TODAS as prescrições. Composite 65/78/88."},
+    {"id": "C_S7S3", "cat": "coupling", "label": "S7↔S3", "size": 24, "desc": "ESG = kill switch BNDES. Lista suja = R$ 800M bloqueados."},
+    {"id": "C_S7S9", "cat": "coupling", "label": "S7↔S9", "size": 22, "desc": "ESG vs demand. Alta demanda absorve parcialmente reputação negativa."},
+    {"id": "C_S8S1", "cat": "coupling", "label": "S8↔S1", "size": 24, "desc": "Ramp reduz FX exposure 90%→40%. Δ R$ 650M em VaR."},
+    {"id": "C_S9S3", "cat": "coupling", "label": "S9↔S3", "size": 22, "desc": "Demanda vs BNDES. RB Parcial < 5% se vendas continuarem crescendo."},
+    {"id": "C_S10S1", "cat": "coupling", "label": "S10↔S1", "size": 24, "desc": "Tariff + FX = compound shock multiplicativo. +R$ 4,5-6bi/6m."},
+    {"id": "C_S10S4", "cat": "coupling", "label": "S10↔S4", "size": 24, "desc": "Tariff + defensivo? Margin 22%→8-12%. Reavaliar tier system."},
+    {"id": "C_S11S4", "cat": "coupling", "label": "S11↔S4", "size": 24, "desc": "Competition + defensivo escalado para Tier 2-3. NASH E3 estável."},
+    {"id": "A_E1", "cat": "action_strategic", "label": "E1: Aprovar pacote mitigação", "size": 20, "owner": "Conselho", "deadline": "Q3 2026", "cost": "R$ 3M"},
+    {"id": "A_E2", "cat": "action_strategic", "label": "E2: Bridge financing R$ 1,2-1,5bi", "size": 20, "owner": "Board", "deadline": "Q3 2026", "cost": "R$ 1,2bi"},
+    {"id": "A_E3", "cat": "action_strategic", "label": "E3: Resolver lista suja S7", "size": 22, "owner": "CEO", "deadline": "30/set/2026", "cost": "R$ 25M"},
+    {"id": "A_E4", "cat": "action_strategic", "label": "E4: Trigger T-MV1 (4-shock)", "size": 20, "owner": "Board", "deadline": "Q3 2026", "cost": "R$ 0"},
+    {"id": "A_E5", "cat": "action_strategic", "label": "E5: Coalizão D (BYD+VW)", "size": 20, "owner": "Board", "deadline": "Q4 2026", "cost": "R$ 50M"},
+    {"id": "A_T1", "cat": "action_tactical", "label": "T1: Hedge FX 95% (4 contrapartes)", "size": 20, "owner": "Risk+CFO", "deadline": "31/out/2026", "cost": "R$ 30M"},
+    {"id": "A_T2", "cat": "action_tactical", "label": "T2: Acelerar nacionalização 70%", "size": 20, "owner": "COO", "deadline": "31/out/2027", "cost": "R$ 280M"},
+    {"id": "A_T3", "cat": "action_tactical", "label": "T3: Defensivo Tier 0-3", "size": 20, "owner": "CMO", "deadline": "contínuo", "cost": "R$ 22,5M/ano"},
+    {"id": "A_T4", "cat": "action_tactical", "label": "T4: Rules engine (30 regras YAML)", "size": 20, "owner": "CSO+Risk", "deadline": "Q3 2026", "cost": "R$ 50k"},
+    {"id": "A_T5", "cat": "action_tactical", "label": "T5: RACI 17 personas + 9 gates", "size": 20, "owner": "CSO+CFO", "deadline": "Q3 2026", "cost": "R$ 0"},
+    {"id": "A_T6", "cat": "action_tactical", "label": "T6: LP CATL 70% lock", "size": 20, "owner": "Head Procurement", "deadline": "Q3 2026", "cost": "R$ 35M"},
+    {"id": "A_T7", "cat": "action_tactical", "label": "T7: NASH Equilibrium (não guerra)", "size": 20, "owner": "Head Strategy", "deadline": "contínuo", "cost": "R$ 1M/trim"},
+    {"id": "A_T8", "cat": "action_tactical", "label": "T8: Backtesting contínuo", "size": 20, "owner": "CSO", "deadline": "Q4 2026", "cost": "R$ 5M/ano"},
+    {"id": "A_T9", "cat": "action_tactical", "label": "T9: Dashboard live", "size": 20, "owner": "CSO+Eng", "deadline": "Q4 2026", "cost": "R$ 200k"},
+    {"id": "A_T10", "cat": "action_tactical", "label": "T10: MSCI + RepRisk monitoring", "size": 20, "owner": "Head ESG", "deadline": "Q3 2026", "cost": "R$ 2M/ano"},
+    {"id": "A_O1", "cat": "action_operational", "label": "O1: PTAX vol 30d intraday", "size": 18, "owner": "Risk Officer", "deadline": "contínuo", "cost": "R$ 0"},
+    {"id": "A_O2", "cat": "action_operational", "label": "O2: Lítio price + VaR supply", "size": 18, "owner": "Head Procurement", "deadline": "mensal", "cost": "R$ 0"},
+    {"id": "A_O3", "cat": "action_operational", "label": "O3: Lista suja MTE monitor", "size": 18, "owner": "Head ESG", "deadline": "contínuo", "cost": "R$ 0"},
+    {"id": "A_O4", "cat": "action_operational", "label": "O4: CATL/EVE delivery KPI", "size": 18, "owner": "Head Procurement", "deadline": "semanal", "cost": "R$ 0"},
+    {"id": "A_O5", "cat": "action_operational", "label": "O5: Composite score intraday", "size": 18, "owner": "Risk+CSO", "deadline": "contínuo", "cost": "R$ 0"},
+    {"id": "A_O6", "cat": "action_operational", "label": "O6: Relatório composite diário", "size": 18, "owner": "CSO", "deadline": "diário", "cost": "R$ 0"},
+    {"id": "A_O7", "cat": "action_operational", "label": "O7: Triggers AMBER/RED", "size": 18, "owner": "Rules engine", "deadline": "real-time", "cost": "R$ 0"},
+    {"id": "A_O8", "cat": "action_operational", "label": "O8: Kill switches override", "size": 18, "owner": "Rules engine", "deadline": "real-time", "cost": "R$ 0"},
+    {"id": "A_O9", "cat": "action_operational", "label": "O9: Audit trail (S3 WORM)", "size": 18, "owner": "Risk Officer", "deadline": "contínuo", "cost": "R$ 5k/mês"},
+    {"id": "A_O10", "cat": "action_operational", "label": "O10: YAML rules update", "size": 18, "owner": "CSO", "deadline": "trimestral", "cost": "R$ 0"},
+    {"id": "P_CONSELHO", "cat": "persona", "label": "Conselho", "size": 18, "desc": "Aprovação pacote mitigação, bridge, S7 resolution, triggers, coalizão."},
+    {"id": "P_CEO", "cat": "persona", "label": "CEO", "size": 18, "desc": "Sponsor E1-E5. Approve S7 resolution. 4-5 ações estratégicas."},
+    {"id": "P_CFO", "cat": "persona", "label": "CFO", "size": 18, "desc": "Aprovador T1 (hedge), E2 (bridge). Sponsor E3 (S7)."},
+    {"id": "P_CSO", "cat": "persona", "label": "CSO", "size": 18, "desc": "Owner T4-T10, O5-O10. Composite score. RACI 17 personas."},
+    {"id": "P_COO", "cat": "persona", "label": "COO", "size": 18, "desc": "Aprovador T2 (nacionalização 70%). Sponsor ramp."},
+    {"id": "P_CMO", "cat": "persona", "label": "CMO", "size": 18, "desc": "Owner T3 (defensivo Tier 0-3). Pricing strategy."},
+    {"id": "P_RISK", "cat": "persona", "label": "Risk Officer", "size": 18, "desc": "Owner T1 (hedge), O1 (PTAX), O5/O9 (audit). 4-5 ações."},
+    {"id": "P_HEAD_PROC", "cat": "persona", "label": "Head Procurement", "size": 18, "desc": "Owner T6 (LP CATL), O2 (lítio), O4 (delivery)."},
+    {"id": "P_HEAD_ESG", "cat": "persona", "label": "Head ESG/Compliance", "size": 18, "desc": "Owner T10 (MSCI/RepRisk), O3 (lista suja monitor)."},
+    {"id": "P_HEAD_STR", "cat": "persona", "label": "Head Strategy", "size": 18, "desc": "Owner T7 (NASH Equilibrium). Game theory."},
+    {"id": "P_HEAD_SUPPLY", "cat": "persona", "label": "Head Supply", "size": 18, "desc": "Co-owner T2 (nacionalização)."},
+    {"id": "P_HEAD_GOV", "cat": "persona", "label": "Head Gov Relations", "size": 18, "desc": "Co-owner E3 (S7 lista suja)."},
+    {"id": "P_TREASURY", "cat": "persona", "label": "Head Treasury", "size": 18, "desc": "Co-owner T1 (hedge FX execution)."},
+    {"id": "P_GOV", "cat": "persona", "label": "Monitor (CSO)", "size": 18, "desc": "Monitora Composite intraday. Dispara triggers."},
+    {"id": "P_BOARD", "cat": "persona", "label": "Board", "size": 18, "desc": "Approve E1-E5, R$ 280M+. Quorum 5/7. Board global + HQ China."},
+    {"id": "P_ENG", "cat": "persona", "label": "Engineering", "size": 18, "desc": "Owner T9 (dashboard). Build rules engine + dashboard."},
+    {"id": "P_ANALYST", "cat": "persona", "label": "Analyst", "size": 18, "desc": "Suporta Risk Officer. Monitora signals."},
+    {"id": "G_G1", "cat": "gate", "label": "G1 — S3 ≥ 18 meses ViE", "size": 16, "desc": "Gate 1: BNDES ViE forecast ≥ 18 meses para bridge financing."},
+    {"id": "G_G2", "cat": "gate", "label": "G2 — Taxa desconto 13%", "size": 16, "desc": "Gate 2: Risk-adjusted discount rate. Fallback 13% nominal."},
+    {"id": "G_G3", "cat": "gate", "label": "G3 — Composite AMBER", "size": 16, "desc": "Gate 3: Composite ≥ 65 (modo tensão) para ações táticas."},
+    {"id": "G_G4", "cat": "gate", "label": "G4 — Hedge h% por S3", "size": 16, "desc": "Gate 4: h% = 30% (Expansão) / 60% (RB Parcial) / 91% (RB Total)."},
+    {"id": "G_G5", "cat": "gate", "label": "G5 — S7 valid", "size": 16, "desc": "Gate 5: S7 ESG = AMBER (kill switch off) para capex novo."},
+    {"id": "G_G6", "cat": "gate", "label": "G6 — Defensivo ROI ≥ 0", "size": 16, "desc": "Gate 6: Defensivo targeted only. Catalog-wide unviable."},
+    {"id": "G_G7", "cat": "gate", "label": "G7 — BNDES R$ 1,5bi", "size": 16, "desc": "Gate 7: BNDES funding partial R$ 1,5bi contingente G5."},
+    {"id": "G_G8", "cat": "gate", "label": "G8 — Lista suja fora", "size": 16, "desc": "Gate 8: BYD fora da lista MTE para capex destravar."},
+    {"id": "G_G9", "cat": "gate", "label": "G9 — NASH stable E3", "size": 16, "desc": "Gate 9: 5 players em (Differentiate, Differentiate) — NASH E3."},
+    {"id": "R_LISTA_SUJA", "cat": "risk", "label": "S7 Kill Switch: Lista Suja", "size": 26, "desc": "BYD na lista suja MTE desde 07/abr/2026. Bloqueia BNDES. R$ 800M+ funding."},
+    {"id": "R_TARIFF", "cat": "risk", "label": "S10 Risk: Tariff 35%", "size": 22, "desc": "Tarifa de importação escalando para 35% em Jan/2027. Camex rejeitou redução."},
+    {"id": "R_GUERRA", "cat": "risk", "label": "S11 Risk: Guerra de preços", "size": 22, "desc": "Stellantis R$ 30bi + Geely. Guerra de preços = -R$ 8,6 bi NPV agregado."},
+    {"id": "R_OVERCAP", "cat": "risk", "label": "S8 Risk: Overcapacity 68%", "size": 22, "desc": "2027: 630k capacidade vs 200k demanda. 68% ociosa. Margem → zero."},
+    {"id": "R_LITIO", "cat": "risk", "label": "S2 Risk: Lítio rebound", "size": 22, "desc": "US$ 9k→22k (5 meses). Mina Jianxiawo fechada. Déficit 2026 esperado."},
+    {"id": "M_VaR821", "cat": "metric", "label": "VaR 95% = R$ 8,21 bi", "size": 22, "desc": "VaR 4-shock 6m, Monte Carlo 10k paths, 11 dimensões. Compound shock multiplicativo."},
+    {"id": "M_CVaR1014", "cat": "metric", "label": "CVaR 95% = R$ 10,14 bi", "size": 20, "desc": "Perda média quando VaR violado. 24% acima do VaR."},
+    {"id": "M_Composite718", "cat": "metric", "label": "Composite 71,8", "size": 24, "desc": "Modo tensão, cluster 2. Pesos 30/30/20/20 (Câmbio/Regulatório/Supply/Macro)."},
+    {"id": "M_TP100", "cat": "metric", "label": "Backtest 5/5 PERFEITO", "size": 22, "desc": "100% TP, 0% FN, 0% FP (após 4 correções), 9,3d avg, 88,9% accuracy. 6 stress events 2020-2025."},
+    {"id": "M_ROI200", "cat": "metric", "label": "ROI 200×", "size": 20, "desc": "R$ 3M investido vs R$ 200M+/ano stress evitado. Payback < 1 mês."},
+    {"id": "M_NPV85", "cat": "metric", "label": "NPV R$ 8,5 bi (cenário base)", "size": 20, "desc": "Base com mitigação: hedge FX 95% + nacionalização 70% + Nash Differentiate."}
+  ],
+  "edges": [
+    {"from": "S_D2", "to": "S_CAMBIO", "type": "session"},
+    {"from": "S_D2", "to": "S_SUPPLY", "type": "session"},
+    {"from": "S_D2", "to": "S_REG", "type": "session"},
+    {"from": "S_D2", "to": "S_COMP", "type": "session"},
+    {"from": "S_D2", "to": "S_MACRO", "type": "session"},
+    {"from": "S_D2", "to": "S_COMP_71_8", "type": "session"},
+    {"from": "S_CAMBIO", "to": "D_S1", "type": "contains"},
+    {"from": "S_SUPPLY", "to": "D_S2", "type": "contains"},
+    {"from": "S_REG", "to": "D_S3", "type": "contains"},
+    {"from": "S_REG", "to": "D_S7", "type": "contains"},
+    {"from": "S_REG", "to": "D_S10", "type": "contains"},
+    {"from": "S_REG", "to": "D_S8", "type": "contains"},
+    {"from": "S_COMP", "to": "D_S11", "type": "contains"},
+    {"from": "S_MACRO", "to": "D_S6", "type": "contains"},
+    {"from": "S_COMP_71_8", "to": "D_S1", "type": "composes"},
+    {"from": "S_COMP_71_8", "to": "D_S2", "type": "composes"},
+    {"from": "S_COMP_71_8", "to": "D_S3", "type": "composes"},
+    {"from": "S_COMP_71_8", "to": "D_S6", "type": "composes"},
+    {"from": "D_S1", "to": "D_S2", "type": "via", "via": "C_S1S2", "label": "12 combos FX×Supply"},
+    {"from": "D_S1", "to": "D_S3", "type": "via", "via": "C_S1S3", "label": "h* 30%→91%"},
+    {"from": "D_S1", "to": "D_S4", "type": "via", "via": "C_S1S4", "label": "ratio 9,4×"},
+    {"from": "D_S3", "to": "D_S4", "type": "via", "via": "C_S3S4", "label": "ViE=10%"},
+    {"from": "D_S5", "to": "D_S1", "type": "via", "via": "C_S5S1", "label": "LP CATL"},
+    {"from": "D_S5", "to": "D_S2", "type": "via", "via": "C_S5S2", "label": "EVE qualif"},
+    {"from": "D_S5", "to": "D_S3", "type": "via", "via": "C_S5S3", "label": "Coalizão D"},
+    {"from": "D_S5", "to": "D_S4", "type": "via", "via": "C_S5S4", "label": "JV pricing"},
+    {"from": "D_S6", "to": "D_S1", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
+    {"from": "D_S6", "to": "D_S2", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
+    {"from": "D_S6", "to": "D_S3", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
+    {"from": "D_S6", "to": "D_S4", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
+    {"from": "D_S7", "to": "D_S3", "type": "via", "via": "C_S7S3", "label": "kill switch"},
+    {"from": "D_S7", "to": "D_S9", "type": "via", "via": "C_S7S9", "label": "absorve"},
+    {"from": "D_S8", "to": "D_S1", "type": "via", "via": "C_S8S1", "label": "FX 90%→15%"},
+    {"from": "D_S9", "to": "D_S3", "type": "via", "via": "C_S9S3", "label": "RB < 5%"},
+    {"from": "D_S10", "to": "D_S1", "type": "via", "via": "C_S10S1", "label": "compound"},
+    {"from": "D_S10", "to": "D_S4", "type": "via", "via": "C_S10S4", "label": "margin↓"},
+    {"from": "D_S11", "to": "D_S4", "type": "via", "via": "C_S11S4", "label": "Tier 2-3"},
+    {"from": "D_S7", "to": "R_LISTA_SUJA", "type": "risk"},
+    {"from": "D_S10", "to": "R_TARIFF", "type": "risk"},
+    {"from": "D_S11", "to": "R_GUERRA", "type": "risk"},
+    {"from": "D_S8", "to": "R_OVERCAP", "type": "risk"},
+    {"from": "D_S2", "to": "R_LITIO", "type": "risk"},
+    {"from": "R_LISTA_SUJA", "to": "A_E3", "type": "blocks", "label": "bloqueia"},
+    {"from": "A_E3", "to": "G_G8", "type": "unlocks"},
+    {"from": "G_G8", "to": "G_G7", "type": "unlocks"},
+    {"from": "G_G7", "to": "A_T2", "type": "enables"},
+    {"from": "C_S1S3", "to": "A_T1", "type": "informs"},
+    {"from": "C_S1S2", "to": "A_T1", "type": "informs"},
+    {"from": "C_S1S4", "to": "A_T3", "type": "informs"},
+    {"from": "C_S3S4", "to": "A_T3", "type": "informs"},
+    {"from": "C_S5S1", "to": "A_T6", "type": "informs"},
+    {"from": "C_S5S2", "to": "A_T6", "type": "informs"},
+    {"from": "C_S5S3", "to": "A_E5", "type": "informs"},
+    {"from": "C_S6ALL", "to": "A_T4", "type": "informs"},
+    {"from": "C_S7S3", "to": "A_E3", "type": "informs"},
+    {"from": "C_S8S1", "to": "A_T2", "type": "informs"},
+    {"from": "C_S10S1", "to": "A_T1", "type": "informs"},
+    {"from": "C_S11S4", "to": "A_T3", "type": "informs"},
+    {"from": "A_T1", "to": "G_G4", "type": "satisfies"},
+    {"from": "A_T3", "to": "G_G6", "type": "satisfies"},
+    {"from": "A_E3", "to": "G_G5", "type": "satisfies"},
+    {"from": "A_T1", "to": "M_VaR821", "type": "mitigates", "label": "-R$ 1,67bi"},
+    {"from": "A_T2", "to": "M_VaR821", "type": "mitigates", "label": "-R$ 0,65bi"},
+    {"from": "A_T3", "to": "M_VaR821", "type": "mitigates", "label": "-R$ 0,50bi"},
+    {"from": "A_E3", "to": "M_VaR821", "type": "mitigates", "label": "libera R$ 0,8bi"},
+    {"from": "M_VaR821", "to": "M_CVaR1014", "type": "input"},
+    {"from": "M_Composite718", "to": "M_VaR821", "type": "feeds"},
+    {"from": "M_TP100", "to": "M_ROI200", "type": "supports"},
+    {"from": "M_ROI200", "to": "M_NPV85", "type": "supports"},
+    {"from": "A_E1", "to": "P_CONSELHO", "type": "owned-by"},
+    {"from": "A_E2", "to": "P_BOARD", "type": "owned-by"},
+    {"from": "A_E3", "to": "P_CEO", "type": "owned-by"},
+    {"from": "A_E4", "to": "P_BOARD", "type": "owned-by"},
+    {"from": "A_E5", "to": "P_BOARD", "type": "owned-by"},
+    {"from": "A_T1", "to": "P_RISK", "type": "owned-by"},
+    {"from": "A_T1", "to": "P_CFO", "type": "owned-by"},
+    {"from": "A_T2", "to": "P_COO", "type": "owned-by"},
+    {"from": "A_T3", "to": "P_CMO", "type": "owned-by"},
+    {"from": "A_T4", "to": "P_CSO", "type": "owned-by"},
+    {"from": "A_T5", "to": "P_CSO", "type": "owned-by"},
+    {"from": "A_T6", "to": "P_HEAD_PROC", "type": "owned-by"},
+    {"from": "A_T7", "to": "P_HEAD_STR", "type": "owned-by"},
+    {"from": "A_T8", "to": "P_CSO", "type": "owned-by"},
+    {"from": "A_T9", "to": "P_CSO", "type": "owned-by"},
+    {"from": "A_T9", "to": "P_ENG", "type": "owned-by"},
+    {"from": "A_T10", "to": "P_HEAD_ESG", "type": "owned-by"},
+    {"from": "A_O1", "to": "P_RISK", "type": "owned-by"},
+    {"from": "A_O2", "to": "P_HEAD_PROC", "type": "owned-by"},
+    {"from": "A_O3", "to": "P_HEAD_ESG", "type": "owned-by"},
+    {"from": "A_O4", "to": "P_HEAD_PROC", "type": "owned-by"},
+    {"from": "A_O5", "to": "P_RISK", "type": "owned-by"},
+    {"from": "A_O5", "to": "P_CSO", "type": "owned-by"},
+    {"from": "A_O6", "to": "P_CSO", "type": "owned-by"},
+    {"from": "A_O7", "to": "P_GOV", "type": "owned-by"},
+    {"from": "A_O8", "to": "P_GOV", "type": "owned-by"},
+    {"from": "A_O9", "to": "P_RISK", "type": "owned-by"},
+    {"from": "A_O10", "to": "P_CSO", "type": "owned-by"}
+  ],
+  "tours": [
+    {
+      "id": "tour-onboarding",
+      "title": "Onboarding: o framework em 5 minutos",
+      "audience": ["conselho", "headhunter", "linkedin"],
+      "steps": [
+        {"node": "S_D2", "say": "Começamos com o D2 Atlas. É a fotografia preditiva do programa. 6 sessões paralelas, 65 KB, composite 71,8."},
+        {"node": "S_COMP_71_8", "say": "Mas o composite sozinho não basta. É a média ponderada de 4 dimensões: Câmbio, Regulatório, Supply, Macro. Pesos 30/30/20/20."},
+        {"node": "D_S7", "say": "O detalhe que mata: S7 ESG está em RED 92, lista suja MTE desde abril/2026. Isso é kill switch do BNDES. Bloqueia R$ 800M de funding."},
+        {"node": "M_VaR821", "say": "Se nada for feito, o VaR 4-shock em 6 meses é R$ 8,21 bilhões. Monte Carlo com 10.000 paths e 4 choques simultâneos."},
+        {"node": "A_E3", "say": "Por isso a Ação E3 — resolver lista suja S7 — é prioridade máxima. R$ 25 milhões, deadline 30/set/2026. Sem ela, o resto trava."},
+        {"node": "M_ROI200", "say": "E o investimento? R$ 3 milhões. ROI 200×. Payback < 1 mês. 1 evento material evitado cobre tudo."}
+      ]
+    },
+    {
+      "id": "tour-couplings",
+      "title": "Os 20 couplings: como as dimensões se conversam",
+      "audience": ["cso", "cfo", "coo"],
+      "steps": [
+        {"node": "C_S1S3", "say": "Acoplamento S1↔S3: o hedge cambial ótimo depende do cenário BNDES. h* = 30% (Expansão) → 91% (Rollback Total). Constraint-based, não 50% flat."},
+        {"node": "C_S1S2", "say": "S1↔S2: 12 combinações FX×Supply. Supply VaR é 2,5× FX VaR em S2 RED. Lítio domina FX em stress conjunto."},
+        {"node": "C_S1S4", "say": "S1↔S4: hedge vs defensivo. Ratio 5,5× → 9,4× pós-tariff. Defensivo catalog-wide é REMOVIDO do action register — ROI -67%."},
+        {"node": "C_S6ALL", "say": "S6→all: macro reescala tudo. Multiplier 1.0/1.5/2.0×. Composite 65/78/88 por cluster."},
+        {"node": "C_S7S3", "say": "S7↔S3: ESG é kill switch do BNDES. Lista suja = R$ 800M bloqueados. Sem S7 GREEN, nenhuma action acima de R$ 30M destrava."},
+        {"node": "C_S10S1", "say": "S10↔S1: tariff + FX = compound shock multiplicativo. +R$ 4,5-6 bi em 6m. O maior contributor de VaR 4-shock."}
+      ]
+    },
+    {
+      "id": "tour-actions",
+      "title": "As 25 ações: o que fazer, em que ordem",
+      "audience": ["cfo", "coo", "cso"],
+      "steps": [
+        {"node": "A_E3", "say": "E3: resolver lista suja. R$ 25M, 30/set/2026. Owner: CEO. Bloqueia tudo se não resolver."},
+        {"node": "A_T1", "say": "T1: hedge FX 95% com 4 contrapartes. R$ 30M, 31/out/2026. Owner: Risk + CFO. Baseline 31/ago."},
+        {"node": "A_T2", "say": "T2: acelerar nacionalização para 70%. R$ 280M, 31/out/2027 (meta intermediária 45% em 31/dez/2026). Δ VaR: -R$ 650M."},
+        {"node": "A_T3", "say": "T3: defensivo Tier 0-3. Catalog-wide REMOVIDO. Targeted only. R$ 22,5M/ano. Owner: CMO."},
+        {"node": "A_O1", "say": "O1: monitorar PTAX vol 30d intraday 4×/dia. Custo zero. Owner: Risk Officer."}
+      ]
+    },
+    {
+      "id": "tour-risks",
+      "title": "Os 5 riscos materiais",
+      "audience": ["conselho", "ceo", "headhunter"],
+      "steps": [
+        {"node": "R_LISTA_SUJA", "say": "Risco #1: lista suja MTE. Kill switch BNDES. R$ 800M+ bloqueados. Certeza alta."},
+        {"node": "R_TARIFF", "say": "Risco #2: tariff 35% Jan/2027. Camex rejeitou redução. -R$ 7,5 bi NPV se nada feito. Certeza alta."},
+        {"node": "R_GUERRA", "say": "Risco #3: guerra de preços. Stellantis R$ 30bi + Geely. -R$ 3-5 bi NPV. Probabilidade alta."},
+        {"node": "R_OVERCAP", "say": "Risco #4: overcapacity 68% em 2027. 630k capacidade vs 200k demanda. Margem → zero. Certeza estrutural."},
+        {"node": "R_LITIO", "say": "Risco #5: lítio rebound. US$ 9k→22k (5 meses). Déficit 2026 esperado. Probabilidade média."}
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+// Boot: ensure DOM (incluindo <script type="application/json"> inline) está pronto
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+
+</body>
+</html>

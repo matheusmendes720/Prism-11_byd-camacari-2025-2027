@@ -1,0 +1,418 @@
+{
+  "inputs": {
+    "exposure_fx_6m_R$_M": 8820,
+    "vgv_6m_R$_M": 30000,
+    "units_6m": 50000,
+    "horizon_years": 3,
+    "discount_rate": 0.13
+  },
+  "old_params": {
+    "sigma": 0.1419,
+    "h_by_scenario": {
+      "Expansao": 0.3,
+      "Continuidade": 0.386,
+      "RollbackParcial": 0.617,
+      "RollbackTotal": 0.906
+    },
+    "var_fx_6m": 2080,
+    "defensivo_catalog": 4500,
+    "defensivo_targeted_tier2": 3000,
+    "defensivo_targeted_tier3": 4500
+  },
+  "new_params": {
+    "sigma": 0.16,
+    "h_by_scenario": {
+      "Expansao": 0.39,
+      "Continuidade": 0.46,
+      "RollbackParcial": 0.66,
+      "RollbackTotal": 0.93
+    },
+    "var_fx_6m": 2345,
+    "defensivo_catalog": 4500,
+    "defensivo_targeted_tier2": 3000,
+    "defensivo_targeted_tier3": 4500
+  },
+  "hedge_per_unit": {
+    "old_by_scenario": {
+      "Expansao": {
+        "h": 0.3,
+        "premium_6m_R$_M": 26.46,
+        "hedge_per_unit_6m_R$": 529.2
+      },
+      "Continuidade": {
+        "h": 0.386,
+        "premium_6m_R$_M": 34.0452,
+        "hedge_per_unit_6m_R$": 680.904
+      },
+      "RollbackParcial": {
+        "h": 0.617,
+        "premium_6m_R$_M": 54.4194,
+        "hedge_per_unit_6m_R$": 1088.388
+      },
+      "RollbackTotal": {
+        "h": 0.906,
+        "premium_6m_R$_M": 79.9092,
+        "hedge_per_unit_6m_R$": 1598.184
+      }
+    },
+    "new_by_scenario": {
+      "Expansao": {
+        "h": 0.39,
+        "premium_6m_R$_M": 34.398,
+        "hedge_per_unit_6m_R$": 687.96
+      },
+      "Continuidade": {
+        "h": 0.46,
+        "premium_6m_R$_M": 40.572,
+        "hedge_per_unit_6m_R$": 811.44
+      },
+      "RollbackParcial": {
+        "h": 0.66,
+        "premium_6m_R$_M": 58.21200000000001,
+        "hedge_per_unit_6m_R$": 1164.2400000000002
+      },
+      "RollbackTotal": {
+        "h": 0.93,
+        "premium_6m_R$_M": 82.02600000000001,
+        "hedge_per_unit_6m_R$": 1640.5200000000002
+      }
+    }
+  },
+  "ratio_old_catalog": {
+    "Expansao": {
+      "hedge_per_unit": 529.2,
+      "defensivo_per_unit": 4500,
+      "ratio": 8.503401360544217
+    },
+    "Continuidade": {
+      "hedge_per_unit": 680.904,
+      "defensivo_per_unit": 4500,
+      "ratio": 6.608861161044729
+    },
+    "RollbackParcial": {
+      "hedge_per_unit": 1088.388,
+      "defensivo_per_unit": 4500,
+      "ratio": 4.134554956504482
+    },
+    "RollbackTotal": {
+      "hedge_per_unit": 1598.184,
+      "defensivo_per_unit": 4500,
+      "ratio": 2.815695814749741
+    }
+  },
+  "ratio_new_catalog": {
+    "Expansao": {
+      "hedge_per_unit": 687.96,
+      "defensivo_per_unit": 4500,
+      "ratio": 6.541077969649398
+    },
+    "Continuidade": {
+      "hedge_per_unit": 811.44,
+      "defensivo_per_unit": 4500,
+      "ratio": 5.545696539485359
+    },
+    "RollbackParcial": {
+      "hedge_per_unit": 1164.2400000000002,
+      "defensivo_per_unit": 4500,
+      "ratio": 3.8651824366110072
+    },
+    "RollbackTotal": {
+      "hedge_per_unit": 1640.5200000000002,
+      "defensivo_per_unit": 4500,
+      "ratio": 2.743032696949747
+    }
+  },
+  "ratio_new_tier2": {
+    "Expansao": {
+      "hedge_per_unit": 687.96,
+      "defensivo_per_unit": 3000,
+      "ratio": 4.3607186464329315
+    },
+    "Continuidade": {
+      "hedge_per_unit": 811.44,
+      "defensivo_per_unit": 3000,
+      "ratio": 3.697131026323573
+    },
+    "RollbackParcial": {
+      "hedge_per_unit": 1164.2400000000002,
+      "defensivo_per_unit": 3000,
+      "ratio": 2.576788291074005
+    },
+    "RollbackTotal": {
+      "hedge_per_unit": 1640.5200000000002,
+      "defensivo_per_unit": 3000,
+      "ratio": 1.828688464633165
+    }
+  },
+  "ratio_new_tier3": {
+    "Expansao": {
+      "hedge_per_unit": 687.96,
+      "defensivo_per_unit": 4500,
+      "ratio": 6.541077969649398
+    },
+    "Continuidade": {
+      "hedge_per_unit": 811.44,
+      "defensivo_per_unit": 4500,
+      "ratio": 5.545696539485359
+    },
+    "RollbackParcial": {
+      "hedge_per_unit": 1164.2400000000002,
+      "defensivo_per_unit": 4500,
+      "ratio": 3.8651824366110072
+    },
+    "RollbackTotal": {
+      "hedge_per_unit": 1640.5200000000002,
+      "defensivo_per_unit": 4500,
+      "ratio": 2.743032696949747
+    }
+  },
+  "sensitivity_by_sigma": {
+    "10%": {
+      "Expansao": {
+        "h": 0.3,
+        "hedge_per_unit": 529.2,
+        "ratio_catalog": 8.503401360544217,
+        "ratio_tier2": 5.668934240362812,
+        "ratio_tier3": 8.503401360544217
+      },
+      "Continuidade": {
+        "h": 0.3,
+        "hedge_per_unit": 529.2,
+        "ratio_catalog": 8.503401360544217,
+        "ratio_tier2": 5.668934240362812,
+        "ratio_tier3": 8.503401360544217
+      },
+      "RollbackParcial": {
+        "h": 0.41250000000000003,
+        "hedge_per_unit": 727.65,
+        "ratio_catalog": 6.184291898577613,
+        "ratio_tier2": 4.1228612657184085,
+        "ratio_tier3": 6.184291898577613
+      },
+      "RollbackTotal": {
+        "h": 0.58125,
+        "hedge_per_unit": 1025.325,
+        "ratio_catalog": 4.388852315119596,
+        "ratio_tier2": 2.925901543413064,
+        "ratio_tier3": 4.388852315119596
+      }
+    },
+    "12%": {
+      "Expansao": {
+        "h": 0.3,
+        "hedge_per_unit": 529.2,
+        "ratio_catalog": 8.503401360544217,
+        "ratio_tier2": 5.668934240362812,
+        "ratio_tier3": 8.503401360544217
+      },
+      "Continuidade": {
+        "h": 0.34500000000000003,
+        "hedge_per_unit": 608.58,
+        "ratio_catalog": 7.394262052647146,
+        "ratio_tier2": 4.929508035098097,
+        "ratio_tier3": 7.394262052647146
+      },
+      "RollbackParcial": {
+        "h": 0.495,
+        "hedge_per_unit": 873.1800000000002,
+        "ratio_catalog": 5.15357658214801,
+        "ratio_tier2": 3.4357177214320065,
+        "ratio_tier3": 5.15357658214801
+      },
+      "RollbackTotal": {
+        "h": 0.6975,
+        "hedge_per_unit": 1230.39,
+        "ratio_catalog": 3.65737692926633,
+        "ratio_tier2": 2.4382512861775534,
+        "ratio_tier3": 3.65737692926633
+      }
+    },
+    "14%": {
+      "Expansao": {
+        "h": 0.34125000000000005,
+        "hedge_per_unit": 601.965,
+        "ratio_catalog": 7.475517679599312,
+        "ratio_tier2": 4.983678453066208,
+        "ratio_tier3": 7.475517679599312
+      },
+      "Continuidade": {
+        "h": 0.4025000000000001,
+        "hedge_per_unit": 710.0100000000001,
+        "ratio_catalog": 6.337938902268982,
+        "ratio_tier2": 4.225292601512654,
+        "ratio_tier3": 6.337938902268982
+      },
+      "RollbackParcial": {
+        "h": 0.5775000000000001,
+        "hedge_per_unit": 1018.7100000000003,
+        "ratio_catalog": 4.417351356126865,
+        "ratio_tier2": 2.9449009040845766,
+        "ratio_tier3": 4.417351356126865
+      },
+      "RollbackTotal": {
+        "h": 0.8137500000000002,
+        "hedge_per_unit": 1435.4550000000004,
+        "ratio_catalog": 3.1348945107997106,
+        "ratio_tier2": 2.089929673866474,
+        "ratio_tier3": 3.1348945107997106
+      }
+    },
+    "16%": {
+      "Expansao": {
+        "h": 0.39,
+        "hedge_per_unit": 687.96,
+        "ratio_catalog": 6.541077969649398,
+        "ratio_tier2": 4.3607186464329315,
+        "ratio_tier3": 6.541077969649398
+      },
+      "Continuidade": {
+        "h": 0.46,
+        "hedge_per_unit": 811.44,
+        "ratio_catalog": 5.545696539485359,
+        "ratio_tier2": 3.697131026323573,
+        "ratio_tier3": 5.545696539485359
+      },
+      "RollbackParcial": {
+        "h": 0.66,
+        "hedge_per_unit": 1164.2400000000002,
+        "ratio_catalog": 3.8651824366110072,
+        "ratio_tier2": 2.576788291074005,
+        "ratio_tier3": 3.8651824366110072
+      },
+      "RollbackTotal": {
+        "h": 0.93,
+        "hedge_per_unit": 1640.5200000000002,
+        "ratio_catalog": 2.743032696949747,
+        "ratio_tier2": 1.828688464633165,
+        "ratio_tier3": 2.743032696949747
+      }
+    },
+    "18%": {
+      "Expansao": {
+        "h": 0.43875000000000003,
+        "hedge_per_unit": 773.9550000000002,
+        "ratio_catalog": 5.814291528577241,
+        "ratio_tier2": 3.876194352384828,
+        "ratio_tier3": 5.814291528577241
+      },
+      "Continuidade": {
+        "h": 0.5175000000000001,
+        "hedge_per_unit": 912.8700000000001,
+        "ratio_catalog": 4.929508035098096,
+        "ratio_tier2": 3.286338690065398,
+        "ratio_tier3": 4.929508035098096
+      },
+      "RollbackParcial": {
+        "h": 0.7425,
+        "hedge_per_unit": 1309.7700000000002,
+        "ratio_catalog": 3.4357177214320065,
+        "ratio_tier2": 2.290478480954671,
+        "ratio_tier3": 3.4357177214320065
+      },
+      "RollbackTotal": {
+        "h": 0.95,
+        "hedge_per_unit": 1675.7999999999997,
+        "ratio_catalog": 2.685284640171859,
+        "ratio_tier2": 1.7901897601145724,
+        "ratio_tier3": 2.685284640171859
+      }
+    },
+    "20%": {
+      "Expansao": {
+        "h": 0.48750000000000004,
+        "hedge_per_unit": 859.9500000000002,
+        "ratio_catalog": 5.232862375719518,
+        "ratio_tier2": 3.488574917146345,
+        "ratio_tier3": 5.232862375719518
+      },
+      "Continuidade": {
+        "h": 0.5750000000000001,
+        "hedge_per_unit": 1014.3,
+        "ratio_catalog": 4.436557231588288,
+        "ratio_tier2": 2.9577048210588583,
+        "ratio_tier3": 4.436557231588288
+      },
+      "RollbackParcial": {
+        "h": 0.8250000000000001,
+        "hedge_per_unit": 1455.3,
+        "ratio_catalog": 3.0921459492888066,
+        "ratio_tier2": 2.0614306328592042,
+        "ratio_tier3": 3.0921459492888066
+      },
+      "RollbackTotal": {
+        "h": 0.95,
+        "hedge_per_unit": 1675.7999999999997,
+        "ratio_catalog": 2.685284640171859,
+        "ratio_tier2": 1.7901897601145724,
+        "ratio_tier3": 2.685284640171859
+      }
+    },
+    "22%": {
+      "Expansao": {
+        "h": 0.53625,
+        "hedge_per_unit": 945.945,
+        "ratio_catalog": 4.757147614290472,
+        "ratio_tier2": 3.1714317428603143,
+        "ratio_tier3": 4.757147614290472
+      },
+      "Continuidade": {
+        "h": 0.6325000000000001,
+        "hedge_per_unit": 1115.7300000000002,
+        "ratio_catalog": 4.033233846898442,
+        "ratio_tier2": 2.6888225645989614,
+        "ratio_tier3": 4.033233846898442
+      },
+      "RollbackParcial": {
+        "h": 0.9075000000000001,
+        "hedge_per_unit": 1600.8300000000004,
+        "ratio_catalog": 2.8110417720807326,
+        "ratio_tier2": 1.8740278480538217,
+        "ratio_tier3": 2.8110417720807326
+      },
+      "RollbackTotal": {
+        "h": 0.95,
+        "hedge_per_unit": 1675.7999999999997,
+        "ratio_catalog": 2.685284640171859,
+        "ratio_tier2": 1.7901897601145724,
+        "ratio_tier3": 2.685284640171859
+      }
+    },
+    "25%": {
+      "Expansao": {
+        "h": 0.609375,
+        "hedge_per_unit": 1074.9375,
+        "ratio_catalog": 4.1862899005756145,
+        "ratio_tier2": 2.7908599337170767,
+        "ratio_tier3": 4.1862899005756145
+      },
+      "Continuidade": {
+        "h": 0.71875,
+        "hedge_per_unit": 1267.8750000000002,
+        "ratio_catalog": 3.5492457852706294,
+        "ratio_tier2": 2.3661638568470864,
+        "ratio_tier3": 3.5492457852706294
+      },
+      "RollbackParcial": {
+        "h": 0.95,
+        "hedge_per_unit": 1675.7999999999997,
+        "ratio_catalog": 2.685284640171859,
+        "ratio_tier2": 1.7901897601145724,
+        "ratio_tier3": 2.685284640171859
+      },
+      "RollbackTotal": {
+        "h": 0.95,
+        "hedge_per_unit": 1675.7999999999997,
+        "ratio_catalog": 2.685284640171859,
+        "ratio_tier2": 1.7901897601145724,
+        "ratio_tier3": 2.685284640171859
+      }
+    }
+  },
+  "baseline_recalibration": {
+    "old_ratio_continuidade": 9.4,
+    "new_ratio_continuidade_catalog": 5.545696539485359,
+    "new_ratio_continuidade_tier2": 3.697131026323573,
+    "new_ratio_continuidade_tier3": 5.545696539485359,
+    "interpretation": "Ratio cai com novo σ. Defensivo catalog-wide fica menos \"mais caro\" que hedge. Tier 2 defensivo (R$ 3k) é apenas 5× hedge (vs 9.4× antes)."
+  }
+}

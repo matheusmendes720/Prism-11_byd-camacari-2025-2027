@@ -1,0 +1,77 @@
+{
+  "source": "BCB SGS API (sgs.10813) — 2015-07 to 2025-07",
+  "n_observations": 2509,
+  "period": {
+    "start": "2015-07-01",
+    "end": "2025-07-01"
+  },
+  "start_ptax": 3.1185,
+  "end_ptax": 5.4505,
+  "max_ptax": 6.208,
+  "min_ptax": 3.0504,
+  "max_drawdown": -0.27270993276429367,
+  "sigma_annual_realized": 0.14861710663084976,
+  "vol_30d_summary": {
+    "mean": 0.13750901702517102,
+    "max": 0.30847371522289424,
+    "min": 0.05600556056840967,
+    "n_clean": 2478
+  },
+  "stress_frequency": {
+    "green_pct": "66.2",
+    "amber_pct": "33.4",
+    "red_pct": "0.4",
+    "n_observations": 2479
+  },
+  "var_95_6m_real": {
+    "mean": null,
+    "p5": 802.1143182656955,
+    "p25": 1049.6833316667678,
+    "p50": 1326.9524027268583,
+    "p75": 1884.3133043930732,
+    "p95": 2742.148115261523,
+    "p99": 3139.213708823504,
+    "min": null,
+    "max": 3351.594631834509
+  },
+  "model_d2": {
+    "sigma": 0.1419,
+    "var_95_6m": 2080
+  },
+  "recalibration": {
+    "old_sigma": 0.1419,
+    "new_sigma": 0.14861710663084976,
+    "old_var": 2080,
+    "new_var": 2742,
+    "sigma_change_pct": "4.7",
+    "var_change_pct": "31.8"
+  },
+  "h_by_scenario": {
+    "old": {
+      "Expansao": 0.3,
+      "Continuidade": 0.386,
+      "RollbackParcial": 0.617,
+      "RollbackTotal": 0.906
+    },
+    "new": {
+      "Expansao": 0.41420160430739755,
+      "Continuidade": 0.5329393975421849,
+      "RollbackParcial": 0.851874632858881,
+      "RollbackTotal": 0.95
+    }
+  },
+  "npv_by_scenario": {
+    "old": {
+      "Expansao": 8,
+      "Continuidade": 74,
+      "RollbackParcial": 319,
+      "RollbackTotal": 763
+    },
+    "new": {
+      "Expansao": 5,
+      "Continuidade": 121,
+      "RollbackParcial": 560,
+      "RollbackTotal": 1032
+    }
+  }
+}

@@ -1,0 +1,232 @@
+<!-- ============================== ANNEX A: TAXONOMY ============================== -->
+<section class="section" id="annex-a">
+  <div class="sec-head">
+    <div class="sec-num">Anexo A</div>
+    <h2 class="sec-title">Taxonomia Completa das 11 Dimensões (S1–S11)</h2>
+    <p class="sec-lede">Cada dimensão tem: nome, tipo (qualitativa/quantitativa), inputs primários, peso no composite, thresholds GREEN/AMBER/RED, status atual BYD (jul/2026), e acoplamentos com outras dimensões.</p>
+  </div>
+
+  <!-- S1 -->
+  <div class="block">
+    <div class="block-num">Dimensão S1</div>
+    <h3 class="block-title">FX / Hedge Cambial</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Quantitativa</td></tr>
+        <tr><td><b>Descrição</b></td><td>Risco de variação cambial (BRL/USD) sobre o custo de importação de kits SKD/CKD e componentes</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>PTAX (R$/US$), vol implícita FX (σ), exposição FX (% do VGV importado), hedge ratio (h*)</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.18 (18%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: BRL/USD &lt; 5.50, vol &lt; 15%; <span class="status-amber">AMBER</span>: 5.50–5.90, vol 15–20%; <span class="status-red">RED</span>: &gt; 5.90, vol &gt; 20%</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> — BRL ~5.30, vol ~14.86%</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S1↔S3 (hedge sizing por ViE), S1↔S2 (FX+supply VaR conjunto), S1↔S4 (hedge vs defensivo, ratio ~9×), S8↔S1 (ramp recalibra exposição FX), S10↔S1 (duplo cost-shock FX+tariff)</td></tr>
+        <tr><td><b>Prescrição default</b></td><td>Hedge constraint-based: h* = 30% (Expansão) → 90.6% (RB Total), otimizado por VaR residual ≤ 20% margin buffer</td></tr>
+        <tr><td><b>Custo hedge</b></td><td>R$ 480/unit (margem), premium 4 counterparties ~R$ 30M/6m</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S2 -->
+  <div class="block">
+    <div class="block-num">Dimensão S2</div>
+    <h3 class="block-title">Supply Chain / Lítio</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Quantitativa + Qualitativa</td></tr>
+        <tr><td><b>Descrição</b></td><td>Risco de custo de supply chain (lítio, baterias, componentes) e resiliência de sourcing</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>Preço lítio carbonate (US$/t), % SKD/CKD importado, status dual-sourcing (EVE/CATL), inventory days</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.16 (16%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: lítio &lt; US$ 15k/t, dual-sourcing OK; <span class="status-amber">AMBER</span>: US$ 15–22k/t; <span class="status-red">RED</span>: &gt; US$ 22k/t ou supply disruption</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> — lítio ~US$ 21–22k/t (rebound de US$ 9k em Q3/2025)</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S1↔S2 (FX+supply VaR conjunto, 2.5× em RED), S2↔S8 (supply risk aumenta com ramp lento), S2↔S3 (lítio impacta ViE)</td></tr>
+        <tr><td><b>Prescrição default</b></td><td>Dual-sourcing: EVE qualification (R$ 280M, 12m), CATL LP 70% locked (R$ 450M). Plano B: spot purchasing +5 fornecedores alternativos em RED.</td></tr>
+        <tr><td><b>Custo plano B</b></td><td>R$ 80M+ (spot purchasing em RED)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S3 -->
+  <div class="block">
+    <div class="block-num">Dimensão S3</div>
+    <h3 class="block-title">Regulatory / BNDES / ViE</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Mista (quantitativa + qualitativa)</td></tr>
+        <tr><td><b>Descrição</b></td><td>ViE (Valor de Importação Econômico) e acesso ao funding BNDES. Gate de capex e scaling.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>ViE (%), BNDES funding acessível (R$M), status lista suja MTE, progresso nacionalizações (%), market share realized</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.18 (18%)</td></tr>
+        <tr><td><b>Probabilidades recalibradas (v2.0)</b></td><td>Expansão 72%, Continuidade 19%, Rollback Parcial 7%, Rollback Total 2%</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: ViE ≥ 18%; <span class="status-amber">AMBER</span>: ViE 15–18%; <span class="status-red">RED</span>: ViE &lt; 15%</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> — ViE ~18%, BYD share 12.8% (abr/2026)</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S1↔S3 (hedge sizing por ViE), S3↔S4 (defensivo break-even ViE=10%), S7→S3 (kill switch: lista suja bloqueia BNDES), S3↔S10 (regulatory compound risk)</td></tr>
+        <tr><td><b>Gate de funding</b></td><td>R$ 800M+ BNDES bloqueados por S7 RED (lista suja)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S4 -->
+  <div class="block">
+    <div class="block-num">Dimensão S4</div>
+    <h3 class="block-title">Pricing / Defensivo</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Mista (quantitativa + estratégica)</td></tr>
+        <tr><td><b>Descrição</b></td><td>Estratégia de pricing defensivo para preservar market share em cenários de stress</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>ASP BYD (R$), preço ICE equivalente, discount Tier (R$/unit), volume em risco (k unidades)</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.16 (16%)</td></tr>
+        <tr><td><b>Tier system (v2.0)</b></td><td>Tier 0: R$ 0 (sem defensivo); Tier 1: R$ 1.5k (R$ 7.5M); Tier 2: R$ 3.0k (R$ 15M); Tier 3: R$ 4.5k targeted (R$ 22.5M)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: defensivo desnecessário (demanda > oferta); <span class="status-amber">AMBER</span>: Tier 1–2 justificado; <span class="status-red">RED</span>: Tier 3 targeted (Rollback scenarios)</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="green"><span class="status-green">GREEN</span> — S9 GREEN (demanda explode, 13.5% EV share)</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S1↔S4 (hedge R$ 480/unit vs defensivo R$ 4.500/unit, ratio ~9×), S3↔S4 (break-even ViE=10%), S4↔S10 (margin compression por tariff), S4↔S11 (competitive pressure)</td></tr>
+        <tr><td><b>Catalog-wide (D2)</b></td><td><span class="status-red">PROIBIDO</span> em v2.0 — ROI −67% em Rollback Total</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S5 -->
+  <div class="block">
+    <div class="block-num">Dimensão S5</div>
+    <h3 class="block-title">Partnerships / Stakeholders</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Qualitativa</td></tr>
+        <tr><td><b>Descrição</b></td><td>Gestão de parcerias estratégicas (EVE, CATL, Tier 1), stakeholders (MDIC, BNDES, BCB) e contratos de longo prazo</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>Status contratos LP, hedge clauses ativas, ESG covenants, stakeholder map completeness</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.10 (10%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: contratos OK, sem covenants stressed; <span class="status-amber">AMBER</span>: covenants exigidos por parceiros; <span class="status-red">RED</span>: renegociação urgente, diversificação necessária</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> — ESG covenants prováveis dado S7 RED</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S5↔S2 (EVE/CATL contratos), S5↔S7 (ESG covenants de parceiros), S5↔S3 (advocacy MDIC/BNDES)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S6 -->
+  <div class="block">
+    <div class="block-num">Dimensão S6</div>
+    <h3 class="block-title">Macro / Governor / Multiplier</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Quantitativa + Macroeconômica</td></tr>
+        <tr><td><b>Descrição</b></td><td>Regime macro como governor que reescala todas as outras prescrições. Multiplicador 1.0×/1.5×/2.0×.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>Selic rate, IPCA (IBGE), PIB Brasil, BRL/USD, índices de confiança, indicadores antecedentes (PMI, IBC-Br)</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.10 (10%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: economia crescendo, Selic baixa, BRL estável; <span class="status-amber">AMBER</span>: desaceleração, vol; <span class="status-red">RED</span>: recessão, BRL em stress</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td><span class="status-amber">AMBER</span> — vol macro elevada, Selic ~14.25%, BRL ~5.30</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S6→todas (governor: multiplica prescrições S1–S5), S6↔S7 (override: S7 RED suspende S6 triggers)</td></tr>
+        <tr><td><b>Latência de transição</b></td><td>GREEN→AMBER: 5min (CSO+CFO); AMBER→RED: 60min (CEO+CFO+Head Supply)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S7 -->
+  <div class="block">
+    <div class="block-num">Dimensão S7</div>
+    <h3 class="block-title">ESG / Reputação — Kill Switch</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Qualitativa (score-based)</td></tr>
+        <tr><td><b>Descrição</b></td><td>Risco ESG/reputacional como kill switch binário. Lista suja MTE = bloqueio automático de capex e funding.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>lista_suja_status (bool, peso 0.40), msci_sustainalytics_score (peso 0.30), controversies_count_12m (peso 0.20), news_sentiment_score (peso 0.10)</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.05 (5%)</td></tr>
+        <tr><td><b>Kill switch rule</b></td><td><code>if lista_suja == TRUE → S7 = RED incondicional</code> (bloqueia funding BNDES, sobrepõe qualquer S3)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-red">RED</span>: lista_suja == TRUE (kill switch); <span class="status-amber">AMBER</span>: controversies ≥1 OR news &lt; −0.1; <span class="status-green">GREEN</span>: todos os 4 inputs GREEN</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="red"><span class="status-red">RED — KILL SWITCH ATIVO</span> — lista_suja=TRUE desde 07/abr/2026; BNDES R$ 800M+ bloqueados</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S7→S3 (CRÍTICO: kill switch bloqueia BNDES), S7↔S1 (+30–50 bps hedge cost), S7↔S2 (fornecedores exigem ESG covenants), S7↔S4 (pricing power reduzido)</td></tr>
+        <tr><td><b>Override</b></td><td>S7 RED sobrepõe TODAS as outras dimensões — composite = 95 fixo, hedge 90.6%, defensivo mínimo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S8 -->
+  <div class="block">
+    <div class="block-num">Dimensão S8</div>
+    <h3 class="block-title">Production Ramp — SKD/CKD Curve</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Quantitativa</td></tr>
+        <tr><td><b>Descrição</b></td><td>Curva de ramp-up da planta Camaçari: SKD 95% (2025) → 40% (2026) → 25% (Q4/2026). Exposição FX não é constante.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>production_actual/capacity_nominal (%), %_SKD_CKD, nationalization_%</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.08 (8%)</td></tr>
+        <tr><td><b>Ramp score formula</b></td><td>production_component (0.50) + local_content_component (0.30) + nationalization_component (0.20) → score 0–1</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: score ≥ 0.80 (produção &gt;80% E nacionalização &gt;60%); <span class="status-amber">AMBER</span>: 0.50–0.79; <span class="status-red">RED</span>: &lt; 0.50</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> — score ~0.77, SKD ~40%, nacionalização ~50%</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S8↔S1 (CRÍTICO: exposição FX 90%→45%, VaR recalibrado), S8↔S2 (supply plano B urgente se RED), S8↔S4 (defensivo mais racional se ramp lento), S8↔S10 (tariff exposure maior com SKD alto)</td></tr>
+        <tr><td><b>FX exposure recalibrada</b></td><td>SKD=40% → FX_exp ≈ 56% do VGV (vs baseline D2 42%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S9 -->
+  <div class="block">
+    <div class="block-num">Dimensão S9</div>
+    <h3 class="block-title">Demand Growth</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Quantitativa</td></tr>
+        <tr><td><b>Descrição</b></td><td>Crescimento da demanda de EV no Brasil. Mercado cresceu 153% YoY (mai/2026). BYD vende mais do que pode produzir — stress é capacidade, não demanda.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>EV_market_share_ytd (%), EV_growth_yoy (%), BYD_backlog_weeks, BNDES_Move_Brasil_status</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.04 (4%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: EV_share &gt; 10% E growth &gt; 30% YoY; <span class="status-amber">AMBER</span>: EV_share 5–10% OU growth 10–30%; <span class="status-red">RED</span>: EV_share &lt; 5% OU growth &lt; 10%</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="green"><span class="status-green">GREEN DUPLO</span> — EV share 13.5%, growth +153% YoY (mai/2026)</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S9↔S10 (tariff impacta demanda), S9↔S11 (demanda divide entre concorrentes), S9↔S3 (BNDES Move Brasil estimula demanda)</td></tr>
+        <tr><td><b>Implicação</b></td><td>S9 GREEN = defensivo pricing menos urgente; S3 Rollback scenarios improbáveis no horizonte 2025–2027</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S10 -->
+  <div class="block">
+    <div class="block-num">Dimensão S10</div>
+    <h3 class="block-title">Tariff Policy — Duplo Cost-Shock</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Quantitativa (regulatória)</td></tr>
+        <tr><td><b>Descrição</b></td><td>Cronograma de tarifas Camex: SKD/CKD 14% (2025) → 35% (jan/2027). Duplo cost-shock com FX (S1): multiplicativo, não aditivo.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>tariff_BEV (%), tariff_PHEV (%), tariff_SKD_CKD (%), exemption_quota_status (US$ 463M/6m ativa H1/2026)</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.05 (5%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: effective_tariff_blend &lt; 20%; <span class="status-amber">AMBER</span>: 20–30% OU increase scheduled ≥5pp; <span class="status-red">RED</span>: ≥30% OU exemption rejected OU antidumping</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> (borderline RED) — blend ~22%, SKD/CKD 14%, BEV/PHEV/HEV 35% desde jul/2026 (6m antecipado)</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S10↔S1 (CRÍTICO: duplo cost-shock multiplicativo, +110% VaR), S10↔S3 (regulatory compound), S10↔S4 (margin compression), S10↔S8 (acelerar ramp = melhor mitigação)</td></tr>
+        <tr><td><b>Cost shock</b></td><td>SKD/CKD 35% = +R$ 34.3k/unit; VaR 6m P95 sobe R$ 2.27bi → R$ 4.5–5.0bi</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S11 -->
+  <div class="block">
+    <div class="block-num">Dimensão S11</div>
+    <h3 class="block-title">Competitive Landscape — Guerra de Preços</h3>
+    <table class="t">
+      <thead><tr><th>Atributo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tipo</b></td><td>Mista (quantitativa + estratégica)</td></tr>
+        <tr><td><b>Descrição</b></td><td>Mapeamento competitivo: Stellantis (R$ 30bi), GM (R$ 7bi), VW (R$ 16bi), Geely (~10.6% share). Capacidade agregada 630k vs demanda 200k (2027) = 68% sobrecapacidade estrutural.</td></tr>
+        <tr><td><b>Inputs primários</b></td><td>BYD_market_share_EV (%), top3_competitors_share (%), price_gap_vs_ICE (R$), new_models_12m, capacidade_agregada/demanda</td></tr>
+        <tr><td><b>Peso no composite</b></td><td>0.05 (5%)</td></tr>
+        <tr><td><b>Thresholds</b></td><td><span class="status-green">GREEN</span>: BYD EV share &gt; 70% E capacidade/demanda &lt; 200%; <span class="status-amber">AMBER</span>: 40–70% E 200–250%; <span class="status-red">RED</span>: &lt; 40% E &gt; 250%</td></tr>
+        <tr><td><b>Status atual (jul/2026)</b></td><td class="amber"><span class="status-amber">AMBER</span> — BYD EV share ~73.6% (2025), capacidade/demanda ~315% (RED). Equilíbrio de Nash: Stellantis Preço Baixo, BYD Preço Normal.</td></tr>
+        <tr><td><b>Principais acoplamentos</b></td><td>S11↔S9 (guerra de preços reduz elasticidade), S11↔S4 (defensivo mais agressivo se RED), S11↔S3 (BNDES financia capacidade competitiva), S11↔S5 (parcerias multinacionais dificultadas)</td></tr>
+        <tr><td><b>War of attrition</b></td><td>GM cede 1º (6–9m), VW 2º (12–18m), Geely 3º (18–24m), Stellantis 4º, BYD vence. S11 RED threshold: &gt;65% price war probability.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Composite weights summary -->
+  <div class="insights">
+    <h4>Pesos do Composite D3 v2.0 — Soma = 1.00</h4>
+    <ul>
+      <li><strong>S1 (FX):</strong> 0.18 | <strong>S2 (Supply):</strong> 0.16 | <strong>S3 (Regulatory):</strong> 0.18 | <strong>S4 (Pricing):</strong> 0.16</li>
+      <li><strong>S5 (Partnerships):</strong> 0.10 | <strong>S6 (Macro):</strong> 0.10 | <strong>S7 (ESG):</strong> 0.05 | <strong>S8 (Ramp):</strong> 0.08</li>
+      <li><strong>S9 (Demand):</strong> 0.04 | <strong>S10 (Tariff):</strong> 0.05 | <strong>S11 (Competition):</strong> 0.05</li>
+    </ul>
+  </div>
+</section>

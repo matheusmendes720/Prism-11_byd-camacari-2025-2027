@@ -1,0 +1,104 @@
+<!-- ============================== ANNEX D: GLOSSARY ============================== -->
+<section class="section" id="annex-d">
+  <div class="sec-head">
+    <div class="sec-num">Anexo D</div>
+    <h2 class="sec-title">Glossário de Termos Técnicos</h2>
+    <p class="sec-lede">Todos os termos técnicos mencionados no framework D3 v2.0, organizados por categoria. Inclui termos de game theory adicionados em v2.0.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">D.1 — Termos Financeiros e Econômicos</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Termo</th><th>Sigla</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><td><b>Value at Risk</b></td><td><b>VaR</b></td><td>Métrica de risco que estima a perda máxima esperada em um horizonte de tempo (ex: 6 meses) com dado nível de confiança (ex: P95 = 95%). D3 usa VaR 6m P95 em R$.</td></tr>
+        <tr><td><b>Conditional VaR</b></td><td><b>CVaR</b></td><td>Perda esperada nos piores 5% dos cenários. CVaR 95% = R$ 10.14bi (vs VaR 95% = R$ 8.21bi). Mais conservativo que VaR.</td></tr>
+        <tr><td><b>Net Present Value</b></td><td><b>NPV</b></td><td>Valor presente líquido. Soma algébrica dos fluxos de caixa futuros descontados a uma taxa (WACC). NPV &gt; 0 = projeto viável. D3 usa WACC 12%.</td></tr>
+        <tr><td><b>ViE — Valor de Importação Econômico</b></td><td><b>ViE</b></td><td>Métrica de conteúdo local: (custo total do veículo − valor CIF importado) ÷ custo total. Determina elegibilidade a benefícios fiscais (IPI, BNDES). ViE ≥ 18% = Expansão (v2.0 recalibrado).</td></tr>
+        <tr><td><b>BNDES</b></td><td><b>BNDES</b></td><td>Banco Nacional de Desenvolvimento Econômico e Social. Principal fonte de funding subsidiado para investimentos industriais no Brasil. Funding BYD Camaçari: R$ 800M+ bloqueado por S7 RED.</td></tr>
+        <tr><td><b>WACC</b></td><td><b>WACC</b></td><td>Weighted Average Cost of Capital. Taxa de desconto usada no NPV. D3 usa 12% para o projeto Camaçari.</td></tr>
+        <tr><td><b>IRR</b></td><td><b>IRR</b></td><td>Internal Rate of Return. Taxa que zera o NPV. D3 projeta IRR ~26–28% (pré-tariff) caindo para ~14% (pós-tariff 35% sem mitigação).</td></tr>
+        <tr><td><b>PTAX</b></td><td><b>PTAX</b></td><td>Câmbio oficial de fechamento do Banco Central do Brasil. Calculado diariamente. Usado como reference rate para hedge cambial.</td></tr>
+        <tr><td><b>Margin Buffer</b></td><td><b>—</b></td><td>Colchão de margem requerido após aplicar hedge. Constraint: VaR residual ≤ 20% da margem bruta.</td></tr>
+        <tr><td><b>Break-even</b></td><td><b>—</b></td><td>Ponto onde receita = custo (margem = 0). Break-even ViE = 10%: abaixo deste ViE, defensivo destrói margem.</td></tr>
+        <tr><td><b>Hedge Ratio</b></td><td><b>h*</b></td><td>Percentual da exposição FX que deve ser hedgeada. Otimizado por cenário S3: 30% (Expansão) a 90.6% (RB Total).</td></tr>
+        <tr><td><b>Tracking Error</b></td><td><b>TE</b></td><td>Desvio padrão da diferença entre retorno do portfolio e benchmark. TE = sqrt(E[(R_portfolio - R_benchmark)^2]). Usado para validar previsões D3.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">D.2 — Termos de Supply Chain e Produção</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Termo</th><th>Sigla</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><td><b>Semi-Knocked Down</b></td><td><b>SKD</b></td><td>Kits de veículo parcialmente desmontados importados da China. Componentes principais montados localmente. SKD 95% em 2025 → 40% em 2026. Exposição FX ~90–95% do valor.</td></tr>
+        <tr><td><b>Completely Knocked Down</b></td><td><b>CKD</b></td><td>Kits totalmente desmontados. Maior valor CIF por kit que SKD. Together, SKD/CKD representam ~85–90% do bill of materials em 2025.</td></tr>
+        <tr><td><b>Nacionalização</b></td><td><b>—</b></td><td>Percentual de conteúdo local no veículo. Meta BNDES/MDIC: 50% até jan/2027, 70% até fim 2026. Reduz exposição FX e tariff.</td></tr>
+        <tr><td><b>CATL / EVE</b></td><td><b>CATL / EVE</b></td><td>Fornecedores de células de bateria. CATL: contrato LP 70% locked pricing. EVE: qualification como Tier 1 (R$ 280M).</td></tr>
+        <tr><td><b>Dual-sourcing</b></td><td><b>—</b></td><td>Estratégia de usar dois fornecedores para o mesmo componente. Mitiga risco de disruption.</td></tr>
+        <tr><td><b>Safety Stock</b></td><td><b>—</b></td><td>Inventário buffer para cobrir interrupções de supply. Trigger S6 AMBER: +30 dias. Custo: R$ 30M.</td></tr>
+        <tr><td><b>LFP / Blade Battery</b></td><td><b>LFP</b></td><td>Lithium Iron Phosphate. Química de bateria usada pela BYD (Blade Battery). Maior segurança térmica e menor custo que NMC.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">D.3 — Termos Regulatórios e Tarifários</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Termo</th><th>Sigla</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><td><b>Camex / Gecex</b></td><td><b>Camex</b></td><td>Câmara de Comércio Exterior. Órgão que define tarifas de importação no Brasil. Cronograma: BEV/PHEV/HEV 35% jul/2026; SKD/CKD 35% jan/2027.</td></tr>
+        <tr><td><b>IPI</b></td><td><b>IPI</b></td><td>Imposto sobre Produtos Industrializados. Incentivo atrelado ao ViE: maior conteúdo local = menor IPI.</td></tr>
+        <tr><td><b>Lista Suja MTE</b></td><td><b>MTE</b></td><td>Cadastro de empregadores que submeteram trabalhadores a condições análogas à escravidão. BYD listada em 07/abr/2026. Bloqueia funding BNDES.</td></tr>
+        <tr><td><b>MPT</b></td><td><b>MPT</b></td><td>Ministério Público do Trabalho. Ajuizou ação contra BYD em mai/2025 (R$ 257M pedidos). Resultado: acordo R$ 40M em dez/2025.</td></tr>
+        <tr><td><b>MDIC</b></td><td><b>MDIC</b></td><td>Ministério do Desenvolvimento, Indústria, Comércio e Serviços. Autoridade que concede incentivos.</td></tr>
+        <tr><td><b>BNDES Move Brasil</b></td><td><b>—</b></td><td>Programa BNDES de funding ao consumidor (taxistas, motoristas de app). Pool R$ 30bi. Estimula demanda EV em ~+15–20% do volume.</td></tr>
+        <tr><td><b>ESG / RepRisk / MSCI</b></td><td><b>ESG</b></td><td>Environmental, Social, Governance. Critérios de investimento responsável. Score ESG da BYD = RED (lista suja + controversies + news sentiment negativo).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">D.4 — Termos de Teoria dos Jogos (novo em v2.0)</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Termo</th><th>Sigla</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><td><b>Nash Equilibrium</b></td><td><b>NE</b></td><td>Estado em que nenhum player pode melhorar seu payoff unilateralmente mudando sua estratégia. No jogo 5×5: (BYD=Normal, Stellantis=Baixo) é o único equilíbrio de Nash. Payoffs: (3.2, 1.1, -0.8, 2.4, 0.6).</td></tr>
+        <tr><td><b>Payoff Matrix</b></td><td><b>—</b></td><td>Matriz 5×5 onde cada célula contém o payoff para todos os 5 players (BYD/Stellantis/GM/VW/Geely). Payoffs em % market share gain/loss. Cada linha = escolha do player da coluna.</td></tr>
+        <tr><td><b>Sequential Game / Stackelberg</b></td><td><b>—</b></td><td>Jogo onde um player (Stellantis, leader) move primeiro e os outros (BYD, follower) respondem. Stellantis announceia R$ 30bi antes de BYD decidir. BYD deve jogar Preço Normal como follower dominante.</td></tr>
+        <tr><td><b>War of Attrition</b></td><td><b>WoA</b></td><td>Jogo onde múltiplos players continuam investindo/competindo até que os mais fracos cedem. GM cede 1º (6–9m), VW 2º (12–18m), Geely 3º (18–24m). BYD vence por menor custo marginal (R$ 85k Dolphin Mini).</td></tr>
+        <tr><td><b>Dominant Strategy</b></td><td><b>—</b></td><td>Estratégia que é ótima para um player independentemente do que os outros players fazem. Para Stellantis: Preço Baixo é dominante (payoff +1.1 vs -0.2 vs +0.3 vs -0.9 vs +2.4 em cada coluna).</td></tr>
+        <tr><td><b>Pareto Optimal</b></td><td><b>—</b></td><td>Estado onde nenhum player pode melhorar sem piorar outro. (Preço Normal, Normal) é Pareto-ótimo — todos os outros estados têm pelo menos um player em pior situação.</td></tr>
+        <tr><td><b>S11 RED Threshold</b></td><td><b>&gt;65%</b></td><td>Probabilidade de guerra de preços &gt; 65% ativa o war of attrition. Indicadores: capacidade/demanda &gt; 250%, GM buffer &lt; R$ 2.5bi, prob(Stellantis Preço Baixo) ≥ 40%.</td></tr>
+        <tr><td><b>Cholesky Decomposition</b></td><td><b>L</b></td><td>Decomposição da matriz de covariância: Σ = L × L^T. Usada para gerar variáveis aleatórias correlacionadas no Monte Carlo. L matrix para os 4 fatores (Tariff/FX/Supply/Demand).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">D.5 — Siglas e Abreviações</div>
+    <table class="t" style="font-size:12px">
+      <thead><tr><th>Sigla</th><th>Significado</th><th>Sigla</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><td><b>FX</b></td><td>Foreign Exchange</td><td><b>VaR</b></td><td>Value at Risk</td></tr>
+        <tr><td><b>CVaR</b></td><td>Conditional VaR</td><td><b>NPV</b></td><td>Net Present Value</td></tr>
+        <tr><td><b>IRR</b></td><td>Internal Rate of Return</td><td><b>WACC</b></td><td>Weighted Average Cost of Capital</td></tr>
+        <tr><td><b>ViE</b></td><td>Valor de Importação Econômico</td><td><b>SKD</b></td><td>Semi-Knocked Down</td></tr>
+        <tr><td><b>CKD</b></td><td>Completely Knocked Down</td><td><b>EV</b></td><td>Electric Vehicle</td></tr>
+        <tr><td><b>ICE</b></td><td>Internal Combustion Engine</td><td><b>BEV</b></td><td>Battery EV</td></tr>
+        <tr><td><b>PHEV</b></td><td>Plug-in Hybrid EV</td><td><b>HEV</b></td><td>Hybrid EV</td></tr>
+        <tr><td><b>LFP</b></td><td>Lithium Iron Phosphate</td><td><b>BNDES</b></td><td>Banco Nacional de Desenvolvimento</td></tr>
+        <tr><td><b>MTE</b></td><td>Ministério do Trabalho</td><td><b>MPT</b></td><td>Ministério Público do Trabalho</td></tr>
+        <tr><td><b>MDIC</b></td><td>Ministério do Desenvolvimento</td><td><b>Camex</b></td><td>Câmara de Comércio Exterior</td></tr>
+        <tr><td><b>IPI</b></td><td>Imposto sobre Prod. Industrializados</td><td><b>BCB</b></td><td>Banco Central do Brasil</td></tr>
+        <tr><td><b>ANFAVEA</b></td><td>Assoc. Nac. Fabricantes</td><td><b>Fenabrave</b></td><td>Fed. Nac. Distrib. Veículos</td></tr>
+        <tr><td><b>ABVE</b></td><td>Assoc. Brasileira VE</td><td><b>RACI</b></td><td>Responsible/Accountable/Consulted/Informed</td></tr>
+        <tr><td><b>CSO</b></td><td>Chief Strategy Officer</td><td><b>CFO</b></td><td>Chief Financial Officer</td></tr>
+        <tr><td><b>COO</b></td><td>Chief Operating Officer</td><td><b>CMO</b></td><td>Chief Marketing Officer</td></tr>
+        <tr><td><b>WoA</b></td><td>War of Attrition</td><td><b>NE</b></td><td>Nash Equilibrium</td></tr>
+        <tr><td><b>TE</b></td><td>Tracking Error</td><td><b>MC</b></td><td>Monte Carlo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>

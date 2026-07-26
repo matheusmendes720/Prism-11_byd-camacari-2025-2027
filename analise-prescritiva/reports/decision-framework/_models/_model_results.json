@@ -1,0 +1,119 @@
+{
+  "params": {
+    "V": 30000000000,
+    "b": 0.7,
+    "e": 0.42,
+    "sigma_annual": 0.1419,
+    "H": 0.5,
+    "m": 0.05,
+    "r": 0.01,
+    "z95": 1.645
+  },
+  "scenarios": [
+    {
+      "name": "Expansão",
+      "vie": 0.25,
+      "prob": 0.15,
+      "bndes": "approved",
+      "color": "#2f7a4d",
+      "margin": 0.3,
+      "hRecommended": 0.3,
+      "hMin": 0.13449683556234382,
+      "residualVaR": 0.04852668566184697,
+      "residualAsPctMargin": 0.16175561887282325,
+      "premium6m": 18899999.999999996
+    },
+    {
+      "name": "Continuidade",
+      "vie": 0.18,
+      "prob": 0.4,
+      "bndes": "approved",
+      "color": "#1f3b8a",
+      "margin": 0.22999999999999998,
+      "hRecommended": 0.386,
+      "hMin": 0.33644757393113023,
+      "residualVaR": 0.042564835709105776,
+      "residualAsPctMargin": 0.1850645030830686,
+      "premium6m": 24318000
+    },
+    {
+      "name": "Rollback Parcial",
+      "vie": 0.1,
+      "prob": 0.3,
+      "bndes": "delayed",
+      "color": "#b8681d",
+      "margin": 0.15000000000000002,
+      "hRecommended": 0.617,
+      "hMin": 0.5672484177811719,
+      "residualVaR": 0.026551029440696275,
+      "residualAsPctMargin": 0.17700686293797513,
+      "premium6m": 38871000
+    },
+    {
+      "name": "Rollback Total",
+      "vie": 0,
+      "prob": 0.15,
+      "bndes": "denied",
+      "color": "#c0392b",
+      "margin": 0.05,
+      "hRecommended": 0.906,
+      "hMin": 0.8557494725937239,
+      "residualVaR": 0.006516440646019449,
+      "residualAsPctMargin": 0.13032881292038898,
+      "premium6m": 57078000
+    }
+  ],
+  "sensScenarios": [
+    {
+      "name": "Base (target=20%)",
+      "targetRatio": 0.2
+    },
+    {
+      "name": "Strict (target=10%)",
+      "targetRatio": 0.1
+    },
+    {
+      "name": "Lenient (target=30%)",
+      "targetRatio": 0.3
+    },
+    {
+      "name": "Low vol (sigma=12%)",
+      "sigma_annual": 0.12
+    },
+    {
+      "name": "High vol (sigma=18%)",
+      "sigma_annual": 0.18
+    },
+    {
+      "name": "High vol + strict",
+      "sigma_annual": 0.18,
+      "targetRatio": 0.1
+    }
+  ],
+  "sensFigData": [
+    {
+      "category": "Base (target=20%)",
+      "value": 38.6
+    },
+    {
+      "category": "Strict (target=10%)",
+      "value": 71.8
+    },
+    {
+      "category": "Lenient (target=30%)",
+      "value": 30
+    },
+    {
+      "category": "Low vol (sigma=12%)",
+      "value": 30
+    },
+    {
+      "category": "High vol (sigma=18%)",
+      "value": 52.7
+    },
+    {
+      "category": "High vol + strict",
+      "value": 78.8
+    }
+  ]
+}

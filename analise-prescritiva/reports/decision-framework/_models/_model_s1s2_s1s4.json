@@ -1,0 +1,150 @@
+{
+  "params_s1s2": {
+    "V": 30000000000,
+    "b": 0.7,
+    "e": 0.42,
+    "sigma_annual": 0.1419,
+    "H": 0.5,
+    "m": 0.05,
+    "r": 0.01,
+    "z95": 1.645,
+    "supply_premium_amber": 0.05,
+    "supply_premium_red": 0.15,
+    "supply_vol_amber": 0.1,
+    "supply_vol_red": 0.3,
+    "corr_fx_supply": 0.3
+  },
+  "params_s1s4": {
+    "V": 30000000000,
+    "units_6m": 50000,
+    "catalog_price": 300000,
+    "bom_frac": 0.7,
+    "margin_frac": 0.05,
+    "hedge_premium_6m": 24000000,
+    "hedge_premium_per_unit_base": 480,
+    "defensivo_price_cut": 4500,
+    "defensivo_volume_protection": 5000,
+    "margin_per_unit": 15000
+  },
+  "s1s2_matrix": {
+    "GREEN": {
+      "Expansão": {
+        "h_rec": 0.3,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 0,
+          "combined": 2079715099.7934418
+        }
+      },
+      "Continuidade": {
+        "h_rec": 0.386,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 0,
+          "combined": 2079715099.7934418
+        }
+      },
+      "Rollback Parcial": {
+        "h_rec": 0.617,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 0,
+          "combined": 2079715099.7934418
+        }
+      },
+      "Rollback Total": {
+        "h_rec": 0.906,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 0,
+          "combined": 2079715099.7934418
+        }
+      }
+    },
+    "AMBER": {
+      "Expansão": {
+        "h_rec": 0.465,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 1727250000,
+          "combined": 3076348517.720282
+        }
+      },
+      "Continuidade": {
+        "h_rec": 0.601,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 1727250000,
+          "combined": 3076348517.720282
+        }
+      },
+      "Rollback Parcial": {
+        "h_rec": 0.757,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 1727250000,
+          "combined": 3076348517.720282
+        }
+      },
+      "Rollback Total": {
+        "h_rec": 0.95,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 1727250000,
+          "combined": 3076348517.720282
+        }
+      }
+    },
+    "RED": {
+      "Expansão": {
+        "h_rec": 0.757,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 5181750000,
+          "combined": 6135282079.075228
+        }
+      },
+      "Continuidade": {
+        "h_rec": 0.825,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 5181750000,
+          "combined": 6135282079.075228
+        }
+      },
+      "Rollback Parcial": {
+        "h_rec": 0.903,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 5181750000,
+          "combined": 6135282079.075228
+        }
+      },
+      "Rollback Total": {
+        "h_rec": 0.95,
+        "var0": {
+          "fx": 2079715099.7934418,
+          "supply": 5181750000,
+          "combined": 6135282079.075228
+        }
+      }
+    }
+  },
+  "defensivo_metrics": {
+    "hedge_cost_per_unit": 480,
+    "defensivo_cost_per_unit": 4500,
+    "volume_protected_units": 5000,
+    "margin_preserved": 75000000,
+    "defensivo_total_cost": 225000000,
+    "volume_loss_no_defensivo": 75000000,
+    "roi": -0.6666666666666666
+  },
+  "total_costs_2x2": {
+    "low × no": 0,
+    "low × yes": 225,
+    "mid × no": 24,
+    "mid × yes": 249,
+    "high × no": 50,
+    "high × yes": 275
+  }
+}

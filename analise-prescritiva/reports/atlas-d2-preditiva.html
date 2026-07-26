@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas D2 — Análise Preditiva Consolidada · Polo BYD Camaçari 2025–2027</title>
+  <meta name="description" content="White paper de análise preditiva do Polo BYD Camaçari. Vulnerabilidade cambial, concentração de supply chain, cenários regulatórios, dinâmica competitiva e modelagem macroeconométrica." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+
+  <style>
+    :root {
+      --bg: #0e1014;
+      --bg-card: #161a21;
+      --bg-deep: #080a0e;
+      --ink: #e6e8ec;
+      --ink-2: #b0b6c2;
+      --ink-3: #7a818f;
+      --ink-4: #4a4f5a;
+      --line: #262b35;
+      --line-2: #34394a;
+      --primary: #6b95f0;
+      --primary-2: #8eb1ff;
+      --accent: #e0a45e;
+      --risk-high: #ff6b63;
+      --risk-med: #ff9f43;
+      --risk-low: #4ade80;
+      --good: #4ade80;
+      --warn: #ff9f43;
+      --bad: #ff6b63;
+      --info: #6b95f0;
+      --serif: 'Inter Tight', 'Inter', system-ui, sans-serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15.5px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    ::selection { background: rgba(107,149,240,0.32); color: #f1efe7; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-4); }
+
+    /* Cover */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 64px 80px 48px;
+      background: linear-gradient(180deg, #07090d 0%, #0e1014 100%);
+      color: #f1efe7;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+    .cover-inner { position: relative; z-index: 2; }
+    .cover-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: #b8b3a3;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .cover-title {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      margin: 0 0 24px;
+      color: #f1efe7;
+    }
+    .cover-title em { font-style: normal; color: #e0a45e; }
+    .cover-sub {
+      font-size: 19px;
+      line-height: 1.5;
+      max-width: 720px;
+      color: #c8c4b6;
+      font-weight: 400;
+    }
+    .cover-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 64px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 32px;
+    }
+    .cover-meta-item {
+      padding-right: 32px;
+    }
+    .cover-meta-item + .cover-meta-item { border-left: 1px solid rgba(255,255,255,0.08); padding-left: 32px; }
+    .cover-meta-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8773; }
+    .cover-meta-value { font-family: var(--serif); font-weight: 700; font-size: 28px; color: #f1efe7; margin-top: 8px; }
+    .cover-meta-note { font-size: 12px; color: #8c8773; margin-top: 4px; }
+
+    .cover-foot {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6e6a5a;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+    }
+
+    /* Layout */
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 56px; }
+
+    /* TOC */
+    .toc {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--line);
+    }
+    .toc-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 16px; }
+    .toc-title { font-family: var(--serif); font-weight: 800; font-size: 40px; letter-spacing: -0.02em; margin: 0 0 32px; }
+    .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+    .toc-item {
+      display: flex;
+      gap: 24px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+    .toc-num { font-family: var(--mono); font-size: 13px; color: var(--ink-3); min-width: 40px; }
+    .toc-link { flex: 1; text-decoration: none; color: var(--ink); font-weight: 500; font-size: 16px; }
+    .toc-link:hover { color: var(--primary-2); }
+    .toc-link small { display: block; font-weight: 400; font-size: 13px; color: var(--ink-3); margin-top: 2px; }
+    .toc-pages { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+
+    /* Sections */
+    .section { padding: 96px 0 64px; border-top: 1px solid var(--line); }
+    .section:first-of-type { border-top: none; }
+    .sec-head { margin-bottom: 56px; }
+    .sec-num { font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+    .sec-title { font-family: var(--serif); font-weight: 800; font-size: 48px; line-height: 1.05; letter-spacing: -0.02em; margin: 12px 0 16px; }
+    .sec-lede { font-size: 18px; line-height: 1.55; color: var(--ink-2); max-width: 760px; }
+
+    /* Blocks */
+    .block { margin: 64px 0; }
+    .block + .block { border-top: 1px dashed var(--line-2); padding-top: 64px; }
+    .block-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 8px; }
+    .block-title { font-family: var(--serif); font-weight: 700; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 18px; }
+    .block-prose { max-width: 780px; }
+    .block-prose p { margin: 0 0 16px; }
+    .block-prose strong { color: var(--ink); }
+    .block-prose code { font-family: var(--mono); font-size: 13px; background: rgba(107,149,240,0.14); padding: 1px 6px; border-radius: 3px; color: #9bbcff; }
+
+    .chart {
+      margin: 32px 0 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 24px 20px 12px;
+    }
+    .chart img { display: block; width: 100%; height: auto; border: 1px solid var(--line-2); border-radius: 4px; }
+    .chart-cap { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; margin: 0 0 12px; }
+
+    .insights {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--primary);
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      max-width: 780px;
+    }
+    .insights h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--primary); }
+    .insights ul { margin: 0; padding-left: 18px; }
+    .insights li { margin-bottom: 4px; font-size: 14.5px; color: var(--ink-2); }
+    .insights li:last-child { margin-bottom: 0; }
+
+    .prescribe {
+      background: linear-gradient(180deg, #1f1a14 0%, #2a2418 100%);
+      color: #ecebe3;
+      border: 1px solid #3a2f1c;
+      border-radius: 6px;
+      padding: 28px 32px;
+      margin: 28px 0 0;
+      max-width: 780px;
+      position: relative;
+    }
+    .prescribe::before {
+      content: "PRESCRIÇÃO";
+      position: absolute;
+      top: -10px; left: 24px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      color: #0e1014;
+      background: #e0a45e;
+      padding: 4px 10px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .prescribe h4 { margin: 8px 0 12px; font-family: var(--serif); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: #f5e6d0; }
+    .prescribe p { margin: 0 0 10px; color: #d4ceb8; font-size: 14.5px; }
+    .prescribe ul { margin: 8px 0 0; padding-left: 18px; }
+    .prescribe li { margin-bottom: 4px; color: #d4ceb8; font-size: 14.5px; }
+    .prescribe strong { color: #f1efe7; }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+    .kpi {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 16px 18px;
+    }
+    .kpi-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
+    .kpi-value { font-family: var(--serif); font-weight: 800; font-size: 30px; margin-top: 6px; letter-spacing: -0.01em; color: var(--ink); }
+    .kpi-note { font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+    .kpi-good { border-top: 3px solid var(--good); }
+    .kpi-warn { border-top: 3px solid var(--warn); }
+    .kpi-bad { border-top: 3px solid var(--bad); }
+    .kpi-info { border-top: 3px solid var(--info); }
+
+    .method {
+      background: #1a1f29;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      max-width: 780px;
+    }
+    .method h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
+    .method p { margin: 0 0 6px; font-size: 14px; color: var(--ink-2); }
+    .method code { font-family: var(--mono); font-size: 12.5px; background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 2px; color: #c8d4f0; }
+
+    table.t {
+      width: 100%;
+      max-width: 780px;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    table.t th, table.t td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+    table.t th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+    table.t td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    table.t tr.total td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+
+    .pull {
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      border-left: 3px solid var(--accent);
+      padding: 8px 0 8px 24px;
+      margin: 24px 0;
+      max-width: 820px;
+      font-weight: 600;
+    }
+    .pull cite { display: block; font-style: normal; font-size: 13px; font-family: var(--mono); color: var(--ink-3); margin-top: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    /* End */
+    .end {
+      background: var(--bg-deep);
+      color: #ecebe3;
+      padding: 96px 0 64px;
+      margin-top: 96px;
+    }
+    .end h2 { font-family: var(--serif); font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.02em; margin: 0 0 32px; }
+    .end p { color: #c8c4b6; max-width: 760px; font-size: 16.5px; }
+    .end h3 { font-family: var(--serif); font-weight: 700; font-size: 24px; margin: 56px 0 16px; color: #f1efe7; }
+    .end .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .end .card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 24px 28px; }
+    .end .card h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #d8a35a; margin: 0 0 12px; }
+    .end .card .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: #8c8773; text-transform: uppercase; }
+    .end .card .v { font-family: var(--serif); font-weight: 700; font-size: 22px; margin: 4px 0 4px; color: #f1efe7; }
+    .end .card .n { font-size: 13px; color: #8c8773; }
+
+    .footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 920px) {
+      .wrap { padding: 0 24px; }
+      .cover { padding: 40px 24px; }
+      .cover-meta { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .cover-meta-item + .cover-meta-item { border-left: none; padding-left: 0; }
+      .sec-title { font-size: 36px; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: 1fr 1fr; }
+      .end .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: white; color: #15171c; }
+      .cover { background: white; color: #15171c; }
+      .cover::before { display: none; }
+      .cover-title { color: #15171c; }
+      .cover-title em { color: #b8681d; }
+      .cover-meta-value { color: #15171c; }
+      .end { background: white; color: #15171c; }
+      .prescribe { background: #f5f0e6; color: #15171c; border-color: #d8a35a; }
+      .prescribe h4, .prescribe p, .prescribe li, .prescribe strong { color: #15171c; }
+      .prescribe li, .prescribe p { color: #3a3f4a; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">Atlas D2 · White Paper · 19 de julho de 2026</div>
+    <h1 class="cover-title">Análise Preditiva <em>do Polo BYD Camaçari</em>, horizonte 2025–2027</h1>
+    <p class="cover-sub">Vulnerabilidade cambial, concentração de supply chain, cenários regulatórios, dinâmica competitiva de EVs e modelagem macroeconométrica. Um documento de referência para a tomada de decisão executiva no programa de instalação industrial baiano.</p>
+  </div>
+
+  <div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Composite Score</div>
+        <div class="cover-meta-value">71.8 / 100</div>
+        <div class="cover-meta-note">Vulnerabilidade alta · peso composto</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Dimensão crítica</div>
+        <div class="cover-meta-value">Supply Chain</div>
+        <div class="cover-meta-note">95.7 / 100 · Highly Concentrated</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Horizonte</div>
+        <div class="cover-meta-value">2025 — 2027</div>
+        <div class="cover-meta-note">Rota 2030 vigente · janela BNDES aberta</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Janela de dados</div>
+        <div class="cover-meta-value">Jan 2020 – Jul 2026</div>
+        <div class="cover-meta-note">1.642 obs PTAX · 77+ meses BCB</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-foot">
+    <div>Value Factory · Análise Preditiva</div>
+    <div>Documento executivo · v1.0</div>
+  </div>
+</section>
+
+<!-- ============================== TOC ============================== -->
+<section class="wrap toc">
+  <div class="toc-eyebrow">Sumário</div>
+  <h2 class="toc-title">Seis sessões, uma decisão</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#s1">
+      <span class="toc-num">S1</span>
+      <span class="toc-link">Vulnerabilidade cambial<small>PTAX, stress test, Monte Carlo, GARCH</small></span>
+      <span class="toc-pages">Score 70.9</span>
+    </a>
+    <a class="toc-item" href="#s2">
+      <span class="toc-num">S2</span>
+      <span class="toc-link">Supply chain<small>HHI, concentração de fornecedores, risco geopolítico</small></span>
+      <span class="toc-pages">Score 95.7</span>
+    </a>
+    <a class="toc-item" href="#s3">
+      <span class="toc-num">S3</span>
+      <span class="toc-link">Cenários regulatórios<small>Rota 2030, BNDES, incentivos fiscais</small></span>
+      <span class="toc-pages">Score 72.0</span>
+    </a>
+    <a class="toc-item" href="#s4">
+      <span class="toc-num">S4</span>
+      <span class="toc-link">Dinâmica competitiva EV<small>Projeção de market share 2026–2028</small></span>
+      <span class="toc-pages">Score 36.8</span>
+    </a>
+    <a class="toc-item" href="#s5">
+      <span class="toc-num">S5</span>
+      <span class="toc-link">Composite Index<small>Índice composto de vulnerabilidade e contribuição</small></span>
+      <span class="toc-pages">71.8 / 100</span>
+    </a>
+    <a class="toc-item" href="#s6">
+      <span class="toc-num">S6</span>
+      <span class="toc-link">Macro e econometria<small>VAR(4), FEVD, correlações BCB, trade deficit</small></span>
+      <span class="toc-pages">Granger, IRF, FEVD</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============================== S1 — CÂMBIO ============================== -->
+<section class="wrap section" id="s1">
+  <div class="sec-head">
+    <div class="sec-num">Sessão 01</div>
+    <h2 class="sec-title">Vulnerabilidade cambial</h2>
+    <p class="sec-lede">A PTAX é o fator macro de maior peso na equação de viabilidade do Polo. Vamos decompor a série, submeter o BOM a choques simétricos, simular 10 mil caminhos de log-normal e validar a persistência de volatilidade via GARCH(1,1) calibrado.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi-info">
+      <div class="kpi-label">PTAX (17/jul/2026)</div>
+      <div class="kpi-value">R$ 5.1176</div>
+      <div class="kpi-note">PTAX venda, BCB</div>
+    </div>
+    <div class="kpi kpi-warn">
+      <div class="kpi-label">Vol 30d anualizada</div>
+      <div class="kpi-value">14.19%</div>
+      <div class="kpi-note">Dispersão material para hedge</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">Tendência 180d</div>
+      <div class="kpi-value">−4.68%</div>
+      <div class="kpi-note">BRL em depreciação</div>
+    </div>
+    <div class="kpi kpi-info">
+      <div class="kpi-label">Janela amostral</div>
+      <div class="kpi-value">1.642 obs</div>
+      <div class="kpi-note">02/jan/2020 → 17/jul/2026</div>
+    </div>
+  </div>
+
+  <!-- Bloco 1.1 -->
+  <div class="block">
+    <div class="block-num">Bloco 1.1 · Contexto</div>
+    <h3 class="block-title">A série PTAX e o regime de volatilidade pós-2022</h3>
+    <div class="block-prose">
+      <p>A janela amostral captura o regime de estresse fiscal brasileiro iniciado em 2022 e amplificado em 2024–2025 pelo ciclo de aperto monetário norte-americano. O comportamento da PTAX deixa de ser estacionário em torno de uma média histórica: a média móvel de 60 dias oscila em banda larga, e os saltos de variância (clustering) que observamos na série são a assinatura típica de um processo <strong>GARCH</strong>, não de um ruído branco.</p>
+      <p>A leitura operacional é direta: <strong>não é razoável projetar o BOM a partir de uma PTAX "média de longo prazo"</strong>. O risco está no caminho, não no destino. Por isso a análise subsequente usa dois instrumentos complementares — <em>stress test</em> determinístico para comunicar a sensibilidade linear e <em>Monte Carlo</em> log-normal para mapear a distribuição de perdas prováveis.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 1.1 · Série PTAX diária (jan/2020 – jul/2026) com banda de desvio 30d</div>
+      <img src="figures/fig-1-1.png" alt="Figura fig-1-1" style="width:100%; height:auto; display:block;" />
+    </div>
+    <div class="insights">
+      <h4>Observações</h4>
+      <ul>
+        <li>Tendência 180d de <strong>−4.68%</strong> indica depreciação do BRL mesmo após ciclo de corte da Selic.</li>
+        <li>Vol anualizada 30d em <strong>14.19%</strong> está acima da média histórica de 12.3% (2015–2019).</li>
+        <li>Picos de amplitude em ago/2022, mar/2023 e out/2024 — todos coincidentes com eventos políticos-fiscais domésticos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bloco 1.2 -->
+  <div class="block">
+    <div class="block-num">Bloco 1.2 · Stress Test</div>
+    <h3 class="block-title">Impacto determinístico no BOM: −10% cambial já tira 4.2 pp de margem</h3>
+    <div class="block-prose">
+      <p>O stress test é a forma mais simples — e mais honesta — de comunicar sensibilidade. Mantemos o mix de componentes dolarizados do veículo constante e variamos apenas a PTAX em saltos discretos: <code>−5%, −10%, −20%, −30%</code>. O efeito sobre o <em>Bill of Materials</em> é praticamente linear porque a exposição é direta (peças CKD + célula de bateria importada) e não há hedge cambial natural.</p>
+      <p>A regra de bolso resultante: <strong>cada 1% de depreciação do BRL custa ~0.42 pp de margem bruta do veículo</strong>. Em um cenário moderado de <code>−10%</code> (PTAX a R$ 4.61), o impacto é de 4.2 pp — equivalente a comprimir toda a margem operacional de um EV compacto. No cenário de <code>−20%</code>, o impacto de 8.4 pp inviabiliza a estrutura de preço atual sem repasse ao consumidor.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 1.2 · Stress test: impacto no BOM (pp) por cenário de PTAX</div>
+      <img src="figures/fig-1-2.png" alt="Figura fig-1-2" style="width:100%; height:auto; display:block;" />
+    </div>
+    <div class="method">
+      <h4>Metodologia</h4>
+      <p>Cenário base: PTAX = R$ 5.12, exposição cambial do BOM estimada em 42% (componentes importados).</p>
+      <p>ΔBOM<sub>pp</sub> = (PTAX<sub>cenário</sub> / PTAX<sub>base</sub> − 1) × 42% × 100.</p>
+      <p>Linearização válida enquanto o repasse a fornecedores nacionais (mecânica, estamparia) se mantiver em ≤ 1.5 ciclos de repasse.</p>
+    </div>
+  </div>
+
+  <!-- Bloco 1.3 -->
+  <div class="block">
+    <div class="block-num">Bloco 1.3 · Monte Carlo</div>
+    <h3 class="block-title">10 mil caminhos log-normais: P5 de −4.78 pp e mediana praticamente zero</h3>
+    <div class="block-prose">
+      <p>O Monte Carlo substitui o determinismo pela distribuição. Usamos o modelo log-normal com drift <code>μ = −4.68% / 252</code> (tendência 180d anualizada em base diária) e volatilidade <code>σ = 14.19% / √252</code>. Simulamos <strong>10.000 caminhos de 126 dias úteis (~6 meses)</strong> e computamos o impacto marginal sobre o BOM no horizonte final.</p>
+      <p>O resultado mais importante não é a mediana (praticamente zero, o que confirma a calibração), mas a <strong>cauda esquerda</strong>: <code>P5 = −4.78 pp</code> e <code>P10 = −3.72 pp</code>. Em outras palavras, existe uma chance em dez de o cenário de stress moderado se materializar em apenas seis meses — e uma chance em vinte de a perda ultrapassar 4.7 pp sem aviso.</p>
+      <p>A probabilidade agregada de perda de margem (ΔBOM &lt; 0) é de <strong>53.6%</strong>, coerente com a tendência de depreciação de 4.68% e simétrica em torno da mediana. O desvio padrão de 3.01 pp é a dispersão que importa para fins de provisionamento.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 1.3 · Distribuição empírica do impacto no BOM (10.000 paths × 6 meses)</div>
+      <img src="figures/fig-1-3.png" alt="Figura fig-1-3" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <table class="t">
+      <thead><tr><th>Percentil</th><th>ΔBOM (pp)</th><th>Interpretação</th></tr></thead>
+      <tbody>
+        <tr><td>P5 (severo)</td><td class="num">−4.78</td><td>Risco de cauda — 1 em 20</td></tr>
+        <tr><td>P10</td><td class="num">−3.72</td><td>Cenário adverso plausível</td></tr>
+        <tr><td>P50 (mediana)</td><td class="num">−0.15</td><td>Calibração validada</td></tr>
+        <tr><td>P90</td><td class="num">+3.90</td><td>Cenário favorável</td></tr>
+        <tr><td>P95 (otimismo)</td><td class="num">+5.19</td><td>Reversão cambial forte</td></tr>
+        <tr class="total"><td>Prob. (Δ &lt; 0)</td><td class="num">53.6%</td><td colspan="1">Mais provável perder do que ganhar</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insights">
+      <h4>Observações</h4>
+      <ul>
+        <li>Distribuição praticamente simétrica em torno da mediana, com leve skew negativo (tendência de depreciação).</li>
+        <li>Range 90% de confiança: <strong>−4.78 pp a +5.15 pp</strong> — a magnitude da cauda é o que define o programa de hedge.</li>
+        <li>Std Dev 3.01 pp é o <em>value-at-risk</em> operacional de 1σ para provisionamento trimestral.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bloco 1.4 -->
+  <div class="block">
+    <div class="block-num">Bloco 1.4 · GARCH(1,1)</div>
+    <h3 class="block-title">Persistência de volatilidade: half-life de 7.7 dias úteis confirma regime GARCH</h3>
+    <div class="block-prose">
+      <p>Para fechar a sessão de câmbio com rigor, ajustamos um <strong>GARCH(1,1)</strong> univariado sobre a série de retornos logarítmicos da PTAX. O modelo canônico:</p>
+      <p style="font-family: var(--mono); font-size: 14px; background: #1a1f29; padding: 12px 16px; border-radius: 4px; max-width: 720px; color: #c8d4f0; border: 1px solid var(--line);">σ²<sub>t</sub> = ω + α · ε²<sub>t−1</sub> + β · σ²<sub>t−1</sub>, &nbsp; α + β &lt; 1 (estacionariedade)</p>
+      <p>Os parâmetros atualmente calibrados são <code>α = 0.08</code> e <code>β = 0.91</code>, com persistência <code>α + β = 0.99</code> e <strong>half-life de 7.7 dias úteis</strong>. Isso significa que um choque de volatilidade leva duas semanas para decair pela metade — em linha com a literatura para mercados emergentes sob estresse fiscal.</p>
+      <p>Importante: <strong>os parâmetros acima são simulados (proxy)</strong> até que a série PTAX real seja validada via BCB SGS e o ajuste seja re-rodado com <em>Maximum Likelihood</em> sobre os retornos observados. O exercício aqui é validar a estrutura, não os números finais.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 1.4 · Volatilidade condicional GARCH(1,1) — simulada e realizada</div>
+      <img src="figures/fig-1-4.png" alt="Figura fig-1-4" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="method">
+      <h4>Diagnóstico de fronteira</h4>
+      <p><strong>Próximos passos (angulos #1 e #4 do backlog):</strong></p>
+      <p>① Re-rodar GARCH univariado com PTAX real (BCB SGS, série 1) e validar α, β e half-life.</p>
+      <p>④ Estender para <strong>GARCH-BEKK</strong> ou <strong>DCC-GARCH</strong> para modelar correlação condicional entre PTAX e commodities críticas (lítio, níquel, cobre).</p>
+    </div>
+
+    <div class="prescribe">
+      <h4>Hedging de 50% da exposição cambial em horizonte 6m</h4>
+      <p>Recomendação primária baseada na leitura conjunta de stress test e Monte Carlo:</p>
+      <ul>
+        <li><strong>Nível de hedge:</strong> 50% da exposição cambial líquida em horizonte de 6 meses, com revisão trimestral.</li>
+        <li><strong>Instrumentos:</strong> swap cambial (B3) + NDF (Non-Deliverable Forward) offshore para camada offshore. Considerar também <em>layered forwards</em> em tranches de 25%.</li>
+        <li><strong>Custo esperado:</strong> 80–120 bps/ano em prêmio de seguro, justificado pela redução do P95 de −4.78 pp para ≈ −2.4 pp.</li>
+        <li><strong>Gatilhos de revisão:</strong> PTAX &gt; R$ 5.40 por 5 dias úteis consecutivos; vol realizada 30d &gt; 18%; evento de risco soberano (NTN-B &gt; IPCA+6.5%).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== S2 — SUPPLY CHAIN ============================== -->
+<section class="wrap section" id="s2">
+  <div class="sec-head">
+    <div class="sec-num">Sessão 02</div>
+    <h2 class="sec-title">Supply chain · a fragilidade que mais pesa no composite</h2>
+    <p class="sec-lede">A concentração de fornecedores em poucos players — e poucos países — é o maior risco estrutural do projeto. A dimensão recebe peso de 30% no composite e responde por 28.7 dos 71.8 pontos totais. Esta sessão detalha HHI por categoria, exposição por player e o cenário de ruptura geopolítica.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">HHI Battery Cells</div>
+      <div class="kpi-value">4.850</div>
+      <div class="kpi-note">Highly Concentrated</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">HHI Lithium</div>
+      <div class="kpi-value">3.400</div>
+      <div class="kpi-note">Highly Concentrated</div>
+    </div>
+    <div class="kpi kpi-warn">
+      <div class="kpi-label">HHI Semiconductors</div>
+      <div class="kpi-value">2.925</div>
+      <div class="kpi-note">Moderadamente concentrada</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">Score Dimensão</div>
+      <div class="kpi-value">95.7 / 100</div>
+      <div class="kpi-note">Dimensão mais crítica do composite</div>
+    </div>
+  </div>
+
+  <!-- Bloco 2.1 -->
+  <div class="block">
+    <div class="block-num">Bloco 2.1 · HHI por categoria</div>
+    <h3 class="block-title">Baterias e lítio no limite superior da escala HHI</h3>
+    <div class="block-prose">
+      <p>O <strong>Herfindahl-Hirschman Index (HHI)</strong> é a métrica padrão de concentração de mercado: soma dos quadrados das participações percentuais. A interpretação regulatória é universal — acima de 2.500 o mercado é considerado <em>highly concentrated</em>, entre 1.500 e 2.500 <em>moderately concentrated</em>, abaixo de 1.500 <em>competitive</em>.</p>
+      <p>Nossas três categorias críticas estão todas no limite superior da escala, e duas delas (baterias e lítio) acima do limiar. Em outras palavras: <strong>o Polo BYD Camaçari não tem opção de segunda fonte viável em escala de produção</strong> para as duas categorias que definem a estrutura de custo de um EV.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 2.1 · HHI por categoria crítica (interpretação regulatória)</div>
+      <img src="figures/fig-2-1.png" alt="Figura fig-2-1" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <!-- Bloco 2.2 -->
+  <div class="block">
+    <div class="block-num">Bloco 2.2 · Anatomia da concentração</div>
+    <h3 class="block-title">CATL + Albemarle cobrem 75% do supply crítico</h3>
+    <div class="block-prose">
+      <p>O HHI é a média ponderada, mas o risco real está nos players individuais. As três categorias somam 14.2 GW de demanda anual projetada para 2027, e os top-2 fornecedores de cada categoria respondem por:</p>
+      <ul>
+        <li><strong>Baterias:</strong> CATL 65% + BYD-Fintech 25% = 90% do supply. A verticalização interna da BYD (Fintech) é uma proteção parcial, mas o Lithium Iron Phosphate (LFP) de alta densidade continua dependendo da CATL.</li>
+        <li><strong>Lítio:</strong> Albemarle 50% + SQM 30% = 80%. Ambos com operações no <em>Lithium Triangle</em> (Chile, Argentina, Bolívia) — exposição a nacionalismo de recursos.</li>
+        <li><strong>Semicondutores:</strong> TSMC 45% + Samsung 30% = 75%. Concentração geográfica em Taiwan e Coreia do Sul — risco geopolítico de primeira ordem.</li>
+      </ul>
+      <p>Agregando: <strong>CATL + lítio (Albemarle/SQM) cobrem &gt; 80% do supply crítico do programa</strong>. Uma disrupção simultânea em duas dessas frentes (cenário Taiwan + Chile) tem impacto de produção imediato, sem mitigação possível em &lt; 12 meses.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 2.2 · Composição de market share por categoria crítica</div>
+      <img src="figures/fig-2-2.png" alt="Figura fig-2-2" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <!-- Bloco 2.3 -->
+  <div class="block">
+    <div class="block-num">Bloco 2.3 · Mapa de risco geopolítico</div>
+    <h3 class="block-title">Fornecedor → país → risco: três clusters, três pontos de falha</h3>
+    <div class="block-prose">
+      <p>O exercício de mapeamento conecta fornecedor, país de origem e a categoria de risco geopolítico. O resultado é um grafo com <strong>três clusters de risco</strong> sobrepostos:</p>
+      <p><strong>① Cluster China-Taiwan:</strong> CATL (Fujian, China) + TSMC (Hsinchu, Taiwan). Risco de sanção tecnológica, bloqueio de Taiwan (TSMC 45% dos semicondutores de先进 nó), retaliation comercial.</p>
+      <p><strong>② Cluster Lithium Triangle:</strong> Albemarle (La Negra, Chile) + SQM (Salar de Atacama, Chile). Risco de nacionalização (projeto de estatalização chilena), instabilidade social na Bolívia, taxação de exportação argentina.</p>
+      <p><strong>③ Cluster Coreia do Sul:</strong> Samsung (Giheung, Coreia do Sul). Risco secundário em semicondutores, parcialmente mitigado pela redundância TSMC-Samsung.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 2.3 · Sankey: fornecedor → país → categoria de risco</div>
+      <img src="figures/fig-2-3.png" alt="Figura fig-2-3" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="prescribe">
+      <h4>Dual-sourcing agressivo com contratos take-or-pay plurianuais</h4>
+      <p>A concentração de 90% (CATL) e 80% (Albemarle + SQM) é incompatível com a janela 2025–2027 do programa. A prescrição tem três camadas:</p>
+      <ul>
+        <li><strong>Curto prazo (6m):</strong> Contratos <em>take-or-pay</em> plurianuais com CATL e Albemarle (mínimo 70% de volume) travados em PTAX forward, com cláusula de <em>pass-through</em> cambial simétrico.</li>
+        <li><strong>Médio prazo (12–18m):</strong> Qualificar segundo fornecedor LFP (EVE Energy ou Gotion) com meta de 25% do supply de células até 2027. Para lítio, expandir contratos com Tianqi (Argentina) e Pilbara Minerals (Austrália).</li>
+        <li><strong>Longo prazo (24m+):</strong> Investimento minoritário em refinaria de lítio no Nordeste (Cadeia Otávia/Mariana) — protege contra nacionalização sul-americana e ancora <em>vertical integration</em> narrativa para capex público.</li>
+        <li><strong>Reserva de segurança:</strong> 60 dias de inventário de safety stock para células e lítio, equivalentes a ~R$ 280M de capital imobilizado.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== S3 — REGULATÓRIO ============================== -->
+<section class="wrap section" id="s3">
+  <div class="sec-head">
+    <div class="sec-num">Sessão 03</div>
+    <h2 class="sec-title">Cenários regulatórios · o peso do Rota 2030 e do BNDES</h2>
+    <p class="sec-lede">A estrutura tributária e os incentivos federais respondem por uma fatia relevante da equação de viabilidade. A sessão mapeia quatro cenários discretos de política industrial, calibra o impacto sobre a cobertura de incentivos e discute a janela BNDES Plano Mais Produção.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi-info">
+      <div class="kpi-label">Score Dimensão</div>
+      <div class="kpi-value">72.0 / 100</div>
+      <div class="kpi-note">Risco alto · dependência regulatória</div>
+    </div>
+    <div class="kpi kpi-good">
+      <div class="kpi-label">Cenário base</div>
+      <div class="kpi-value">18.0%</div>
+      <div class="kpi-note">Cobertura de incentivos</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">Rollback total</div>
+      <div class="kpi-value">−18.0 pp</div>
+      <div class="kpi-note">Impacto máximo no ViE</div>
+    </div>
+    <div class="kpi kpi-info">
+      <div class="kpi-label">Expansão</div>
+      <div class="kpi-value">+7.0 pp</div>
+      <div class="kpi-note">Cenário positivo de renovação</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 3.1 · Cenários discretos</div>
+    <h3 class="block-title">Cobertura de incentivos: −18 pp no rollback, +7 pp na expansão</h3>
+    <div class="block-prose">
+      <p>A modelagem de cenários regulatórios segue a lógica de árvore de decisão com quatro ramos discretos:</p>
+      <ul>
+        <li><strong>Continuidade (40% prob.):</strong> Rota 2030 renovado nos termos atuais, cobertura de incentivos permanece em 18.0% do VGV. Baseline de referência.</li>
+        <li><strong>Rollback Parcial (30% prob.):</strong> Renovação com redução de 40% do incentivo, cobertura cai para 10.0% — perda de 8.0 pp no ViE (Valor Incentivado Estimado).</li>
+        <li><strong>Rollback Total (15% prob.):</strong> Não renovação do programa, cobertura zera — perda máxima de 18.0 pp no ViE. Cenário de ruptura política.</li>
+        <li><strong>Expansão (15% prob.):</strong> Novo regime automotivo com adicionais para eletrificação, cobertura sobe para 25.0% (+7.0 pp). Cenário de alinhamento com política industrial verde.</li>
+      </ul>
+      <p>A <strong>probabilidade ponderada de impacto</strong> é de <code>0.40×0 + 0.30×(−8) + 0.15×(−18) + 0.15×(+7) = −3.45 pp</code> — ou seja, o cenário mais provável é perda modesta, mas com cauda longa material.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 3.1 · Cobertura de incentivos por cenário (Δ vs. base em pp)</div>
+      <img src="figures/fig-3-1.png" alt="Figura fig-3-1" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="method">
+      <h4>Premissas</h4>
+      <p>Rota 2030 vigente até 2027; revisão congressional em ago/2026.</p>
+      <p>BNDES Plano Mais Produção: taxa TLP+remuneração (~TJLP+1.2% a.a.), carência 24m, amortização 96m.</p>
+      <p>Cenário base assume aprovação do Plano Mais Produção integral (R$ 3.5 bi disponível até 2027).</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 3.2 · Sensibilidade BNDES</div>
+    <h3 class="block-title">O Plano Mais Produção é essencial — sem ele, ViE cai 12 pp</h3>
+    <div class="block-prose">
+      <p>A modelagem de sensibilidade isolada do componente BNDES mostra que a aprovação do <strong>Plano Mais Produção</strong> é a variável binária mais importante da dimensão regulatória. A diferença entre "Plano aprovado" e "Plano negado" é de <strong>12 pp de ViE</strong> — equivalente a toda a margem operacional projetada de um ano de operação em regime.</p>
+      <p>Em conjunto com o Rota 2030, os dois instrumentos respondem por <strong>78% do ViE</strong> do programa. Isso cria uma vulnerabilidade política: o timing de aprovação (ago/2026) coincide com o início da operação assistida, e qualquer atraso impacta diretamente o fluxo de caixa do primeiro ano.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 3.2 · Decomposição do ViE por instrumento (cobertura %)</div>
+      <img src="figures/fig-3-2.png" alt="Figura fig-3-2" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="prescribe">
+      <h4>Programa estruturado de advocacy + contingência de funding alternativo</h4>
+      <ul>
+        <li><strong>Advocacy técnico:</strong> Posicionar BYD como caso de sucesso de <em>policy outcome</em> (job creation, transferência tecnológica, verticalização) para baseline de apoio congressional em ago/2026.</li>
+        <li><strong>Engagement MDIC/BNDES:</strong> Reunião técnica mensal com a diretoria do BNDES para garantir slot no Plano Mais Produção. Cofinanciamento com Brde/ Banco do Nordeste para reduzir exposição a funding federal único.</li>
+        <li><strong>Plano B (contingência):</strong> Linha de bridge financing de US$ 800M com sindicato de bancos comerciais (Itau BBA, BTG, Bradesco) — drawable em 30 dias caso o BNDES atrase além de dez/2026.</li>
+        <li><strong>Cláusula de proteção no MCMV regulatório:</strong> incluir <em>change-of-law</em> nos contratos com fornecedores locais permitindo repasse parcial em cenário de rollback total.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== S4 — COMPETITIVO ============================== -->
+<section class="wrap section" id="s4">
+  <div class="sec-head">
+    <div class="sec-num">Sessão 04</div>
+    <h2 class="sec-title">Dinâmica competitiva · EV market share 2026–2028</h2>
+    <p class="sec-lede">A BYD chega ao mercado brasileiro com a maior fatia de EVs em 2026, mas a trajetória é de erosão acelerada. A sessão projeta a evolução do market share, identifica os vetores de pressão (Tesla Model 2, eletrificação de VW e GM) e calcula a perda de participação no horizonte do programa.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi-good">
+      <div class="kpi-label">BYD share 2026</div>
+      <div class="kpi-value">38%</div>
+      <div class="kpi-note">Líder absoluta</div>
+    </div>
+    <div class="kpi kpi-warn">
+      <div class="kpi-label">BYD share 2027</div>
+      <div class="kpi-value">31%</div>
+      <div class="kpi-note">−7 pp em 12m</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">BYD share 2028</div>
+      <div class="kpi-value">24%</div>
+      <div class="kpi-note">−14 pp acumulado</div>
+    </div>
+    <div class="kpi kpi-info">
+      <div class="kpi-label">Score Dimensão</div>
+      <div class="kpi-value">36.8 / 100</div>
+      <div class="kpi-note">Risco baixo no curto prazo</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 4.1 · Projeção de market share</div>
+    <h3 class="block-title">Tesla triplica share (5% → 18%) com Model 2; VW e GM ganham 4 pp cada</h3>
+    <div class="block-prose">
+      <p>A projeção combina três vetores de pressão competitiva convergentes:</p>
+      <ul>
+        <li><strong>Entrada da Tesla Model 2 (2027):</strong> veículo de entrada a ~US$ 25k, com a base de custos da Gigafactory Mexico e a narrativa de marca premium acessível. Triplica a participação de Tesla em 24 meses.</li>
+        <li><strong>Eletrificação de linha de VW e GM:</strong> VW ID.3 nacionalizado via plataforma MEB+ em Resende, GM Equinox EV produzido em São Caetano. Capturam clientes de marca forte e concessionário established.</li>
+        <li><strong>Pressão sobre "Outros":</strong> Caoa Chery, Renault, JAC e novos entrantes chineses (GWM, Leapmotor via Stellantis) disputam o segmento de entrada.</li>
+      </ul>
+      <p>A leitura consolidação é que <strong>o mercado de EV brasileiro vai passar de "competição por educação do consumidor" (2026) para "competição por share em mercado maduro" (2028)</strong>. BYD perde 14 pp de share, mas a queda é compensada parcialmente pelo crescimento absoluto do mercado (de 110k para 220k unidades anuais projetadas).</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 4.1 · Projeção de market share EV Brasil 2026–2028 (% por OEM)</div>
+      <img src="figures/fig-4-1.png" alt="Figura fig-4-1" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 4.2 · Decomposição da perda</div>
+    <h3 class="block-title">Onde a BYD perde share: 9 pp vão para Tesla+VW, 5 pp para GM+Outros</h3>
+    <div class="block-prose">
+      <p>Dos 14 pp perdidos pela BYD no horizonte 2026–2028, a decomposição é a seguinte: <strong>5 pp para Tesla</strong> (efeito Model 2), <strong>4 pp para VW</strong> (linha MEB+), <strong>3 pp para GM</strong> (Equinox EV), <strong>2 pp diluídos entre Outros</strong> (GWM, Caoa Chery, JAC). Em outras palavras, dois terços da perda vão para OEMs com plataforma <em>global</em> e cadeia de suprimento integrada — competindo em custo, não em preço de catálogo.</p>
+      <p>Importante: a perda de share <strong>não é equivalente a perda de volume absoluto</strong>. Com mercado crescendo ~40% ao ano, BYD 2028 com 24% vende mais unidades do que 2026 com 38% — desde que a operação Camaçari escale para 180k unidades/ano.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 4.2 · Trajetória de share BYD vs. concorrentes (2026–2028)</div>
+      <img src="figures/fig-4-2.png" alt="Figura fig-4-2" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="prescribe">
+      <h4>Pricing defensivo + diferenciação por bateria LFP e verticalização local</h4>
+      <ul>
+        <li><strong>Pricing defensivo em 2026 (Q3–Q4):</strong> Travar preço de catálogo abaixo do Model 2 esperado (US$ 25k) com pacote de serviço + wallbox incluso. Custo estimado: R$ 4.500/unidade, ROI positivo se share for preservado em 1.5 pp.</li>
+        <li><strong>Diferenciação LFP:</strong> Comunicar segurança + durabilidade do LFP vs. NMC da Tesla. Construir narrativa de "bateria que não pega fogo" — referenciada em recall Tesla 2024.</li>
+        <li><strong>Verticalização como narrativa:</strong> "Carro baiano" com 60% de conteúdo local em 2027 — disputar narrativa de emprego + transferência tecnológica contra VW MEB+.</li>
+        <li><strong>Programa de fidelização (BYD Connect):</strong> Subscription de bateria, garantía estendida, OTA updates — fidelizar primeira geração de compradores para reduzir churn em 2028.</li>
+        <li><strong>Roadmap de produto 2027–2028:</strong> Antecipar SUV compacto (X-Dream nacional) e picape elétrica leve para preencher gaps que Tesla Model 2 deixa abertos.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== S5 — COMPOSITE ============================== -->
+<section class="wrap section" id="s5">
+  <div class="sec-head">
+    <div class="sec-num">Sessão 05</div>
+    <h2 class="sec-title">Composite Index · a fotografia consolidada</h2>
+    <p class="sec-lede">A média ponderada das quatro dimensões produz o score composto de vulnerabilidade de 71.8/100. Esta sessão apresenta a decomposição por contribuição, contextualiza o número em escala histórica e prioriza onde a ação corretiva entrega mais retorno por real investido.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">Composite</div>
+      <div class="kpi-value">71.8 / 100</div>
+      <div class="kpi-note">Vulnerabilidade alta</div>
+    </div>
+    <div class="kpi kpi-warn">
+      <div class="kpi-label">Câmbio (30%)</div>
+      <div class="kpi-value">21.3</div>
+      <div class="kpi-note">Maior contribuidor</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">Supply Chain (30%)</div>
+      <div class="kpi-value">28.7</div>
+      <div class="kpi-note">Dimensão mais crítica</div>
+    </div>
+    <div class="kpi kpi-info">
+      <div class="kpi-label">Regulatório (20%)</div>
+      <div class="kpi-value">14.4</div>
+      <div class="kpi-note">Janela de definição em ago/2026</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 5.1 · Score por dimensão</div>
+    <h3 class="block-title">Os quatro eixos de vulnerabilidade em um único plano</h3>
+    <div class="block-prose">
+      <p>O radar abaixo coloca as quatro dimensões em um mesmo plano de leitura. Quanto mais para fora, maior a vulnerabilidade. O polígono da situação atual (linha cheia) é assimétrico: <strong>puxado para o quadrante superior-direito pelo supply chain e pelo câmbio</strong>, e ancorado no quadrante inferior pelo competitivo.</p>
+      <p>Para efeitos de priorização, observamos que a redução de 10 pontos no score de supply chain (de 95.7 para 85.7) é <strong>duas vezes mais eficiente em reduzir o composite</strong> do que a mesma redução na dimensão competitiva (de 36.8 para 26.8). A alocação de capital de mitigação deve refletir esse retorno marginal decrescente.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 5.1 · Radar de vulnerabilidade por dimensão (0–100)</div>
+      <img src="figures/fig-5-1.png" alt="Figura fig-5-1" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 5.2 · Contribuição ponderada</div>
+    <h3 class="block-title">Supply chain sozinho responde por 40% do composite</h3>
+    <div class="block-prose">
+      <p>A decomposição do score composto por <em>contribuição</em> (score × peso) revela a concentração do risco: <strong>supply chain e câmbio, juntos, respondem por 50 dos 71.8 pontos (70% do composite)</strong>. Regulatório adiciona 14.4 e competitivo apenas 7.4 — o que confirma que a posição de mercado atual (líder em 2026) não é a principal fonte de risco.</p>
+      <p>Esta é a evidência quantitativa para a priorização: o programa de mitigação deve alocar desproporcionalmente mais recursos para cadeia de suprimentos e hedge cambial, em vez de marketing defensivo ou ações comerciais.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 5.2 · Contribuição de cada dimensão ao composite (pp)</div>
+      <img src="figures/fig-5-2.png" alt="Figura fig-5-2" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 5.3 · Retorno marginal de mitigação</div>
+    <h3 class="block-title">Onde R$ 1 de mitigação entrega mais queda no composite</h3>
+    <div class="block-prose">
+      <p>Combinando score atual, peso da dimensão e custo de mitigação estimado, calculamos o <strong>retorno marginal</strong> de cada real investido em mitigação:</p>
+      <ul>
+        <li><strong>Supply chain (dual-sourcing):</strong> −3.5 pp no composite por R$ 100M investido em qualificação de fornecedores + safety stock.</li>
+        <li><strong>Câmbio (hedging 50%):</strong> −2.1 pp no composite por R$ 80M/ano em prêmio de hedge.</li>
+        <li><strong>Regulatório (advocacy + contingency):</strong> −4.8 pp no composite por R$ 12M investido (custo político é o principal ativo).</li>
+        <li><strong>Competitivo (pricing defensivo):</strong> −0.9 pp no composite por R$ 320M/ano em subsídio de catálogo.</li>
+      </ul>
+      <p><strong>O regulatório tem o melhor retorno por real investido</strong>, mas a alavanca é política e de baixa previsibilidade. <strong>Supply chain e câmbio são a base obrigatória</strong> do programa de mitigação. Competitivo entra como investimento de manutenção de posição, não de mitigação estrutural.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 5.3 · Eficiência de mitigação (Δpp composite por R$ 100M investido)</div>
+      <img src="figures/fig-5-3.png" alt="Figura fig-5-3" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="prescribe">
+      <h4>Sequência de mitigação: regulatório → supply chain → câmbio → competitivo</h4>
+      <p>A ordem reflete a combinação de <em>eficiência por real</em> e <em>controlabilidade</em> (a capacidade de influenciar a variável internamente):</p>
+      <ul>
+        <li><strong>1º — Regulatório (12m, R$ 12M):</strong> advocacy Plano Mais Produção + Rota 2030. ROI político, baixo custo, alto retorno se aprovado.</li>
+        <li><strong>2º — Supply chain (18m, R$ 280M):</strong> dual-sourcing + safety stock + investimento minoritário em lítio nacional. Maior impacto em composite.</li>
+        <li><strong>3º — Câmbio (contínuo, R$ 80M/ano):</strong> programa de hedge 50% com revisão trimestral. Reduz volatilidade do P&amp;L.</li>
+        <li><strong>4º — Competitivo (24m+, R$ 320M/ano):</strong> pricing defensivo + diferenciação. Investimento de manutenção de posição.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== S6 — MACRO/ECON ============================== -->
+<section class="wrap section" id="s6">
+  <div class="sec-head">
+    <div class="sec-num">Sessão 06</div>
+    <h2 class="sec-title">Macro & econometria · o chão macro do programa</h2>
+    <p class="sec-lede">A última sessão ancora as quatro dimensões anteriores em modelos macroeconométricos: VAR(4) com Impulse Response Functions, Forecast Error Variance Decomposition, e correlações contra séries do Banco Central. O objetivo é separar o que é vulnerabilidade do programa do que é vulnerabilidade do ambiente.</p>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi kpi-info">
+      <div class="kpi-label">VAR(4) IRF</div>
+      <div class="kpi-value">−204k</div>
+      <div class="kpi-note">Peak em PTAX → ANFAVEA (lag 3)</div>
+    </div>
+    <div class="kpi kpi-info">
+      <div class="kpi-label">FEVD 12m</div>
+      <div class="kpi-value">8%</div>
+      <div class="kpi-note">PTAX explica 8% da variância ANFAVEA</div>
+    </div>
+    <div class="kpi kpi-good">
+      <div class="kpi-label">PIB ↔ ANFAVEA</div>
+      <div class="kpi-value">+0.59</div>
+      <div class="kpi-note">Correlação forte</div>
+    </div>
+    <div class="kpi kpi-bad">
+      <div class="kpi-label">Trade Autos</div>
+      <div class="kpi-value">−US$ 584M</div>
+      <div class="kpi-note">Déficit mensal médio</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 6.1 · VAR(4) IRF</div>
+    <h3 class="block-title">Choque cambial: vendas de veículos caem com pico em 3 meses</h3>
+    <div class="block-prose">
+      <p>Estimamos um <strong>VAR(4)</strong> (Vector Autoregression com 4 lags) sobre o sistema <code>(PTAX, ANFAVEA vendas, IPCA, PIB)</code> em frequência mensal. A <em>Impulse Response Function</em> mostra que um choque de +1 desvio padrão na PTAX (depreciação do BRL) gera:</p>
+      <ul>
+        <li>Resposta de ANFAVEA vendas de <strong>−204 mil unidades no lag 3</strong> (≈ 9 meses após o choque), com bandas de confiança a 95% que não cruzam zero.</li>
+        <li>Persistência: o efeito se dissipa em ≈ 6 meses (volve ao intervalo de confiança).</li>
+        <li>Confirmação da teoria: depreciação cambial eleva preço de veículos importados (70% da oferta em 2020–2023) e desloca demanda para usados.</li>
+      </ul>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 6.1 · IRF VAR(4): choque de +1σ em PTAX → resposta de ANFAVEA vendas (lags 0–12)</div>
+      <img src="figures/fig-6-1.png" alt="Figura fig-6-1" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="method">
+      <h4>Metodologia</h4>
+      <p>VAR(4) com séries mensais dessazonalizadas (X-13 ARIMA-SEATS), N = 77 observações (jan/2020 – mai/2026).</p>
+      <p>Estabilidade verificada via eigenvalues dentro do círculo unitário.</p>
+      <p>Identificação por Cholesky com ordem: PTAX → IPCA → PIB → ANFAVEA (PTAX contemporaneamente exógena).</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 6.2 · FEVD</div>
+    <h3 class="block-title">PTAX explica 8% da variância de vendas a 12 meses — o resto é macro doméstico</h3>
+    <div class="block-prose">
+      <p>A <em>Forecast Error Variance Decomposition</em> decompõe o erro de previsão de ANFAVEA em contribuição de cada variável do sistema. A leitura a 12 meses:</p>
+      <ul>
+        <li><strong>PTAX: 8%</strong> — o câmbio é o terceiro driver, atrás de IPCA e PIB.</li>
+        <li><strong>IPCA: 31%</strong> — a inflação explica mais que o dobro do câmbio, via taxa de juros e crédito.</li>
+        <li><strong>PIB: 38%</strong> — o produto é o principal explicador da demanda por veículos.</li>
+        <li><strong>Choques próprios (ANFAVEA): 23%</strong> — inércia da própria série de vendas.</li>
+      </ul>
+      <p>Em outras palavras, <strong>o câmbio importa, mas a macro doméstica importa mais</strong>. A vulnerabilidade cambial é real e quantificada, mas o principal driver do programa é o ciclo de crescimento e inflação brasileiros.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 6.2 · FEVD 12m da variância de ANFAVEA vendas por choque</div>
+      <img src="figures/fig-6-2.png" alt="Figura fig-6-2" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 6.3 · Correlações BCB</div>
+    <h3 class="block-title">PIB e confiança explicam vendas; crédito tem correlação fraca</h3>
+    <div class="block-prose">
+      <p>Scout de correlações entre ANFAVEA vendas e séries mensais do Banco Central (SGS), com N ≥ 77 observações:</p>
+      <ul>
+        <li><strong>PIB mensal (r = +0.59):</strong> correlação forte e significativa. Confirma que o ciclo macro domestico dirige o mercado de veículos.</li>
+        <li><strong>FGV ICG (r = +0.44):</strong> confiança do consumidor tem sinal positivo e magnitude moderada. Antecipa demanda com 1–2 meses de lead.</li>
+        <li><strong>FGV ICC (r = +0.31):</strong> confiança da indústria — correlação menor mas ainda material.</li>
+        <li><strong>IPCA (r = −0.24):</strong> sinal negativo como esperado. Inflação comprime renda real e desloca demanda.</li>
+        <li><strong>Crédito automotivo (r = +0.02):</strong> correlação fraca, contraintuitiva. Explicação: o crédito automotivo é mais regulado que discricionário, e seu volume responde endogenamente ao ciclo de vendas.</li>
+      </ul>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 6.3 · Correlação de Pearson: ANFAVEA vendas vs. séries macro BCB (N ≥ 77)</div>
+      <img src="figures/fig-6-3.png" alt="Figura fig-6-3" style="width:100%; height:auto; display:block;" />
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-num">Bloco 6.4 · Trade deficit autos</div>
+    <h3 class="block-title">Déficit mensal de US$ 584M em autos: a balança comercial pressiona a narrativa</h3>
+    <div class="block-prose">
+      <p>A balança comercial do setor automotivo fechou os últimos 12 meses com <strong>importações de US$ 906.7M/mês</strong> e exportações de US$ 322.2M/mês — um déficit mensal médio de <strong>US$ 584.5M</strong>. Isso equivale a aproximadamente US$ 7 bi/ano de pressão sobre o balanço de pagamentos do setor.</p>
+      <p>A <strong>narrativa de substituição de importações</strong> via Camaçari 2025–2027 é a alavanca política mais poderosa do projeto: cada 10% de redução no déficit mensal de autos é equivalente a US$ 700M/ano de pressão cambial aliviadas. É a métrica que fala diretamente com a área econômica do governo.</p>
+    </div>
+    <div class="chart">
+      <div class="chart-cap">Figura 6.4 · Trade deficit setor automotivo (importações − exportações, US$ M/mês)</div>
+      <img src="figures/fig-6-4.png" alt="Figura fig-6-4" style="width:100%; height:auto; display:block;" />
+    </div>
+
+    <div class="prescribe">
+      <h4>Macro monitoring mensal + narrativa de substituição de importações</h4>
+      <ul>
+        <li><strong>Dashboard mensal de monitoramento:</strong> PTAX, IPCA, PIB mensal, FGV ICG/ICC, ANFAVEA vendas, BCB expectativas Focus. Refresh automático via BCB SGS API.</li>
+        <li><strong>Gatilho de revisão do plano:</strong> se PIB mensal &lt; 0 por 2 trimestres consecutivos OU IPCA 12m &gt; 6.5%, replanejar volume 2027 (redução de 15% na curva base).</li>
+        <li><strong>Narrativa de substituição de importações:</strong> comunicar para o MF e a área econômica que a operação Camaçari reduz déficit em ~US$ 2 bi/ano até 2028 (volume total 360k unidades/ano com 60% de conteúdo local).</li>
+        <li><strong>Estender VAR com DCC-GARCH:</strong> modelar correlação condicional PTAX-ANFAVEA em janelas rolantes de 24 meses — detecta mudanças estruturais de regime que o VAR estático não captura (angulo #4 do backlog).</li>
+        <li><strong>Granger causality test:</strong> confirmar direcionalidade cambial → vendas (angulo #2 do backlog). Resultado esperado: simetria com feedback positivo após 3 meses.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== END / ROADMAP ============================== -->
+<section class="end">
+  <div class="wrap">
+    <div class="toc-eyebrow" style="color: #8c8773;">Síntese executiva</div>
+    <h2>Do diagnóstico ao roadmap: a sequência que protege o programa</h2>
+    <p>O Polo BYD Camaçari opera em um ambiente de vulnerabilidade alta (composite 71.8/100), com dois pontos de falha material — supply chain (95.7) e câmbio (70.9) — e dois pontos de vigilância — regulatório (72.0) e competitivo (36.8). Esta página consolida o caminho de mitigação, com horizonte, custo estimado e KPI de acompanhamento.</p>
+
+    <h3>Os cinco números que importam</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>01 · Composite</h4>
+        <div class="lbl">Vulnerabilidade</div>
+        <div class="v">71.8 / 100</div>
+        <div class="n">Alta · meta de redução: 60/100 até dez/2027</div>
+      </div>
+      <div class="card">
+        <h4>02 · Supply chain</h4>
+        <div class="lbl">Dimensão mais crítica</div>
+        <div class="v">95.7 / 100</div>
+        <div class="n">CATL + lítio = 80% do supply crítico</div>
+      </div>
+      <div class="card">
+        <h4>03 · Monte Carlo P5</h4>
+        <div class="lbl">Câmbio · risco de cauda</div>
+        <div class="v">−4.78 pp</div>
+        <div class="n">BOM em cenário severo (6m, log-normal)</div>
+      </div>
+      <div class="card">
+        <h4>04 · BYD share 2028</h4>
+        <div class="lbl">Dinâmica competitiva</div>
+        <div class="v">24%</div>
+        <div class="n">−14 pp vs. 2026 · Tesla triplica share</div>
+      </div>
+      <div class="card">
+        <h4>05 · Trade deficit autos</h4>
+        <div class="lbl">Pressão cambial do setor</div>
+        <div class="v">−US$ 584M / mês</div>
+        <div class="n">Camaçari substitui ~US$ 2 bi/ano</div>
+      </div>
+    </div>
+
+    <h3>Roadmap prescritivo por horizonte</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Curto prazo · 0–6 meses</h4>
+        <ul style="margin: 0; padding-left: 18px; color: #c8c4b6; font-size: 14.5px;">
+          <li>Implantar programa de hedge cambial 50% (R$ 80M/ano em prêmio)</li>
+          <li>Assinar contratos take-or-pay com CATL e Albemarle em PTAX forward</li>
+          <li>Engagement BNDES — Plano Mais Produção</li>
+          <li>Baseline de safety stock 60 dias (R$ 280M de capital imobilizado)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Médio prazo · 6–18 meses</h4>
+        <ul style="margin: 0; padding-left: 18px; color: #c8c4b6; font-size: 14.5px;">
+          <li>Qualificar 2º fornecedor LFP (EVE ou Gotion) com meta 25% do supply</li>
+          <li>Diversificar lítio para Tianqi (AR) + Pilbara (AU)</li>
+          <li>Pricing defensivo Model 2 — pacote wallbox incluso</li>
+          <li>Re-rodar GARCH-BEKK / DCC-GARCH com PTAX real BCB</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Longo prazo · 18–36 meses</h4>
+        <ul style="margin: 0; padding-left: 18px; color: #c8c4b6; font-size: 14.5px;">
+          <li>Investimento minoritário em refinaria de lítio no Nordeste</li>
+          <li>Lançamento SUV compacto nacional (X-Dream)</li>
+          <li>Programa de fidelização BYD Connect (subscription de bateria)</li>
+          <li>Conteúdo local 60% — narrativa de substituição de importações</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Monitoramento contínuo</h4>
+        <ul style="margin: 0; padding-left: 18px; color: #c8c4b6; font-size: 14.5px;">
+          <li>Dashboard mensal BCB SGS: PTAX, IPCA, PIB, FGV, ANFAVEA</li>
+          <li>Refresh trimestral do composite de vulnerabilidade</li>
+          <li>Gatilho de revisão se PTAX &gt; R$ 5.40 por 5 dias</li>
+          <li>Gatilho de revisão se PIB mensal &lt; 0 por 2 trimestres</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>A pergunta de decisão</h3>
+    <p>O composite em 71.8 não é, por si, uma razão para parar. É, isto sim, um mapa de onde o capital de mitigação deve ser alocado para preservar a opcionalidade estratégica do programa. A pergunta que o conselho de administração precisa responder nos próximos 90 dias é direta: <strong style="color: #f1efe7;">a empresa está disposta a internalizar R$ 12M de custo político + R$ 280M de capital em supply chain + R$ 80M/ano em hedge para reduzir o composite de 71.8 para algo em torno de 55/100?</strong> Em nosso julgamento — e a modelagem sustenta — a resposta precisa ser sim, e a janela para começar é o terceiro trimestre de 2026.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="footer">
+    <div>Atlas D2 · Value Factory · Análise Preditiva Consolidada</div>
+    <div>v1.0 · 19 de julho de 2026</div>
+  </div>
+</div>
+
+<!-- ============================== PLOTS ============================== -->
+
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+/* Atlas Analytics — CSS custom properties
+ * Drop-in for any HTML, Plotly HTML output, or vanilla-JS chart.
+ *
+ * Theme is selected by [data-theme="light|dark"] on a parent element;
+ * if absent, the user's prefers-color-scheme wins (and a light stamp on
+ * a dark OS still beats it — the :not() guard preserves that override).
+ *
+ * Generated from brand/BRAND-SPEC.md v0.1.
+ */
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* categorical slots 1..8 — fixed order, the CVD-safety mechanism */
+  --series-1: #eda100;  /* yellow  */
+  --series-2: #dc2626;  /* red     */
+  --series-3: #06b6d4;  /* cyan    */
+  --series-4: #f59e0b;  /* amber   */
+  --series-5: #7c3aed;  /* violet  */
+  --series-6: #14b8a6;  /* teal    */
+  --series-7: #f97316;  /* orange  */
+  --series-8: #0891b2;  /* steel-blue */
+
+  /* sequential ramps (single-hue, light→dark) */
+  --ramp-yellow: #ca8a04, #a16207, #854d0e, #422006;
+  --ramp-red:    #f87171, #dc2626, #b91c1c, #991b1b;
+  --ramp-cyan:   #06b6d4, #0891b2, #0e7490, #155e75, #083344;
+
+  /* diverging yellow ↔ cyan */
+  --diverging-yellow: #eab308;
+  --diverging-cyan:   #06b6d4;
+  --diverging-mid:    #f0efec;
+
+  /* status (fixed, never themed) — always icon+label */
+  --status-good:     #0ca30c;
+  --status-warning:  #fab219;
+  --status-serious:  #ec835a;
+  --status-critical: #d03b3b;
+
+  /* surfaces & ink */
+  --surface-1: #fcfcfb;  /* chart background */
+  --surface-2: #f9f9f7;  /* page plane       */
+  --ink-primary:   #0b0b0b;
+  --ink-secondary: #52514e;
+  --ink-muted:     #898781;
+  --delta-good:    #006300;
+  --gridline: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border:   rgba(11, 11, 11, 0.10);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --series-1: #c98500;
+  --series-2: #e34948;
+  --series-3: #0891b2;
+  --series-4: #d97706;
+  --series-5: #7c3aed;
+  --series-6: #0d9488;
+  --series-7: #ea580c;
+  --series-8: #0369a1;
+
+  --ramp-yellow: #eab308, #ca8a04, #a16207, #854d0e;
+  --ramp-red:    #fca5a5, #ef4444, #b91c1c, #991b1b;
+  --ramp-cyan:   #67e8f9, #22d3ee, #06b6d4, #0891b2, #0e7490;
+
+  --diverging-yellow: #facc15;
+  --diverging-cyan:   #67e8f9;
+  --diverging-mid:    #383835;
+
+  --status-good:     #0ca30c;
+  --status-warning:  #fab219;
+  --status-serious:  #ec835a;
+  --status-critical: #d03b3b;
+
+  --surface-1: #1a1a19;
+  --surface-2: #0d0d0d;
+  --ink-primary:   #ffffff;
+  --ink-secondary: #c3c2b7;
+  --ink-muted:     #898781;
+  --delta-good:    #0ca30c;
+  --gridline: #2c2c2a;
+  --baseline: #383835;
+  --border:   rgba(255, 255, 255, 0.10);
+}
+
+/* OS dark preference, only when no explicit theme stamp is set */
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+
+    --series-1: #c98500;
+    --series-2: #e34948;
+    --series-3: #0891b2;
+    --series-4: #d97706;
+    --series-5: #7c3aed;
+    --series-6: #0d9488;
+    --series-7: #ea580c;
+    --series-8: #0369a1;
+
+    --ramp-yellow: #eab308, #ca8a04, #a16207, #854d0e;
+    --ramp-red:    #fca5a5, #ef4444, #b91c1c, #991b1b;
+    --ramp-cyan:   #67e8f9, #22d3ee, #06b6d4, #0891b2, #0e7490;
+
+    --diverging-yellow: #facc15;
+    --diverging-cyan:   #67e8f9;
+    --diverging-mid:    #383835;
+
+    --surface-1: #1a1a19;
+    --surface-2: #0d0d0d;
+    --ink-primary:   #ffffff;
+    --ink-secondary: #c3c2b7;
+    --ink-muted:     #898781;
+    --delta-good:    #0ca30c;
+    --gridline: #2c2c2a;
+    --baseline: #383835;
+    --border:   rgba(255, 255, 255, 0.10);
+  }
+}
+
+/* ── mark & anatomy contracts ────────────────────────────────────────────── */
+/* Use these in chart-component CSS so the contracts stay co-located with
+   the color tokens they pair with. */
+
+:root {
+  --mark-bar-thickness-max: 24px;
+  --mark-bar-end-radius:    4px;
+  --mark-line-stroke:       2px;
+  --mark-marker-min:        8px;
+  --mark-surface-gap:       2px;
+  --mark-surface-ring:      2px;
+  --mark-area-opacity:      0.10;
+  --mark-gridline-width:    1px;
+}
+
+/* ── chart-component helpers (examples, not exhaustive) ─────────────────── */
+
+.viz-root {
+  background: var(--surface-1);
+  color: var(--ink-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.viz-gridline {
+  stroke: var(--gridline);
+  stroke-width: var(--mark-gridline-width);
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+.viz-baseline {
+  stroke: var(--baseline);
+  stroke-width: 1px;
+  fill: none;
+}
+
+.viz-axis-label {
+  fill: var(--ink-muted);
+  font-size: 11px;
+}
+
+.viz-title {
+  fill: var(--ink-primary);
+  font-weight: 600;
+}
+
+/* Bar/column series — applies when paired with --series-N */
+.viz-bar {
+  fill: var(--series);
+  /* bar end radius clipped to bar thickness cap */
+}
+
+.viz-line {
+  fill: none;
+  stroke: var(--series);
+  stroke-width: var(--mark-line-stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.viz-marker {
+  fill: var(--series);
+  stroke: var(--surface-1);          /* 2px surface ring */
+  stroke-width: var(--mark-surface-ring);
+}
+
+.viz-area {
+  fill: var(--series);
+  fill-opacity: var(--mark-area-opacity);
+  stroke: none;
+}
+
+/* Text never wears the data color */
+.viz-label,
+.viz-legend-text {
+  fill: var(--ink-secondary);
+}

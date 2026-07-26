@@ -1,0 +1,122 @@
+{
+  "baseline_model": {
+    "var_fx_6m_R$_M": 2080,
+    "var_supply_6m_R$_M": 5180,
+    "weight_fx_supply": "1:2.49"
+  },
+  "recalibrated": {
+    "var_fx_6m_R$_M": 2345,
+    "var_supply_6m_R$_M": 2835,
+    "weight_fx_supply": "1:1.21"
+  },
+  "events": [
+    {
+      "name": "Pre-2015 baseline",
+      "start": 2015,
+      "duration_months": 12,
+      "magnitude": 0,
+      "lit_price_impact": 0,
+      "is_crisis": false,
+      "var_realized": 0,
+      "var_pct_of_old": 0
+    },
+    {
+      "name": "Lítio spike 2015-16 (China EV boom)",
+      "start": 2015.5,
+      "duration_months": 18,
+      "magnitude": 0.15,
+      "lit_price_impact": 0.5,
+      "is_crisis": false,
+      "var_realized": 1701,
+      "var_pct_of_old": 32.83783783783784
+    },
+    {
+      "name": "Fukushima recovery supply chain",
+      "start": 2016,
+      "duration_months": 6,
+      "magnitude": 0.1,
+      "lit_price_impact": 0,
+      "is_crisis": false,
+      "var_realized": 378,
+      "var_pct_of_old": 7.297297297297297
+    },
+    {
+      "name": "Lítio spike 2018 (cobalt crisis)",
+      "start": 2018,
+      "duration_months": 12,
+      "magnitude": 0.2,
+      "lit_price_impact": 1,
+      "is_crisis": false,
+      "var_realized": 1512,
+      "var_pct_of_old": 29.18918918918919
+    },
+    {
+      "name": "COVID-19 2020",
+      "start": 2020,
+      "duration_months": 9,
+      "magnitude": 0.3,
+      "lit_price_impact": 0.4,
+      "is_crisis": true,
+      "var_realized": 1701,
+      "var_pct_of_old": 32.83783783783784
+    },
+    {
+      "name": "Semiconductor crisis 2021-22",
+      "start": 2021,
+      "duration_months": 18,
+      "magnitude": 0.25,
+      "lit_price_impact": 2,
+      "is_crisis": true,
+      "var_realized": 2835,
+      "var_pct_of_old": 54.729729729729726
+    },
+    {
+      "name": "Lítio normalization 2023",
+      "start": 2023,
+      "duration_months": 12,
+      "magnitude": 0.05,
+      "lit_price_impact": -0.4,
+      "is_crisis": false,
+      "var_realized": 378,
+      "var_pct_of_old": 7.297297297297297
+    },
+    {
+      "name": "Post-2023 normal",
+      "start": 2024,
+      "duration_months": 24,
+      "magnitude": 0,
+      "lit_price_impact": -0.2,
+      "is_crisis": false,
+      "var_realized": 0,
+      "var_pct_of_old": 0
+    }
+  ],
+  "empirical_summary": {
+    "mean_var_R$_M": 1063,
+    "p50_var_R$_M": 1512,
+    "p75_var_R$_M": 1701,
+    "p95_var_R$_M": 2835,
+    "max_var_R$_M": 2835,
+    "crisis_var_avg_R$_M": 2268,
+    "crisis_var_max_R$_M": 2835
+  },
+  "stress_conditional_var": {
+    "calm_R$_M": 0,
+    "normal_R$_M": 378,
+    "stress_R$_M": 1607,
+    "crisis_R$_M": 2268,
+    "n_events": {
+      "calm": 2,
+      "normal": 2,
+      "stress": 2,
+      "crisis": 2
+    }
+  },
+  "changes": {
+    "var_supply_change_R$_M": -2345,
+    "var_supply_change_pct": "-45.3",
+    "weight_change": "changed",
+    "weight_old_decimal": 0.4015444015444015,
+    "weight_new_decimal": 0.8271604938271605
+  }
+}

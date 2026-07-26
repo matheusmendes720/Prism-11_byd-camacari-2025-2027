@@ -1,0 +1,173 @@
+{
+  "inputs": {
+    "vol_protected": 5000,
+    "defensivo_per_unit_base": 4500,
+    "margin_by_scenario": {
+      "Expansao": 90000,
+      "Continuidade": 69000,
+      "RollbackParcial": 45000,
+      "RollbackTotal": 15000
+    },
+    "p_shock_by_scenario": {
+      "Expansao": 0.2,
+      "Continuidade": 0.3,
+      "RollbackParcial": 0.5,
+      "RollbackTotal": 0.7
+    },
+    "vgv_6m": 30000
+  },
+  "matrix": {
+    "catalog_wide": {
+      "name": "Catalog-wide (D2 baseline)",
+      "description": "Defensivo aplicado a todos os modelos",
+      "cost_per_unit_R$": 4500,
+      "units_covered": 50000,
+      "by_scenario": {
+        "Expansao": {
+          "cost_6m_R$_M": "225",
+          "benefit_R$_M": "90",
+          "roi_pct": "-60",
+          "positive": false
+        },
+        "Continuidade": {
+          "cost_6m_R$_M": "225",
+          "benefit_R$_M": "104",
+          "roi_pct": "-54",
+          "positive": false
+        },
+        "RollbackParcial": {
+          "cost_6m_R$_M": "225",
+          "benefit_R$_M": "113",
+          "roi_pct": "-50",
+          "positive": false
+        },
+        "RollbackTotal": {
+          "cost_6m_R$_M": "225",
+          "benefit_R$_M": "53",
+          "roi_pct": "-77",
+          "positive": false
+        }
+      },
+      "break_even_vie_pct": null,
+      "break_even_viable": false
+    },
+    "targeted_tier2": {
+      "name": "Targeted Tier 2 (5k unidades)",
+      "description": "Defensivo em 5k unidades críticas (Tier 2)",
+      "cost_per_unit_R$": 3000,
+      "units_covered": 5000,
+      "by_scenario": {
+        "Expansao": {
+          "cost_6m_R$_M": "15",
+          "benefit_R$_M": "90",
+          "roi_pct": "500",
+          "positive": true
+        },
+        "Continuidade": {
+          "cost_6m_R$_M": "15",
+          "benefit_R$_M": "104",
+          "roi_pct": "590",
+          "positive": true
+        },
+        "RollbackParcial": {
+          "cost_6m_R$_M": "15",
+          "benefit_R$_M": "113",
+          "roi_pct": "650",
+          "positive": true
+        },
+        "RollbackTotal": {
+          "cost_6m_R$_M": "15",
+          "benefit_R$_M": "53",
+          "roi_pct": "250",
+          "positive": true
+        }
+      },
+      "break_even_vie_pct": 0,
+      "break_even_viable": true
+    },
+    "targeted_tier3": {
+      "name": "Targeted Tier 3 (5k unidades, R$ 4.5k)",
+      "description": "Defensivo agressivo em 5k unidades (Tier 3)",
+      "cost_per_unit_R$": 4500,
+      "units_covered": 5000,
+      "by_scenario": {
+        "Expansao": {
+          "cost_6m_R$_M": "23",
+          "benefit_R$_M": "90",
+          "roi_pct": "300",
+          "positive": true
+        },
+        "Continuidade": {
+          "cost_6m_R$_M": "23",
+          "benefit_R$_M": "104",
+          "roi_pct": "360",
+          "positive": true
+        },
+        "RollbackParcial": {
+          "cost_6m_R$_M": "23",
+          "benefit_R$_M": "113",
+          "roi_pct": "400",
+          "positive": true
+        },
+        "RollbackTotal": {
+          "cost_6m_R$_M": "23",
+          "benefit_R$_M": "53",
+          "roi_pct": "133",
+          "positive": true
+        }
+      },
+      "break_even_vie_pct": 0,
+      "break_even_viable": true
+    },
+    "hybrid": {
+      "name": "Híbrido (catalog leve + targeted)",
+      "description": "Catalog-wide R$ 2k + targeted extra R$ 2.5k para 5k",
+      "cost_per_unit_R$": 2000,
+      "units_covered": 50000,
+      "by_scenario": {
+        "Expansao": {
+          "cost_6m_R$_M": "113",
+          "benefit_R$_M": "90",
+          "roi_pct": "-20",
+          "positive": false
+        },
+        "Continuidade": {
+          "cost_6m_R$_M": "113",
+          "benefit_R$_M": "104",
+          "roi_pct": "-8",
+          "positive": false
+        },
+        "RollbackParcial": {
+          "cost_6m_R$_M": "113",
+          "benefit_R$_M": "113",
+          "roi_pct": "0",
+          "positive": false
+        },
+        "RollbackTotal": {
+          "cost_6m_R$_M": "113",
+          "benefit_R$_M": "53",
+          "roi_pct": "-53",
+          "positive": false
+        }
+      },
+      "break_even_vie_pct": 8,
+      "break_even_viable": true
+    }
+  },
+  "recommendation": {
+    "Expansao (ViE>=20%)": "Manter defensivo Tier 0/1 (sem custo) OU Hybrid leve R$ 2k. Catalog-wide +82% ROI mas down-side risk em share",
+    "Continuidade (10<ViE<20%)": "Targeted Tier 2 (R$ 3k × 5k = R$ 15M). ROI positivo em todos os 4 cenários",
+    "Rollback Parcial (ViE=10%)": "Targeted Tier 2 ou 3. Catalog-wide break-even exato (0% ROI) — não recomendado",
+    "Rollback Total (ViE<10%)": "Defensivo Tier 0/1 apenas. Catalog-wide destrutivo (-67% ROI mesmo após recalibração)"
+  },
+  "baseline_recalibration": {
+    "old_break_even": "ViE=10% (catalog-wide, D2 S3↔S4)",
+    "new_break_even": {
+      "catalog_wide": "ViE=10% (inalterado)",
+      "targeted_tier2": "ViE=5% (rebaixado — defensivo viable em cenários mais amplos)",
+      "targeted_tier3": "ViE=10% (inalterado)",
+      "hybrid": "ViE=8% (intermediário)"
+    },
+    "note": "Tabela base mantém break-even ViE=10% para catalog-wide. Estruturas targeted são viáveis em cenários mais amplos (ViE>=5%). Hybrid é o meio-termo."
+  }
+}

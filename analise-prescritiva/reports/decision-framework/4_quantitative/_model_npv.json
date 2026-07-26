@@ -1,0 +1,234 @@
+{
+  "params": {
+    "r": 0.13,
+    "horizon": 3,
+    "p_shock_base": 0.3,
+    "discount_note": "NTN-B 10y (~11%) + 200bps spread soberano = 13% nominal"
+  },
+  "scenarios": {
+    "Expansao": {
+      "vie": 0.25,
+      "p_shock": 0.2,
+      "label": "Expansão (ViE=25%)"
+    },
+    "Continuidade": {
+      "vie": 0.18,
+      "p_shock": 0.3,
+      "label": "Continuidade (ViE=18%)"
+    },
+    "RollbackParcial": {
+      "vie": 0.1,
+      "p_shock": 0.5,
+      "label": "Rollback Parcial (ViE=10%)"
+    },
+    "RollbackTotal": {
+      "vie": 0,
+      "p_shock": 0.7,
+      "label": "Rollback Total (ViE=0%)"
+    }
+  },
+  "npv_table": {
+    "Expansao": {
+      "Hedge FX (S1)": {
+        "cost_3y_total": 113.39999999999999,
+        "benefit": 124.80000000000001,
+        "npv": 8.485137885795055,
+        "roi_pct": 10.052910052910072,
+        "note": "VaR FX 6m = R$ 2.08B; benefício = h* × VaR × P(shock cenário)"
+      },
+      "Dual-sourcing (S2)": {
+        "cost_3y_total": 520,
+        "benefit": 1036,
+        "npv": 342.44775614614224,
+        "roi_pct": 99.23076923076923,
+        "note": "VaR supply 6m = R$ 5.18B; benefício = VaR × P(shock cenário)"
+      },
+      "Advocacy BNDES (S3)": {
+        "cost_3y_total": 36,
+        "benefit": 15,
+        "npv": -16.586630923759635,
+        "roi_pct": -58.333333333333336,
+        "note": "Preservar ViE +5pp = R$ 75M margem incremental; × P(shock cenário)"
+      },
+      "Defensivo targeted (S4)": {
+        "cost_3y_total": 135,
+        "benefit": 90,
+        "npv": -35.768665400233004,
+        "roi_pct": -33.33333333333333,
+        "note": "5k unidades × margin_per_unit(S3) × P(shock); tier system S3↔S4"
+      },
+      "Partnerships (S5)": {
+        "cost_3y_total": 45,
+        "benefit": 30,
+        "npv": -18.311362488105523,
+        "roi_pct": -33.33333333333333,
+        "note": "Resiliência = R$ 150M (evitar disruption 6m, proxy); × P(shock cenário)"
+      },
+      "Framework D3": {
+        "cost_3y_total": 3,
+        "benefit": 350,
+        "npv": 271.7401865829647,
+        "roi_pct": 11566.666666666668,
+        "note": "Economia D3 vs D2 = R$ 700M-1bi/3y; framework viabiliza 5 prescrições"
+      }
+    },
+    "Continuidade": {
+      "Hedge FX (S1)": {
+        "cost_3y_total": 145.8,
+        "benefit": 240.86399999999998,
+        "npv": 73.8798264879614,
+        "roi_pct": 65.20164609053495,
+        "note": "VaR FX 6m = R$ 2.08B; benefício = h* × VaR × P(shock cenário)"
+      },
+      "Dual-sourcing (S2)": {
+        "cost_3y_total": 520,
+        "benefit": 1554,
+        "npv": 748.1177381337686,
+        "roi_pct": 198.84615384615384,
+        "note": "VaR supply 6m = R$ 5.18B; benefício = VaR × P(shock cenário)"
+      },
+      "Advocacy BNDES (S3)": {
+        "cost_3y_total": 36,
+        "benefit": 22.5,
+        "npv": -10.713030798456163,
+        "roi_pct": -37.5,
+        "note": "Preservar ViE +5pp = R$ 75M margem incremental; × P(shock cenário)"
+      },
+      "Defensivo targeted (S4)": {
+        "cost_3y_total": 135,
+        "benefit": 103.5,
+        "npv": -25.19618517468676,
+        "roi_pct": -23.333333333333332,
+        "note": "5k unidades × margin_per_unit(S3) × P(shock); tier system S3↔S4"
+      },
+      "Partnerships (S5)": {
+        "cost_3y_total": 45,
+        "benefit": 45,
+        "npv": -6.564162237498579,
+        "roi_pct": 0,
+        "note": "Resiliência = R$ 150M (evitar disruption 6m, proxy); × P(shock cenário)"
+      },
+      "Framework D3": {
+        "cost_3y_total": 3,
+        "benefit": 560,
+        "npv": 436.2009900914619,
+        "roi_pct": 18566.666666666664,
+        "note": "Economia D3 vs D2 = R$ 700M-1bi/3y; framework viabiliza 5 prescrições"
+      }
+    },
+    "RollbackParcial": {
+      "Hedge FX (S1)": {
+        "cost_3y_total": 233.39999999999998,
+        "benefit": 641.68,
+        "npv": 318.83189167348746,
+        "roi_pct": 174.92716366752356,
+        "note": "VaR FX 6m = R$ 2.08B; benefício = h* × VaR × P(shock cenário)"
+      },
+      "Dual-sourcing (S2)": {
+        "cost_3y_total": 520,
+        "benefit": 2590,
+        "npv": 1559.4577021090215,
+        "roi_pct": 398.0769230769231,
+        "note": "VaR supply 6m = R$ 5.18B; benefício = VaR × P(shock cenário)"
+      },
+      "Advocacy BNDES (S3)": {
+        "cost_3y_total": 36,
+        "benefit": 37.5,
+        "npv": 1.0341694521507776,
+        "roi_pct": 4.166666666666666,
+        "note": "Preservar ViE +5pp = R$ 75M margem incremental; × P(shock cenário)"
+      },
+      "Defensivo targeted (S4)": {
+        "cost_3y_total": 90,
+        "benefit": 112.5,
+        "npv": 17.26942394363563,
+        "roi_pct": 25,
+        "note": "5k unidades × margin_per_unit(S3) × P(shock); tier system S3↔S4"
+      },
+      "Partnerships (S5)": {
+        "cost_3y_total": 45,
+        "benefit": 75,
+        "npv": 16.930238263715303,
+        "roi_pct": 66.66666666666666,
+        "note": "Resiliência = R$ 150M (evitar disruption 6m, proxy); × P(shock cenário)"
+      },
+      "Framework D3": {
+        "cost_3y_total": 3,
+        "benefit": 800,
+        "npv": 624.156194101173,
+        "roi_pct": 26566.666666666668,
+        "note": "Economia D3 vs D2 = R$ 700M-1bi/3y; framework viabiliza 5 prescrições"
+      }
+    },
+    "RollbackTotal": {
+      "Hedge FX (S1)": {
+        "cost_3y_total": 342.6,
+        "benefit": 1319.136,
+        "npv": 763.4333566429207,
+        "roi_pct": 285.03677758318736,
+        "note": "VaR FX 6m = R$ 2.08B; benefício = h* × VaR × P(shock cenário)"
+      },
+      "Dual-sourcing (S2)": {
+        "cost_3y_total": 520,
+        "benefit": 3625.9999999999995,
+        "npv": 2370.7976660842737,
+        "roi_pct": 597.3076923076923,
+        "note": "VaR supply 6m = R$ 5.18B; benefício = VaR × P(shock cenário)"
+      },
+      "Advocacy BNDES (S3)": {
+        "cost_3y_total": 36,
+        "benefit": 52.5,
+        "npv": 12.781369702757718,
+        "roi_pct": 45.83333333333333,
+        "note": "Preservar ViE +5pp = R$ 75M margem incremental; × P(shock cenário)"
+      },
+      "Defensivo targeted (S4)": {
+        "cost_3y_total": 45,
+        "benefit": 52.5,
+        "npv": 5.697911909166081,
+        "roi_pct": 16.666666666666664,
+        "note": "5k unidades × margin_per_unit(S3) × P(shock); tier system S3↔S4"
+      },
+      "Partnerships (S5)": {
+        "cost_3y_total": 45,
+        "benefit": 105,
+        "npv": 40.424638764929185,
+        "roi_pct": 133.33333333333331,
+        "note": "Resiliência = R$ 150M (evitar disruption 6m, proxy); × P(shock cenário)"
+      },
+      "Framework D3": {
+        "cost_3y_total": 3,
+        "benefit": 900,
+        "npv": 702.4708624385526,
+        "roi_pct": 29900,
+        "note": "Economia D3 vs D2 = R$ 700M-1bi/3y; framework viabiliza 5 prescrições"
+      }
+    }
+  },
+  "summary": {
+    "total_npv_by_scenario": {
+      "Expansao": 552.0064218028037,
+      "Continuidade": 1215.7251765025503,
+      "RollbackParcial": 2537.679619543184,
+      "RollbackTotal": 3895.6058055426
+    },
+    "best_prescription": {
+      "Expansao": {
+        "name": "Framework D3",
+        "roi": 11566.666666666668
+      },
+      "Continuidade": {
+        "name": "Framework D3",
+        "roi": 18566.666666666664
+      },
+      "RollbackParcial": {
+        "name": "Framework D3",
+        "roi": 26566.666666666668
+      },
+      "RollbackTotal": {
+        "name": "Framework D3",
+        "roi": 29900
+      }
+    }
+  }
+}

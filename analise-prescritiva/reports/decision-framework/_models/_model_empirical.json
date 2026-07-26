@@ -1,0 +1,72 @@
+{
+  "seed": 42,
+  "n_days": 1512,
+  "n_years": 6,
+  "baseline_ptax": 5.2,
+  "baseline_sigma": 0.1419,
+  "stress_events": [
+    {
+      "period": "COVID-19",
+      "dates": "2020-03 to 2020-11",
+      "stress_factor": 1
+    },
+    {
+      "period": "Election 2022",
+      "dates": "2022-08 to 2022-10",
+      "stress_factor": 0.6
+    },
+    {
+      "period": "2024 Q1 spike",
+      "dates": "2024-01 to 2024-03",
+      "stress_factor": 0.4
+    },
+    {
+      "period": "2025 Q2 spike",
+      "dates": "2025-04 to 2025-06",
+      "stress_factor": 0.8
+    }
+  ],
+  "empirical": {
+    "sigma_annual_realized": 0.16424509725083278,
+    "sigma_annual_std": 0.05092476945308166,
+    "exposure_R$_M": 8.82,
+    "var_95_R$_M_6m_mean": 1831.660926811307,
+    "var_95_R$_M_6m_p5": 1205.6194854747177,
+    "var_95_R$_M_6m_p50": 1606.1757069709777,
+    "var_95_R$_M_6m_p95": 3116.1535818174602,
+    "var_95_R$_M_6m_max": 4057.300173506141,
+    "var_95_R$_M_6m_min": 886.2797072183442,
+    "max_drawdown": -0.2619377127429993,
+    "n_stress_periods": {
+      "green_pct": 74.83130904183535,
+      "amber_pct": 13.69770580296896,
+      "red_pct": 11.470985155195681
+    },
+    "n_observations": 1482
+  },
+  "model_assumptions": {
+    "sigma_annual": 0.1419,
+    "exposure_R$_M": 8.82,
+    "var_95_R$_M_6m": 2080,
+    "var_95_R$_M_3y": 5094.93866498901,
+    "hedge_premium_6m_base": 24
+  },
+  "recalibration": {
+    "sigma_adjustment": 1.1574707346781732,
+    "var_adjustment": 0.8806062148131284,
+    "model_underestimates_sigma": true,
+    "model_underestimates_var": false,
+    "recommended_sigma": 0.16424509725083278,
+    "recommended_var_95": 1831.660926811307,
+    "frequency_check": {
+      "green_pct_target": 70,
+      "amber_pct_target": 25,
+      "red_pct_target": 5,
+      "deviation_from_target": {
+        "green": 4.831309041835354,
+        "amber": -11.30229419703104,
+        "red": 6.470985155195681
+      }
+    }
+  }
+}

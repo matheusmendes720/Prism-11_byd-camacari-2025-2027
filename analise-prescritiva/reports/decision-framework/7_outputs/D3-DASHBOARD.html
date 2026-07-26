@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BYD Camaçari — Decision Dashboard v2.0</title>
+  <style>
+    :root {
+      --bg: #0e1014;
+      --bg-card: #161a21;
+      --bg-deep: #080a0e;
+      --ink: #e6e8ec;
+      --ink-2: #b0b6c2;
+      --ink-3: #7a818f;
+      --ink-4: #4a4f5a;
+      --line: #262b35;
+      --line-2: #34394a;
+      --green: #22c55e;
+      --amber: #eab308;
+      --red: #ef4444;
+      --primary: #6b95f0;
+      --accent: #e0a45e;
+      --serif: 'Inter Tight','Inter',system-ui,sans-serif;
+      --sans: 'Inter',system-ui,sans-serif;
+      --mono: 'JetBrains Mono',ui-monospace,monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-4); }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    .section { padding: 48px 0 40px; border-top: 1px solid var(--line); }
+    .section:first-of-type { border-top: none; }
+
+    /* ===== HEADER ===== */
+    .header {
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #07090d 0%, var(--bg) 100%);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .header-title { font-family: var(--serif); font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+    .header-title em { font-style: normal; color: var(--accent); }
+    .header-meta { display: flex; align-items: center; gap: 20px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); flex-wrap: wrap; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 3px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .badge-accuracy { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.4); }
+    .badge-date { color: var(--ink-3); }
+
+    /* ===== KPI ROW ===== */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+    .kpi { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }
+    .kpi-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+    .kpi-value { font-family: var(--serif); font-weight: 700; font-size: 28px; margin: 6px 0 2px; line-height: 1; }
+    .kpi-note { font-size: 11.5px; color: var(--ink-3); }
+    .kpi.green .kpi-value { color: var(--green); }
+    .kpi.red .kpi-value { color: var(--red); }
+    .kpi.amber .kpi-value { color: var(--amber); }
+
+    /* ===== SCORECARD ===== */
+    .scorecard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .card.kill-switch { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.5); }
+    .card.kill-switch:hover { border-color: var(--red); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .card-id { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-3); text-transform: uppercase; }
+    .card-status { font-size: 16px; line-height: 1; }
+    .card-name { font-family: var(--serif); font-weight: 700; font-size: 15px; margin-bottom: 10px; color: var(--ink); }
+    .card-score { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+    .card-score.green { color: var(--green); }
+    .card-score.amber { color: var(--amber); }
+    .card-score.red { color: var(--red); }
+    .card-detail {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line-2);
+      font-size: 12.5px;
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+    .card.expanded .card-detail { display: block; }
+    .card-detail strong { color: var(--ink); }
+    .kill-badge {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ===== SIMULATOR ===== */
+    .simulator { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 24px 28px; }
+    .sim-title { font-family: var(--serif); font-weight: 700; font-size: 20px; margin-bottom: 20px; }
+    .sim-sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; margin-bottom: 24px; }
+    .slider-group { display: flex; flex-direction: column; gap: 6px; }
+    .slider-label { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+    .slider-label span { color: var(--ink); font-weight: 500; }
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--line-2);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: 2px solid var(--bg-card);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      border: 2px solid var(--bg-card);
+    }
+    .sim-output { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .sim-npv { grid-column: 1 / -1; }
+    .sim-npv-bar { height: 10px; border-radius: 5px; margin-top: 10px; background: var(--line-2); overflow: hidden; position: relative; }
+    .sim-npv-fill { height: 100%; border-radius: 5px; transition: width 0.3s, background 0.3s; }
+    .sim-npv-fill.positive { background: linear-gradient(90deg, var(--green), #16a34a); }
+    .sim-npv-fill.negative { background: linear-gradient(90deg, #dc2626, var(--red)); }
+    .output-box { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; }
+    .output-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+    .output-value { font-family: var(--serif); font-weight: 700; font-size: 22px; }
+    .output-value.positive { color: var(--green); }
+    .output-value.negative { color: var(--red); }
+
+    /* ===== TORNADO ===== */
+    .tornado-svg { width: 100%; overflow: visible; }
+    .tornado-bar { transition: width 0.4s ease; }
+    .tornado-bar:hover { opacity: 0.85; }
+
+    /* ===== TRIGGER TABLE ===== */
+    .trigger-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .trigger-table th { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; padding: 10px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+    .trigger-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+    .trigger-table tr:last-child td { border-bottom: none; }
+    .trigger-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .trigger-id { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--ink); }
+    .trigger-status { display: inline-block; padding: 2px 8px; border-radius: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .trigger-status.red { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.4); }
+    .trigger-status.amber { background: rgba(234,179,8,0.15); color: var(--amber); border: 1px solid rgba(234,179,8,0.4); }
+    .trigger-status.green { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.4); }
+
+    /* ===== SECTION TITLES ===== */
+    .sec-title { font-family: var(--serif); font-weight: 700; font-size: 18px; letter-spacing: -0.01em; margin-bottom: 16px; }
+    .sec-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+
+    /* ===== FOOTER ===== */
+    .footer { padding: 24px 0; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); display: flex; justify-content: space-between; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .container { padding: 0 16px; }
+      .kpi-row, .scorecard-grid { grid-template-columns: repeat(2, 1fr); }
+      .sim-sliders { grid-template-columns: 1fr; }
+      .sim-output { grid-template-columns: 1fr 1fr; }
+      .sim-npv { grid-column: 1 / -1; }
+    }
+    @media (max-width: 540px) {
+      .kpi-row, .scorecard-grid { grid-template-columns: 1fr; }
+      .header-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <div class="container header-inner">
+    <h1 class="header-title">BYD Camaçari — Decision <em>Dashboard</em> v2.0</h1>
+    <div class="header-meta">
+      <span class="badge badge-accuracy">44% accuracy</span>
+      <span class="badge badge-date">21/jul/2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== KPI ROW ===== -->
+  <div class="section">
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">NPV Esperado (c/ mitigação)</div>
+        <div class="kpi-value green">R$ 8.5 bi</div>
+        <div class="kpi-note">Base case com hedge ativo</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-label">4-Shock VaR 95%</div>
+        <div class="kpi-value">R$ 8.21 bi</div>
+        <div class="kpi-note">FX×Supply×Tariff×Demand</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-label">CVaR 95%</div>
+        <div class="kpi-value">R$ 10.14 bi</div>
+        <div class="kpi-note">Loss médio dado breach</div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-label">Composite Score</div>
+        <div class="kpi-value">88</div>
+        <div class="kpi-note">Modo crise — ação requerida</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCORECARD ===== -->
+  <div class="section">
+    <div class="sec-eyebrow">§C — Scorecard</div>
+    <div class="sec-title">11 Dimensões — Status em 21/jul/2026</div>
+    <div class="scorecard-grid">
+
+      <!-- S1 FX -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S1 FX</span>
+          <span class="card-status">&#x1F7E2;</span>
+        </div>
+        <div class="card-name">Câmbio PTAX</div>
+        <div class="card-score amber">P95 VaR R$ 2.73 bi</div>
+        <div class="card-detail">
+          <strong>FX PTAX (S1)</strong><br>
+          Status: AMBER — BRL em tendência de alta.<br>
+          Hedge ótimo: 30–91% conforme S3.<br>
+          Acoplamento: S1↔S3, S1↔S2, S1↔S4, S8↔S1, S10↔S1.
+        </div>
+      </div>
+
+      <!-- S2 Supply -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S2 Supply</span>
+          <span class="card-status">&#x1F7E1;</span>
+        </div>
+        <div class="card-name">Supply Chain Lítio</div>
+        <div class="card-score amber">σ 95% · R$ 3.67 bi</div>
+        <div class="card-detail">
+          <strong>Supply Lítio (S2)</strong><br>
+          Status: AMBER — CATL Jianxiawo fechada.<br>
+          σ 6m = 95% (ativo mais volátil).<br>
+          Dual-sourcing recomendado; plano B ativado em RED.
+        </div>
+      </div>
+
+      <!-- S3 BNDES -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S3 BNDES</span>
+          <span class="card-status">&#x1F7E1;</span>
+        </div>
+        <div class="card-name">Regulatório / BNDES</div>
+        <div class="card-score amber">ViE 18%</div>
+        <div class="card-detail">
+          <strong>BNDES / ViE (S3)</strong><br>
+          Status: AMBER — Continuidade.<br>
+          Break-even ViE = 10% (Rollback Parcial).<br>
+          Advocacy R$ 12–24M conforme S6.
+        </div>
+      </div>
+
+      <!-- S4 Defensivo -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S4 Defensivo</span>
+          <span class="card-status">&#x1F7E2;</span>
+        </div>
+        <div class="card-name">Defensivo Pricing</div>
+        <div class="card-score green">Tier 1–2 ativo</div>
+        <div class="card-detail">
+          <strong>Pricing Defensivo (S4)</strong><br>
+          Status: GREEN — Tier calibrado.<br>
+          Catalog-wide proibido em composite ≥ 85.<br>
+          ROI +233% em targeted; -67% em catalog-wide.
+        </div>
+      </div>
+
+      <!-- S5 Político -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S5 Político</span>
+          <span class="card-status">&#x1F7E1;</span>
+        </div>
+        <div class="card-name">Parcerias & LP</div>
+        <div class="card-score amber">EVE/CATL/Tier 1</div>
+        <div class="card-detail">
+          <strong>Parcerias LP (S5)</strong><br>
+          Status: AMBER — revise hedge clauses.<br>
+          Custo +R$ 5M (legal) em AMBER.<br>
+          Renegociar / diversificar em RED.
+        </div>
+      </div>
+
+      <!-- S6 Triggers -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S6 Triggers</span>
+          <span class="card-status">&#x1F7E1;</span>
+        </div>
+        <div class="card-name">Macro Governor</div>
+        <div class="card-score amber">Multiplicador 1.5×</div>
+        <div class="card-detail">
+          <strong>S6 Macro Governor</strong><br>
+          Status: AMBER — multiplier 1.5× ativo.<br>
+          GREEN: 1.0× | AMBER: 1.5× | RED: 2.0×.<br>
+          Trigger 5min ativo; composite +13.
+        </div>
+      </div>
+
+      <!-- S7 ESG — KILL SWITCH -->
+      <div class="card kill-switch" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S7 ESG</span>
+          <span class="card-status">&#x1F534;</span>
+        </div>
+        <div class="card-name">ESG Kill Switch <span class="kill-badge">KILL SWITCH</span></div>
+        <div class="card-score red">LISTA SUJA MTE</div>
+        <div class="card-detail">
+          <strong style="color: var(--red);">ESG KILL SWITCH — ATIVO</strong><br>
+          Lista suja MTE desde 07/abr/2026.<br>
+          BNDES funding bloqueado.<br>
+          Capex novo em pausa.<br>
+          <strong>Override: bloqueia TODAS as ações S1–S6.</strong>
+        </div>
+      </div>
+
+      <!-- S8 Ramp -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S8 Ramp</span>
+          <span class="card-status">&#x1F7E1;</span>
+        </div>
+        <div class="card-name">Production Ramp</div>
+        <div class="card-score amber">SKD 40% em 2026</div>
+        <div class="card-detail">
+          <strong>Ramp SKD→CKD (S8)</strong><br>
+          Status: AMBER — 2025 SKD 95% → 2026 40%.<br>
+          Exposição FX cai 90% → 45%.<br>
+          Aceleração reduz VaR ~R$ 30–50M/pp.
+        </div>
+      </div>
+
+      <!-- S9 Demand — GREEN -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S9 Demand</span>
+          <span class="card-status">&#x1F7E2;</span>
+        </div>
+        <div class="card-name">Demand Growth</div>
+        <div class="card-score green">+153% YoY EV</div>
+        <div class="card-detail">
+          <strong>Demanda EV (S9)</strong><br>
+          Status: GREEN — 13.5% EV share Jul/2026.<br>
+          Upside capture: expandir capex.<br>
+          Contribuição VaR marginal: 8% (downside hedge não prioritário).
+        </div>
+      </div>
+
+      <!-- S10 Tariff — RED -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S10 Tariff</span>
+          <span class="card-status">&#x1F534;</span>
+        </div>
+        <div class="card-name">Tariff Policy</div>
+        <div class="card-score red">14%→35% Jan/2027</div>
+        <div class="card-detail">
+          <strong>Tariff Camex (S10)</strong><br>
+          Status: RED — BYD exemption rejeitada Jul/2025.<br>
+          #1 VaR contributor: 29% do VaR 4-shock.<br>
+          Peso composite recomendado: 0.05→0.10.<br>
+          Multiplicativo com S1 (não aditivo).
+        </div>
+      </div>
+
+      <!-- S11 Competition — RED -->
+      <div class="card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-id">S11 Competition</span>
+          <span class="card-status">&#x1F534;</span>
+        </div>
+        <div class="card-name">Competitive Landscape</div>
+        <div class="card-score red">Nash Diff. Equil.</div>
+        <div class="card-detail">
+          <strong>Competition (S11)</strong><br>
+          Status: RED — Stellantis/GM/VW/Geely/GWM.<br>
+          Nash Differentiate: AG-DIFF-1/2/3.<br>
+          LFP verticalization (AG-DIFF-1) como resposta.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SIMULADOR NPV ===== -->
+  <div class="section">
+    <div class="sec-eyebrow">§C — Simulador</div>
+    <div class="sec-title">Simulador NPV — 4 Choques em Tempo Real</div>
+    <div class="simulator">
+      <div class="sim-sliders">
+
+        <div class="slider-group">
+          <div class="slider-label">FX PTAX <span id="fxVal">5.75</span></div>
+          <input type="range" id="fxSlider" min="4.5" max="7.0" step="0.05" value="5.75">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label">Lítio (US$/t) <span id="liVal">22,000</span></div>
+          <input type="range" id="liSlider" min="12000" max="35000" step="500" value="22000">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label">Tariff (%) <span id="tarVal">35%</span></div>
+          <input type="range" id="tarSlider" min="25" max="50" step="1" value="35">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-label">Demanda (%) <span id="demVal">0%</span></div>
+          <input type="range" id="demSlider" min="-30" max="30" step="1" value="0">
+        </div>
+
+      </div>
+
+      <div class="sim-output">
+        <div class="sim-npv">
+          <div class="output-label">NPV Ajustado (R$ bi)</div>
+          <div class="output-value" id="npvOut">R$ 8.50 bi</div>
+          <div class="sim-npv-bar">
+            <div class="sim-npv-fill positive" id="npvBar" style="width: 70%;"></div>
+          </div>
+        </div>
+        <div class="output-box">
+          <div class="output-label">VaR 4-Shock</div>
+          <div class="output-value negative" id="varOut">R$ 8.21 bi</div>
+        </div>
+        <div class="output-box">
+          <div class="output-label">CVaR 95%</div>
+          <div class="output-value negative" id="cvarOut">R$ 10.14 bi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TORNADO CHART ===== -->
+  <div class="section">
+    <div class="sec-eyebrow">§C — Sensitivity</div>
+    <div class="sec-title">Tornado — Contribuição Marginal ao VaR 95%</div>
+    <div style="background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 24px 20px 16px;">
+      <svg class="tornado-svg" viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid lines -->
+        <line x1="280" y1="20" x2="280" y2="200" stroke="#262b35" stroke-width="1"/>
+        <line x1="350" y1="20" x2="350" y2="200" stroke="#262b35" stroke-width="1"/>
+        <line x1="420" y1="20" x2="420" y2="200" stroke="#262b35" stroke-width="1"/>
+        <line x1="490" y1="20" x2="490" y2="200" stroke="#262b35" stroke-width="1"/>
+        <line x1="560" y1="20" x2="560" y2="200" stroke="#262b35" stroke-width="1"/>
+
+        <!-- Center label -->
+        <text x="280" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#7a818f">R$ 0</text>
+        <text x="420" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#7a818f">R$ 2.37 bi</text>
+
+        <!-- Tariff 29% -->
+        <rect class="tornado-bar" x="280" y="30" height="32" rx="4" fill="#ef4444" opacity="0.85">
+          <animate attributeName="width" from="0" to="290" dur="0.6s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+        </rect>
+        <text x="575" y="50" font-family="Inter Tight,Inter,system-ui" font-size="13" font-weight="700" fill="#e6e8ec">Tariff</text>
+        <text x="575" y="63" font-family="JetBrains Mono,monospace" font-size="11" fill="#ef4444">29% — R$ 2.37 bi</text>
+
+        <!-- FX 26% (R$ 2.14 bi) -->
+        <rect class="tornado-bar" x="280" y="74" height="32" rx="4" fill="#eab308" opacity="0.85">
+          <animate attributeName="width" from="0" to="258" dur="0.7s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+        </rect>
+        <text x="545" y="94" font-family="Inter Tight,Inter,system-ui" font-size="13" font-weight="700" fill="#e6e8ec">FX PTAX</text>
+        <text x="545" y="107" font-family="JetBrains Mono,monospace" font-size="11" fill="#eab308">26% — R$ 2.14 bi</text>
+
+        <!-- Lithium 24% (R$ 1.97 bi) -->
+        <rect class="tornado-bar" x="280" y="118" height="32" rx="4" fill="#6b95f0" opacity="0.85">
+          <animate attributeName="width" from="0" to="237" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+        </rect>
+        <text x="522" y="138" font-family="Inter Tight,Inter,system-ui" font-size="13" font-weight="700" fill="#e6e8ec">Lítio</text>
+        <text x="522" y="151" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b95f0">24% — R$ 1.97 bi</text>
+
+        <!-- Demand 21% (R$ 1.72 bi) -->
+        <rect class="tornado-bar" x="280" y="162" height="32" rx="4" fill="#22c55e" opacity="0.85">
+          <animate attributeName="width" from="0" to="213" dur="0.9s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+        </rect>
+        <text x="498" y="182" font-family="Inter Tight,Inter,system-ui" font-size="13" font-weight="700" fill="#e6e8ec">Demanda</text>
+        <text x="498" y="195" font-family="JetBrains Mono,monospace" font-size="11" fill="#22c55e">21% — R$ 1.72 bi</text>
+
+        <!-- Interação label -->
+        <text x="140" y="100" font-family="Inter Tight,Inter,system-ui" font-size="11" fill="#7a818f" text-anchor="middle">+ Interação</text>
+        <text x="140" y="114" font-family="JetBrains Mono,monospace" font-size="10" fill="#7a818f" text-anchor="middle">29%</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ===== TRIGGER MATRIX ===== -->
+  <div class="section">
+    <div class="sec-eyebrow">§C — Triggers</div>
+    <div class="sec-title">Trigger Matrix — T-MV1 a T-MV5</div>
+    <div style="background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;">
+      <table class="trigger-table">
+        <thead>
+          <tr>
+            <th>Trigger</th>
+            <th>Tipo</th>
+            <th>Condição</th>
+            <th>Resposta</th>
+            <th>Latência</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="trigger-id">T-MV1</span></td>
+            <td>4-shock stress</td>
+            <td>FX&gt;6.2 AND Supply RED AND Tariff&gt;30% AND S7 RED simultâneos</td>
+            <td>Composite 95; freeze all; CEO+Conselho 24h; bridge R$ 800M</td>
+            <td><span style="font-family: var(--mono); font-size: 12px; color: var(--ink-3);">5 min</span></td>
+            <td><span class="trigger-status red">ACTIVE</span></td>
+          </tr>
+          <tr>
+            <td><span class="trigger-id">T-MV2</span></td>
+            <td>FX-Supply tail</td>
+            <td>FX&gt;6.0 AND S2=RED por &gt;20 dias consecutivos</td>
+            <td>Plano B supply; hedging adicional; rever EVE</td>
+            <td><span style="font-family: var(--mono); font-size: 12px; color: var(--ink-3);">30 min</span></td>
+            <td><span class="trigger-status amber">MONITOR</span></td>
+          </tr>
+          <tr>
+            <td><span class="trigger-id">T-MV3</span></td>
+            <td>Tariff jump</td>
+            <td>Tariff salta &gt;10pp em &lt;30 dias (Camex emergency)</td>
+            <td>Recalibrar S10; AG-DIFF-1 (LFP verticalization); rever ramp Q4</td>
+            <td><span style="font-family: var(--mono); font-size: 12px; color: var(--ink-3);">48h</span></td>
+            <td><span class="trigger-status amber">MONITOR</span></td>
+          </tr>
+          <tr>
+            <td><span class="trigger-id">T-MV4</span></td>
+            <td>CVaR95 breach</td>
+            <td>CVaR 95% realizado &gt; R$ 10.14 bi em qualquer quarter</td>
+            <td>Emergency committee; composite weights; learning loop</td>
+            <td><span style="font-family: var(--mono); font-size: 12px; color: var(--ink-3);">24h</span></td>
+            <td><span class="trigger-status amber">MONITOR</span></td>
+          </tr>
+          <tr>
+            <td><span class="trigger-id">T-MV5</span></td>
+            <td>Upside capture</td>
+            <td>BRL&lt;5.0 AND Tariff exemption renovada AND S7=AMBER+</td>
+            <td>Capturar upside: expandir capex; acelerar ramp; hedge reduction</td>
+            <td><span style="font-family: var(--mono); font-size: 12px; color: var(--ink-3);">72h</span></td>
+            <td><span class="trigger-status green">READY</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="container" style="display: flex; justify-content: space-between; width: 100%;">
+    <span>BYD Camacari · 2025–2027</span>
+    <span>D3 Framework v2.0 · C1+C2+C3 validados</span>
+  </div>
+</div>
+
+<script>
+  // ===== CARD EXPAND / COLLAPSE =====
+  function toggleCard(card) {
+    card.classList.toggle('expanded');
+  }
+
+  // ===== NPV SIMULATOR =====
+  var BASE_NPV = 8.5;       // R$ bi
+  var BASE_VAR = 8.21;     // R$ bi
+  var BASE_CVAR = 10.14;    // R$ bi
+  var MAX_LOSS = 18.0;      // R$ bi (bar width reference)
+
+  var fxSlider  = document.getElementById('fxSlider');
+  var liSlider  = document.getElementById('liSlider');
+  var tarSlider = document.getElementById('tarSlider');
+  var demSlider = document.getElementById('demSlider');
+
+  var fxVal = document.getElementById('fxVal');
+  var liVal = document.getElementById('liVal');
+  var tarVal = document.getElementById('tarVal');
+  var demVal = document.getElementById('demVal');
+
+  var npvOut = document.getElementById('npvOut');
+  var npvBar = document.getElementById('npvBar');
+  var varOut = document.getElementById('varOut');
+  var cvarOut = document.getElementById('cvarOut');
+
+  function calcNPV() {
+    var fx  = parseFloat(fxSlider.value);
+    var li  = parseFloat(liSlider.value);
+    var tar = parseFloat(tarSlider.value);
+    var dem = parseFloat(demSlider.value);
+
+    // Update displayed values
+    fxVal.textContent  = fx.toFixed(2);
+    liVal.textContent  = li.toLocaleString('pt-BR');
+    tarVal.textContent = tar + '%';
+    demVal.textContent = (dem >= 0 ? '+' : '') + dem + '%';
+
+    // NPV sensitivity around base (simplified linear model)
+    // FX baseline = 5.75, each +0.1 FX => -R$ 0.3 bi
+    // Li baseline = 22000, each +1000 => -R$ 0.05 bi
+    // Tariff baseline = 35%, each +1% => -R$ 0.15 bi
+    // Demand: -30 to +30, each +1% => +R$ 0.08 bi (upside)
+    var fxEff  = (fx  - 5.75) * -3.0;
+    var liEff  = (li  - 22000) / 1000 * -0.5;
+    var tarEff = (tar - 35) * -1.5;
+    var demEff = dem * 0.08;
+
+    var npv = BASE_NPV + fxEff + liEff + tarEff + demEff;
+
+    // VaR/CVaR recalc based on stress level
+    var stressMult = 1.0;
+    stressMult += Math.max(0, (fx - 5.75)) * 0.3;          // FX stress
+    stressMult += Math.max(0, (li - 22000)) / 1000 * 0.1;   // Lithium stress
+    stressMult += Math.max(0, (tar - 35)) * 0.2;             // Tariff stress
+    stressMult -= Math.max(0, -dem) / 30 * 0.15;             // Demand buffer (upside reduces)
+    stressMult = Math.max(0.3, stressMult);
+
+    var varVal  = BASE_VAR * stressMult;
+    var cvarVal = BASE_CVAR * stressMult;
+
+    // Update NPV display
+    npvOut.textContent = 'R$ ' + npv.toFixed(2) + ' bi';
+    npvOut.className = 'output-value ' + (npv >= 0 ? 'positive' : 'negative');
+
+    // Update bar
+    var barPct = Math.min(100, Math.max(5, (npv / MAX_LOSS) * 100));
+    npvBar.style.width = barPct + '%';
+    npvBar.className = 'sim-npv-fill ' + (npv >= 0 ? 'positive' : 'negative');
+
+    // Update VaR / CVaR
+    varOut.textContent  = 'R$ ' + varVal.toFixed(2) + ' bi';
+    cvarOut.textContent = 'R$ ' + cvarVal.toFixed(2) + ' bi';
+    varOut.className  = 'output-value negative';
+    cvarOut.className = 'output-value negative';
+  }
+
+  // Attach listeners
+  fxSlider.addEventListener('input', calcNPV);
+  liSlider.addEventListener('input', calcNPV);
+  tarSlider.addEventListener('input', calcNPV);
+  demSlider.addEventListener('input', calcNPV);
+
+  // Init
+  calcNPV();
+</script>
+
+</body>
+</html>

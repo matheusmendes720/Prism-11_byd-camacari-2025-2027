@@ -1,0 +1,99 @@
+<!-- ============================== ANNEX E: OSINT SOURCES ============================== -->
+<section class="section" id="annex-e">
+  <div class="sec-head">
+    <div class="sec-num">Anexo E</div>
+    <h2 class="sec-title">Fontes e Data de Coleta OSINT</h2>
+    <p class="sec-lede">Tabela com todas as fontes primárias utilizadas no framework D3 v2.0, incluindo fonte, URL ou referência, data de coleta, e classificação de confiabilidade.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">E.1 — Fontes Primárias: Cronologia BYD / Escândalo</div>
+    <table class="t" style="font-size:12.5px">
+      <thead><tr><th>Evento</th><th>Fonte</th><th>Data</th><th>Confiabilidade</th></tr></thead>
+      <tbody>
+        <tr><td>163 trabalhadores chineses resgatados, BYD Camaçari</td><td>MPT-BA / Reuters</td><td>23/dez/2024</td><td class="green">ALTA</td></tr>
+        <tr><td>MPT ajuíza ação civil (R$ 257M pedidos)</td><td>MPT / G1 / Folha</td><td>27/mai/2025</td><td class="green">ALTA</td></tr>
+        <tr><td>Acordo MPT: R$ 40M (94% de desconto)</td><td>STF / Justiça Federal-BA</td><td>26/dez/2025</td><td class="green">ALTA</td></tr>
+        <tr><td>BYD incluída na lista suja MTE</td><td>MTE cadastro público</td><td>07/abr/2026</td><td class="green">ALTA (oficial)</td></tr>
+        <tr><td>Washington Post: "fraude consciente e sistêmica"</td><td>Washington Post</td><td>14/mar/2026</td><td class="green">ALTA</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">E.2 — Fontes: Produção e Planta Camaçari</div>
+    <table class="t" style="font-size:12.5px">
+      <thead><tr><th>Dado</th><th>Fonte</th><th>Data coleta</th><th>Confiabilidade</th></tr></thead>
+      <tbody>
+        <tr><td>Produção Q1-Q4 2025 (~50k unidades ano)</td><td>Fenabrave / ANFAVEA</td><td>Jan/2026</td><td class="green">ALTA</td></tr>
+        <tr><td>SKD/CKD composition 2025-2026</td><td>MDIC import records / Reuters</td><td>Jul/2026</td><td class="amber">MÉDIA</td></tr>
+        <tr><td>Nacionalização progress (BNDES reports)</td><td>BNDES / MDIC</td><td>Mar/2026</td><td class="green">ALTA (oficial)</td></tr>
+        <tr><td>Ramp curve e capacidade nominal</td><td>Reuters / just-auto.com / AutoEsporte</td><td>2025-2026</td><td class="amber">MÉDIA</td></tr>
+        <tr><td>BYD Dolphin Mini launch</td><td>BYD.com / CNN Brasil</td><td>01/jul/2025</td><td class="green">ALTA (oficial)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">E.3 — Fontes: Mercado EV e Market Share</div>
+    <table class="t" style="font-size:12.5px">
+      <thead><tr><th>Dado</th><th>Fonte</th><th>Data coleta</th><th>Confiabilidade</th></tr></thead>
+      <tbody>
+        <tr><td>BYD units 2022-2025 (260 → 112.915)</td><td>Fenabrave / ABVE / BYD.com.br</td><td>Jan/2026</td><td class="green">ALTA</td></tr>
+        <tr><td>BYD market share 12.8% (abr/2026)</td><td>Fenabrave / Focus2move</td><td>Mai/2026</td><td class="green">ALTA</td></tr>
+        <tr><td>EV market share Brasil: 6% → 13.5%</td><td>ANFAVEA / cleantechnica / ABVE</td><td>Mai/2026</td><td class="green">ALTA</td></tr>
+        <tr><td>Crescimento YoY +153%</td><td>ANFAVEA / Reuters</td><td>Mai/2026</td><td class="green">ALTA</td></tr>
+        <tr><td>Geely share ~10.6% (crescendo)</td><td>Fenabrave / MarkLines</td><td>2026</td><td class="amber">MÉDIA</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">E.4 — Fontes: Tarifas e Regulação</div>
+    <table class="t" style="font-size:12.5px">
+      <thead><tr><th>Dado</th><th>Fonte</th><th>Data coleta</th><th>Confiabilidade</th></tr></thead>
+      <tbody>
+        <tr><td>Cronograma Camex: BEV/PHEV/HEV 35% jul/2026</td><td>Camex Resolução Gecex / Reuters</td><td>Jan/2026</td><td class="green">ALTA (oficial)</td></tr>
+        <tr><td>SKD/CKD 35% jan/2027 (antecipado)</td><td>Camex / g1.globo</td><td>Jan/2026</td><td class="green">ALTA (oficial)</td></tr>
+        <tr><td>BYD request redução tariff — REJEITADO</td><td>Reuters / Camex</td><td>Jul/2025</td><td class="green">ALTA</td></tr>
+        <tr><td>Quota BYD US$ 463M tariff-free (H1/2026)</td><td>electrive.com / BYD.com.br</td><td>Dez/2025</td><td class="green">ALTA</td></tr>
+        <tr><td>BNDES Move Brasil R$ 30bi</td><td>gov.br / MP 1.359/2026</td><td>2026</td><td class="green">ALTA (oficial)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">E.5 — Fontes: Lítio e Commodities</div>
+    <table class="t" style="font-size:12.5px">
+      <thead><tr><th>Dado</th><th>Fonte</th><th>Data coleta</th><th>Confiabilidade</th></tr></thead>
+      <tbody>
+        <tr><td>Preço lítio: US$ 9k (Q3/2025) → US$ 22k (jun/2026)</td><td>Fastmarkets / Bloomberg</td><td>Jun/2026</td><td class="green">ALTA</td></tr>
+        <tr><td>CATL Jianxiawo fechada (desde out/2024)</td><td>Reuters / Fastmarkets</td><td>2025-2026</td><td class="amber">MÉDIA</td></tr>
+        <tr><td>Consensus deficit LCE 2026-2027 (20-80kt)</td><td>UBS / Morgan Stanley / BMI / Fastmarkets</td><td>2026</td><td class="amber">MÉDIA</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">E.6 — Fontes: Concorrentes e Capex</div>
+    <table class="t" style="font-size:12.5px">
+      <thead><tr><th>Player / Dado</th><th>Fonte</th><th>Data coleta</th><th>Confiabilidade</th></tr></thead>
+      <tbody>
+        <tr><td>Stellantis R$ 30bi investimento Brasil</td><td>Reuters / Stellantis press</td><td>2023-2024</td><td class="green">ALTA (oficial)</td></tr>
+        <tr><td>GM R$ 7bi / VW R$ 16bi</td><td>Reuters / Bloomberg</td><td>2024-2025</td><td class="green">ALTA</td></tr>
+        <tr><td>Capacidade agregada 630k (2027)</td><td>ANFAVEA / Reuters / MarkLines</td><td>2025-2026</td><td class="amber">MÉDIA</td></tr>
+        <tr><td>Demanda projetada EV Brasil 200k (2027)</td><td>ANFAVEA / ABVE / consensus</td><td>2026</td><td class="amber">MÉDIA</td></tr>
+        <tr><td>Sobrecapacidade 68%</td><td>Calculado (capacidade/demanda)</td><td>Jul/2026</td><td class="green">ALTA (derivado)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insights">
+    <h4>Classificação de Confiabilidade</h4>
+    <ul>
+      <li><span style="color:var(--good)">ALTA</span>: fonte oficial (governo, banco central, decisão judicial), dado auditável em múltiplas fontes independentes</li>
+      <li><span style="color:var(--warn)">MÉDIA</span>: dado de mercado (analistas, consultorias), estimado a partir de proxies, ou com janela de incerteza</li>
+      <li><span style="color:var(--bad)">BAIXA</span>: dado unidimensional, inferência única, ou com viés potencial (BYD disclosures, por exemplo)</li>
+    </ul>
+  </div>
+</section>

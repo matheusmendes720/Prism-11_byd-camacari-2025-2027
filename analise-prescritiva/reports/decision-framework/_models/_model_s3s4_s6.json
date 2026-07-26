@@ -1,0 +1,84 @@
+{
+  "params_s3s4": {
+    "V": 30000000000,
+    "units_6m": 50000,
+    "catalog_price": 300000,
+    "margin_base": 0.05,
+    "defensivo_price_cut": 4500,
+    "volume_protected": 5000
+  },
+  "s3s4_matrix": {
+    "Expansão": {
+      "vie": 0.25,
+      "totalMarginPerUnit": 90000,
+      "cost_catalog_wide": 225000000,
+      "cost_targeted": 22500000,
+      "benefit_catalog_wide": 450000000,
+      "benefit_targeted": 450000000,
+      "roi_catalog_wide": 1,
+      "roi_targeted": 19,
+      "margin_pct_consumed": 0.05
+    },
+    "Continuidade": {
+      "vie": 0.18,
+      "totalMarginPerUnit": 69000,
+      "cost_catalog_wide": 225000000,
+      "cost_targeted": 22500000,
+      "benefit_catalog_wide": 345000000,
+      "benefit_targeted": 345000000,
+      "roi_catalog_wide": 0.5333333333333333,
+      "roi_targeted": 14.333333333333334,
+      "margin_pct_consumed": 0.06521739130434782
+    },
+    "Rollback Parcial": {
+      "vie": 0.1,
+      "totalMarginPerUnit": 45000.00000000001,
+      "cost_catalog_wide": 225000000,
+      "cost_targeted": 22500000,
+      "benefit_catalog_wide": 225000000.00000003,
+      "benefit_targeted": 225000000.00000003,
+      "roi_catalog_wide": 1.3245476616753472e-16,
+      "roi_targeted": 9.000000000000002,
+      "margin_pct_consumed": 0.09999999999999998
+    },
+    "Rollback Total": {
+      "vie": 0,
+      "totalMarginPerUnit": 15000,
+      "cost_catalog_wide": 225000000,
+      "cost_targeted": 22500000,
+      "benefit_catalog_wide": 75000000,
+      "benefit_targeted": 75000000,
+      "roi_catalog_wide": -0.6666666666666666,
+      "roi_targeted": 2.3333333333333335,
+      "margin_pct_consumed": 0.3
+    }
+  },
+  "break_even_vie": 0.1,
+  "s6_triggers": {
+    "S1 Hedge": {
+      "GREEN": "Baseline (do S3)",
+      "AMBER": "+10pp hedge (S6 multiplier 1.5×)",
+      "RED": "+20pp hedge, até 95% teto (modo defensivo)"
+    },
+    "S2 Supply": {
+      "GREEN": "Baseline dual-sourcing 18m",
+      "AMBER": "Acelerar EVE qualification, +30 dias safety stock",
+      "RED": "Plano B acionado: comprar spot, hedge alternativo"
+    },
+    "S3 Regulatory": {
+      "GREEN": "Advocacy baseline R$ 12M",
+      "AMBER": "Increase advocacy R$ 24M, expandir MDIC meetings",
+      "RED": "Bridge financing R$ 800M acionado (Plano B)"
+    },
+    "S4 Pricing": {
+      "GREEN": "Defensivo conforme S4 status",
+      "AMBER": "Defensivo targeted Tier 2 (R$ 22M)",
+      "RED": "Defensivo Tier 3 + comunicação ao mercado"
+    }
+  },
+  "composite_by_s6": {
+    "GREEN": 65,
+    "AMBER": 78,
+    "RED": 88
+  }
+}

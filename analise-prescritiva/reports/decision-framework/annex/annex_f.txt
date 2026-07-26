@@ -1,0 +1,85 @@
+<!-- ============================== ANNEX F: AGENT OUTPUT CONTRACT ============================== -->
+<section class="section" id="annex-f">
+  <div class="sec-head">
+    <div class="sec-num">Anexo F</div>
+    <h2 class="sec-title">Contrato de Output dos Agents</h2>
+    <p class="sec-lede">Formato e estrutura padrão para todos os documentos D3 v2.0. Garante consistência, versionamento e rastreabilidade entre agents.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-num">F.1 — Naming Convention</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Tipo de documento</th><th>Padrão de nome</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Documento principal</b></td><td><code>D3-MAIN.html</code></td><td>D3-MAIN.html v2.0</td></tr>
+        <tr><td><b>Anexo técnico</b></td><td><code>D3-ANNEX.html</code></td><td>D3-ANNEX.html v2.0</td></tr>
+        <tr><td><b>Interdependência</b></td><td><code>D3-INTERDEPENDENCY-S{N}-{DIM}.md</code></td><td>D3-INTERDEPENDENCY-S7-ESG.md</td></tr>
+        <tr><td><b>Recalibração</b></td><td><code>D3-RECALIBRATION-S{N}-{TEMA}.md</code></td><td>D3-RECALIBRATION-S3-PROBABILITIES.md</td></tr>
+        <tr><td><b>OSINT Checkpoint</b></td><td><code>D3-OSINT-CHECKPOINT.md</code></td><td>—</td></tr>
+        <tr><td><b>Figura / Anexo</b></td><td><code>figures/fig-d3-s{N}-{ID}.png</code></td><td>figures/fig-d3-s7-1-esg-score.png</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">F.2 — Header padrão (frontmatter)</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Campo</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Documento</b></td><td>Identificação do documento</td><td>D3-INTERDEPENDENCY-S7-ESG.md</td></tr>
+        <tr><td><b>Projeto</b></td><td>Nome do projeto</td><td>BYD Camaçari 2025–2027</td></tr>
+        <tr><td><b>Data</b></td><td>Data de criação (ISO 8601)</td><td>2026-07-21</td></tr>
+        <tr><td><b>Versão</b></td><td>Número de versão</td><td>1.0, 2.0, draft, final</td></tr>
+        <tr><td><b>Status</b></td><td>Status do documento</td><td>WORKING DRAFT / FINAL / OBSOLETE</td></tr>
+        <tr><td><b>Tag</b></td><td>Tag de release D3</td><td>D3-v2.0 — Game theory + backtesting</td></tr>
+        <tr><td><b>Companion</b></td><td>Documentos relacionados</td><td>D3-INTERDEPENDENCY-S1-S3.md, D3-OSINT-CHECKPOINT.md</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">F.3 — Estrutura de seção padrão</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Seção</th><th>Conteúdo</th><th>Obrigatório</th></tr></thead>
+      <tbody>
+        <tr><td><b>1. Por que esta análise</b></td><td>Motivação, gap do D2/D3 que fecha, relação com OSINT checkpoint</td><td>SIM</td></tr>
+        <tr><td><b>2. Componentes / Inputs</b></td><td>Tabela com inputs, tipo, fonte, peso, frequência</td><td>SIM</td></tr>
+        <tr><td><b>3. Thresholds G/A/R</b></td><td>Tabela com thresholds GREEN/AMBER/RED e condições</td><td>SIM</td></tr>
+        <tr><td><b>4. Status atual</b></td><td>Valor atual (data), evidência, status agregado</td><td>SIM</td></tr>
+        <tr><td><b>5. Modelo (pseudocódigo)</b></td><td>Fórmulas e pseudocódigo do modelo</td><td>SIM</td></tr>
+        <tr><td><b>6. Acoplamentos</b></td><td>Tabela com acoplamentos, mecanismo, magnitude, prioridade</td><td>SIM</td></tr>
+        <tr><td><b>7. Trigger thresholds</b></td><td>Ações automáticas disparadas por cada threshold</td><td>SIM</td></tr>
+        <tr><td><b>8. Implicações</b></td><td>O que muda no framework, cascata em outras dimensões</td><td>SIM</td></tr>
+        <tr><td><b>9. Limitações</b></td><td>Limitações conhecidas, dados faltantes, incertezas</td><td>SIM</td></tr>
+        <tr><td><b>10. Fontes</b></td><td>Tabela com fonte, URL, data, confiabilidade</td><td>SIM</td></tr>
+        <tr><td><b>Resumo executivo</b></td><td>Síntese em 1 parágrafo para consumo executivo</td><td>SIM</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">F.4 — Tags de versão e status</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Tag</th><th>Significado</th><th>Uso</th></tr></thead>
+      <tbody>
+        <tr><td><b>DRAFT</b></td><td>Primeira versão, incompleta</td><td>Agent working file</td></tr>
+        <tr><td><b>WORKING DRAFT</b></td><td>Estrutura completa, dados parciais</td><td>Revisão interna</td></tr>
+        <tr><td><b>FINAL</b></td><td>Aprovado, pronto para integração</td><td>Integração D3-MAIN</td></tr>
+        <tr><td><b>OBSOLETE</b></td><td>Substituído por versão mais nova</td><td>Arquivo morto</td></tr>
+        <tr><td><b>v2.0</b></td><td>Versão do framework D3</td><td>Todas as seções</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block">
+    <div class="block-num">F.5 — Formato de data</div>
+    <table class="t" style="font-size:13px">
+      <thead><tr><th>Contexto</th><th>Formato</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td>Header (ISO)</td><td><code>YYYY-MM-DD</code></td><td>2026-07-21</td></tr>
+        <tr><td>Texto / display</td><td><code>DD/MMM/YYYY</code></td><td>21/jul/2026</td></tr>
+        <tr><td>Header BRT timestamp</td><td><code>DD de MMM de YYYY — HH:MM BRT</code></td><td>21 de julho de 2026 — 08:16 BRT</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>

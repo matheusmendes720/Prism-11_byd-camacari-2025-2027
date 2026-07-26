@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D3 Workshop — Apresentação ao Conselho · 21/jul/2026</title>
+  <meta name="description" content="Workshop de 30min apresentando o D3 framework ao Conselho BYD Camaçari. 10 slides com gap #1 fechado, trigger matrix 6×3, NPV, sensitivity, MC." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+
+  <style>
+    :root {
+      --bg: #0e1014; --bg-card: #161a21; --bg-deep: #080a0e;
+      --ink: #e6e8ec; --ink-2: #b0b6c2; --ink-3: #7a818f; --ink-4: #4a4f5a;
+      --line: #262b35; --line-2: #34394a;
+      --primary: #6b95f0; --primary-2: #8eb1ff; --accent: #e0a45e;
+      --risk-high: #ff6b63; --risk-med: #ff9f43; --risk-low: #4ade80;
+      --good: #4ade80; --warn: #ff9f43; --bad: #ff6b63; --info: #6b95f0;
+      --serif: 'Inter Tight', 'Inter', system-ui, sans-serif;
+      --sans: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    ::selection { background: rgba(107,149,240,0.32); color: #f1efe7; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 4px; }
+
+    /* Sidebar */
+    .sidebar { position: fixed; top: 0; left: 0; width: 240px; height: 100vh; background: var(--bg-deep); border-right: 1px solid var(--line); padding: 32px 24px; overflow-y: auto; z-index: 100; }
+    .sidebar h1 { font-family: var(--serif); font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--ink); }
+    .sidebar .subtitle { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 32px; }
+    .nav-link { display: block; padding: 10px 12px; color: var(--ink-2); text-decoration: none; font-size: 13.5px; border-left: 2px solid transparent; transition: all 0.15s; }
+    .nav-link:hover { background: rgba(107,149,240,0.08); color: var(--ink); }
+    .nav-link.active { color: var(--primary-2); border-left-color: var(--primary); background: rgba(107,149,240,0.08); }
+    .nav-link .num { display: inline-block; width: 24px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+
+    .sidebar .meta { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .sidebar .meta-item { margin-bottom: 12px; }
+    .sidebar .meta-label { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; color: var(--ink-3); text-transform: uppercase; }
+    .sidebar .meta-value { font-family: var(--serif); font-weight: 700; font-size: 14px; color: var(--ink); margin-top: 2px; }
+
+    .progress-bar { position: fixed; top: 0; left: 240px; right: 0; height: 3px; background: var(--line); z-index: 99; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.3s; }
+
+    /* Slide layout */
+    .slide { min-height: 100vh; padding: 80px 80px 60px 320px; display: flex; flex-direction: column; justify-content: center; scroll-snap-align: start; border-bottom: 1px solid var(--line); position: relative; }
+    .slide-num { font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+    .slide-title { font-family: var(--serif); font-weight: 800; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 16px; }
+    .slide-title em { font-style: normal; color: var(--accent); }
+    .slide-subtitle { font-size: 19px; line-height: 1.5; color: var(--ink-2); max-width: 880px; margin-bottom: 40px; }
+    .slide-content { max-width: 1100px; }
+    .slide-meta { position: absolute; bottom: 32px; right: 80px; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; color: var(--ink-3); text-transform: uppercase; }
+
+    /* Cover slide */
+    .slide.cover { background: linear-gradient(180deg, #07090d 0%, #0e1014 100%); position: relative; overflow: hidden; }
+    .slide.cover::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 64px 64px; pointer-events: none; }
+    .slide.cover .slide-content { position: relative; z-index: 2; }
+    .slide.cover .slide-title { font-size: clamp(48px, 7vw, 96px); }
+
+    /* Big numbers */
+    .big-number { font-family: var(--serif); font-weight: 800; font-size: clamp(64px, 12vw, 160px); line-height: 0.95; letter-spacing: -0.04em; color: var(--accent); margin: 16px 0; }
+    .big-number small { display: block; font-size: 18px; font-weight: 500; color: var(--ink-2); letter-spacing: 0; margin-top: 12px; }
+
+    /* KPI row */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+    .kpi { background: var(--bg-card); border: 1px solid var(--line); border-radius: 6px; padding: 20px 22px; }
+    .kpi-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--ink-3); text-transform: uppercase; }
+    .kpi-value { font-family: var(--serif); font-weight: 700; font-size: 32px; color: var(--ink); margin: 8px 0 4px; line-height: 1; }
+    .kpi-note { font-size: 12px; color: var(--ink-3); }
+
+    /* Coupling cards */
+    .coupling-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .coupling-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 6px; padding: 18px 22px; }
+    .coupling-card .num { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+    .coupling-card .name { font-family: var(--serif); font-weight: 700; font-size: 18px; margin: 4px 0 8px; color: var(--ink); }
+    .coupling-card .headline { font-size: 14px; color: var(--accent); font-family: var(--mono); }
+
+    /* Heatmap (compact) */
+    .heatmap { display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 4px; margin: 24px 0; max-width: 900px; }
+    .hm-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; padding: 12px 8px; display: flex; align-items: center; }
+    .hm-header { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 8px; text-align: center; border-radius: 4px; }
+    .hm-cell { padding: 12px 10px; border-radius: 4px; font-size: 12.5px; line-height: 1.4; min-height: 70px; }
+    .hm-cell .lbl { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.75; margin-bottom: 3px; display: block; }
+    .hm-green { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.32); color: #c8efd4; }
+    .hm-amber { background: rgba(255,159,67,0.12); border: 1px solid rgba(255,159,67,0.4); color: #ffd8a8; }
+    .hm-red { background: rgba(255,107,99,0.13); border: 1px solid rgba(255,107,99,0.42); color: #ffc1bd; }
+    .hm-header.green { background: rgba(74,222,128,0.18); color: #c8efd4; }
+    .hm-header.amber { background: rgba(255,159,67,0.18); color: #ffd8a8; }
+    .hm-header.red { background: rgba(255,107,99,0.2); color: #ffc1bd; }
+
+    /* Decision tree (compact) */
+    .trees-mini { display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 4px; margin: 24px 0; }
+    .tree-mini-cell { padding: 10px 8px; border-radius: 4px; text-align: center; font-size: 12px; }
+    .tree-mini-cell .comp { font-family: var(--serif); font-weight: 800; font-size: 18px; line-height: 1; }
+    .tree-mini-green { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.32); color: #c8efd4; }
+    .tree-mini-amber { background: rgba(255,159,67,0.12); border: 1px solid rgba(255,159,67,0.4); color: #ffd8a8; }
+    .tree-mini-red { background: rgba(255,107,99,0.13); border: 1px solid rgba(255,107,99,0.42); color: #ffc1bd; }
+    .tree-mini-crisis { background: rgba(255,107,99,0.22); border: 2px solid rgba(255,107,99,0.6); color: #ffd5d2; animation: pulse 2.5s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,99,0); } 50% { box-shadow: 0 0 0 6px rgba(255,107,99,0.15); } }
+
+    /* Chart */
+    .chart { background: var(--bg-card); border: 1px solid var(--line); border-radius: 6px; padding: 20px; margin: 24px 0; max-width: 1100px; }
+    .chart img { width: 100%; height: auto; border-radius: 4px; }
+    .chart-cap { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin: 12px 0 0; }
+
+    /* Tables */
+    table.t { width: 100%; max-width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    table.t th, table.t td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    table.t th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+    table.t td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    table.t td.center { text-align: center; }
+    table.t td.green { color: var(--good); }
+    table.t td.red { color: var(--bad); }
+    table.t td.amber { color: var(--warn); }
+
+    /* Insights */
+    .insights { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--primary); border-radius: 4px; padding: 18px 22px; margin: 20px 0; max-width: 880px; }
+    .insights h4 { margin: 0 0 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--primary); }
+    .insights ul { margin: 0; padding-left: 18px; }
+    .insights li { margin-bottom: 6px; font-size: 14.5px; color: var(--ink-2); }
+    .insights.warn { border-left-color: var(--warn); }
+    .insights.warn h4 { color: var(--warn); }
+    .insights.good { border-left-color: var(--good); }
+    .insights.good h4 { color: var(--good); }
+
+    /* Pull quote */
+    .pull { font-family: var(--serif); font-size: 28px; line-height: 1.3; letter-spacing: -0.01em; color: var(--ink); border-left: 3px solid var(--accent); padding: 8px 0 8px 24px; margin: 24px 0; max-width: 880px; font-weight: 600; }
+    .pull cite { display: block; font-style: normal; font-size: 13px; font-family: var(--mono); color: var(--ink-3); margin-top: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    /* Decisions list */
+    .decisions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+    .decision { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 4px; padding: 16px 20px; }
+    .decision .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--accent); }
+    .decision .q { font-family: var(--serif); font-weight: 600; font-size: 15px; color: var(--ink); margin: 4px 0; }
+    .decision .who { font-size: 12px; color: var(--ink-3); }
+
+    @media (max-width: 1100px) {
+      .sidebar { width: 200px; }
+      .slide { padding: 80px 40px 60px 240px; }
+      .kpi-row { grid-template-columns: 1fr 1fr; }
+      .coupling-grid, .decisions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <h1>D3 Workshop</h1>
+  <div class="subtitle">Conselho · 30 min</div>
+
+  <nav>
+    <a class="nav-link" href="#s1"><span class="num">01</span>Cover</a>
+    <a class="nav-link" href="#s2"><span class="num">02</span>Agenda</a>
+    <a class="nav-link" href="#s3"><span class="num">03</span>Tese</a>
+    <a class="nav-link" href="#s4"><span class="num">04</span>5 acoplamentos</a>
+    <a class="nav-link" href="#s5"><span class="num">05</span>Trigger matrix 6×3</a>
+    <a class="nav-link" href="#s6"><span class="num">06</span>12 decision trees</a>
+    <a class="nav-link" href="#s7"><span class="num">07</span>NPV layer</a>
+    <a class="nav-link" href="#s8"><span class="num">08</span>Sensitivity + MC</a>
+    <a class="nav-link" href="#s9"><span class="num">09</span>Phase 1 status</a>
+    <a class="nav-link" href="#s10"><span class="num">10</span>Decisões pedidas</a>
+  </nav>
+
+  <div class="meta">
+    <div class="meta-item">
+      <div class="meta-label">Duração</div>
+      <div class="meta-value">30 min</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Audiência</div>
+      <div class="meta-value">Conselho + CEO</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Material</div>
+      <div class="meta-value">13 docs + 2 HTMLs</div>
+    </div>
+  </div>
+</aside>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<!-- ============================== SLIDE 1: COVER ============================== -->
+<section class="slide cover" id="s1">
+  <div class="slide-content">
+    <div class="slide-num">D3 v0.4 · Workshop Conselho · 21/jul/2026</div>
+    <h1 class="slide-title">De fotografia <em>preditiva</em><br/>a playbook <em>operacional</em></h1>
+    <p class="slide-subtitle">D3 transforma o D2 (Atlas preditivo, 6 sessões paralelas) num framework de decisão contínuo. 5 acoplamentos modelados, trigger matrix 6×3, 32 ações com RACI, learning loop trimestral. Gap #1 do D2 audit (interdependências não modeladas) está fechado.</p>
+  </div>
+  <div class="slide-meta">Slide 1/10 · 1 min</div>
+</section>
+
+<!-- ============================== SLIDE 2: AGENDA ============================== -->
+<section class="slide" id="s2">
+  <div class="slide-num">02</div>
+  <h2 class="slide-title">Agenda · 30 min</h2>
+  <p class="slide-subtitle">10 slides, 3 min cada, ~30 min total. Q&A no final (15 min).</p>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Min 0-10</div>
+      <div class="kpi-value">Tese + Acoplamentos</div>
+      <div class="kpi-note">Slides 1-4 · o que é D3 + gap #1 fechado</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Min 10-20</div>
+      <div class="kpi-value">Trigger + Decision</div>
+      <div class="kpi-note">Slides 5-6 · como o framework opera</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Min 20-30</div>
+      <div class="kpi-value">NPV + Sensitivity + MC</div>
+      <div class="kpi-note">Slides 7-8 · números materialmente distintos</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Min 30-45</div>
+      <div class="kpi-value">Q&A + Decisões</div>
+      <div class="kpi-note">Slides 9-10 · Phase 1 + 6 decisões pedidas</div>
+    </div>
+  </div>
+  <div class="slide-meta">Slide 2/10 · 1 min</div>
+</section>
+
+<!-- ============================== SLIDE 3: TESE ============================== -->
+<section class="slide" id="s3">
+  <div class="slide-num">03</div>
+  <h2 class="slide-title">A tese em 1 número</h2>
+  <p class="slide-subtitle">D2 é uma boa fotografia preditiva, mas é um playbook fraco. D3 fecha o gap entre "sabemos o que vai acontecer" e "sabemos o que fazer quando acontecer".</p>
+
+  <div class="big-number">R$ 700M–1bi<small>economia D3 vs D2 em 3 anos — ~2× o capex do programa</small></div>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Hedge FX</div>
+      <div class="kpi-value">30–91%</div>
+      <div class="kpi-note">varia por cenário, não 50% flat</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Defensivo break-even</div>
+      <div class="kpi-value">ViE = 10%</div>
+      <div class="kpi-note">catalog-wide destrutivo em RB Total</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Composite RED</div>
+      <div class="kpi-value">88</div>
+      <div class="kpi-note">vs 65 GREEN; virada em AMBER (78)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Custo framework</div>
+      <div class="kpi-value">R$ 3.0M</div>
+      <div class="kpi-note">Fases 1-3; ROI em 1 evento evitado</div>
+    </div>
+  </div>
+
+  <div class="pull">
+    D2 trata 6 sessões como paralelas. D3 modela os 5 acoplamentos que importam.
+  </div>
+  <div class="slide-meta">Slide 3/10 · 3 min</div>
+</section>
+
+<!-- ============================== SLIDE 4: 5 ACOPLAMENTOS ============================== -->
+<section class="slide" id="s4">
+  <div class="slide-num">04</div>
+  <h2 class="slide-title">Gap #1 do D2 audit: <em>fechado</em></h2>
+  <p class="slide-subtitle">5 acoplamentos modelados quantitativamente. Cada um com doc dedicado, 12 figuras no total, 30 findings.</p>
+
+  <div class="coupling-grid">
+    <div class="coupling-card">
+      <div class="num">Acoplamento 1</div>
+      <div class="name">S1 ↔ S3</div>
+      <div class="headline">h* = 30% (Expansão) → 90.6% (RB Total). Constraint-based sizing corrige prescrição errada do D2.</div>
+    </div>
+
+    <div class="coupling-card">
+      <div class="num">Acoplamento 2</div>
+      <div class="name">S1 ↔ S2</div>
+      <div class="headline">12 combinações (4 S3 × 3 S2). Supply VaR 2.5× FX VaR em S2 RED — hedge cobre só 1/3 do risco total.</div>
+    </div>
+
+    <div class="coupling-card">
+      <div class="num">Acoplamento 3</div>
+      <div class="name">S1 ↔ S4</div>
+      <div class="headline">Hedge R$ 480/unit vs defensivo R$ 4.500/unit (9.4× ratio). Catalog-wide ROI −67%; targeted +233%.</div>
+    </div>
+
+    <div class="coupling-card">
+      <div class="num">Acoplamento 4</div>
+      <div class="name">S3 ↔ S4</div>
+      <div class="headline">Break-even ViE = 10%. Defensivo catalog-wide destrutivo em RB Total (−67% ROI). Tier system 0/1/2/3 obrigatório.</div>
+    </div>
+
+    <div class="coupling-card">
+      <div class="num">Acoplamento 5</div>
+      <div class="name">S6 → todas</div>
+      <div class="headline">Multiplicador 1.0×/1.5×/2.0×. 12 ações pré-mapeadas. Virada crítica em AMBER (composite 78), não RED (88).</div>
+    </div>
+
+    <div class="coupling-card" style="border-color: var(--accent);">
+      <div class="num">PLUS · S5 ↔ S1-S4</div>
+      <div class="name">4 couplings de partnerships</div>
+      <div class="headline">EVE + CATL + VW + Geely. S5 é o "óleo" do framework — R$ 4bi em 3y sobre R$ 182M (ROI +2099%).</div>
+    </div>
+  </div>
+  <div class="slide-meta">Slide 4/10 · 4 min</div>
+</section>
+
+<!-- ============================== SLIDE 5: TRIGGER MATRIX 6×3 ============================== -->
+<section class="slide" id="s5">
+  <div class="slide-num">05</div>
+  <h2 class="slide-title">Trigger matrix <em>6×3</em> — coração operacional</h2>
+  <p class="slide-subtitle">18 cells (6 sessões × 3 status) com ação, custo, owner, latência definidos. S6 macro reescala as outras 4 sessões via multiplier.</p>
+
+  <div class="heatmap">
+    <div class="hm-label"></div>
+    <div class="hm-header green">S6 GREEN</div>
+    <div class="hm-header amber">S6 AMBER</div>
+    <div class="hm-header red">S6 RED</div>
+
+    <div class="hm-label">S1 Hedge</div>
+    <div class="hm-cell hm-green"><span class="lbl">Baseline</span>h* do S3 (30-91%)</div>
+    <div class="hm-cell hm-amber"><span class="lbl">+10pp (1.5×)</span>+R$ 6-12M</div>
+    <div class="hm-cell hm-red"><span class="lbl">+20pp (2.0×)</span>+R$ 12-24M, sat 95%</div>
+
+    <div class="hm-label">S2 Supply</div>
+    <div class="hm-cell hm-green"><span class="lbl">Dual-src 18m</span>Baseline EVE</div>
+    <div class="hm-cell hm-amber"><span class="lbl">+30d stock</span>+R$ 30M</div>
+    <div class="hm-cell hm-red"><span class="lbl">Plano B</span>Spot + alt hedge, R$ 80M+</div>
+
+    <div class="hm-label">S3 BNDES</div>
+    <div class="hm-cell hm-green"><span class="lbl">R$ 12M</span>MDIC baseline</div>
+    <div class="hm-cell hm-amber"><span class="lbl">Dobrar R$ 24M</span>+2 lobbystas</div>
+    <div class="hm-cell hm-red"><span class="lbl">Bridge R$ 800M</span>Plano B financing</div>
+
+    <div class="hm-label">S4 Pricing</div>
+    <div class="hm-cell hm-green"><span class="lbl">Conforme S3</span>Tier do S3↔S4</div>
+    <div class="hm-cell hm-amber"><span class="lbl">+1 tier</span>+R$ 7.5-22.5M</div>
+    <div class="hm-cell hm-red"><span class="lbl">Tier 3 + comm</span>R$ 22.5M + R$ 5M</div>
+  </div>
+
+  <div class="insights">
+    <h4>Latência de resposta</h4>
+    <ul>
+      <li><strong>GREEN → AMBER: 5 min</strong> — automático via script (T2.1, Q4 2026)</li>
+      <li><strong>AMBER → RED: 60 min</strong> — comitê de crise, CEO + Board approval</li>
+      <li><strong>RED → AMBER: 24h</strong> — desmobilização ordenada</li>
+      <li><strong>AMBER → GREEN: 72h</strong> — recalibração oportunística</li>
+    </ul>
+  </div>
+  <div class="slide-meta">Slide 5/10 · 4 min</div>
+</section>
+
+<!-- ============================== SLIDE 6: 12 DECISION TREES ============================== -->
+<section class="slide" id="s6">
+  <div class="slide-num">06</div>
+  <h2 class="slide-title">12 decision trees — <em>composite 65-99</em></h2>
+  <p class="slide-subtitle">Grid 4×3 (S3 status × S6 status) com composite + ação + custo + owner. Crisis (≥88) tem pulse animation.</p>
+
+  <div class="trees-mini">
+    <div class="hm-label"></div>
+    <div class="hm-header green">S6 GREEN</div>
+    <div class="hm-header amber">S6 AMBER</div>
+    <div class="hm-header red">S6 RED</div>
+
+    <div class="hm-label">S3 Expansão</div>
+    <div class="tree-mini-cell tree-mini-green"><div class="comp">58</div>CSO mensal</div>
+    <div class="tree-mini-cell tree-mini-amber"><div class="comp">68</div>CSO+CFO R$60M</div>
+    <div class="tree-mini-cell tree-mini-red"><div class="comp">78</div>CEO R$180M</div>
+
+    <div class="hm-label">S3 Continuidade</div>
+    <div class="tree-mini-cell tree-mini-green"><div class="comp">65</div>CSO mensal</div>
+    <div class="tree-mini-cell tree-mini-amber"><div class="comp">78</div>CSO+CFO R$65M</div>
+    <div class="tree-mini-cell tree-mini-red"><div class="comp">88</div>CEO+Board R$200M</div>
+
+    <div class="hm-label">S3 RB Parcial</div>
+    <div class="tree-mini-cell tree-mini-amber"><div class="comp">73</div>CSO R$25M</div>
+    <div class="tree-mini-cell tree-mini-red"><div class="comp">85</div>CFO+CEO R$95M</div>
+    <div class="tree-mini-cell tree-mini-crisis"><div class="comp">95</div>Board R$280M</div>
+
+    <div class="hm-label">S3 RB Total</div>
+    <div class="tree-mini-cell tree-mini-red"><div class="comp">82</div>CFO+CEO R$50M</div>
+    <div class="tree-mini-cell tree-mini-crisis"><div class="comp">93</div>CEO+Board R$150M</div>
+    <div class="tree-mini-cell tree-mini-crisis"><div class="comp">99</div>Board R$400M</div>
+  </div>
+
+  <div class="insights warn">
+    <h4>3 padrões materialmente distintos</h4>
+    <ul>
+      <li><strong>Slides 1-2 (Expansão+GREEN/AMBER)</strong>: composite 58-68, execução limpa do playbook. CSO mensal. Custo marginal.</li>
+      <li><strong>Slides 3-7 (Continuidade+AMBER → RB Parcial+AMBER)</strong>: composite 73-85, modo tensão. CFO+CEO semanal. Custo R$ 25-95M.</li>
+      <li><strong>Slides 8-12 (≥ RB Parcial+RED ou RB Total+qualquer)</strong>: composite ≥88, <strong>MODO CRISE</strong>. CEO+Board+Board global. Comitê permanente. Custo R$ 150-400M.</li>
+    </ul>
+  </div>
+  <div class="slide-meta">Slide 6/10 · 4 min</div>
+</section>
+
+<!-- ============================== SLIDE 7: NPV LAYER ============================== -->
+<section class="slide" id="s7">
+  <div class="slide-num">07</div>
+  <h2 class="slide-title">NPV layer — <em>R$ 552M → R$ 3.9bi</em></h2>
+  <p class="slide-subtitle">6 prescrições × 4 cenários S3, 3 anos, taxa 13% (NTN-B 10y + 200bps spread). P(shock) crescente por cenário: 20/30/50/70%.</p>
+
+  <table class="t">
+    <thead>
+      <tr>
+        <th>Prescrição</th>
+        <th>Expansão</th>
+        <th>Continuidade</th>
+        <th>RB Parcial</th>
+        <th>RB Total</th>
+        <th>Recomendação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Hedge FX (S1)</b></td>
+        <td class="num green">+8</td>
+        <td class="num green">+74</td>
+        <td class="num green">+319</td>
+        <td class="num green">+763</td>
+        <td>✅ Manter sempre</td>
+      </tr>
+      <tr>
+        <td><b>Dual-sourcing (S2)</b></td>
+        <td class="num green">+342</td>
+        <td class="num green">+748</td>
+        <td class="num green">+1.559</td>
+        <td class="num green">+2.371</td>
+        <td>✅ Manter sempre</td>
+      </tr>
+      <tr>
+        <td><b>Advocacy BNDES (S3)</b></td>
+        <td class="num red">−17</td>
+        <td class="num red">−11</td>
+        <td class="num">+1</td>
+        <td class="num green">+13</td>
+        <td>⚠️ Decidir Risk Officer</td>
+      </tr>
+      <tr>
+        <td><b>Defensivo targeted (S4)</b></td>
+        <td class="num red">−36</td>
+        <td class="num red">−25</td>
+        <td class="num green">+17</td>
+        <td class="num green">+6</td>
+        <td>⚠️ Decidir Risk Officer</td>
+      </tr>
+      <tr>
+        <td><b>Partnerships (S5)</b></td>
+        <td class="num red">−18</td>
+        <td class="num red">−7</td>
+        <td class="num green">+17</td>
+        <td class="num green">+40</td>
+        <td>⚠️ Decidir Risk Officer</td>
+      </tr>
+      <tr>
+        <td><b>Framework D3</b></td>
+        <td class="num green">+272</td>
+        <td class="num green">+436</td>
+        <td class="num green">+624</td>
+        <td class="num green">+702</td>
+        <td>✅ Manter sempre</td>
+      </tr>
+      <tr style="border-top: 2px solid var(--accent);">
+        <td><b>TOTAL NPV (R$ M)</b></td>
+        <td class="num green">+552</td>
+        <td class="num green">+1.216</td>
+        <td class="num green">+2.538</td>
+        <td class="num green">+3.896</td>
+        <td><b>R$ 8.2bi baseline</b></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insights good">
+    <h4>3 padrões materialmente distintos</h4>
+    <ul>
+      <li><strong>Manter sempre</strong>: Hedge FX + Dual-sourcing + Framework D3 (pagam em todos os cenários)</li>
+      <li><strong>Decidir Risk Officer</strong>: Advocacy + Defensivo + Partnerships (negativos em Expansão, "seguros" caros em tempos bons)</li>
+      <li><strong>Compound value em stress</strong>: Framework D3 ROI 11.5k-30k% (R$ 3M habilita R$ 700M-1bi)</li>
+    </ul>
+  </div>
+  <div class="slide-meta">Slide 7/10 · 4 min</div>
+</section>
+
+<!-- ============================== SLIDE 8: SENSITIVITY + MC ============================== -->
+<section class="slide" id="s8">
+  <div class="slide-num">08</div>
+  <h2 class="slide-title">Sensitivity + MC — <em>top risks</em></h2>
+  <p class="slide-subtitle">Sensitivity univariado (10 perguntas) + MC multivariado (10k runs, 4 vars correlacionadas via Cholesky).</p>
+
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Tornado univariado</div>
+      <div class="kpi-value" style="font-size: 22px;">#1 BNDES −10pp</div>
+      <div class="kpi-note">+R$ 2.4bi (+36%)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Tornado univariado</div>
+      <div class="kpi-value" style="font-size: 22px;">#2 Lítio −30%</div>
+      <div class="kpi-note">−R$ 2.1bi (−30%)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Tornado multivariado</div>
+      <div class="kpi-value" style="font-size: 22px;">#1 Lítio ρ=0.999</div>
+      <div class="kpi-note">dual-src benefit linear em VaR</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">P95 / P99 (10k runs)</div>
+      <div class="kpi-value">R$ 21bi / R$ 32bi</div>
+      <div class="kpi-note">upside material em compound stress</div>
+    </div>
+  </div>
+
+  <div class="insights warn">
+    <h4>3 descobertas que mudam narrativa</h4>
+    <ul>
+      <li><strong>Lítio é risk driver #1</strong> (não BNDES, não PTAX). Contrato LP com CATL (70% do lítio em preço fixo) é a maior alavanca de redução de volatilidade.</li>
+      <li><strong>Use mediana MC (R$ 6.82bi), não baseline det. (R$ 8.20bi)</strong>. Reporting honesto: R$ 6.8bi ± R$ 9.6bi (P5-P95).</li>
+      <li><strong>Expansão tem 5% de chance de NPV marginal negativo</strong> (P5 = −R$ 2M). P(shock) baixo torna "seguros" caros em tempos bons — decidir Risk Officer.</li>
+    </ul>
+  </div>
+  <div class="slide-meta">Slide 8/10 · 4 min</div>
+</section>
+
+<!-- ============================== SLIDE 9: PHASE 1 STATUS ============================== -->
+<section class="slide" id="s9">
+  <div class="slide-num">09</div>
+  <h2 class="slide-title">Phase 1 status · <em>5/6 done</em></h2>
+  <p class="slide-subtitle">Foundation phase completa exceto por T1.6 (este workshop). Pronto pra abrir Phase 2 (Q4 2026) após decisões do Conselho.</p>
+
+  <table class="t">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Output</th>
+        <th>Status</th>
+        <th>Q</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>T1.1</b> Dependency graph</td>
+        <td>D3-DEPENDENCY-GRAPH.md (12.9 KB)</td>
+        <td class="green">✅ Done</td>
+        <td>Q3 26</td>
+      </tr>
+      <tr>
+        <td><b>T1.2</b> Trigger matrix</td>
+        <td>D3-TRIGGER-MATRIX.md (17.3 KB)</td>
+        <td class="green">✅ Done</td>
+        <td>Q3 26</td>
+      </tr>
+      <tr>
+        <td><b>T1.3</b> 12 decision trees</td>
+        <td>D3-MAIN.html §4.4</td>
+        <td class="green">✅ Done</td>
+        <td>Q3 26</td>
+      </tr>
+      <tr>
+        <td><b>T1.4</b> RACI matrix</td>
+        <td>D3-MAIN.html §6.2</td>
+        <td class="green">✅ Done</td>
+        <td>Q3 26</td>
+      </tr>
+      <tr>
+        <td><b>T1.5</b> Action register</td>
+        <td>D3-MAIN.html §7 (32 ações)</td>
+        <td class="green">✅ Done</td>
+        <td>Q3 26</td>
+      </tr>
+      <tr>
+        <td><b>T1.6</b> Workshop Conselho</td>
+        <td>este deck (D3-WORKSHOP.html)</td>
+        <td class="amber">🟡 Hoje</td>
+        <td>Q3 26</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insights good">
+    <h4>Próximas fases (aprovadas condicionalmente)</h4>
+    <ul>
+      <li><strong>Phase 2 (Q4 2026, R$ 1.0M)</strong>: auto-trigger S6→S1-S5, NPV layer operacional, dashboard executivo, piloto S6→S1</li>
+      <li><strong>Phase 3 (Q1 2027, R$ 1.5M)</strong>: MC multivariado refinado (100k runs), game theory, recalibração D2 v2</li>
+      <li><strong>Phase 4 ongoing (R$ 200k/trim)</strong>: learning loop, recalibração semestral, stress test anual</li>
+    </ul>
+  </div>
+  <div class="slide-meta">Slide 9/10 · 3 min</div>
+</section>
+
+<!-- ============================== SLIDE 10: DECISÕES PEDIDAS ============================== -->
+<section class="slide" id="s10">
+  <div class="slide-num">10</div>
+  <h2 class="slide-title"><em>6 decisões</em> pedidas ao Conselho</h2>
+  <p class="slide-subtitle">Decisões que faltam para abrir Fase 2 e operacionalizar o D3. Sequência recomendada: governance (1-2) → parâmetros (3) → approval gates (4-6).</p>
+
+  <div class="decisions">
+    <div class="decision">
+      <div class="num">Decisão 1</div>
+      <div class="q">Quem é o CSO?</div>
+      <div class="who">Framework pressupõe essa figura. Se não existir, quem assume? (CFO? Head de Strategy? Head de Risk?) · <b>CEO decide</b></div>
+    </div>
+
+    <div class="decision">
+      <div class="num">Decisão 2</div>
+      <div class="q">Quem é o Risk Officer?</div>
+      <div class="who">Responsável direto pelo sizing do hedge (S1) e pelo trigger S6 → S1. · <b>CEO + CFO decidem</b></div>
+    </div>
+
+    <div class="decision">
+      <div class="num">Decisão 3</div>
+      <div class="q">Taxa de desconto ajustada a risco soberano</div>
+      <div class="who">Para NPV do pacote de mitigação. Provavelmente NTN-B 10y + spread. Modelo atual usa 13%. · <b>CFO + Conselho decidem</b></div>
+    </div>
+
+    <div class="decision">
+      <div class="num">Decisão 4</div>
+      <div class="q">Threshold mínimo de stress test → "modo crise"</div>
+      <div class="who">Composite ≥ 88? VaR residual &gt; X? Definir antes de ativar. · <b>CSO + Risk Officer decidem</b></div>
+    </div>
+
+    <div class="decision">
+      <div class="num">Decisão 5</div>
+      <div class="q">Quem aprova R$ 280M+?</div>
+      <div class="who">Conselho local? CEO? Board global BYD? Bridge financing R$ 800M provavelmente precisa de Board global. · <b>CEO + Conselho + Board decidem</b></div>
+    </div>
+
+    <div class="decision">
+      <div class="num">Decisão 6</div>
+      <div class="q">Integração com calendário Board BYD global</div>
+      <div class="who">D3 v0 reporta mensal para Conselho local; trimestral para Board global. Cadência precisa alinhar com calendário do Board. · <b>CEO + Board secretariat decidem</b></div>
+    </div>
+  </div>
+
+  <div class="pull">
+    Meta: começar Phase 2 em <em>agosto/2026</em>, finalizar em <em>outubro/2026</em>, workshop Q3 antes do fim do trimestre.
+  </div>
+  <div class="slide-meta">Slide 10/10 · 6 min · Q&A 15 min</div>
+</section>
+
+<script>
+  // Progress bar
+  const progressFill = document.getElementById('progress');
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function updateProgress() {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = Math.min(100, (scrollY / docHeight) * 100);
+    progressFill.style.width = pct + '%';
+  }
+
+  // Active sidebar link
+  function updateActiveLink() {
+    const scrollY = window.scrollY + 100;
+    let activeIdx = 0;
+    slides.forEach((slide, i) => {
+      if (slide.offsetTop <= scrollY) activeIdx = i;
+    });
+    document.querySelectorAll('.nav-link').forEach((link, i) => {
+      link.classList.toggle('active', i === activeIdx);
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    updateProgress();
+    updateActiveLink();
+  });
+  updateProgress();
+  updateActiveLink();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta charset="utf-8"/>
+<title>Dream Weaver - Hierarchy Explorer</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "primary-light": "#e7f1fc",
+                        "primary-dark": "#0d5aab",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1e293b",
+                        "text-light": "#0f172a",
+                        "text-dark": "#f8fafc",
+                        "muted-light": "#64748b",
+                        "muted-dark": "#94a3b8",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)',
+                        'soft-lg': '0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 2px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex h-screen w-full">
+<aside class="w-16 flex flex-col items-center bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark py-4">
+<div class="w-10 h-10 text-primary mb-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path><path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+<nav class="flex flex-col items-center gap-4">
+<a class="p-3 rounded-lg text-muted-light dark:text-muted-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary dark:hover:text-primary-light transition-colors" href="#"><span class="material-symbols-outlined">dashboard</span></a>
+<a class="p-3 rounded-lg bg-primary-light dark:bg-primary-dark/20 text-primary dark:text-primary-light transition-colors" href="#"><span class="material-symbols-outlined">account_tree</span></a>
+<a class="p-3 rounded-lg text-muted-light dark:text-muted-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary dark:hover:text-primary-light transition-colors" href="#"><span class="material-symbols-outlined">lightbulb</span></a>
+<a class="p-3 rounded-lg text-muted-light dark:text-muted-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary dark:hover:text-primary-light transition-colors" href="#"><span class="material-symbols-outlined">calendar_today</span></a>
+</nav>
+<div class="mt-auto flex flex-col items-center gap-4">
+<button class="p-3 rounded-lg text-muted-light dark:text-muted-dark hover:bg-primary-light dark:hover:bg-primary-dark/20 hover:text-primary dark:hover:text-primary-light transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 bg-cover bg-center rounded-full" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZdrDnDnOak_UVdTS-vImT1KYpDdh-mz73grFcyMLzTu9CK6yAETu3NRpGwX9DTG3q-30ehzuxX7NWq6RbLm_1xJTsLAhATly1idr8k_eJeqSxlxhHACOZTfR6HDujPzlOP-Yci3Dt8ExasBcL9nnnI_La43wBrOE3gdM7bxaYyhBLND4VgMyHf1V1_XmHLTsljcuptsoqAifiQzO1Iju8DOAGg8i08383q1SpNol74RdtOx_6NPC4wdEg_lqfRZWQ8H8adxJ7Bd4-");'></div>
+</div>
+</aside>
+<div class="flex-1 flex overflow-hidden">
+<div class="w-1/3 xl:w-1/4 bg-card-light dark:bg-card-dark/50 border-r border-border-light dark:border-border-dark flex flex-col">
+<div class="p-4 border-b border-border-light dark:border-border-dark flex-shrink-0">
+<h2 class="text-xl font-bold">Hierarchy Explorer</h2>
+<div class="mt-4 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">search</span>
+<input class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-primary focus:border-primary transition" placeholder="Search items..." type="text"/>
+</div>
+</div>
+<div class="flex-grow overflow-y-auto custom-scroll p-4 space-y-2">
+<div class="space-y-1">
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-primary text-xl">filter_drama</span>
+<span class="font-semibold text-lg flex-1">Become a Tech Lead</span>
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">expand_more</span>
+</div>
+<div class="pl-6 space-y-1">
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer bg-primary-light dark:bg-primary-dark/20 text-primary-dark dark:text-primary-light">
+<span class="material-symbols-outlined text-lg">flag</span>
+<span class="font-medium flex-1">Master Backend Development</span>
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">expand_more</span>
+</div>
+<div class="pl-6 space-y-1">
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-base">rocket_launch</span>
+<span class="flex-1">Learn Advanced NodeJS</span>
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">chevron_right</span>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-base">rocket_launch</span>
+<span class="flex-1">Database Optimization</span>
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">expand_more</span>
+</div>
+<div class="pl-6">
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-sm">check_box_outline_blank</span>
+<span>Read "High Performance MySQL"</span>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-sm text-primary">check_box</span>
+<span class="line-through text-muted-light dark:text-muted-dark">Complete Coursera Course</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pl-6">
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-lg">flag</span>
+<span class="font-medium flex-1">Improve Soft Skills</span>
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-primary text-xl">travel_explore</span>
+<span class="font-semibold text-lg flex-1">Travel Southeast Asia</span>
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark flex-shrink-0">
+<button class="w-full bg-primary text-white font-bold py-2.5 px-4 rounded-lg hover:bg-primary-dark transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                    New Item
+                </button>
+</div>
+</div>
+<main class="flex-1 flex flex-col bg-background-light dark:bg-background-dark overflow-y-auto custom-scroll">
+<div class="p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<p class="text-sm text-muted-light dark:text-muted-dark">Objective</p>
+<h1 class="text-3xl font-extrabold text-text-light dark:text-text-dark">Master Backend Development</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg hover:bg-card-light dark:hover:bg-card-dark text-muted-light dark:text-muted-dark"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 rounded-lg hover:bg-card-light dark:hover:bg-card-dark text-muted-light dark:text-muted-dark"><span class="material-symbols-outlined">delete</span></button>
+<button class="p-2 rounded-lg hover:bg-card-light dark:hover:bg-card-dark text-muted-light dark:text-muted-dark"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft dark:shadow-none p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Task List</h3>
+<button class="text-primary font-semibold text-sm flex items-center gap-1"><span class="material-symbols-outlined text-base">add_circle</span> Add Task</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<input checked="" class="h-5 w-5 rounded text-primary focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" type="checkbox"/>
+<span class="flex-1 font-medium">Complete NodeJS course on Udemy</span>
+<div class="w-32 bg-background-light dark:bg-background-dark rounded-full h-2.5">
+<div class="bg-green-500 h-2.5 rounded-full" style="width: 100%"></div>
+</div>
+<span class="text-sm font-semibold text-green-500">100%</span>
+</div>
+<div class="flex items-center gap-4">
+<input class="h-5 w-5 rounded text-primary focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" type="checkbox"/>
+<span class="flex-1 font-medium">Build a REST API project</span>
+<div class="w-32 bg-background-light dark:bg-background-dark rounded-full h-2.5">
+<div class="bg-yellow-500 h-2.5 rounded-full" style="width: 45%"></div>
+</div>
+<span class="text-sm font-semibold text-yellow-500">45%</span>
+</div>
+<div class="flex items-center gap-4">
+<input class="h-5 w-5 rounded text-primary focus:ring-primary border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark" type="checkbox"/>
+<span class="flex-1 font-medium">Deploy an application to AWS</span>
+<div class="w-32 bg-background-light dark:bg-background-dark rounded-full h-2.5">
+<div class="bg-red-500 h-2.5 rounded-full" style="width: 10%"></div>
+</div>
+<span class="text-sm font-semibold text-red-500">10%</span>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft dark:shadow-none p-6">
+<h3 class="text-lg font-bold mb-4">Quick Note</h3>
+<textarea class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg p-3 h-40 resize-none focus:ring-2 focus:ring-primary focus:border-primary transition" placeholder="Jot down your thoughts...">Remember to look into GraphQL for the next project. It might be a good alternative to REST for complex data fetching.</textarea>
+<div class="mt-4 flex justify-end">
+<button class="bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors">Save Note</button>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft dark:shadow-none p-6 text-center">
+<h3 class="text-lg font-bold mb-4">Overall Progress</h3>
+<div class="relative w-32 h-32 mx-auto">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-background-light dark:text-background-dark" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="65, 100" stroke-dashoffset="-25" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-3xl font-extrabold text-primary">65%</span>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft dark:shadow-none p-6">
+<h3 class="text-lg font-bold mb-4">Time Blocks</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3 bg-background-light dark:bg-background-dark p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<div>
+<p class="font-semibold">Project Work</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Mon, 10:00 - 12:00</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-background-light dark:bg-background-dark p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<div>
+<p class="font-semibold">Course Study</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Tue, 18:00 - 19:30</p>
+</div>
+</div>
+<button class="w-full mt-2 text-primary font-semibold text-sm flex items-center justify-center gap-1"><span class="material-symbols-outlined text-base">add</span> Add Time Block</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<title>Dream Weaver - Smart Recommendations</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1173d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex flex-col min-h-screen">
+<header class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path><path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">Dream Weaver</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Dashboard</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Dreams</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Objectives</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Goals</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary" href="#">Tasks</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 bg-cover bg-center rounded-full" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZdrDnDnOak_UVdTS-vImT1KYpDdh-mz73grFcyMLzTu9CK6yAETu3NRpGwX9DTG3q-30ehzuxX7NWq6RbLm_1xJTsLAhATly1idr8k_eJeqSxlxhHACOZTfR6HDujPzlOP-Yci3Dt8ExasBcL9nnnI_La43wBrOE3gdM7bxaYyhBLND4VgMyHf1V1_XmHLTsljcuptsoqAifiQzO1Iju8DOAGg8i08383q1SpNol74RdtOx_6NPC4wdEg_lqfRZWQ8H8adxJ7Bd4-");'></div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-8">Smart Recommendations</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+<div class="flex flex-col md:flex-row">
+<div class="p-6 flex-1">
+<p class="text-sm font-semibold text-primary mb-1">Based on your dream</p>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Learn Algorithms</h3>
+<p class="text-gray-600 dark:text-gray-400 mb-4">Suggested Task: Daily coding practice</p>
+<button class="bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">Add to Tasks</button>
+</div>
+<div class="md:w-2/5 h-48 md:h-auto bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDlATYHVLlxNZI0V9F8UhR7j1ImKfB0Z7A2L-0STIWsD2Q1-dD6UoI3QLEWQZZwX8afb9EhzPLvkDCeCahhoxp5FBABYDcEmDd6H6PD6iRuBPKws8U9r7nUAAw6Z0-MtaJF9v5esgvX2CXg2YQMxugAAJjZgHZLK-JUM8mSdLlo5HuwFaR1YotERmOOGJPeWo_7iy_D0iR32fxL_2G-Vm-MJoL5stcemiaD6wRXcgFoD4Kc2o0f0s--p3guNEmopBgOqeO697PYhiiM");'></div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+<div class="flex flex-col md:flex-row">
+<div class="p-6 flex-1">
+<p class="text-sm font-semibold text-primary mb-1">Based on your dream</p>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Improve Public Speaking</h3>
+<p class="text-gray-600 dark:text-gray-400 mb-4">Suggested Task: Join a Toastmasters club</p>
+<button class="bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">Add to Tasks</button>
+</div>
+<div class="md:w-2/5 h-48 md:h-auto bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApEXIeMNKsvZ8BWvvI6AR_aC_RUmozCfDVSel-_8xEHYp-MDAx_Lw2nDQAYvkyxrNxi4hE8kO511P3dSOuwesCoCaVBUQi-BSRP2HAAQJ2Ah6TOuA7VhkeN_gUAMJMeGo8Qx32LizGQ6Shqk4K0upCgQ0Rdt-gn-QwQdsNb1sKl4vzV24sVTeB_f2sxzz9u3YyOjdSsbbCXX2wt5iW_qQicSI7nCS0NETyUzLZUdHmDq_sp4vJWxPErqjk6JEHkyIvaK9pqyJAHFF0");'></div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+<div class="flex flex-col md:flex-row">
+<div class="p-6 flex-1">
+<p class="text-sm font-semibold text-primary mb-1">Based on your dream</p>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Start a Business</h3>
+<p class="text-gray-600 dark:text-gray-400 mb-4">Suggested Task: Create a business plan</p>
+<button class="bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">Add to Tasks</button>
+</div>
+<div class="md:w-2/5 h-48 md:h-auto bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9UhWN9EZIOvUfmZq8-UE2TWw312zBQtdQtDeFMR2kp7utenbg05VXszssYs9wuCuoT9i5-7IrjCI8q7bn3H-ZRqb3203JvdZc-RAf5QR9666HcXzuhPNGFjB5WVVnx5HLVxndJuB2-Gby4ITxk3Meb8uL6L5fK0AHVRkg-_S-eOKsU2uZNXVuNaJcose8UC65SFcX2BlXK_8aDXYIOFH-WSE6-6O3g_snKasrer9xlfDuwH44cG7slwbgqISriAcanD2kINrkT2_C");'></div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900/50 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+<div class="flex flex-col md:flex-row">
+<div class="p-6 flex-1">
+<p class="text-sm font-semibold text-primary mb-1">Based on your dream</p>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Travel the World</h3>
+<p class="text-gray-600 dark:text-gray-400 mb-4">Suggested Task: Research travel destinations</p>
+<button class="bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors">Add to Tasks</button>
+</div>
+<div class="md:w-2/5 h-48 md:h-auto bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXgyPS7nhFoOQH28XIkXQtfGlVkJly5mY5w0pzK1iJg2Dt48qOttsDy6edb1jNY9qUUnQvbfhE6v5ar6EGIGeaULJ44ju6Mmo19-DUa7S_bdtnVdwCjOshoZYwi4ba0Q7tZ48Mb-sbhU9royHQdsMNPVRTFfj6IySiuAWrDuTUhNA6KVWx5W5RjbKEWcxZdaV32NHO_DLRCGrR2Ao7LRRlvHI--t0O8ymTnXb47Vmyf73itbmOpeA88Cg2eHIQKSNjHwjoEk4iEnvl");'></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

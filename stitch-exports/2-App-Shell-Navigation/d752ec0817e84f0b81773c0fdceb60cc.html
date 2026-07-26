@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+          },
+        },
+      };
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex h-screen flex-col">
+<header class="flex items-center justify-between border-b border-gray-200/10 px-6 py-3">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-gray-800 dark:text-white">
+<span class="material-symbols-outlined text-primary text-2xl"> all_inclusive </span>
+<h1 class="text-lg font-bold">Dream Weaver</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary" href="#">My Dreams</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary" href="#">My Goals</a>
+<a class="text-sm font-bold text-primary" href="#">My Tasks</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary" href="#">My Journal</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500"> search </span>
+<input class="h-10 w-48 rounded-lg bg-gray-200/50 dark:bg-gray-800/50 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Search" type="search"/>
+</div>
+<button class="relative rounded-full p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50">
+<span class="material-symbols-outlined"> notifications </span>
+<span class="absolute right-1 top-1 h-2 w-2 rounded-full bg-primary"></span>
+</button>
+<img alt="User avatar" class="size-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR4YWFz7WfjKLSh6tUkxxy3He4CBxPTH4vtaMx9f6xSRVL269S-ZhQDiY6RgKa_3kBya-GNVS_m4DjuL8tlLi7cJMe_K49wRfkGHQScU7nT_KoZbT1DYhUFDIwuZjYbeM35DtPjXXGsYunf5p6aV0Lxv16YpM9U2HSfnYPA2fmJ8kp-wJeBJ2L3TX0r7Q8wREAmEWWCQqetjUDYu-txcFPvhq92Nd4bfkzGYw047CsPC2yn8JXgwvsqS__-l6TjFvRtKDgDtGNDz6Z"/>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<div class="flex-1 overflow-y-auto p-6">
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Tasks Manager</h2>
+<div class="border-b border-gray-200/10 dark:border-gray-700">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8">
+<a class="border-primary text-primary whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium" href="#"> Pending </a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200 whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium" href="#"> In Progress </a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200 whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium" href="#"> Completed </a>
+</nav>
+</div>
+<div class="mt-6 space-y-4">
+<div class="flex items-center gap-4 rounded-lg bg-background-light p-4 shadow-sm dark:bg-background-dark/50 border border-transparent hover:border-primary/50 transition-all">
+<div class="h-full w-1 rounded-full bg-red-500"></div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Draft a detailed project proposal</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: 2024-07-15</p>
+</div>
+<div class="w-1/3 h-20 bg-cover bg-center rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBobpKR9Avp2ulJ-UJpsXM96Gug4Gk8-rHw-B2Ij80wBg19R-7jBQQQQFCOa8rWPoj_vV4bHYeeS0qq2_7qIui_8rNtXuWhpIp8ZCMb_ubR4qrdCd_XbdQNbEv7CBvHr5E6psVdRwRfSYzfjONweYOLq2ZGi-TDHsrT4XN_v1Kx1Df8FmZcalYKnu2uvLDGD9SBKfwvmzT5c94l0dfRludikiYVPxlzI5jw98Homo6__ZipsIOaqncrGNDpWxjnivPboAQG9vbSsPAt");'></div>
+</div>
+<div class="flex items-center gap-4 rounded-lg bg-background-light p-4 shadow-sm dark:bg-background-dark/50 border border-transparent hover:border-primary/50 transition-all">
+<div class="h-full w-1 rounded-full bg-yellow-500"></div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Conduct market research</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: 2024-07-20</p>
+</div>
+<div class="w-1/3 h-20 bg-cover bg-center rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA0ph-tT3cqaPxD6FBJnfTF4qsescMNGCMPDQaGKGeTdQWTwekcj4LqNcyfCOQ2E6vKDudwQ_FA3FfjUc_GCBLJCi--8YR7mcFGuZBt42RoNp069Cih8QIecHFWPgdn_B1Mz5BeGL9mBKQtNID-8TTVK8CVJPuo0UNQTreDMQ-hRu32f7dPb0mZQqGNDgbP2PI78juE0EmzUBTQiN4UHw_0lwBIRot42xocLKmOvP39Slk_p0C2KS0TYd4NCS3_pj6FcL9h4jji76w0");'></div>
+</div>
+<div class="flex items-center gap-4 rounded-lg bg-background-light p-4 shadow-sm dark:bg-background-dark/50 border border-transparent hover:border-primary/50 transition-all">
+<div class="h-full w-1 rounded-full bg-green-500"></div>
+<div class="flex-1">
+<p class="text-sm font-semibold text-gray-900 dark:text-white">Schedule a team meeting</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: 2024-07-25</p>
+</div>
+<div class="w-1/3 h-20 bg-cover bg-center rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqDmLWzDOzTS1yRfpinSy7dI-l_Afwhm8xPl_0hxJP6eNv_9--KGmE8orVi1fOwBOI6DNmoNBS-JKLJvb3Ux3r995YzQ2aFTZVbgQWsMW9NVh8jO3fvBmqQxJMnon97b0eWbqRBB1zL37WkXcmiYGjQBJ3H5RiLIGfaSi0LkA7LPfrSd-bZN2fipQg__id4JANjzgbWpiQErICcrrpEeTlnSCqhXbbXpLevxT-GKYDxX6yrj7PweI4z7zfEWSPl1CVij9Bv-bh-KHR");'></div>
+</div>
+</div>
+</div>
+<aside class="w-80 border-l border-gray-200/10 bg-background-light/50 dark:bg-background-dark/40 p-6 flex flex-col">
+<div class="flex-1">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">AI Suggestions</h3>
+<p class="mt-1 text-sm text-gray-600 dark:text-gray-400">These 3 tasks align with your current goal → Want to add them?</p>
+<div class="mt-6 space-y-4">
+<div class="flex cursor-pointer items-center gap-3 rounded-lg p-3 hover:bg-primary/10">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800/80">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-400"> add_task </span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Identify key stakeholders</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: 2024-07-18</p>
+</div>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg p-3 hover:bg-primary/10">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800/80">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-400"> add_task </span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Create a communication plan</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: 2024-07-22</p>
+</div>
+</div>
+<div class="flex cursor-pointer items-center gap-3 rounded-lg p-3 hover:bg-primary/10">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200/80 dark:bg-gray-800/80">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-400"> add_task </span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Set up project tracking tools</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: 2024-07-28</p>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Add Tasks</button>
+</aside>
+</main>
+</div>
+
+</body></html>

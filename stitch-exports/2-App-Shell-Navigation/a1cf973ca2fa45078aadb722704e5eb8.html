@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dream Weaver Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex flex-col min-h-screen">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-800 px-10 py-3 bg-background-light dark:bg-background-dark/50 backdrop-blur-sm sticky top-0 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-gray-900 dark:text-white">
+<svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-9.5c.83 0 1.5-.67 1.5-1.5S10.83 7.5 10 7.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm4 0c.83 0 1.5-.67 1.5-1.5S14.83 7.5 14 7.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-4 4c.83 0 1.5-.67 1.5-1.5S10.83 11.5 10 11.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm4 0c.83 0 1.5-.67 1.5-1.5S14.83 11.5 14 11.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"></path>
+</svg>
+<h2 class="text-xl font-bold">Dream Weaver</h2>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-primary dark:text-primary" href="#">Dreams</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Objectives</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Goals</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Tasks</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-gray-800 bg-background-light dark:bg-gray-900/50 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Search..."/>
+</div>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-400">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-10 w-10 border-2 border-primary" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTWcN4LV_nI9HOVnm5Y2d42u1s9YZuMbdMm0SFR0XeRUdx-mfWvxiJySDaxQWclK0l_8093cTy3SCpSvpg-IPV_jW1sQxFQnBysLcSGZSAwLHrcaQYPf8odtR20sD1sXfI2WV_w3DhjS5cHGKyeQTbDRxllmgpVUFP1JsFkTjU_sxT39MMMGu4BOW-Pt5aqvclFtfMDpzuq1Sxgb3fZ3Tl-Bw3re4-5rDPpfyyJkdnrIsv_2LUcNY_oqogp-Z27YDVVipOceA7jPhm");'></div>
+</div>
+</header>
+<main class="flex-1 px-10 py-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex justify-between items-center mb-8">
+<h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+<button class="bg-primary text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add</span>
+<span>New Item</span>
+</button>
+</div>
+<div class="space-y-12">
+<div>
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">My Dreams</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-gray-900/50 border border-transparent dark:border-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 group">
+<div class="relative">
+<div class="h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBCczObniTCjjov6W0zgmplR7Fv86WcPouXugdHn5-DbQGDPtEY-81QyFS8CZD5hmSgXVPAA1lxTcsx1QHggMV9rHrLkGNoLAvEq3AigwpDiy_lGOA43MlQd1SImlHzkZ35Gz2hP8KaYUNwaNcYAWuzelWpFng8ilvO3xeh6cweGjYN0A7bP0Dzfo8U1OSOsH-g0pppcx9xYWEtrSbCCiSgD094fBDyXxgA1o-YEJyC6MTwejmjNrFMiOPygpMdkAlLqBsGmomB6w0m");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-lg text-gray-900 dark:text-white">Become a Published Author</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Write and publish a novel by the end of next year.</p>
+</div>
+<div class="relative w-16 h-16">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-gray-200 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"></path>
+<path class="text-primary progress-ring__circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-linecap="round" stroke-width="3.8"></path>
+</svg>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-bold text-gray-900 dark:text-white">75%</span>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="text-xs text-gray-400 dark:text-gray-500">2/3 Objectives</div>
+<button class="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+<span>Expand</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:rotate-180">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">My Objectives</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-gray-900/50 border border-transparent dark:border-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 group">
+<div class="p-5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-lg text-gray-900 dark:text-white">Complete Writing Course</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Finish the online writing course by the end of this month.</p>
+</div>
+<div class="w-16 h-16 flex-shrink-0">
+<div class="relative w-full h-16">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-gray-200 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"></path>
+<path class="text-primary progress-ring__circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="50, 100" stroke-linecap="round" stroke-width="3.8"></path>
+</svg>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-bold text-gray-900 dark:text-white">50%</span>
+</div>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="text-xs text-gray-400 dark:text-gray-500">5/10 Goals</div>
+<button class="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+<span>Expand</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:rotate-180">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">My Goals</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-gray-900/50 border border-transparent dark:border-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 group">
+<div class="p-5">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-lg text-gray-900 dark:text-white">Write First Draft</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Complete the first draft of the novel by the end of this quarter.</p>
+</div>
+<div class="relative w-16 h-16">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-gray-200 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"></path>
+<path class="text-primary progress-ring__circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-linecap="round" stroke-width="3.8"></path>
+</svg>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-bold text-gray-900 dark:text-white">25%</span>
+</div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="text-xs text-gray-400 dark:text-gray-500">1/4 Tasks</div>
+<button class="flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+<span>Expand</span>
+<span class="material-symbols-outlined text-base transition-transform group-hover:rotate-180">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

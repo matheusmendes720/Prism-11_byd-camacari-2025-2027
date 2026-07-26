@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta charset="utf-8"/>
+<title>Dream Logger</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .glow-on-hover {
+                transition: box-shadow 0.3s ease-in-out;
+            }
+            .glow-on-hover:hover {
+                box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.5);
+            }
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-black dark:text-white">
+<div class="flex h-screen">
+<aside class="w-64 bg-white/5 border-r border-black/10 dark:border-white/10 flex-col hidden sm:flex">
+<div class="flex items-center gap-3 p-6">
+<svg class="text-black dark:text-white" fill="none" height="24" viewBox="0 0 48 48" width="24" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+<h1 class="text-lg font-bold text-black dark:text-white">Dream Logger</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-lg hover:bg-black/5 dark:hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">psychology</span>
+                Dreams
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-lg hover:bg-black/5 dark:hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">flag</span>
+                Objectives
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-lg hover:bg-black/5 dark:hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+                Tasks
+            </a>
+</nav>
+</aside>
+<div class="flex flex-col flex-1">
+<header class="flex items-center justify-between w-full px-6 py-3 border-b border-black/10 dark:border-white/10 shrink-0">
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-black/50 dark:text-white/50">search</span>
+<input class="w-full pl-10 pr-4 py-2 text-sm bg-black/5 dark:bg-white/5 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-black dark:text-white placeholder-black/50 dark:placeholder-white/50" placeholder="Quick search..." type="search"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="relative">
+<button class="flex items-center gap-2" id="profile-menu-button">
+<img alt="User avatar" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/a/ACg8ocK_4V_5_Jd2-kM2g-gX6q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-l-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-g-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-g-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-l-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-l-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-g-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-t-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-p-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-e-t-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q--q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-q-..."/>
+</button>
+<div class="absolute right-0 mt-2 w-48 bg-background-light dark:bg-background-dark border border-black/10 dark:border-white/10 rounded-lg shadow-lg hidden" id="profile-menu">
+<a class="block px-4 py-2 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5" href="#">Profile</a>
+<a class="block px-4 py-2 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5" href="#">Settings</a>
+<hr class="border-black/10 dark:border-white/10"/>
+<a class="block px-4 py-2 text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5" href="#">Logout</a>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-6">
+<div class="space-y-6">
+<div class="relative rounded-xl overflow-hidden p-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+<div class="relative z-10">
+<h2 class="text-4xl font-bold">Hi Alex, let’s grow your dreams today!</h2>
+<p class="text-lg mt-2 text-white/80">Here's a snapshot of your journey.</p>
+</div>
+<div class="absolute inset-0 z-0 opacity-20">
+<svg height="100%" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 200" width="100%" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(300, 150) scale(1.5)">
+<path d="M -50 -80 L -40 -80 L -40 -60 L -20 -60 L -20 -40 L 0 -40 L 0 -20 L 20 -20 L 20 0" fill="none" stroke="white" stroke-width="2"></path>
+<circle cx="20" cy="0" fill="white" r="5"></circle>
+<path d="M -55 -75 L -65 -65 M -60 -70 L -60 -60" stroke="white" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M -35 -55 L -45 -45 M -40 -50 L -40 -40" stroke="white" stroke-linecap="round" stroke-width="1.5"></path>
+<path d="M -15 -35 L -25 -25 M -20 -30 L -20 -20" stroke="white" stroke-linecap="round" stroke-width="1.5"></path>
+</g>
+</svg>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 bg-white/5 p-6 rounded-xl border border-black/10 dark:border-white/10">
+<h3 class="text-xl font-bold mb-4">Knowledge Map Preview</h3>
+<div class="relative w-full h-96">
+<div class="absolute top-1/2 left-1/4 -translate-y-1/2 glow-on-hover">
+<div class="w-32 h-32 rounded-full border-4 border-blue-400 flex items-center justify-center text-center p-2 bg-background-dark">
+<div class="text-sm">
+<p class="font-bold">Become a<br/>Software Engineer</p>
+<p class="text-xs text-blue-300">75%</p>
+</div>
+</div>
+</div>
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 glow-on-hover">
+<div class="w-28 h-28 rounded-full border-4 border-purple-400 flex items-center justify-center text-center p-2 bg-background-dark">
+<div class="text-sm">
+<p class="font-bold">Master Data Structures</p>
+<p class="text-xs text-purple-300">60%</p>
+</div>
+</div>
+</div>
+<div class="absolute top-3/4 left-3/4 -translate-y-1/2 -translate-x-1/2 glow-on-hover">
+<div class="w-24 h-24 rounded-full border-4 border-green-400 flex items-center justify-center text-center p-2 bg-background-dark">
+<div class="text-sm">
+<p class="font-bold">Learn Algorithms</p>
+<p class="text-xs text-green-300">90%</p>
+</div>
+</div>
+</div>
+<svg class="absolute inset-0 w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M 25% 50% C 37.5% 37.5%, 37.5% 37.5%, 50% 25%" stroke="#4A5568" stroke-dasharray="4 4" stroke-width="2"></path>
+<path d="M 25% 50% C 50% 62.5%, 50% 62.5%, 75% 75%" stroke="#4A5568" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="bg-white/5 p-6 rounded-xl border border-black/10 dark:border-white/10">
+<h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-yellow-400">auto_awesome</span>
+                            AI Recommendations
+                        </h3>
+<div class="space-y-4">
+<div class="bg-black/10 dark:bg-white/10 p-4 rounded-lg">
+<p class="font-semibold">Master Data Structures →</p>
+<p class="text-sm text-white/70">Complete 5 LeetCode trees problems this week.</p>
+</div>
+<div class="bg-black/10 dark:bg-white/10 p-4 rounded-lg">
+<p class="font-semibold">Learn Algorithms →</p>
+<p class="text-sm text-white/70">Review Big O notation concepts.</p>
+</div>
+<div class="bg-black/10 dark:bg-white/10 p-4 rounded-lg">
+<p class="font-semibold">New Dream Idea?</p>
+<p class="text-sm text-white/70">Start a new dream about learning a new language.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white/5 p-6 rounded-xl border border-black/10 dark:border-white/10">
+<h3 class="text-xl font-bold mb-4">Progress Snapshot</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
+<div class="flex flex-col items-center">
+<div class="relative w-28 h-28">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+<path class="text-blue-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="60, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold">60%</span>
+</div>
+</div>
+<p class="mt-2 font-semibold">Dreams Achieved</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-28 h-28">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+<path class="text-green-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-dasharray="85, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold">85%</span>
+</div>
+</div>
+<p class="mt-2 font-semibold">Objectives Done</p>
+</div>
+<div class="flex flex-col items-center justify-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-4xl text-red-500">local_fire_department</span>
+<span class="text-4xl font-bold">42</span>
+</div>
+<p class="mt-2 font-semibold">Day Streak</p>
+</div>
+<div class="flex flex-col items-center justify-center">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-5xl text-yellow-500">military_tech</span>
+<span class="material-symbols-outlined text-5xl text-gray-400">workspace_premium</span>
+<span class="material-symbols-outlined text-5xl text-orange-400">verified</span>
+</div>
+<p class="mt-2 font-semibold">Motivational Badges</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+<script>
+      const profileMenuButton = document.getElementById('profile-menu-button');
+      const profileMenu = document.getElementById('profile-menu');
+      profileMenuButton.addEventListener('click', () => {
+        profileMenu.classList.toggle('hidden');
+      });
+      document.addEventListener('click', (event) => {
+        if (!profileMenuButton.contains(event.target) && !profileMenu.contains(event.target)) {
+          profileMenu.classList.add('hidden');
+        }
+      });
+    </script>
+
+</body></html>

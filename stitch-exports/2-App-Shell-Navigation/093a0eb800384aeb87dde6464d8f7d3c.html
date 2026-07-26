@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dream Weaver Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2632",
+                        "text-light": "#101922",
+                        "text-dark": "#f6f7f8",
+                        "muted-light": "#64748b",
+                        "muted-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .sidebar-item {
+            color: #64748b;
+        }
+        .dark .sidebar-item {
+            color: #94a3b8;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            color: #1173d4;
+            background-color: #1173d41a;
+        }
+        .dark .sidebar-item:hover, .dark .sidebar-item.active {
+            color: #f8fafc;
+            background-color: #1173d433;
+        }
+        .dark .sidebar-item.active {
+             color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex h-screen">
+<aside class="w-64 flex flex-col bg-card-light dark:bg-card-dark border-r border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-4 border-b border-slate-200 dark:border-slate-800 h-16">
+<svg class="text-primary" fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.5 3A14.5 14.5 0 0 0 0 17.5 14.5 14.5 0 0 0 14.5 3z"></path>
+<path d="M9 13h9"></path>
+<path d="M9 17h5"></path>
+</svg>
+<h1 class="text-lg font-bold text-slate-800 dark:text-white">Dream Weaver</h1>
+</div>
+<nav class="flex-1 space-y-1 p-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item active" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">nightlight</span>
+<span class="text-sm font-medium">Dreams</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">track_changes</span>
+<span class="text-sm font-medium">Objectives</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">flag</span>
+<span class="text-sm font-medium">Goals</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-sm font-medium">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="text-sm font-medium">AI Recommendations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="text-sm font-medium">Progress/Insights</span>
+</a>
+</nav>
+<div class="mt-auto p-2 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-sm font-medium">Knowledge Map Panel</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8 overflow-y-auto">
+<header class="flex justify-between items-center mb-8">
+<div>
+<h1 class="text-3xl font-bold">Dashboard</h1>
+<p class="text-muted-light dark:text-muted-dark">Welcome back, let's make some progress!</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-muted-light dark:text-muted-dark">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">
+                    JD
+                </div>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-center gap-6">
+<div class="p-3 bg-green-500/10 rounded-full">
+<span class="material-symbols-outlined text-green-500 text-3xl">favorite</span>
+</div>
+<div>
+<p class="text-sm text-muted-light dark:text-muted-dark">Health</p>
+<p class="text-2xl font-bold">92%</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-center gap-6">
+<div class="p-3 bg-blue-500/10 rounded-full">
+<span class="material-symbols-outlined text-blue-500 text-3xl">link</span>
+</div>
+<div>
+<p class="text-sm text-muted-light dark:text-muted-dark">Coherence</p>
+<p class="text-2xl font-bold">85%</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-center gap-6">
+<div class="p-3 bg-purple-500/10 rounded-full">
+<span class="material-symbols-outlined text-purple-500 text-3xl">trending_up</span>
+</div>
+<div>
+<p class="text-sm text-muted-light dark:text-muted-dark">Progress</p>
+<p class="text-2xl font-bold">76%</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<div class="xl:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl">
+<h2 class="text-xl font-semibold mb-4">Recent Events</h2>
+<div class="space-y-4">
+<div class="flex items-start gap-4">
+<div class="bg-primary/10 text-primary p-2 rounded-full mt-1">
+<span class="material-symbols-outlined text-lg">task_alt</span>
+</div>
+<div>
+<p class="font-medium">Task 'Launch new marketing campaign' completed.</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Today, 10:30 AM</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-yellow-500/10 text-yellow-500 p-2 rounded-full mt-1">
+<span class="material-symbols-outlined text-lg">flag</span>
+</div>
+<div>
+<p class="font-medium">New Goal added: 'Increase user engagement by 15%'.</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">Yesterday, 4:15 PM</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-rose-500/10 text-rose-500 p-2 rounded-full mt-1">
+<span class="material-symbols-outlined text-lg">nightlight</span>
+</div>
+<div>
+<p class="font-medium">New Dream logged: 'Travel to Japan'.</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">2 days ago, 11:00 PM</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-green-500/10 text-green-500 p-2 rounded-full mt-1">
+<span class="material-symbols-outlined text-lg">track_changes</span>
+</div>
+<div>
+<p class="font-medium">Objective 'Master Frontend Development' progress updated to 60%.</p>
+<p class="text-sm text-muted-light dark:text-muted-dark">3 days ago, 9:00 AM</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-8">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl">
+<h2 class="text-xl font-semibold mb-4">Current Wave</h2>
+<div class="flex items-center justify-between">
+<p class="font-medium">Wave 3: Growth &amp; Expansion</p>
+<span class="text-sm font-semibold text-primary">75%</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 mt-2">
+<div class="bg-primary h-2.5 rounded-full" style="width: 75%"></div>
+</div>
+<p class="text-sm text-muted-light dark:text-muted-dark mt-2">Ends in 2 weeks</p>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl">
+<h2 class="text-xl font-semibold mb-4">45-Day Cycle</h2>
+<div class="flex items-center justify-between">
+<p class="font-medium">Cycle 1: Q3 Focus</p>
+<span class="text-sm font-semibold text-primary">32/45 days</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 mt-2">
+<div class="bg-primary h-2.5 rounded-full" style="width: 71.1%"></div>
+</div>
+<p class="text-sm text-muted-light dark:text-muted-dark mt-2">13 days remaining</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

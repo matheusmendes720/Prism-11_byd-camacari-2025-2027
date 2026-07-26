@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dream Weaver - Export Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+<div class="flex h-screen flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200/80 dark:border-slate-800/80 px-10 py-3">
+<div class="flex items-center gap-4">
+<div class="h-8 w-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Dream Weaver</h2>
+</div>
+<nav class="flex items-center gap-8">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Journal</a>
+<a class="text-sm font-medium text-primary dark:text-primary" href="#">Export</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-2xl"> notifications </span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCoa0Feo6Ekj9dSbNeO2nW8eXkxojbjLSKUlouOacvtVQxwwczTqofN61Yhc2hDd0hOP-zPWCMzbAz4h-Tr-i3iSH3HhuUjK03nm7DKf2VcP4DgDfntdAUNFsbfrZWDXFpb07q2jqTlyZ-ynZDnXIm-wb51s18k8TQiD0AAqYSy-tWMAluPRNTQzsk2Td0XrSeRntv9CVWAEFe7wg2_GR-S984f3DIP-tF1zfGK1rXFHv-_78L6wFOatTsu23kOtUP7x0-XUR-JGCSQ");'></div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto">
+<div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+<div class="space-y-12">
+<div class="space-y-2">
+<h1 class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">Export Mode</h1>
+<p class="text-slate-600 dark:text-slate-400">Select the data you want to export. You can choose specific batches or time ranges.</p>
+</div>
+<div class="space-y-8 rounded-lg border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/50 p-8 shadow-sm">
+<section>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Select Data</h3>
+<div class="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-3">
+<div class="sm:col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="batch">Batch</label>
+<select class="form-select mt-1 block w-full rounded-lg border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-primary focus:ring-primary" id="batch">
+<option>All Data</option>
+<option>Dreams Only</option>
+<option>Goals &amp; Objectives</option>
+</select>
+</div>
+<div class="sm:col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="start-date">Start Date</label>
+<input class="form-input mt-1 block w-full rounded-lg border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-primary focus:ring-primary" id="start-date" type="date"/>
+</div>
+<div class="sm:col-span-1">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="end-date">End Date</label>
+<input class="form-input mt-1 block w-full rounded-lg border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:border-primary focus:ring-primary" id="end-date" type="date"/>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Preview</h3>
+<div class="mt-4">
+<div class="border-b border-slate-200 dark:border-slate-700">
+<nav aria-label="Tabs" class="-mb-px flex space-x-8">
+<a class="whitespace-nowrap border-b-2 border-primary px-1 py-4 text-sm font-medium text-primary" href="#">JSON</a>
+<a class="whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:text-slate-400 dark:hover:border-slate-600 dark:hover:text-slate-300" href="#">Markdown</a>
+</nav>
+</div>
+<div class="mt-4">
+<pre class="w-full overflow-x-auto rounded-lg bg-slate-100 dark:bg-slate-800/50 p-4 text-sm text-slate-600 dark:text-slate-300"><code>{
+  "dreams": [
+    {
+      "date": "2023-01-15",
+      "title": "Flying Over Mountains",
+      "description": "I was soaring above snow-capped peaks, feeling free and exhilarated.",
+      "emotions": ["joy", "freedom"]
+    },
+    {
+      "date": "2023-02-20",
+      "title": "Lost in a Forest",
+      "description": "I wandered through a dense forest, feeling lost and anxious.",
+      "emotions": ["anxiety", "confusion"]
+    }
+  ],
+  "objectives": [
+    {
+      "title": "Learn a New Language",
+      "status": "in_progress",
+      "tasks": [
+        "Complete beginner course",
+        "Practice speaking with native speakers"
+      ]
+    }
+  ],
+  "goals": [
+    {
+      "title": "Run a Marathon",
+      "deadline": "2024-06-01",
+      "progress": 0.5
+    }
+  ],
+  "tasks": [
+    {
+      "description": "Read a chapter of 'The Dreamer's Guide'",
+      "completed": true
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+</section>
+</div>
+<div class="flex justify-end gap-4">
+<button class="rounded-lg bg-slate-200 px-6 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 transition-colors">
+                Cancel
+              </button>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-bold text-white hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-xl"> download </span>
+                Download
+              </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

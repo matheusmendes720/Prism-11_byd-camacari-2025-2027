@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Journal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        :root {
+          --background-light: #f8fafc;
+          --background-dark: #0f172a;
+          --primary: #3b82f6;
+          --card-light: #ffffff;
+          --card-dark: #1e293b;
+          --text-light: #0f172a;
+          --text-dark: #f8fafc;
+          --text-muted-light: #64748b;
+          --text-muted-dark: #94a3b8;
+          --border-light: #e2e8f0;
+          --border-dark: #334155;
+        }
+        .dark {
+          --background-light: var(--background-dark);
+          --background-dark: var(--background-light);
+          --card-light: var(--card-dark);
+          --card-dark: var(--card-light);
+          --text-light: var(--text-dark);
+          --text-dark: var(--text-light);
+          --text-muted-light: var(--text-muted-dark);
+          --text-muted-dark: var(--text-muted-light);
+          --border-light: var(--border-dark);
+          --border-dark: var(--border-light);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+          font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-light antialiased">
+<div class="flex h-screen">
+<aside class="w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark flex flex-col">
+<div class="p-6">
+<h1 class="text-2xl font-bold text-primary">DreamTrack</h1>
+</div>
+<nav class="flex-1 px-4 py-2 space-y-2">
+<a class="flex items-center px-4 py-2 text-text-light dark:text-text-dark bg-blue-500/10 dark:bg-primary/20 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">edit_note</span>
+<span>Daily Entry</span>
+</a>
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">flag</span>
+<span>Goals</span>
+</a>
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">rocket_launch</span>
+<span>Objectives</span>
+</a>
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">checklist</span>
+<span>Tasks</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8 overflow-y-auto">
+<div class="max-w-4xl mx-auto">
+<header class="mb-8">
+<h2 class="text-3xl font-bold text-text-light dark:text-text-dark">What's on your mind?</h2>
+<p class="text-text-muted-light dark:text-text-muted-dark mt-1">Capture your thoughts, dreams, and reflections for the day.</p>
+</header>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+<textarea class="w-full h-40 p-4 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 text-base placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="Today, I dreamt about..."></textarea>
+<div class="mt-4 p-4 bg-blue-50 dark:bg-primary/10 rounded-lg border border-blue-200 dark:border-primary/20">
+<h3 class="text-lg font-semibold text-blue-800 dark:text-primary mb-2 flex items-center">
+<span class="material-symbols-outlined mr-2 text-xl">auto_awesome</span>
+                            AI Insights
+                        </h3>
+<div class="space-y-3 text-sm text-blue-700 dark:text-blue-200">
+<div class="flex items-start">
+<span class="material-symbols-outlined text-base mr-2 mt-0.5">psychology</span>
+<div><strong>Sentiment:</strong> <span class="bg-green-200 text-green-800 px-2 py-0.5 rounded-full text-xs font-medium">Positive</span></div>
+</div>
+<div class="flex items-start">
+<span class="material-symbols-outlined text-base mr-2 mt-0.5">label</span>
+<div><strong>Tags:</strong> <span class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-0.5 rounded-full text-xs font-medium">#project_launch</span> <span class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-0.5 rounded-full text-xs font-medium">#team_collaboration</span> <span class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-0.5 rounded-full text-xs font-medium">#career_growth</span></div>
+</div>
+<div class="flex items-start">
+<span class="material-symbols-outlined text-base mr-2 mt-0.5">summarize</span>
+<p><strong>Summary:</strong> You expressed excitement about a new project launch and confidence in your team's ability to succeed, seeing it as a major step in your career.</p>
+</div>
+</div>
+</div>
+<div class="flex justify-end mt-4">
+<button class="bg-primary text-white font-semibold py-2 px-6 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark transition-colors flex items-center">
+<span class="material-symbols-outlined mr-2">save</span>
+                            Save Entry
+                        </button>
+</div>
+</div>
+<div class="mt-12">
+<h3 class="text-2xl font-bold text-text-light dark:text-text-dark mb-6">Past Entries</h3>
+<div class="space-y-6">
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-border-light dark:border-border-dark hover:shadow-md transition-shadow duration-200">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark text-lg">A Productive Day</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">October 26, 2023</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Positive</span>
+<button class="p-2 text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">more_horiz</span>
+</button>
+</div>
+</div>
+<p class="mt-3 text-text-muted-light dark:text-text-muted-dark line-clamp-2">
+                                Managed to finish the presentation slides for the quarterly review. Felt a huge sense of relief. Also, had a great brainstorming session with the team for the upcoming project. The energy was fantastic, and I'm really optimistic about the direction we're heading.
+                            </p>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-border-light dark:border-border-dark hover:shadow-md transition-shadow duration-200">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark text-lg">Feeling a bit stuck</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">October 25, 2023</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Neutral</span>
+<button class="p-2 text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">more_horiz</span>
+</button>
+</div>
+</div>
+<p class="mt-3 text-text-muted-light dark:text-text-muted-dark line-clamp-2">
+                                I've been staring at this bug for hours and can't seem to figure it out. It's frustrating because I know the solution is probably simple. Need to take a break and come back with fresh eyes. Maybe a walk will help clear my head.
+                            </p>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-border-light dark:border-border-dark hover:shadow-md transition-shadow duration-200">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-semibold text-text-light dark:text-text-dark text-lg">A Dream of Flying</p>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">October 24, 2023</p>
+</div>
+<div class="flex items-center gap-1">
+<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Dream</span>
+<button class="p-2 text-text-muted-light dark:text-text-muted-dark hover:text-text-light dark:hover:text-text-dark rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">more_horiz</span>
+</button>
+</div>
+</div>
+<p class="mt-3 text-text-muted-light dark:text-text-muted-dark line-clamp-2">
+                                Last night, I dreamt I could fly over my city. The lights were like a million tiny stars below me. It felt so liberating and peaceful. Woke up feeling inspired and reminded me of my goal to get a pilot's license someday.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple dark mode toggle for demonstration
+        const html = document.querySelector('html');
+        // A button would normally handle this. For now, we can toggle it via console.
+        // e.g., html.classList.toggle('dark');
+    </script>
+
+</body></html>

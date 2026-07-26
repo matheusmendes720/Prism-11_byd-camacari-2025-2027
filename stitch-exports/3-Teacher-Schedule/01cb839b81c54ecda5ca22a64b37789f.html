@@ -1,0 +1,187 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: Lexend, "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f3f4f1] px-10 py-3">
+          <div class="flex items-center gap-4 text-[#151612]">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path></svg>
+            </div>
+            <h2 class="text-[#151612] text-lg font-bold leading-tight tracking-[-0.015em]">FitPlan Pro</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-[#151612] text-sm font-medium leading-normal" href="#">Dashboard</a>
+              <a class="text-[#151612] text-sm font-medium leading-normal" href="#">Schedule</a>
+              <a class="text-[#151612] text-sm font-medium leading-normal" href="#">Classes</a>
+              <a class="text-[#151612] text-sm font-medium leading-normal" href="#">Reports</a>
+            </div>
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-[#f3f4f1] text-[#151612] gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5"
+            >
+              <div class="text-[#151612]" data-icon="Bell" data-size="20px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"
+                  ></path>
+                </svg>
+              </div>
+            </button>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnieSk3TRahisax5BruSATldmuEQv9whNSP9MJqfFPElxbW9l8GLnp33ACHtUivDHSh1OAZZuehsdl54YFUoJ0mvDo6dRrmw5B4Wi1r924AUHz6LhZIiXwGbGH05TpWH7nPeJb3PBfblVWkYsQ2NBt5Bs80s_EBGvntiJSanp5pOsWyMj11qL44kX8gJJAys9qILBA4mxJlSxPJvH9MSW5R-S_YTnif9mYEiywntt1NGc9OsfEZFRrP56_CppE3Ec8LOepBu3qt6A");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-[#151612] tracking-light text-[32px] font-bold leading-tight min-w-72">Report Overview</p></div>
+            <h2 class="text-[#151612] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Coach Information</h2>
+            <div class="p-4 grid grid-cols-[20%_1fr] gap-x-6">
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e1e3dd] py-5">
+                <p class="text-[#79816a] text-sm font-normal leading-normal">Name</p>
+                <p class="text-[#151612] text-sm font-normal leading-normal">Coach Evelyn Reed</p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e1e3dd] py-5">
+                <p class="text-[#79816a] text-sm font-normal leading-normal">Specialty</p>
+                <p class="text-[#151612] text-sm font-normal leading-normal">Strength Training</p>
+              </div>
+              <div class="col-span-2 grid grid-cols-subgrid border-t border-t-[#e1e3dd] py-5">
+                <p class="text-[#79816a] text-sm font-normal leading-normal">Years of Experience</p>
+                <p class="text-[#151612] text-sm font-normal leading-normal">6</p>
+              </div>
+            </div>
+            <h2 class="text-[#151612] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Schedule Overview</h2>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-xl border border-[#e1e3dd] bg-white">
+                <table class="flex-1">
+                  <thead>
+                    <tr class="bg-white">
+                      <th class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120 px-4 py-3 text-left text-[#151612] w-[400px] text-sm font-medium leading-normal">Day</th>
+                      <th class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240 px-4 py-3 text-left text-[#151612] w-[400px] text-sm font-medium leading-normal">Time</th>
+                      <th class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360 px-4 py-3 text-left text-[#151612] w-[400px] text-sm font-medium leading-normal">Class</th>
+                      <th class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480 px-4 py-3 text-left text-[#151612] w-[400px] text-sm font-medium leading-normal">Studio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-t border-t-[#e1e3dd]">
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Monday</td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        8:00 AM - 9:00 AM
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        Strength Training
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Studio A</td>
+                    </tr>
+                    <tr class="border-t border-t-[#e1e3dd]">
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Tuesday</td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        9:30 AM - 10:30 AM
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        Cardio Blast
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Studio B</td>
+                    </tr>
+                    <tr class="border-t border-t-[#e1e3dd]">
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        Wednesday
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        5:00 PM - 6:00 PM
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        Yoga Flow
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Studio C</td>
+                    </tr>
+                    <tr class="border-t border-t-[#e1e3dd]">
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Thursday</td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        8:00 AM - 9:00 AM
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        Strength Training
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Studio A</td>
+                    </tr>
+                    <tr class="border-t border-t-[#e1e3dd]">
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Friday</td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        9:30 AM - 10:30 AM
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">
+                        Cardio Blast
+                      </td>
+                      <td class="table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480 h-[72px] px-4 py-2 w-[400px] text-[#79816a] text-sm font-normal leading-normal">Studio B</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <style>
+                          @container(max-width:120px){.table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-120{display: none;}}
+                @container(max-width:240px){.table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-240{display: none;}}
+                @container(max-width:360px){.table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-360{display: none;}}
+                @container(max-width:480px){.table-03df9eca-2fc4-42a6-967c-5dd2e33b3088-column-480{display: none;}}
+              </style>
+            </div>
+            <h2 class="text-[#151612] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Workload Summary</h2>
+            <div class="flex flex-wrap gap-4 px-4 py-6">
+              <div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-[#e1e3dd] p-6">
+                <p class="text-[#151612] text-base font-medium leading-normal">Weekly Coaching Hours</p>
+                <p class="text-[#151612] tracking-light text-[32px] font-bold leading-tight truncate">12 hours</p>
+                <div class="flex gap-1">
+                  <p class="text-[#79816a] text-base font-normal leading-normal">This Week</p>
+                  <p class="text-[#07881a] text-base font-medium leading-normal">+5%</p>
+                </div>
+                <div class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3">
+                  <div class="border-[#79816a] bg-[#f3f4f1] border-t-2 w-full" style="height: 40%;"></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Mon</p>
+                  <div class="border-[#79816a] bg-[#f3f4f1] border-t-2 w-full" style="height: 40%;"></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Tue</p>
+                  <div class="border-[#79816a] bg-[#f3f4f1] border-t-2 w-full" style="height: 80%;"></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Wed</p>
+                  <div class="border-[#79816a] bg-[#f3f4f1] border-t-2 w-full" style="height: 20%;"></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Thu</p>
+                  <div class="border-[#79816a] bg-[#f3f4f1] border-t-2 w-full" style="height: 20%;"></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Fri</p>
+                </div>
+              </div>
+              <div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-[#e1e3dd] p-6">
+                <p class="text-[#151612] text-base font-medium leading-normal">Client Distribution by Plan</p>
+                <p class="text-[#151612] tracking-light text-[32px] font-bold leading-tight truncate">Average: 15 clients</p>
+                <div class="flex gap-1">
+                  <p class="text-[#79816a] text-base font-normal leading-normal">This Quarter</p>
+                  <p class="text-[#e71b08] text-base font-medium leading-normal">-10%</p>
+                </div>
+                <div class="grid min-h-[180px] gap-x-4 gap-y-6 grid-cols-[auto_1fr] items-center py-3">
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Basic</p>
+                  <div class="h-full flex-1"><div class="border-[#79816a] bg-[#f3f4f1] border-r-2 h-full" style="width: 60%;"></div></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Intermediate</p>
+                  <div class="h-full flex-1"><div class="border-[#79816a] bg-[#f3f4f1] border-r-2 h-full" style="width: 60%;"></div></div>
+                  <p class="text-[#79816a] text-[13px] font-bold leading-normal tracking-[0.015em]">Advanced</p>
+                  <div class="h-full flex-1"><div class="border-[#79816a] bg-[#f3f4f1] border-r-2 h-full" style="width: 30%;"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -79,7 +79,8 @@ button { cursor: pointer; }
 .legend-row .swatch.circle { border-radius: 50%; }
 
 /* MAIN CANVAS */
-.canvas-area { grid-column: 2; grid-row: 2; position: relative; overflow: hidden; background: var(--bg); background-image: radial-gradient(circle at 1px 1px, rgba(38,42,51,0.7) 1px, transparent 0); background-size: 32px 32px; }
+.canvas-area { grid-column: 2; grid-row: 2; position: relative; overflow: hidden; background: var(--bg); background-image: radial-gradient(circle at 1px 1px, rgba(38,42,51,0.7) 1px, transparent 0); background-size: 32px 32px; min-width: 0; min-height: 0; width: 100%; height: 100%; }
+#main-svg { min-width: 200px; min-height: 200px; }
 #main-svg { width: 100%; height: 100%; display: block; cursor: grab; }
 #main-svg:active { cursor: grabbing; }
 #main-svg text { user-select: none; }
@@ -352,7 +353,7 @@ button { cursor: pointer; }
 
 <!-- MAIN CANVAS -->
 <div class="canvas-area">
-  <svg id="main-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  <svg id="main-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></svg>
 
   <div id="graph-legend">
     <div class="g"><div class="dot" style="background:var(--good)"></div>Verde: ≥ 70</div>
@@ -400,7 +401,9 @@ button { cursor: pointer; }
 <div id="tooltip">
   <div class="tip-tag" id="tip-tag"></div>
   <div class="tip-title" id="tip-title"></div>
-  <div class="tip-sub" id="tip-sub"></div>
+  <div class="tip-sub" id="tip-sub">
+      <span style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--ink-4)">build 0ea5a27 · 2026-07-26 · 146892 bytes</span>
+    </div>
 </div>
 
 <script>
@@ -893,6 +896,10 @@ let zoomScale = 1;
 let zoomTx = 0, zoomTy = 0;
 let selectedNodeId = null;
 let nodesRendered = [];
+let tourActive = false;
+let currentTourId = null;
+let tourIdx = 0;
+let tourSteps = [];
 
 const svg = document.getElementById('main-svg');
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -908,7 +915,62 @@ function el(tag, attrs, text) {
 }
 function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 
-function statusColor(s) { return s===STATUS.GREEN?COLORS.green : s===STATUS.AMBER?COLORS.amber : COLORS.red; }
+// ================================================================
+//  TOURS — guided narratives (v2.1 refactor: previously missing)
+// ================================================================
+const tours = [
+  {
+    id: 'overview-30s',
+    name: 'Overview executivo',
+    duration: '30 s',
+    description: 'Mostra o composite no centro e os 11 riscos orbitando, com gates de decisao.',
+    steps: [
+      { title: 'Composite score', desc: 'D3 Composite 78/100 — vulnerabilidade media-alta do plano BYD 2025-2027.', narration: 'O score agregado e 78 em 100, no limite entre amarelo e vermelho. Tres dimensoes estao em vermelho.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' },
+      { title: '3 RED flags', desc: 'S7 ESG/Reputacao, S10 Tarifario, S11 Competitivo — onde o plano precisa de mitigacao ativa.', narration: 'Tres areas em vermelho: risco ESG, exposicao tarifaria, e pressao competitiva.', action_set: { view: 'red-flags', layer: 'framework' }, nodeId: 'S7' },
+      { title: 'Gates de decisao', desc: '4 gates em sequencia: G0 baseline -> G1 protecao cambial -> G2 supply -> G3 contingencia.', action_set: { view: 'gates', layer: 'framework' }, nodeId: 'G1' },
+      { title: '5 personas', desc: 'CFO, CEO, CSO, COO, CRO — cada uma olha o mesmo grafo com lente diferente.', action_set: { view: 'personas', layer: 'framework' }, nodeId: 'P1' },
+      { title: 'Proximo passo', desc: 'Clique em qualquer no para ver analise detalhada da dimensao.', action: 'Volte para Overview / Framework ou selecione uma view especializada.' }
+    ]
+  },
+  {
+    id: 'risk-deep-dive',
+    name: 'Risk deep-dive',
+    duration: '45 s',
+    description: 'Foca nos 3 RED flags e nos cenarios que os tornam criticos.',
+    steps: [
+      { title: 'Visao geral de risco', desc: '5 cenarios politicos x 3 RED flags = 15 estados possiveis.', action_set: { view: 'scenario', layer: 'framework' }, nodeId: 'SC_RB' },
+      { title: 'Cascade: como RED vira desastre', desc: 'Cadeia S7 -> S10 -> S11 mostra caminho de propagacao.', action_set: { view: 'cascade', layer: 'framework' }, nodeId: 'S7' },
+      { title: 'Linha do tempo', desc: 'Quando cada gate dispara e qual acao corretiva e obrigatoria.', action_set: { view: 'timeline', layer: 'framework' }, nodeId: 'G2' },
+      { title: 'Fluxo de decisao', desc: 'Do trigger a acao: qual policy reage a qual sinal.', action_set: { view: 'flow', layer: 'framework' }, nodeId: 'C_IN' }
+    ]
+  },
+  {
+    id: 'cfo-1min',
+    name: 'CFO em 1 min',
+    duration: '60 s',
+    description: 'Foco em VaR, hedge, NPV — o que o CFO precisa ver primeiro.',
+    steps: [
+      { title: 'Composite e VaR', desc: '78/100, VaR 6m R$ 4,0 bi — exposicao total do plano.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' },
+      { title: 'Hedge cambial', desc: 'h* otimo varia 30%->91% conforme cenario BNDES.', action_set: { view: 'overview', layer: 'signal' }, nodeId: 'S1' },
+      { title: 'Supply chain', desc: 'Litio em 95th percentile. VaR supply R$ 2,27-4,0 bi.', action_set: { view: 'overview', layer: 'data' }, nodeId: 'S2' },
+      { title: 'Decisoes para CFO', desc: '12 decision trees mapeiam: trigger -> policy -> acao -> KPI -> owner.', action_set: { view: 'gates', layer: 'framework' }, nodeId: 'G1' }
+    ]
+  }
+];
+
+function getTourSteps() {
+  const t = tours.find(t => t.id === currentTourId);
+  return t ? t.steps : [];
+}
+
+function statusColor(s) { return s===STATUS.GREEN?COLORS.green : s===STATUS.AMBER?COLORS.amber : COLORS.red;}function hexToRgba(hex, alpha) {
+  if (!hex || hex[0] !== '#') return 'rgba(255,255,255,' + (alpha||1) + ')';
+  var r = parseInt(hex.slice(1,3), 16);
+  var g = parseInt(hex.slice(3,5), 16);
+  var b = parseInt(hex.slice(5,7), 16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha||1) + ')';
+}
+
 function statusClass(s) { return s===STATUS.GREEN?'green' : s===STATUS.AMBER?'amber' : 'red'; }
 
 // ================================================================
@@ -993,7 +1055,9 @@ function build() {
         'data-from': l.from, 'data-to': l.to,
         'data-edgetype': l.edgeType,
         class: 'edge-label',
-        opacity: l.edgeType==='primary' || l.edgeType==='critical' ? '0.85' : '0.45'
+        // v2.1.2: hide edge labels by default, show on hover
+        opacity: '0',
+        'pointer-events': 'none'
       });
       text.textContent = l.label;
       edgesG.appendChild(text);
@@ -1013,40 +1077,62 @@ function build() {
     let fillColor, strokeColor, r = n.r, labelColor = '#e6e8ec', labelFont = 'Inter, sans-serif';
 
     if (n.ntype === 'composite') {
-      fillColor = 'rgba(224,164,94,0.15)';
+      fillColor = 'rgba(224,164,94,0.18)';
       strokeColor = COLORS.accent;
-      r = 50;
+      r = 62;
       labelColor = COLORS.accent;
       labelFont = 'Source Serif Pro, Georgia, serif';
     } else if (n.ntype === 'gate') {
       fillColor = 'rgba(74,222,128,0.15)';
       strokeColor = COLORS.green;
-      r = 22;
+      r = 28;
       labelColor = COLORS.green;
     } else if (n.ntype === 'persona') {
       fillColor = 'rgba(180,139,255,0.15)';
       strokeColor = COLORS.purple;
-      r = 18;
+      r = 24;
       labelColor = COLORS.purple;
     } else if (n.ntype === 'data') {
       fillColor = 'rgba(95,209,232,0.20)';
       strokeColor = COLORS.cyan;
-      r = 22;
+      r = 28;
       labelColor = COLORS.cyan;
     } else if (n.ntype === 'decision') {
       fillColor = 'rgba(107,149,240,0.20)';
       strokeColor = COLORS.primary;
-      r = 24;
+      r = 30;
       labelColor = COLORS.primary;
     } else if (n.ntype === 'action') {
       fillColor = 'rgba(180,139,255,0.15)';
       strokeColor = COLORS.purple;
+      r = 26;
+      labelColor = COLORS.purple;
+    } else if (n.ntype === 'trigger') {
+      fillColor = 'rgba(180,139,255,0.20)';
+      strokeColor = COLORS.purple;
       r = 22;
       labelColor = COLORS.purple;
+    } else if (n.ntype === 'learning') {
+      fillColor = 'rgba(95,209,232,0.20)';
+      strokeColor = COLORS.cyan;
+      r = n.r;
+      labelColor = COLORS.cyan;
+    } else if (n.ntype === 'milestone') {
+      fillColor = 'rgba(224,164,94,0.20)';
+      strokeColor = COLORS.accent;
+      r = n.r;
+      labelColor = COLORS.accent;
+    } else if (n.ntype === 'scenario') {
+      // Fix #2: scenario color by status
+      var sc = statusColor(n.status);
+      fillColor = hexToRgba(sc, 0.18);
+      strokeColor = sc;
+      r = n.r;
+      labelColor = sc;
     } else { // dim
       fillColor = 'rgba(74,222,128,0.18)';
       strokeColor = statusColor(n.status);
-      r = n.r;
+      r = (n.r && n.r > 0) ? Math.max(n.r, 34) : 34;
       labelColor = n.status===STATUS.RED ? COLORS.red : '#e6e8ec';
     }
 
@@ -1064,15 +1150,18 @@ function build() {
       g.appendChild(inner);
     }
 
-    // Label (single line)
+    // Label (single line) — for dim nodes, shift up so it doesn't collide with inner status dot
     const labelLines = String(n.label).split('\n');
     const labelSize = n.ntype==='composite' ? 11 : (n.ntype==='dim' || n.ntype==='data' ? 10.5 : 9.5);
     const labelWeight = n.ntype==='composite' ? '700' : '600';
+    // For dim nodes, push label up by r/3 so the inner status dot (rendered earlier at center) is below the label
+    const labelYOffset = n.ntype === 'dim' ? -(r * 0.35) : 0;
     if (labelLines.length === 1) {
       const t = el('text', {
         'text-anchor':'middle', 'dominant-baseline':'central',
         'font-family': labelFont, 'font-size': labelSize,
-        'font-weight': labelWeight, fill: labelColor
+        'font-weight': labelWeight, fill: labelColor,
+        y: labelYOffset
       });
       t.textContent = n.label;
       g.appendChild(t);
@@ -1082,7 +1171,7 @@ function build() {
           'text-anchor':'middle', 'dominant-baseline':'central',
           'font-family': labelFont, 'font-size': labelSize,
           'font-weight': labelWeight, fill: labelColor,
-          y: (i - (labelLines.length-1)/2) * 12
+          y: (i - (labelLines.length-1)/2) * 12 + labelYOffset
         });
         t.textContent = line;
         g.appendChild(t);
@@ -1149,8 +1238,9 @@ function viewLabel(v) {
 function computePositions(nodes, links) {
   const w = W(), h = H();
   const cx = w / 2, cy = h / 2;
-  let R = Math.min(w, h) * 0.32;
-  if (!isFinite(R) || R < 50) R = 250; // safe fallback
+  // Use up to 40% of the smaller dimension, with bigger fallback
+  let R = Math.min(w, h) * 0.40;
+  if (!isFinite(R) || R < 50) R = 360; // bigger fallback so 11 dims spread out
   if (!isFinite(cx)) cx = 600;
   if (!isFinite(cy)) cy = 400;
 
@@ -1160,10 +1250,14 @@ function computePositions(nodes, links) {
 
   // Group other nodes by type
   const dims = nodes.filter(n => n.ntype === 'dim');
-  const others = nodes.filter(n => n.ntype !== 'composite' && n.ntype !== 'dim' && n.ntype !== 'gate' && n.ntype !== 'persona' && n.ntype !== 'risk');
+  const others = nodes.filter(n => n.ntype !== 'composite' && n.ntype !== 'dim' && n.ntype !== 'gate' && n.ntype !== 'persona' && n.ntype !== 'risk' && n.ntype !== 'trigger' && n.ntype !== 'learning' && n.ntype !== 'milestone' && n.ntype !== 'scenario');
   const gates = nodes.filter(n => n.ntype === 'gate');
   const persons = nodes.filter(n => n.ntype === 'persona');
   const risks = nodes.filter(n => n.ntype === 'risk');
+  const triggers = nodes.filter(n => n.ntype === 'trigger');
+  const learnings = nodes.filter(n => n.ntype === 'learning');
+  const milestones = nodes.filter(n => n.ntype === 'milestone');
+  const scenarios = nodes.filter(n => n.ntype === 'scenario');
 
   // Place dim nodes in inner circle
   if (dims.length) {
@@ -1211,6 +1305,41 @@ function computePositions(nodes, links) {
     });
   }
 
+  // Triggers (signal layer) — top-right cluster
+  if (triggers.length) {
+    triggers.forEach((n, i) => {
+      n.x = w - 120;
+      n.y = 80 + i * 50;
+    });
+  }
+
+  // Learnings (governance / learning layer) — right rail
+  if (learnings.length) {
+    learnings.forEach((n, i) => {
+      const mid = (learnings.length - 1) / 2;
+      n.x = Math.max(w - 80, 100);
+      n.y = cy + (i - mid) * 60 + 200;
+    });
+  }
+
+  // Milestones (timeline / flow) — bottom rail
+  if (milestones.length) {
+    milestones.forEach((n, i) => {
+      const mid = (milestones.length - 1) / 2;
+      n.x = cx + (i - mid) * 80;
+      n.y = h - 80;
+    });
+  }
+
+  // Scenarios — center column
+  if (scenarios.length) {
+    scenarios.forEach((n, i) => {
+      const mid = (scenarios.length - 1) / 2;
+      n.x = cx;
+      n.y = 100 + i * 90;
+    });
+  }
+
   // Recompute link endpoints based on actual node positions
   links.forEach(l => {
     const n1 = nodes.find(n => n.id === l.from);
@@ -1221,12 +1350,13 @@ function computePositions(nodes, links) {
 }
 
 function W() {
-  const w = svg.clientWidth || (window.innerWidth - 620);
-  return w > 0 ? w : 1200; // safe default if layout not ready
+  // Try real width first, then window-based fallback, then safe default.
+  const w = (svg && svg.clientWidth) || (window.innerWidth - 620) || 1200;
+  return w > 0 ? w : 1200;
 }
 function H() {
-  const h = svg.clientHeight || (window.innerHeight - 96);
-  return h > 0 ? h : 800; // safe default
+  const h = (svg && svg.clientHeight) || (window.innerHeight - 96) || 800;
+  return h > 0 ? h : 800;
 }
 
 // ================================================================
@@ -1260,7 +1390,7 @@ function getElementsForView(view, layer) {
       nodes.push({
         id: k, ntype: 'dim', label: d.short || k, name: d.name || k,
         status: d.status || 'green', score: d.score || 70,
-        weight: d.weight || 0.1, desc: d.desc || '', r: 30
+        weight: d.weight || 0.1, desc: d.desc || '', r: 36
       });
     });
   }
@@ -1293,10 +1423,17 @@ function getElementsForView(view, layer) {
     safePush({id:'R_LITIO', ntype:'risk', label:'R-Li', r:20, status:'amber', name:'Lítio rebound', data:{summary:'US$ 9k→22k. Déficit 2026: 1,5-80kt LCE.'}});
   } else if (view === 'red-flags') {
     // 3 RED dims highlighted (others filtered)
-    var keepIds = ['S2','S7','S10','S11'];
+    var keepIds = ['S7','S10','S11'];
+    var keep = new Set(keepIds);
     for (var i = nodes.length - 1; i >= 0; i--) {
-      if (nodes[i].ntype === 'dim' && keepIds.indexOf(nodes[i].id) === -1) {
+      if (nodes[i].ntype === 'dim' && !keep.has(nodes[i].id)) {
         nodes.splice(i, 1);
+      }
+    }
+    // Fix #1: drop edges whose endpoints were removed
+    for (var j = links.length - 1; j >= 0; j--) {
+      if (!keep.has(links[j].from) || !keep.has(links[j].to)) {
+        links.splice(j, 1);
       }
     }
   } else if (view === 'gates') {
@@ -1330,12 +1467,12 @@ function getElementsForView(view, layer) {
       {id:'M12', label:'Jun/27', name:'G3 Ongoing'}
     ];
     milestones.forEach(function(m) {
-      safePush({id:m.id, ntype:'gate', label:m.label, r:14, name:m.name, data:{summary:m.name}});
+      safePush({id:m.id, ntype:'milestone', label:m.label, r:14, name:m.name, data:{summary:m.name}});
     });
   } else if (view === 'scenario') {
-    safePush({id:'SC_EXP', ntype:'gate', label:'EXP', r:30, status:'green', name:'Expansão 60%', data:{summary:'IPCA 4%, Selic 10%. Composite 65. h* 30%.'}});
-    safePush({id:'SC_CONT', ntype:'gate', label:'CONT', r:30, status:'amber', name:'Continuidade 25%', data:{summary:'IPCA 4,5%, Selic 11%. Composite 78. h* 60%.'}});
-    safePush({id:'SC_RB', ntype:'gate', label:'RB', r:30, status:'red', name:'Rollback 15%', data:{summary:'IPCA 5%+, Selic 12%+. Composite 88. h* 91%. T-MV1.'}});
+    safePush({id:'SC_EXP', ntype:'scenario', label:'EXP', r:30, status:'green', name:'Expansão 60%', data:{summary:'IPCA 4%, Selic 10%. Composite 65. h* 30%.'}});
+    safePush({id:'SC_CONT', ntype:'scenario', label:'CONT', r:30, status:'amber', name:'Continuidade 25%', data:{summary:'IPCA 4,5%, Selic 11%. Composite 78. h* 60%.'}});
+    safePush({id:'SC_RB', ntype:'scenario', label:'RB', r:30, status:'red', name:'Rollback 15%', data:{summary:'IPCA 5%+, Selic 12%+. Composite 88. h* 91%. T-MV1.'}});
   } else if (view === 'cascade') {
     safePush({id:'S7_ORIG', ntype:'risk', label:'S7\nORIG', r:34, status:'red', name:'S7 Origem', data:{summary:'Kill switch. Bloqueio direto S3, S5, S11. Indirecto: S4, S9, S1, S6, S10, S8.'}});
     // Cascade edges from S7_ORIG
@@ -1346,7 +1483,30 @@ function getElementsForView(view, layer) {
     safeLink({id:'cas-5', from:'S7_ORIG', to:'S9', label:'demand', edgeType:'risk'});
     safeLink({id:'cas-6', from:'S7_ORIG', to:'S1', label:'macro', edgeType:'risk'});
   } else if (view === 'flow') {
-    // Flow is just a special layer
+    // Flow view: time-ordered sequence as horizontal rail
+    var flowMilestones = [
+      {id:'FM1', label:'G0', name:'Piloto'},
+      {id:'FM2', label:'A_T4', name:'Rules'},
+      {id:'FM3', label:'A_E3', name:'Lista'},
+      {id:'FM4', label:'A_T6', name:'LP CATL'},
+      {id:'FM5', label:'G1', name:'Fase 1'},
+      {id:'FM6', label:'A_E2', name:'Bridge'},
+      {id:'FM7', label:'A_T2', name:'Nacion'},
+      {id:'FM8', label:'A_E5', name:'Coalizão'},
+      {id:'FM9', label:'G2', name:'Fase 2'},
+      {id:'FM10', label:'G3', name:'Ongoing'}
+    ];
+    flowMilestones.forEach(function(m) {
+      safePush({id: m.id, ntype:'milestone', label: m.label, r: 18, name: m.name, data:{summary: m.name}});
+    });
+  } else if (view === 'couplings') {
+    // Couplings view: highlight primary edges, dim secondary
+    links.forEach(function(l) {
+      l._primary = (l.edgeType === 'primary');
+      l._secondary = (l.edgeType === 'secondary');
+    });
+    safePush({id:'C_IN', ntype:'composite', label:'C-IN', r:18, status:'green', name:'Coupling In', data:{summary:'Origem dos acoplamentos S×S.'}});
+    safePush({id:'C_OUT', ntype:'composite', label:'C-OUT', r:18, status:'amber', name:'Coupling Out', data:{summary:'Destino dos acoplamentos S×S.'}});
   }
 
   // Layer-specific extras (only if view === 'overview' or no view-specific took over)
@@ -1362,7 +1522,7 @@ function getElementsForView(view, layer) {
     } else if (layer === 'signal') {
       var triggers = ['T-AMBER','T-S7','T-HYST','T-5D','T-Li'];
       triggers.forEach(function(t) {
-        safePush({id: t, ntype: 'gate', label: t, r: 16, name: t + ' trigger', data:{summary:'Trigger ' + t}});
+        safePush({id: t, ntype: 'trigger', label: t, r: 16, name: t + ' trigger', data:{summary:'Trigger ' + t}});
       });
     } else if (layer === 'decision') {
       if (typeof decisionTrees === 'object' && decisionTrees !== null) {
@@ -1382,16 +1542,36 @@ function getElementsForView(view, layer) {
       }
     } else if (layer === 'learning') {
       ['BT','REC','DRIFT'].forEach(function(k) {
-        safePush({id: k, ntype: 'gate', label: k, r: 22, name: k, data:{summary:'Learning: ' + k}});
+        safePush({id: k, ntype: 'learning', label: k, r: 22, name: k, data:{summary:'Learning: ' + k}});
       });
     } else if (layer === 'governance') {
+      // Real governance concepts (not duplicate gates)
+      var gov = [
+        {id:'GOV-AUDIT',   label:'AUDIT',   r:24, name:'Audit Trail',   summary:'Trilha auditoria SAS-70 / SOX.'},
+        {id:'GOV-SIGNOFF', label:'SIGNOFF', r:22, name:'Sign-off Chain', summary:'Cadeia de assinaturas CEO+CFO+CSO+COO.'},
+        {id:'GOV-RACI',    label:'RACI',    r:22, name:'RACI Matrix',   summary:'Responsabilidade × Accountability × Consulted × Informed.'},
+        {id:'GOV-COMPL',   label:'COMPL',   r:22, name:'Compliance',     summary:'Compliance check MPT/CVM/IBAMA/Cade.'}
+      ];
+      gov.forEach(function(g) {
+        safePush({id: g.id, ntype: 'learning', label: g.label, r: g.r,
+                  name: g.name, data: {summary: g.summary}});
+      });
+    } else if (layer === 'framework') {
+      // Framework (default): 4 gates + first 3 personas
       if (Array.isArray(gates)) {
         gates.forEach(function(g, i) {
-          safePush({id: 'GOV-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
+          safePush({id: 'FW-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
+        });
+      }
+      if (Array.isArray(personas)) {
+        personas.slice(0, 3).forEach(function(p, i) {
+          safePush({id: 'FW-P' + i, ntype: 'persona',
+                    label: (p.role || p.name || ('P' + i)).slice(0, 8),
+                    r: 20, name: p.name || '', data: p});
         });
       }
     } else {
-      // Framework (default): add 4 gates + first 3 personas
+      // Unknown layer — fall back to framework defaults
       if (Array.isArray(gates)) {
         gates.forEach(function(g, i) {
           safePush({id: 'FW-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
@@ -1405,6 +1585,7 @@ function getElementsForView(view, layer) {
 }
 
 function showTourStep() {
+  tourSteps = getTourSteps();
   if (!tourSteps.length) return;
   const step = tourSteps[tourIdx];
   const bar = document.getElementById('tour-progress-bar');
@@ -1468,6 +1649,7 @@ function restartTour() {
   showTourStep();
 }
 function updateTourCounter() {
+  tourSteps = getTourSteps();
   document.getElementById('tour-step-count').textContent = (tourIdx+1) + ' / ' + tourSteps.length;
 }
 
@@ -1548,12 +1730,22 @@ function setLayer(layer) {
 function setView(view) {
   currentView = view;
   updateViewButtons();
+  updateLayerButtons();  // Fix #5: refresh layer button state
   build();
   document.getElementById('detail-empty').style.display = '';
   document.getElementById('detail-content').style.display = 'none';
 }
 function updateLayerButtons() {
-  document.querySelectorAll('.layer-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-layer') === currentLayer));
+  // Fix #5: layer buttons only apply to overview and flow views
+  const layerActive = (currentView === 'overview' || currentView === 'flow');
+  document.querySelectorAll('.layer-btn').forEach(btn => {
+    const isActive = btn.getAttribute('data-layer') === currentLayer;
+    btn.classList.toggle('active', isActive);
+    btn.disabled = !layerActive;
+    btn.style.opacity = layerActive ? '1' : '0.4';
+    btn.style.cursor = layerActive ? 'pointer' : 'not-allowed';
+    btn.title = layerActive ? '' : 'Layers apply only to Overview / Flow views';
+  });
 }
 function updateViewButtons() {
   document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-view') === currentView));
@@ -1608,6 +1800,227 @@ function onSearch(query) {
   });
 }
 
+// ----------------------------------------------------------------
+// v2.1 — missing handlers called by build() event listeners.
+// These were referenced but never defined in the v2.1 refactor.
+// ----------------------------------------------------------------
+
+// Click handler — highlight the selected node and dim non-neighbours.
+function selectNode(nodeId) {
+  try {
+    if (!nodeId) return;
+    const svgEl = document.getElementById('main-svg');
+    if (!svgEl) return;
+    // Mark selected
+    svgEl.querySelectorAll('.node-group').forEach(g => {
+      g.classList.remove('selected');
+    });
+    // Manual escape (CSS.escape may not exist in all browsers)
+    var safeId = String(nodeId).replace(/[\\"\]]/g, '\\$&');
+    var target = svgEl.querySelector('.node-group[data-id="' + safeId + '"]');
+    if (target) target.classList.add('selected');
+    // Dim everything that is not the selected node or a direct neighbour
+    var connected = new Set([nodeId]);
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      var src = edge.getAttribute('data-from') || '';
+      var dst = edge.getAttribute('data-to') || '';
+      if (src === nodeId || dst === nodeId) {
+        connected.add(src);
+        connected.add(dst);
+      }
+    });
+    svgEl.querySelectorAll('.node-group').forEach(function(g) {
+      var id = g.getAttribute('data-id') || '';
+      g.style.opacity = connected.has(id) ? '1' : '0.15';
+    });
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      var src = edge.getAttribute('data-from') || '';
+      var dst = edge.getAttribute('data-to') || '';
+      edge.style.opacity = (src === nodeId || dst === nodeId) ? '1' : '0.05';
+    });
+    // Update detail panel
+    var nodeObj = (typeof nodesRendered !== 'undefined' && nodesRendered) ? nodesRendered.find(function(n) { return n.id === nodeId; }) : null;
+    if (nodeObj && typeof showDetail === 'function') showDetail(nodeObj);
+  } catch (err) {
+    console.error('[D3 selectNode] error:', err);
+  }
+}
+
+// Hover-in: highlight edges connected to this node.
+function highlightConnections(nodeId) {
+  try {
+    if (!nodeId) return;
+    const svgEl = document.getElementById('main-svg');
+    if (!svgEl) return;
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      var src = edge.getAttribute('data-from') || '';
+      var dst = edge.getAttribute('data-to') || '';
+      var lit = (src === nodeId || dst === nodeId);
+      edge.style.opacity = lit ? '1' : '0.15';
+      edge.style.strokeWidth = lit ? '2.5' : '1';
+    });
+    // Show edge labels for connected edges
+    svgEl.querySelectorAll('text.edge-label').forEach(function(label) {
+      var src = label.getAttribute('data-from') || '';
+      var dst = label.getAttribute('data-to') || '';
+      var lit = (src === nodeId || dst === nodeId);
+      label.style.opacity = lit ? '0.85' : '0';
+    });
+  } catch (err) {
+    console.error('[D3 highlightConnections] error:', err);
+  }
+}
+
+// Hover-out / click-outside: restore default opacity.
+function unhighlightConnections() {
+  try {
+    const svgEl = document.getElementById('main-svg');
+    if (!svgEl) return;
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      edge.style.opacity = '';
+      edge.style.strokeWidth = '';
+    });
+    svgEl.querySelectorAll('text.edge-label').forEach(function(label) {
+      label.style.opacity = '0';
+    });
+    // Restore non-selected node opacity (selectNode dimmed the rest)
+    const selected = svgEl.querySelector('.node-group.selected');
+    if (selected) {
+      const selId = selected.getAttribute('data-id') || '';
+      svgEl.querySelectorAll('.node-group').forEach(g => {
+        g.style.opacity = '';
+        g.classList.remove('selected');
+      });
+    }
+  } catch (err) {
+    console.error('[D3 unhighlightConnections] error:', err);
+  }
+}
+
+// ================================================================
+//  DETAIL PANEL — populates the right-side panel with node info
+// ================================================================
+function showDetail(n) {
+  try {
+    if (!n) return;
+    var empty = document.getElementById('detail-empty');
+    var content = document.getElementById('detail-content');
+    if (empty) empty.style.display = 'none';
+    if (content) content.style.display = 'block';
+
+    // Try to find rich data
+    var rich = null;
+    if (n.id && typeof dimData !== 'undefined' && dimData[n.id]) rich = dimData[n.id];
+    if (!rich && n.id && typeof dataNodes !== 'undefined' && dataNodes[n.id]) rich = dataNodes[n.id];
+    if (!rich && n.id && typeof decisionTrees !== 'undefined' && decisionTrees[n.id]) rich = decisionTrees[n.id];
+    if (!rich && n.id && typeof actions !== 'undefined' && actions[n.id]) rich = actions[n.id];
+
+    var name = (rich && rich.name) || n.name || n.label || n.id || 'Node';
+    var summary = (rich && (rich.summary || rich.desc)) || n.desc || '';
+    var ntype = n.ntype || 'node';
+    var status = n.status || (rich && rich.status) || '';
+    var score = (typeof n.score === 'number') ? n.score : (rich && typeof rich.score === 'number' ? rich.score : null);
+    var explain = (rich && rich.explain) || '';
+    var whyItMatters = (rich && rich.whyItMatters) || '';
+    var realImpact = (rich && rich.realImpact) || '';
+    var glossary = (rich && rich.glossary) || [];
+
+    var html = '<div class="detail-header">';
+    html += '<div class="detail-tag">' + String(ntype).toUpperCase() + (status ? ' · ' + String(status).toUpperCase() : '') + '</div>';
+    html += '<div class="detail-title">' + name + '</div>';
+    if (n.id) html += '<div class="detail-sub">' + n.id + '</div>';
+    if (summary) html += '<div class="detail-summary">' + summary + '</div>';
+    if (score !== null) {
+      html += '<div class="detail-badges">';
+      var bc = (status === 'red') ? 'red' : (status === 'amber') ? 'amber' : (status === 'green') ? 'green' : 'blue';
+      html += '<span class="badge ' + bc + '">Score: ' + score + '/100</span>';
+      html += '</div>';
+    }
+    html += '</div>';
+
+    if (explain) {
+      html += '<div class="section-card"><h4>O que é</h4><div style="font-size:12px;line-height:1.6;color:var(--ink-2)">' + explain + '</div></div>';
+    }
+    if (whyItMatters) {
+      html += '<div class="section-card"><h4>Por que importa</h4><div style="font-size:12px;line-height:1.6;color:var(--ink-2)">' + whyItMatters + '</div></div>';
+    }
+    if (realImpact) {
+      html += '<div class="section-card"><h4>Impacto real</h4><div style="font-size:12px;line-height:1.6;color:var(--ink-2)">' + realImpact + '</div></div>';
+    }
+    if (glossary && glossary.length) {
+      html += '<div class="section-card"><h4>Glossário</h4>';
+      for (var i = 0; i < glossary.length; i++) {
+        var g = glossary[i];
+        html += '<div class="kv-row"><span class="kv-label">' + g.term + '</span></div>';
+        html += '<div style="font-size:11px;color:var(--ink-3);margin-bottom:6px">' + g.def + '</div>';
+      }
+      html += '</div>';
+    }
+
+    content.innerHTML = html;
+  } catch (err) {
+    console.error('[D3 showDetail] error:', err);
+  }
+}
+
+// Tooltip element — created lazily, reused.
+let _tooltipEl = null;
+function _getTooltip() {
+  if (_tooltipEl && _tooltipEl.isConnected) return _tooltipEl;
+  _tooltipEl = document.createElement('div');
+  _tooltipEl.id = 'd3-node-tooltip';
+  _tooltipEl.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;' +
+    'background:rgba(15,23,42,0.95);color:#f1f5f9;border:1px solid #475569;' +
+    'border-radius:6px;padding:8px 10px;font:12px/1.4 ui-sans-serif,system-ui,sans-serif;' +
+    'max-width:280px;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:none;';
+  document.body.appendChild(_tooltipEl);
+  return _tooltipEl;
+}
+
+function showTooltip(event, node) {
+  try {
+    if (!node) return;
+    const tt = _getTooltip();
+    const id = node.id || node.dimension || '';
+    const label = node.label || node.name || id;
+    const ntype = node.ntype || node.type || '';
+    const status = node.status || '';
+    const score = (typeof node.score === 'number') ? node.score.toFixed(0) : '';
+    let html = '<div style="font-weight:600;color:#e2e8f0;margin-bottom:4px;">' + label + '</div>';
+    html += '<div style="opacity:0.7;font-size:11px;margin-bottom:4px;">' + id + ' · ' + ntype + '</div>';
+    if (status) html += '<div>Status: <b>' + status + '</b></div>';
+    if (score) html += '<div>Score: <b>' + score + '/100</b></div>';
+    if (node.description) html += '<div style="margin-top:4px;opacity:0.85;">' + node.description + '</div>';
+    tt.innerHTML = html;
+    tt.style.display = 'block';
+    moveTooltip(event);
+  } catch (err) {
+    console.error('[D3 showTooltip] error:', err);
+  }
+}
+
+function moveTooltip(event) {
+  try {
+    const tt = _getTooltip();
+    if (!tt || tt.style.display === 'none') return;
+    const x = (event.clientX || 0) + 14;
+    const y = (event.clientY || 0) + 14;
+    tt.style.left = x + 'px';
+    tt.style.top = y + 'px';
+  } catch (err) {
+    // Silent — mouse-move is high-frequency
+  }
+}
+
+function hideTooltip() {
+  try {
+    const tt = _getTooltip();
+    if (tt) tt.style.display = 'none';
+  } catch (err) {
+    // Silent
+  }
+}
+
 //  EVENT WIRING
 // ================================================================
 document.querySelectorAll('.layer-btn').forEach(btn => {
@@ -1633,29 +2046,54 @@ document.getElementById('tour-restart').addEventListener('click', restartTour);
 //  INIT
 // ================================================================
 function init() {
-  // Robust init: always call build(). W()/H() fall back to window dimensions
-  // if svg.clientWidth is 0, so we don't need to wait for layout.
+  // Robust init: defer build via rAF to ensure layout is computed.
+  // Also retry until SVG has non-zero dimensions.
   try {
     if (!svg) {
       console.error('[D3 init] svg element not found');
       return;
     }
-    build();
-    window.addEventListener('resize', function() { build(); });
-    console.log('[D3 init] ready — svg', svg.clientWidth, 'x', svg.clientHeight);
+    // Defer initial build to next animation frame so layout is computed
+    requestAnimationFrame(function() {
+      build();
+      window.addEventListener('resize', function() { build(); });
+
+      // ResizeObserver: rebuild if SVG element actually resizes (zoom, panel toggle, etc.)
+      if (typeof ResizeObserver !== 'undefined') {
+        try {
+          const ro = new ResizeObserver(function(entries) {
+            for (const e of entries) {
+              const r = e.contentRect;
+              if (r.width > 0 && r.height > 0) build();
+            }
+          });
+          ro.observe(svg);
+        } catch (e) { /* ResizeObserver unavailable — ignore */ }
+      }
+      console.log('[D3 init] ready — svg', svg.clientWidth, 'x', svg.clientHeight);
+    });
   } catch (err) {
     console.error('[D3 init] error:', err);
   }
 }
 
-// Boot: standard DOMContentLoaded + window load order
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
+// Boot: standard DOMContentLoaded + window load order, deduped.
+// First init() is deferred via requestAnimationFrame inside init() to wait for layout.
+if (typeof window.__d3InitFired === 'undefined') {
+  window.__d3InitFired = true;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  // Also run once on window.load as fallback (CSS might not have been applied yet at DOMContentLoaded)
+  window.addEventListener('load', function() {
+    // Only run if SVG actually got sized in between
+    if (svg && svg.clientWidth > 0 && svg.clientHeight > 0) {
+      build();
+    }
+  });
 }
-// Also try on window load as fallback (in case CSS not yet applied)
-window.addEventListener('load', init);
 
 </script>
 </body>

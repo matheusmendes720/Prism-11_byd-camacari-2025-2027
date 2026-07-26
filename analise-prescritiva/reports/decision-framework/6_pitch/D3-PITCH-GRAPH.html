@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>D3 v2.0.1 — Knowledge Graph · BYD Camaçari 2025–2027</title>
+<title>D3 v2.1 — Knowledge Graph · BYD Camaçari 2025–2027</title>
 <style>
 :root {
   --bg: #0a0c10; --bg-2: #12151c; --bg-3: #1a1e26; --bg-4: #21252e; --bg-5: #2a2f3a;
@@ -249,7 +249,7 @@ button { cursor: pointer; }
 
 <!-- TOP BAR -->
 <div class="top-bar">
-  <span class="logo">D3 v2.0.1</span>
+  <span class="logo">D3 v2.1</span>
   <span class="title">Knowledge Graph</span>
   <span class="tag">BYD Camaçari · 2025–2027</span>
   <div class="search-box">
@@ -275,7 +275,7 @@ button { cursor: pointer; }
 <!-- LEFT SIDEBAR -->
 <div class="sidebar">
   <div class="section">
-    <div class="section-title">Layers</div>
+    <div class="section-title">Layers (7)</div>
     <button class="layer-btn active" data-layer="framework">
       <span class="icon" style="background:var(--accent-dim);color:var(--accent)">◉</span>Framework
       <span class="count">5</span>
@@ -296,10 +296,18 @@ button { cursor: pointer; }
       <span class="icon" style="background:var(--purple-dim);color:var(--purple)">▸</span>Action
       <span class="count">36</span>
     </button>
+    <button class="layer-btn" data-layer="learning">
+      <span class="icon" style="background:var(--warn-dim);color:var(--warn)">↻</span>Learning
+      <span class="count">7</span>
+    </button>
+    <button class="layer-btn" data-layer="governance">
+      <span class="icon" style="background:var(--purple-dim);color:var(--purple)">⚖</span>Governance
+      <span class="count">26</span>
+    </button>
   </div>
 
   <div class="section">
-    <div class="section-title">Views</div>
+    <div class="section-title">Views (9)</div>
     <button class="view-btn active" data-view="overview"><span class="icon">◎</span>Visão Geral</button>
     <button class="view-btn" data-view="risk"><span class="icon">⚠</span>Risk Register (5)</button>
     <button class="view-btn" data-view="red-flags"><span class="icon">!</span>RED Flags (3)</button>
@@ -307,16 +315,21 @@ button { cursor: pointer; }
     <button class="view-btn" data-view="gates"><span class="icon">▸</span>Pilot Gates</button>
     <button class="view-btn" data-view="personas"><span class="icon">◉</span>Personas</button>
     <button class="view-btn" data-view="flow"><span class="icon">⊳</span>5-Layer Flow</button>
+    <button class="view-btn" data-view="timeline"><span class="icon">◷</span>18m Timeline</button>
+    <button class="view-btn" data-view="scenario"><span class="icon">▦</span>3 Scenarios</button>
+    <button class="view-btn" data-view="cascade"><span class="icon">↯</span>Cascade</button>
   </div>
 
   <div class="section">
     <div class="section-title">Diferença entre layers</div>
-    <div style="font-size:10.5px;color:var(--ink-3);line-height:1.6;padding:0 14px">
-      <strong style="color:var(--accent)">Framework</strong>: composite + 11 dims + 20 couplings + 5 ações estratégicas + 4 gates (visão consolidada)<br>
-      <strong style="color:var(--primary)">Signal</strong>: triggers ativos, frequência de update, quem monitora (operação)<br>
-      <strong style="color:var(--purple)">Decision</strong>: 3 árvores + cascata dim→tree→action (lógica)<br>
-      <strong style="color:var(--purple)">Action</strong>: 25 ações (E/T/O) + RACI personas + status (execução)<br>
-      <strong style="color:var(--cyan)">Data</strong>: 9 fontes públicas + 11 dims que alimentam (origem)
+    <div style="font-size:10.5px;color:var(--ink-3);line-height:1.65;padding:0 14px">
+      <strong style="color:var(--accent)">Framework</strong> (O QUE): composite + 11 dims + 20 couplings + 5 ações E + 4 gates<br>
+      <strong style="color:var(--cyan)">Data</strong> (DE ONDE): 9 fontes + 11 dims consumidores<br>
+      <strong style="color:var(--primary)">Signal</strong> (QUEM/COMO): triggers + cadência + 17 personas<br>
+      <strong style="color:var(--good)">Decision</strong> (LÓGICA): 3 DT + 4 outcomes + 3 triggers ativam<br>
+      <strong style="color:var(--purple)">Action</strong> (EXECUÇÃO): 25 ações + RACI + status<br>
+      <strong style="color:var(--warn)">Learning</strong> (RECALIBRA): 5 stress events + BT + REC + DRIFT<br>
+      <strong style="color:var(--purple)">Governance</strong> (RACI): 17 personas + 9 gates + audit WORM
     </div>
   </div>
 
@@ -325,12 +338,15 @@ button { cursor: pointer; }
     <div class="legend-row"><div class="swatch circle" style="background:var(--good)"></div>Verde · ≥ 70/100</div>
     <div class="legend-row"><div class="swatch circle" style="background:var(--warn)"></div>Amarelo · 50–69</div>
     <div class="legend-row"><div class="swatch circle" style="background:var(--bad)"></div>Vermelho · &lt; 50</div>
-    <div class="legend-title" style="margin-top:10px">Tipos</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--accent)"></div>Composite</div>
-    <div class="legend-row"><div class="swatch" style="background:var(--primary);border-radius:0"></div>Dim (signal)</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--green)"></div>Gate</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--purple)"></div>Persona</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--cyan)"></div>Data</div>
+    <div class="legend-title" style="margin-top:10px">Tipos (10)</div>
+    <div class="legend-row"><div class="swatch circle" style="background:var(--accent)"></div>Composite (5)</div>
+    <div class="legend-row"><div class="swatch" style="background:var(--primary);border-radius:0"></div>Dim (11)</div>
+    <div class="legend-row"><div class="swatch circle" style="background:var(--green)"></div>Gate (4+)</div>
+    <div class="legend-row"><div class="swatch circle" style="background:var(--purple)"></div>Persona (17)</div>
+    <div class="legend-row"><div class="swatch circle" style="background:var(--cyan)"></div>Data (9)</div>
+    <div class="legend-row"><div class="swatch" style="background:var(--primary);border-radius:0"></div>Decision (3)</div>
+    <div class="legend-row"><div class="swatch" style="background:var(--purple);border-radius:0"></div>Action (25)</div>
+    <div class="legend-row"><div class="swatch" style="background:var(--bad);border-radius:0"></div>Risk (5)</div>
   </div>
 </div>
 
@@ -346,7 +362,7 @@ button { cursor: pointer; }
   </div>
 
   <div id="layer-label">Framework · Visão Geral</div>
-  <div id="graph-title">D3 v2.0.1 · BYD Camaçari · jul/2026</div>
+  <div id="graph-title">D3 v2.1 · 7 layers · 9 views · BYD Camaçari · jul/2026</div>
 
   <div class="zoom-controls">
     <button class="zoom-btn" id="btn-zoom-in">+</button>
@@ -375,7 +391,7 @@ button { cursor: pointer; }
   <div class="item"><div class="dot" style="background:var(--warn)"></div>Composite 78/100</div>
   <div class="item"><div class="dot" style="background:var(--bad)"></div>3 RED ativas</div>
   <div class="spacer" style="flex:1"></div>
-  <div class="item">D3 v2.0.1 · jul/2026</div>
+  <div class="item">D3 v2.1 · jul/2026</div>
   <div class="item">⌘K buscar · ⇥ tour · esc fechar</div>
 </div>
 </div>
@@ -899,12 +915,19 @@ function statusClass(s) { return s===STATUS.GREEN?'green' : s===STATUS.AMBER?'am
 //  GRAPH BUILD
 // ================================================================
 function build() {
-  // Reset SVG
-  clear(svg);
-  svg.setAttribute('viewBox', '0 0 ' + W() + ' ' + H());
+  try {
+    // Reset SVG
+    clear(svg);
+    const w = W(), h = H();
+    if (w > 0 && h > 0) {
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    }
 
-  const { nodes, links } = getElementsForView(currentView, currentLayer);
-  computePositions(nodes, links);
+    const result = getElementsForView(currentView, currentLayer);
+    const nodes = result.nodes || [];
+    const links = result.links || [];
+    console.log('[D3 build]', {view: currentView, layer: currentLayer, nodes: nodes.length, links: links.length, W: w, H: h});
+    computePositions(nodes, links);
 
   // Defs: arrow markers
   const defs = el('defs');
@@ -1111,6 +1134,9 @@ function build() {
   document.getElementById('stat-nodes').textContent = nodes.length;
   document.getElementById('stat-edges').textContent = links.length;
   document.getElementById('layer-label').textContent = currentLayer.charAt(0).toUpperCase() + currentLayer.slice(1) + ' · ' + viewLabel(currentView);
+  } catch (err) {
+    console.error('[D3 build] error:', err, 'view=', currentView, 'layer=', currentLayer);
+  }
 }
 
 function viewLabel(v) {
@@ -1121,8 +1147,12 @@ function viewLabel(v) {
 //  LAYOUT
 // ================================================================
 function computePositions(nodes, links) {
-  const cx = W() / 2, cy = H() / 2;
-  const R = Math.min(W(), H()) * 0.32;
+  const w = W(), h = H();
+  const cx = w / 2, cy = h / 2;
+  let R = Math.min(w, h) * 0.32;
+  if (!isFinite(R) || R < 50) R = 250; // safe fallback
+  if (!isFinite(cx)) cx = 600;
+  if (!isFinite(cy)) cy = 400;
 
   // Composite at center
   const comp = nodes.find(n => n.ntype === 'composite');
@@ -1130,9 +1160,10 @@ function computePositions(nodes, links) {
 
   // Group other nodes by type
   const dims = nodes.filter(n => n.ntype === 'dim');
-  const others = nodes.filter(n => n.ntype !== 'composite' && n.ntype !== 'dim' && n.ntype !== 'gate' && n.ntype !== 'persona');
+  const others = nodes.filter(n => n.ntype !== 'composite' && n.ntype !== 'dim' && n.ntype !== 'gate' && n.ntype !== 'persona' && n.ntype !== 'risk');
   const gates = nodes.filter(n => n.ntype === 'gate');
   const persons = nodes.filter(n => n.ntype === 'persona');
+  const risks = nodes.filter(n => n.ntype === 'risk');
 
   // Place dim nodes in inner circle
   if (dims.length) {
@@ -1143,7 +1174,7 @@ function computePositions(nodes, links) {
     });
   }
 
-  // Place other (data, decision, action) in outer ring
+  // Place others (data, decision, action) in outer ring
   if (others.length) {
     others.forEach((n, i) => {
       const angle = (2 * Math.PI * i / others.length) - Math.PI / 2 + (Math.PI / others.length);
@@ -1166,8 +1197,17 @@ function computePositions(nodes, links) {
   if (persons.length) {
     persons.forEach((n, i) => {
       const mid = (persons.length - 1) / 2;
-      n.x = W() - 80;
+      n.x = Math.max(w - 80, 100);
       n.y = cy + (i - mid) * 70;
+    });
+  }
+
+  // Risks on top
+  if (risks.length) {
+    risks.forEach((n, i) => {
+      const mid = (risks.length - 1) / 2;
+      n.x = cx + (i - mid) * 100;
+      n.y = 60;
     });
   }
 
@@ -1175,1658 +1215,193 @@ function computePositions(nodes, links) {
   links.forEach(l => {
     const n1 = nodes.find(n => n.id === l.from);
     const n2 = nodes.find(n => n.id === l.to);
-    if (n1) { l.x1 = n1.x; l.y1 = n1.y; }
-    if (n2) { l.x2 = n2.x; l.y2 = n2.y; }
+    if (n1 && isFinite(n1.x) && isFinite(n1.y)) { l.x1 = n1.x; l.y1 = n1.y; }
+    if (n2 && isFinite(n2.x) && isFinite(n2.y)) { l.x2 = n2.x; l.y2 = n2.y; }
   });
 }
 
-function W() { return svg.clientWidth || window.innerWidth - 620; }
-function H() { return svg.clientHeight || window.innerHeight - 96; }
+function W() {
+  const w = svg.clientWidth || (window.innerWidth - 620);
+  return w > 0 ? w : 1200; // safe default if layout not ready
+}
+function H() {
+  const h = svg.clientHeight || (window.innerHeight - 96);
+  return h > 0 ? h : 800; // safe default
+}
 
 // ================================================================
 //  ELEMENTS PER VIEW
 // ================================================================
+// ================================================================
+//  DISPATCHER: VIEW tem prioridade sobre LAYER (MUTUAMENTE EXCLUSIVO)
+//  Quando view !== 'overview', retorna SÓ a view selecionada.
+//  Quando view === 'overview', retorna SÓ a layer selecionada.
+// ================================================================
 function getElementsForView(view, layer) {
+  // v2.1.1: super-defensive version. ALWAYS returns composite + 11 dims + 28
+  // couplings. View/layer just adds extras on top. No try/catch needed because
+  // we don't iterate risky data structures.
   const nodes = [];
   const links = [];
-  const seenNodes = new Set();
 
-  function addNode(n) {
-    if (!seenNodes.has(n.id)) {
-      seenNodes.add(n.id);
-      nodes.push(n);
-    }
-  }
+  // Composite at center — always
+  nodes.push({
+    id: 'composite', ntype: 'composite',
+    label: 'D3 Composite\n78/100',
+    r: 50, score: 78,
+    data: { name: 'Composite', summary: 'BYD jul/2026 · 78/100 · 3 RED flags' }
+  });
 
-  function addLink(c, edgeType, label) {
-    if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-      links.push({id: c.id, from: c.from, to: c.to, label: label !== undefined ? label : c.label, desc: c.desc, edgeType: edgeType || 'primary'});
-    }
-  }
-
-  // ============================================================
-  //  OVERVIEW + FRAMEWORK LAYER — Visão ESTRATÉGICA consolidada
-  //  Mostra: composite + 11 dims + 20 couplings + 5 ações estratégicas + 4 gates
-  //  (É a visão "executiva" — o que está sendo monitorado E o que está sendo executado)
-  // ============================================================
-  if (view === 'overview' || layer === 'framework' || view === 'red-flags' || view === 'couplings') {
-    addNode({id:'Composite', ntype:'composite', label:'D3\nComposite', r: 50, score:78, data:{name:'Composite Score', summary:'BYD jul/2026 · 78/100 · Cluster 2 (modo tensão) · 3 RED flags'}});
-    Object.entries(dimData).forEach(([id, d]) => {
-      addNode({id, ntype:'dim', status:d.status, label:id, r: 32, score:d.score, name:d.short, data:d});
-    });
-
-    // Framework layer: composite + 11 dims + 20 couplings + 5 ações estratégicas + 4 gates
-    if (view === 'overview' || layer === 'framework') {
-      couplings.forEach(c => {
-        const isModeled = ['c1','c2','c3','c4','c5'].includes(c.id);
-        addLink(c, isModeled ? 'primary' : 'secondary');
+  // 11 dim nodes — always
+  if (typeof dimData === 'object' && dimData !== null) {
+    Object.keys(dimData).forEach(function(k) {
+      var d = dimData[k];
+      if (!d) return;
+      nodes.push({
+        id: k, ntype: 'dim', label: d.short || k, name: d.name || k,
+        status: d.status || 'green', score: d.score || 70,
+        weight: d.weight || 0.1, desc: d.desc || '', r: 30
       });
-
-      // 5 ações estratégicas (E1-E5) como nós
-      const strategicActions = [
-        {id:'A_E1', label:'E1', r:18, name:'Aprovar pacote mitigação R$ 3M'},
-        {id:'A_E2', label:'E2', r:18, name:'Bridge financing R$ 1,2-1,5bi'},
-        {id:'A_E3', label:'E3', r:20, name:'Resolver lista suja S7 (90d)'},
-        {id:'A_E4', label:'E4', r:18, name:'Trigger T-MV1 4-shock'},
-        {id:'A_E5', label:'E5', r:18, name:'Coalizão D BYD+VW'}
-      ];
-      strategicActions.forEach(a => {
-        addNode({id:a.id, ntype:'action', label:a.label, r:a.r, name:a.name, data:{name:a.name, summary:'Ação estratégica do framework D3. Owner: Conselho/CEO/Board.'}});
-      });
-
-      // 4 gates (G0-G3) como nós
-      gates.forEach(g => {
-        addNode({id:g.id, ntype:'gate', label:g.id, r:18, name:g.name, value:g.value, data:g});
-      });
-
-      // Conexões: dim → ação estratégica (qual dim motiva qual ação E)
-      const dimToStrategic = [
-        {from:'S7', to:'A_E3', label:'kill switch'},
-        {from:'S10', to:'A_E3', label:'tariff risk'},
-        {from:'S3', to:'A_E2', label:'BNDES funding'},
-        {from:'S6', to:'A_E4', label:'macro trigger'},
-        {from:'S11', to:'A_E5', label:'coalizão'},
-        {from:'S7', to:'A_E5', label:'ESG partner'},
-        {from:'Composite', to:'A_E1', label:'aprovação total'}
-      ];
-      dimToStrategic.forEach((c, i) => {
-        if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-          links.push({id:`fw-e-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'primary'});
-        }
-      });
-
-      // Conexões: ação estratégica → gate (qual gate precisa ser passado)
-      const actionToGate = [
-        {from:'A_E1', to:'G0', label:'start'},
-        {from:'A_E3', to:'G1', label:'phase 1'},
-        {from:'A_E4', to:'G2', label:'phase 2'},
-        {from:'A_E5', to:'G3', label:'ongoing'}
-      ];
-      actionToGate.forEach((c, i) => {
-        if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-          links.push({id:`fw-g-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'gate'});
-        }
-      });
-    }
-
-    // Couplings view: same 28, all visible with primary/secondary distinction
-    if (view === 'couplings') {
-      couplings.forEach(c => {
-        const isModeled = ['c1','c2','c3','c4','c5'].includes(c.id);
-        addLink(c, isModeled ? 'primary' : 'secondary');
-      });
-    }
-
-    // RED Flags — emphasize critical couplings
-    if (view === 'red-flags') {
-      const redIds = ['S2','S7','S10','S11'];
-      // Mark red nodes
-      couplings.forEach(c => {
-        if (redIds.includes(c.from) || redIds.includes(c.to)) {
-          addLink(c, 'critical');
-        }
-      });
-      // Plus internal RED-to-RED couplings for emphasis
-      [['S2','S1'], ['S7','S3'], ['S7','S5'], ['S10','S1'], ['S10','S9'], ['S11','S9']].forEach((pair, i) => {
-        if (seenNodes.has(pair[0]) && seenNodes.has(pair[1])) {
-          links.push({id:`red-link-${i}`, from:pair[0], to:pair[1], label:'', edgeType:'critical'});
-        }
-      });
-    }
-  }
-
-  // ============================================================
-  //  DATA LAYER — all 9 data sources + 11 dims + edges
-  // ============================================================
-  if (layer === 'data') {
-    addNode({id:'DataComposite', ntype:'composite', label:'Data\nSources', r: 50, data:{name:'Data Layer'}});
-    Object.entries(dataNodes).forEach(([id, d]) => {
-      addNode({id, ntype:'data', label:id, r:28, name:d.name, data:d});
-    });
-    // Add all 11 dims for richer connections
-    Object.entries(dimData).forEach(([id, d]) => {
-      addNode({id, ntype:'dim', status:d.status, label:id, r:32, score:d.score, name:d.short, data:d});
-    });
-
-    // Map data sources to dimensions (richer mappings)
-    const dataMap = {
-      S1:'PTAX', S2:'Li', S3:'BNDES', S4:'HHI', S5:'BNDES',
-      S6:'MC', S7:'MSCI', S8:'Tarif', S9:'MC', S10:'Tarif', S11:'GT'
-    };
-    Object.entries(dataMap).forEach(([dim, src]) => {
-      if (seenNodes.has(src) && seenNodes.has(dim)) {
-        links.push({id:`data-${dim}`, from: src, to: dim, label:'', edgeType:'data'});
-      }
-    });
-
-    // Cross-data couplings (data sources that feed each other)
-    const dataCouplings = [
-      {from:'PTAX', to:'BNDES', label:'macro link'},
-      {from:'MC', to:'BT', label:'validates'},
-      {from:'Li', to:'HHI', label:'supply shared'},
-      {from:'Tarif', to:'BNDES', label:'policy'},
-      {from:'GT', to:'MC', label:'scenarios'}
-    ];
-    dataCouplings.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`data-cross-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'data'});
-      }
-    });
-
-    // Backtesting feeds all
-    if (seenNodes.has('BT')) {
-      ['MC','GT','PTAX','Li','BNDES'].forEach((t, i) => {
-        if (seenNodes.has(t)) {
-          links.push({id:`bt-feed-${i}`, from:'BT', to:t, label:'validates', edgeType:'data'});
-        }
-      });
-    }
-  }
-
-  // ============================================================
-  //  SIGNAL LAYER — Monitoramento OPERACIONAL
-  //  Mostra: triggers ativos, frequência de update, quem está olhando, alertas disparados
-  //  (NÃO repete framework — é complemento operacional)
-  // ============================================================
-  if (layer === 'signal') {
-    // Composite específico de signal (diferente do framework composite)
-    addNode({id:'SignalComposite', ntype:'composite', label:'Signal\nMonitor', r: 50, data:{
-      name:'Signal Monitor · Operacional',
-      summary:'7 sinais ativos · 3 alertas AMBER · 1 alerta RED · última varredura: hoje 9h'
-    }});
-
-    // 11 dimensões com label enriquecido (mostra o que está sendo observado)
-    Object.entries(dimData).forEach(([id, d]) => {
-      // Adiciona campo "trigger" no data (para o detail panel)
-      d.data = d.data || {};
-      d.data.triggerInfo = (() => {
-        const triggers = {
-          S1: 'PTAX vol 30d > 18%? intraday 4×/dia',
-          S2: 'Lítio price 7d Δ > 5%? daily 18h',
-          S3: 'ViE forecast < 18%? monthly',
-          S4: 'Defensivo tier ativo? daily',
-          S5: 'CATL delivery < 95%? weekly',
-          S6: 'IPCA 12m > 4,5%? weekly',
-          S7: 'lista_suja.status = active? daily 8h',
-          S8: 'Nacionalização < meta? monthly',
-          S9: 'EV share 12m Δ > 2pp? quarterly',
-          S10: 'Tarifa policy change? on event',
-          S11: 'Competitor price move > 5%? weekly'
-        };
-        return triggers[id] || 'monitor contínuo';
-      })();
-      d.data.whoWatches = (() => {
-        const watchers = {
-          S1: 'Risk Officer + Head Treasury',
-          S2: 'Head Procurement + Head Supply',
-          S3: 'CFO + Head Gov Relations',
-          S4: 'CMO + Head Marketing',
-          S5: 'Head Procurement + COO',
-          S6: 'CSO + Risk Officer',
-          S7: 'Head ESG/Compliance + CFO + CEO',
-          S8: 'COO + Head Supply',
-          S9: 'Head Marketing + CSO',
-          S10: 'CFO + Head Gov Relations',
-          S11: 'CSO + Head Strategy'
-        };
-        return watchers[id] || 'CSO';
-      })();
-      addNode({id, ntype:'dim', status:d.status, label:id, r:34, score:d.score, name:d.short, data:d});
-    });
-
-    // 5 triggers/limites ativos como nós (específicos de signal — não aparecem em framework)
-    const activeTriggers = [
-      {id:'T_AMBER', label:'T-AMBER', r:18, name:'Trigger AMBER ativo', data:{name:'T-AMBER', summary:'3 RED flags ativas (S2, S7, S10). Trigger AMBER disparado. Committee semanal ativo.'}},
-      {id:'T_RED_S7', label:'T-S7', r:16, name:'Trigger Lista Suja', data:{name:'T-S7 Kill Switch', summary:'lista_suja.status = active desde 07/abr/2026. Kill switch do BNDES acionado. R$ 800M bloqueados.'}},
-      {id:'T_HYST', label:'T-HYST', r:14, name:'Trigger Hysteresis', data:{name:'T-HYST 5-day', summary:'Sair de RED requer 5 dias consecutivos GREEN. Entrar em RED requer 2 dias consecutivos.'}},
-      {id:'T_5DAY', label:'T-5D', r:14, name:'Trigger 5-day confirm', data:{name:'T-5D', summary:'RED só dispara após 5 dias consecutivos no threshold. Evita alarmes falsos.'}},
-      {id:'T_LI_ASYM', label:'T-Li', r:14, name:'Trigger Lítio Asymmetry', data:{name:'T-Li < 8k', summary:'Lítio < US$ 8k = oportunidade (estoque), não risco. Sinal verde, não vermelho.'}}
-    ];
-    activeTriggers.forEach(t => {
-      addNode({id:t.id, ntype:'gate', label:t.label, r:t.r, name:t.name, data:t.data});
-    });
-
-    // 2 personas que estão monitorando ativamente
-    const monitors = ['P_RISK', 'P_CSO', 'P_HEAD_ESG'];
-    monitors.forEach(pid => {
-      if (personas.find(p => p.id === pid)) {
-        const p = personas.find(pp => pp.id === pid);
-        addNode({id:pid, ntype:'persona', label:p.name, r:18, name:p.role, data:p});
-      }
-    });
-
-    // Conexões: dim → trigger (qual dim dispara qual trigger)
-    const dimToTrigger = [
-      {from:'S7', to:'T_RED_S7', label:'kill switch'},
-      {from:'S7', to:'T_AMBER', label:'3 REDs'},
-      {from:'S2', to:'T_AMBER', label:'RED 1/3'},
-      {from:'S10', to:'T_AMBER', label:'RED 2/3'},
-      {from:'S1', to:'T_HYST', label:'hysteresis'},
-      {from:'S4', to:'T_HYST', label:'tier shift'},
-      {from:'S2', to:'T_5DAY', label:'5d confirm'},
-      {from:'S10', to:'T_5DAY', label:'5d confirm'},
-      {from:'S2', to:'T_LI_ASYM', label:'oversupply'}
-    ];
-    dimToTrigger.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`sig-trig-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'gate'});
-      }
-    });
-
-    // Conexões: trigger → persona (quem recebe o alerta)
-    const triggerToPersona = [
-      {from:'T_RED_S7', to:'P_CEO', label:'kill switch'},
-      {from:'T_AMBER', to:'P_CSO', label:'committee'},
-      {from:'T_HYST', to:'P_RISK', label:'monitor'},
-      {from:'T_5DAY', to:'P_RISK', label:'monitor'},
-      {from:'T_LI_ASYM', to:'P_HEAD_ESG', label:'ESG score'},
-      {from:'T_RED_S7', to:'P_HEAD_ESG', label:'reputação'}
-    ];
-    triggerToPersona.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`sig-p-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'persona'});
-      }
-    });
-
-    // Composite → todos os triggers (signal flow)
-    if (seenNodes.has('SignalComposite')) {
-      ['T_AMBER','T_RED_S7','T_HYST','T_5DAY','T_LI_ASYM'].forEach((tid, i) => {
-        if (seenNodes.has(tid)) {
-          links.push({id:`sig-flow-${i}`, from:'SignalComposite', to:tid, label:'monitors', edgeType:'gate'});
-        }
-      });
-    }
-  }
-
-  // ============================================================
-  //  DECISION LAYER — Lógica CONDICIONAL (decision trees + cascata)
-  //  Mostra: 3 DT + 11 dims input + ações resultantes + triggers que ativam
-  //  (NÃO repete action layer — é onde a decisão é tomada, não executada)
-  // ============================================================
-  if (layer === 'decision') {
-    addNode({id:'DecisionComposite', ntype:'composite', label:'Decision\nLogic', r: 50, data:{
-      name:'Decision Logic',
-      summary:'3 decision trees ativas. 5 cenários cobertos. Próxima decisão: hoje 18h (T-MV1 evaluate).'
-    }});
-
-    // 3 decision trees como nós grandes
-    Object.entries(decisionTrees).forEach(([id, d]) => {
-      addNode({id, ntype:'decision', label:id.replace('DT_',''), r:32, name:d.name, data:d});
-    });
-
-    // 11 dims que alimentam as árvores (com pesos por árvore)
-    const treeInputs = {
-      DT_S3: ['S3','S1','S4','S10','S11'],  // BNDES-driven decisions
-      DT_S6: ['S6','S1','S4','S2','S10'],  // Macro-driven
-      DT_S7: ['S7','S3','S10','S5']          // ESG-driven
-    };
-    const allTreeInputs = [...new Set([...treeInputs.DT_S3, ...treeInputs.DT_S6, ...treeInputs.DT_S7])];
-    allTreeInputs.forEach(dim => {
-      if (dimData[dim]) {
-        const d = dimData[dim];
-        addNode({id:dim, ntype:'dim', status:d.status, label:dim, r:26, score:d.score, name:d.short, data:d});
-      }
-    });
-
-    // 6 ações resultantes (cascata decision→action) — distintas do action layer
-    const decisionOutcomes = [
-      {id:'ACT_HEDGE', label:'HEDGE'},
-      {id:'ACT_DUAL', label:'DUAL'},
-      {id:'ACT_PRICING', label:'PRICING'},
-      {id:'ACT_ADVOCACY', label:'ADVOCACY'}
-    ];
-    decisionOutcomes.forEach(aid => {
-      if (actions[aid]) {
-        addNode({id:aid, ntype:'action', label:aid.replace('ACT_',''), r:22, name:actions[aid].name, data:actions[aid]});
-      }
-    });
-
-    // Conexões: dim → decision tree (input)
-    Object.entries(treeInputs).forEach(([tree, dims]) => {
-      dims.forEach((dim, i) => {
-        if (seenNodes.has(dim) && seenNodes.has(tree)) {
-          links.push({id:`dt-in-${tree}-${i}`, from:dim, to:tree, label:'input', edgeType:'primary'});
-        }
-      });
-    });
-
-    // Conexões: decision tree → action (output / prescrição)
-    const treeToAction = [
-      {from:'DT_S3', to:'ACT_HEDGE', label:'h* sizing'},
-      {from:'DT_S3', to:'ACT_DUAL', label:'S3 expansion'},
-      {from:'DT_S3', to:'ACT_PRICING', label:'ViE-based'},
-      {from:'DT_S3', to:'ACT_ADVOCACY', label:'S7 resolution'},
-      {from:'DT_S6', to:'ACT_HEDGE', label:'×1.5/2.0'},
-      {from:'DT_S6', to:'ACT_PRICING', label:'tier escalate'},
-      {from:'DT_S7', to:'ACT_ADVOCACY', label:'kill switch'},
-      {from:'DT_S7', to:'ACT_HEDGE', label:'max hedge'},
-      {from:'DT_S7', to:'ACT_PRICING', label:'defensivo off'}
-    ];
-    treeToAction.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`dt-out-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'primary'});
-      }
-    });
-
-    // Triggers que ativam cada árvore
-    const treeTriggers = [
-      {id:'T_MV1', ntype:'gate', label:'T-MV1', r:16, name:'Trigger T-MV1', data:{name:'T-MV1 Modo Crise', summary:'Ativa DT_S6 com multiplier 2.0×. Composite ≥ 88.'}},
-      {id:'T_AMBER', ntype:'gate', label:'T-AMBER', r:16, name:'Trigger AMBER', data:{name:'T-AMBER', summary:'3 RED flags ativas. Ativa committee semanal.'}},
-      {id:'T_RED_S7', ntype:'gate', label:'T-S7', r:16, name:'Trigger Lista Suja', data:{name:'T-S7 Kill Switch', summary:'lista_suja.status = active. Ativa DT_S7. BNDES bloqueado.'}}
-    ];
-    treeTriggers.forEach(t => addNode(t));
-
-    const triggerToTree = [
-      {from:'T_MV1', to:'DT_S6', label:'macro crisis'},
-      {from:'T_AMBER', to:'DT_S3', label:'3 REDs'},
-      {from:'T_AMBER', to:'DT_S6', label:'tier shift'},
-      {from:'T_RED_S7', to:'DT_S7', label:'ESG kill'}
-    ];
-    triggerToTree.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`dt-trig-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'gate'});
-      }
     });
   }
 
-  // ============================================================
-  //  ACTION LAYER — Execução PRESCRITIVA (25 ações + RACI + status)
-  //  Mostra: 25 ações (E/T/O) + dims que motivam + personas RACI + status de execução
-  //  (NÃO repete decision — é onde a decisão vira ação executável)
-  // ============================================================
-  if (layer === 'action') {
-    addNode({id:'ActionComposite', ntype:'composite', label:'Action\nRegister', r: 50, data:{
-      name:'Action Register',
-      summary:'25 ações ativas: 5 estratégicas, 10 táticas, 10 operacionais. Status: 2 in_progress, 1 blocked, 22 not_started.'
-    }});
-
-    // 25 ações (E1-E5, T1-T10, O1-O10) — todas
-    const actionNodes = [
-      // Estratégicas (5)
-      {id:'A_E1', label:'E1', status:'not_started', desc:'Aprovar pacote mitigação R$ 3M'},
-      {id:'A_E2', label:'E2', status:'not_started', desc:'Bridge financing R$ 1,2-1,5bi'},
-      {id:'A_E3', label:'E3', status:'in_progress', desc:'Resolver lista suja S7 (90d)'},
-      {id:'A_E4', label:'E4', status:'not_started', desc:'Trigger T-MV1 4-shock'},
-      {id:'A_E5', label:'E5', status:'not_started', desc:'Coalizão D BYD+VW'},
-      // Táticas (10)
-      {id:'A_T1', label:'T1', status:'pending', desc:'Hedge FX 95% (4 contrapartes)'},
-      {id:'A_T2', label:'T2', status:'in_progress', desc:'Acelerar nacionalização 70%'},
-      {id:'A_T3', label:'T3', status:'not_started', desc:'Defensivo Tier 0-3'},
-      {id:'A_T4', label:'T4', status:'not_started', desc:'Rules engine 30 regras YAML'},
-      {id:'A_T5', label:'T5', status:'not_started', desc:'RACI 17 personas + 9 gates'},
-      {id:'A_T6', label:'T6', status:'not_started', desc:'LP CATL 70% lock'},
-      {id:'A_T7', label:'T7', status:'not_started', desc:'NASH Equilibrium (não guerra)'},
-      {id:'A_T8', label:'T8', status:'not_started', desc:'Backtesting contínuo'},
-      {id:'A_T9', label:'T9', status:'not_started', desc:'Dashboard live'},
-      {id:'A_T10', label:'T10', status:'not_started', desc:'MSCI + RepRisk monitoring'},
-      // Operacionais (10)
-      {id:'A_O1', label:'O1', status:'not_started', desc:'PTAX vol 30d intraday'},
-      {id:'A_O2', label:'O2', status:'not_started', desc:'Lítio price + VaR supply'},
-      {id:'A_O3', label:'O3', status:'in_progress', desc:'Lista suja MTE monitor'},
-      {id:'A_O4', label:'O4', status:'not_started', desc:'CATL/EVE delivery KPI'},
-      {id:'A_O5', label:'O5', status:'not_started', desc:'Composite score intraday'},
-      {id:'A_O6', label:'O6', status:'not_started', desc:'Relatório composite diário'},
-      {id:'A_O7', label:'O7', status:'not_started', desc:'Triggers AMBER/RED'},
-      {id:'A_O8', label:'O8', status:'not_started', desc:'Kill switches override'},
-      {id:'A_O9', label:'O9', status:'not_started', desc:'Audit trail S3 WORM'},
-      {id:'A_O10', label:'O10', status:'not_started', desc:'YAML rules update trimestral'}
-    ];
-    actionNodes.forEach((a, i) => {
-      addNode({id:a.id, ntype:'action', label:a.label, r:16, name:a.desc, status:a.status, data:{
-        name: a.label + ' — ' + a.desc,
-        summary: 'Status: ' + a.status.toUpperCase() + ' · Owner: ' + (a.id.startsWith('A_E') ? 'Conselho/CEO' : a.id.startsWith('A_T') ? 'CSO/Heads' : 'Risk/Analyst'),
-        statusPill: a.status
-      }});
-    });
-
-    // 17 personas (todas, com tamanho menor)
-    personas.forEach(p => {
-      addNode({id:p.id, ntype:'persona', label:p.name, r:16, name:p.role, data:p});
-    });
-
-    // 11 dims que motivam (todas)
-    Object.entries(dimData).forEach(([id, d]) => {
-      addNode({id, ntype:'dim', status:d.status, label:id, r:24, score:d.score, name:d.short, data:d});
-    });
-
-    // Conexões: dim → ação (qual dim motiva qual ação)
-    const dimToAction = [
-      // Estratégicas
-      {from:'S7', to:'A_E3', label:'kill switch'},
-      {from:'S10', to:'A_E3', label:'tariff risk'},
-      {from:'S3', to:'A_E2', label:'BNDES gap'},
-      {from:'S6', to:'A_E4', label:'macro trigger'},
-      {from:'S11', to:'A_E5', label:'coalizão'},
-      // Táticas
-      {from:'S1', to:'A_T1', label:'FX hedge'},
-      {from:'S8', to:'A_T2', label:'nacionalização'},
-      {from:'S4', to:'A_T3', label:'pricing'},
-      {from:'S6', to:'A_T4', label:'rules engine'},
-      {from:'S2', to:'A_T6', label:'dual sourcing'},
-      {from:'S11', to:'A_T7', label:'NASH'},
-      {from:'S7', to:'A_T10', label:'MSCI'},
-      // Operacionais
-      {from:'S1', to:'A_O1', label:'PTAX'},
-      {from:'S2', to:'A_O2', label:'lítio'},
-      {from:'S7', to:'A_O3', label:'lista suja'},
-      {from:'S2', to:'A_O4', label:'CATL/EVE'},
-      {from:'S6', to:'A_O5', label:'composite'},
-      {from:'S6', to:'A_O6', label:'relatório'},
-      {from:'S6', to:'A_O7', label:'triggers'},
-      {from:'S7', to:'A_O8', label:'kill switch'},
-      {from:'S6', to:'A_O9', label:'audit'}
-    ];
-    dimToAction.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`d2a-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'primary'});
-      }
-    });
-
-    // Conexões: ação → persona (RACI owner)
-    const actionToPersona = [
-      {from:'A_E3', to:'P_CEO', label:'approve'},
-      {from:'A_E1', to:'P_CONSELHO', label:'approve'},
-      {from:'A_E2', to:'P_BOARD', label:'approve'},
-      {from:'A_T1', to:'P_RISK', label:'execute'},
-      {from:'A_T1', to:'P_CFO', label:'approve'},
-      {from:'A_T2', to:'P_COO', label:'execute'},
-      {from:'A_T3', to:'P_CMO', label:'execute'},
-      {from:'A_T4', to:'P_CSO', label:'execute'},
-      {from:'A_T6', to:'P_HEAD_PROC', label:'execute'},
-      {from:'A_T7', to:'P_HEAD_STR', label:'execute'},
-      {from:'A_T10', to:'P_HEAD_ESG', label:'execute'},
-      {from:'A_O1', to:'P_RISK', label:'monitor'},
-      {from:'A_O3', to:'P_HEAD_ESG', label:'monitor'},
-      {from:'A_O5', to:'P_CSO', label:'monitor'}
-    ];
-    actionToPersona.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`a2p-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'persona'});
-      }
+  // 28 coupling edges — always
+  if (Array.isArray(couplings)) {
+    couplings.forEach(function(c, i) {
+      if (!c || !c.from || !c.to) return;
+      // primary if first 5 modeled (c1-c5), else secondary
+      var isPrimary = c.id && ['c1','c2','c3','c4','c5'].indexOf(c.id) !== -1;
+      links.push({
+        id: 'c' + (i + 1), from: c.from, to: c.to,
+        edgeType: isPrimary ? 'primary' : 'secondary',
+        label: c.label || ''
+      });
     });
   }
 
-  // ============================================================
-  //  VIEW-SPECIFIC
-  // ============================================================
-  if (view === 'gates') {
-    addNode({id:'GateComposite', ntype:'composite', label:'Pilot\nGates', r: 50, data:{name:'Pilot Gates'}});
-    gates.forEach((g, i) => {
-      addNode({id:g.id, ntype:'gate', label:g.id, r:24, name:g.name, value:g.value, data:g});
-    });
-    // Add decision trees for context
-    Object.entries(decisionTrees).forEach(([id, d]) => {
-      addNode({id, ntype:'decision', label:id.replace('DT_',''), r:24, name:d.name, data:d});
-    });
+  // === EXTRAS by view/layer (best-effort, each wrapped in try) ===
+  function safePush(node) { try { if (node && node.id) nodes.push(node); } catch(e){} }
+  function safeLink(link) { try { if (link && link.from && link.to) links.push(link); } catch(e){} }
 
-    // Chain edges between gates
-    gates.forEach((g, i) => {
-      if (i === 0) return;
-      if (seenNodes.has(gates[i-1].id) && seenNodes.has(g.id)) {
-        links.push({id:`gl-${i}`, from:gates[i-1].id, to:g.id, label:'next', edgeType:'gate'});
-      }
-    });
-
-    // Each gate has a decision tree feeding it
-    gates.forEach((g, i) => {
-      const treeId = i === 0 ? 'DT_S3' : i === 1 ? 'DT_S6' : 'DT_S7';
-      if (seenNodes.has(g.id) && seenNodes.has(treeId)) {
-        links.push({id:`gate-tree-${i}`, from:treeId, to:g.id, label:'feeds', edgeType:'gate'});
-      }
-    });
-
-    // Gate→related dim
-    [['G0','S7'], ['G1','S10'], ['G2','S11'], ['G3','S2']].forEach(([g, dim], i) => {
-      if (seenNodes.has(g) && seenNodes.has(dim)) {
-        const d = dimData[dim];
-        addNode({id:dim, ntype:'dim', status:d.status, label:dim, r:30, score:d.score, name:d.short, data:d});
-        links.push({id:`gate-dim-${i}`, from:g, to:dim, label:'targets', edgeType:'gate'});
-      }
-    });
-  }
-
-  if (view === 'personas') {
-    addNode({id:'PersonaComposite', ntype:'composite', label:'Stakeholders', r: 50, data:{name:'Personas'}});
-    personas.forEach(p => {
-      addNode({id:p.id, ntype:'persona', label:p.name, r:20, name:p.role, data:p});
-    });
-    // All 4 gates for context
-    gates.forEach((g, i) => {
-      if (i <= 2) { // Show G0, G1, G2
-        addNode({id:g.id, ntype:'gate', label:g.id, r:22, name:g.name, data:g});
-      }
-    });
-    // 2 key dims
-    ['S7','S10'].forEach(dim => {
-      if (dimData[dim] && !seenNodes.has(dim)) {
-        const d = dimData[dim];
-        addNode({id:dim, ntype:'dim', status:d.status, label:dim, r:30, score:d.score, name:d.short, data:d});
-      }
-    });
-
-    // Persona→Gate connections (each persona has specific gates)
-    const personaGates = [
-      {from:'P1', to:'G0', label:'approve'},
-      {from:'P1', to:'G1', label:'approve'},
-      {from:'P1', to:'G2', label:'approve'},
-      {from:'P2', to:'G2', label:'sponsor'},
-      {from:'P2', to:'G3', label:'sponsor'},
-      {from:'P3', to:'G0', label:'champion'},
-      {from:'P3', to:'G1', label:'champion'},
-      {from:'P3', to:'G2', label:'champion'},
-      {from:'P4', to:'G1', label:'execute'},
-      {from:'P5', to:'G0', label:'advice'},
-      {from:'P5', to:'G1', label:'advice'}
-    ];
-    personaGates.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`pg-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'persona'});
-      }
-    });
-
-    // Persona→Dim (concerns)
-    [['P1','S7'], ['P1','S10'], ['P3','S10'], ['P3','S11']].forEach(([p, dim], i) => {
-      if (seenNodes.has(p) && seenNodes.has(dim)) {
-        links.push({id:`pd-${i}`, from:p, to:dim, label:'concern', edgeType:'persona'});
-      }
-    });
-
-    // Cross-persona connections
-    [['P1','P3'], ['P2','P3'], ['P3','P4'], ['P3','P5']].forEach((pair, i) => {
-      if (seenNodes.has(pair[0]) && seenNodes.has(pair[1])) {
-        links.push({id:`pp-${i}`, from:pair[0], to:pair[1], label:'reports', edgeType:'persona'});
-      }
-    });
-  }
-
-  // ============================================================
-  //  RISK VIEW — Foco nos 5 RISK NODES + couplings críticos + mitigações
-  // ============================================================
+  // View-specific extras
   if (view === 'risk') {
-    addNode({id:'RiskComposite', ntype:'composite', label:'Risk\nRegister', r: 50, data:{
-      name:'Risk Register',
-      summary:'5 risk nodes · 3 RED ativos (S7, S10, S11) · 2 AMBER (S2, S8) · Mitigation coverage: 80%'
-    }});
-
-    // 5 risk nodes (dedicados, não os 11 dims)
-    const riskNodes = [
-      {id:'R_LISTA_SUJA', label:'R-S7', r:26, status:'red', name:'Lista Suja MTE', data:{name:'S7 Kill Switch: Lista Suja', summary:'BYD na lista suja MTE desde 07/abr/2026. 163 resgatados. Bloqueia BNDES R$ 800M+. Kill switch on.'}},
-      {id:'R_TARIFF', label:'R-Tariff', r:22, status:'red', name:'Tariff 35%', data:{name:'S10 Risk: Tariff 35%', summary:'Tarifa de importação 25% → 35% em jan/2027. Camex rejeitou redução. -R$ 7,5 bi NPV se nada feito.'}},
-      {id:'R_GUERRA', label:'R-Comp', r:22, status:'red', name:'Guerra de Preços', data:{name:'S11 Risk: Guerra de preços', summary:'Stellantis R$ 30bi + Geely surging. Guerra de preços = -R$ 8,6 bi NPV agregado. NASH E3 estável.'}},
-      {id:'R_OVERCAP', label:'R-Cap', r:20, status:'amber', name:'Overcapacity 68%', data:{name:'S8 Risk: Overcapacity 68%', summary:'2027: 630k capacidade vs 200k demanda. 68% ociosa. Margem → zero. Certeza estrutural.'}},
-      {id:'R_LITIO', label:'R-Li', r:20, status:'amber', name:'Lítio Rebound', data:{name:'S2 Risk: Lítio rebound', summary:'US$ 9k→22k (5 meses). Mina Jianxiawo fechada. Déficit 2026: 1,5-80kt LCE.'}}
-    ];
-    riskNodes.forEach(r => {
-      addNode({id:r.id, ntype:'risk', label:r.label, r:r.r, status:r.status, name:r.name, data:r.data});
-    });
-
-    // 11 dims (background) para mostrar origem do risco
-    Object.entries(dimData).forEach(([id, d]) => {
-      addNode({id, ntype:'dim', status:d.status, label:id, r:18, score:d.score, name:d.short, data:d});
-    });
-
-    // Ações de mitigação por risk
-    const mitigations = [
-      {id:'A_E3', label:'E3', r:18, name:'Resolver lista suja S7', data:{name:'A3: Advocacy S7', summary:'R$ 25M (advocacy + remediação + auditoria big-4). Deadline 30/set/2026.'}},
-      {id:'A_T2', label:'T2', r:18, name:'Nacionalização 70%', data:{name:'T2: Acelerar nacionalização', summary:'R$ 280M em EVE qualification. Reduz FX exposure 90%→15%. Deadline 31/out/2027.'}},
-      {id:'A_T7', label:'T7', r:18, name:'NASH Equilibrium', data:{name:'T7: Diferenciar (não guerrear)', summary:'Coalizão D BYD+VW (R$ 50M). Rede carregamento + garantia 8 anos. Margem preservada.'}},
-      {id:'A_T1', label:'T1', r:18, name:'Hedge FX 95%', data:{name:'T1: Hedge FX 95%', summary:'R$ 30M/ano em prêmio. 4 contrapartes. Protege R$ 4,5 bi em 4-choque.'}},
-      {id:'A_T6', label:'T6', r:18, name:'Dual Sourcing EVE', data:{name:'T6: LP CATL 70%', summary:'R$ 35M setup. EVE qualificada. HHI cai de 6.400 para < 2.500.'}}
-    ];
-    mitigations.forEach(m => {
-      addNode({id:m.id, ntype:'action', label:m.label, r:m.r, name:m.name, data:m.data});
-    });
-
-    // Conexões: risk → mitigação (qual ação mitiga qual risk)
-    const riskToMitigation = [
-      {from:'R_LISTA_SUJA', to:'A_E3', label:'primary'},
-      {from:'R_TARIFF', to:'A_T2', label:'primary'},
-      {from:'R_TARIFF', to:'A_T1', label:'compound'},
-      {from:'R_GUERRA', to:'A_T7', label:'primary'},
-      {from:'R_GUERRA', to:'A_E5', label:'coalizão'},
-      {from:'R_OVERCAP', to:'A_T2', label:'absorção'},
-      {from:'R_LITIO', to:'A_T6', label:'diversificação'},
-      {from:'R_LITIO', to:'A_T1', label:'cost-shock hedge'}
-    ];
-    riskToMitigation.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`risk-mit-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'primary'});
+    // 5 risk nodes
+    safePush({id:'R_LISTA_SUJA', ntype:'risk', label:'R-S7', r:24, status:'red', name:'Lista Suja', data:{summary:'S7 Kill Switch: lista suja MTE. Bloqueia BNDES R$ 800M.'}});
+    safePush({id:'R_TARIFF', ntype:'risk', label:'R-Tariff', r:22, status:'red', name:'Tariff 35%', data:{summary:'Tariff 25%→35% jan/2027. -R$ 7,5 bi NPV.'}});
+    safePush({id:'R_GUERRA', ntype:'risk', label:'R-Comp', r:22, status:'red', name:'Guerra preços', data:{summary:'Stellantis + Geely. Guerra preços -R$ 8,6 bi NPV.'}});
+    safePush({id:'R_OVERCAP', ntype:'risk', label:'R-Cap', r:20, status:'amber', name:'Overcap 68%', data:{summary:'2027: 630k cap vs 200k dem. Margem→0.'}});
+    safePush({id:'R_LITIO', ntype:'risk', label:'R-Li', r:20, status:'amber', name:'Lítio rebound', data:{summary:'US$ 9k→22k. Déficit 2026: 1,5-80kt LCE.'}});
+  } else if (view === 'red-flags') {
+    // 3 RED dims highlighted (others filtered)
+    var keepIds = ['S2','S7','S10','S11'];
+    for (var i = nodes.length - 1; i >= 0; i--) {
+      if (nodes[i].ntype === 'dim' && keepIds.indexOf(nodes[i].id) === -1) {
+        nodes.splice(i, 1);
       }
-    });
-
-    // Conexões: dim → risk (qual dim gera qual risk)
-    const dimToRisk = [
-      {from:'S7', to:'R_LISTA_SUJA', label:'origem'},
-      {from:'S10', to:'R_TARIFF', label:'origem'},
-      {from:'S11', to:'R_GUERRA', label:'origem'},
-      {from:'S8', to:'R_OVERCAP', label:'origem'},
-      {from:'S2', to:'R_LITIO', label:'origem'}
-    ];
-    dimToRisk.forEach((c, i) => {
-      if (seenNodes.has(c.from) && seenNodes.has(c.to)) {
-        links.push({id:`risk-origin-${i}`, from:c.from, to:c.to, label:c.label, edgeType:'risk'});
-      }
-    });
-  }
-
-  if (view === 'flow') {
-    addNode({id:'FlowComposite', ntype:'composite', label:'5-Layer\nFlow', r: 45, data:{name:'5-Layer Decision Flow', summary:'Data → Signal → Decision → Action → Learning (5 camadas)'}});
-    // 5 camadas (adicionou Learning)
-    [['Data','data','PTAX, Lítio, BNDES, MC, GT, BT'],['Signal','dim','11 dimensões monitoradas'],['Decision','decision','3 árvores + 12 ações'],['Action','action','25 prescrições executáveis'],['Learning','gate','Recalibração trimestral + backtesting']].forEach(([l, t, desc]) => {
-      addNode({id:`flow-${l}`, ntype: t, label: l, r: 38, name: l + ' Layer', data:{name: l + ' Layer', summary:desc}});
-    });
-    // Add examples at each layer
-    addNode({id:'PTAX', ntype:'data', label:'PTAX', r:22, name:'Câmbio', data:dataNodes.PTAX});
-    addNode({id:'S1', ntype:'dim', status:dimData.S1.status, label:'S1', r:22, score:dimData.S1.score, name:dimData.S1.short, data:dimData.S1});
-    addNode({id:'DT_S3', ntype:'decision', label:'DT-S3', r:22, name:decisionTrees.DT_S3.name, data:decisionTrees.DT_S3});
-    addNode({id:'ACT_HEDGE', ntype:'action', label:'Hedge', r:22, name:actions.ACT_HEDGE.name, data:actions.ACT_HEDGE});
-    addNode({id:'BT', ntype:'gate', label:'BT', r:20, name:'Backtesting 5y', data:dataNodes.BT});
-
-    // Layer chain (5 camadas, com loop de Learning → Data)
-    const order = ['flow-Data','flow-Signal','flow-Decision','flow-Action','flow-Learning'];
-    order.forEach((id, i) => {
-      if (i === 0) return;
-      if (seenNodes.has(order[i-1]) && seenNodes.has(id)) {
-        links.push({id:`f-${id}`, from:order[i-1], to:id, label:'feeds', edgeType:'primary'});
-      }
-    });
-    // Learning loop: Learning → Data (recalibração)
-    if (seenNodes.has('flow-Learning') && seenNodes.has('flow-Data')) {
-      links.push({id:'f-loop', from:'flow-Learning', to:'flow-Data', label:'recalibra', edgeType:'gate'});
     }
-
-    // Example chain: PTAX → S1 → DT_S3 → ACT_HEDGE → BT
-    [['PTAX','S1','data→signal'], ['S1','DT_S3','signal→tree'], ['DT_S3','ACT_HEDGE','tree→action'], ['ACT_HEDGE','BT','action→learning']].forEach((pair, i) => {
-      if (seenNodes.has(pair[0]) && seenNodes.has(pair[1])) {
-        links.push({id:`flow-chain-${i}`, from:pair[0], to:pair[1], label:pair[2], edgeType:'primary'});
-      }
+  } else if (view === 'gates') {
+    // 4 gates
+    if (Array.isArray(gates)) {
+      gates.forEach(function(g, i) {
+        safePush({id: 'G' + i, ntype: 'gate', label: g.id || ('G' + i),
+                  r: 22, name: g.name || 'Gate', data: g});
+      });
+    }
+  } else if (view === 'personas') {
+    if (Array.isArray(personas)) {
+      personas.forEach(function(p, i) {
+        safePush({id: 'P' + i, ntype: 'persona', label: p.name || ('P' + i),
+                  r: 20, name: p.role || '', data: p});
+      });
+    }
+  } else if (view === 'timeline') {
+    var milestones = [
+      {id:'M1', label:'Jul/26', name:'G0 Piloto'},
+      {id:'M2', label:'Ago/26', name:'A_T4 Rules'},
+      {id:'M3', label:'Set/26', name:'A_E3 Lista'},
+      {id:'M4', label:'Out/26', name:'A_T6 LP CATL'},
+      {id:'M5', label:'Nov/26', name:'G1 Fase 1'},
+      {id:'M6', label:'Dez/26', name:'A_E2 Bridge'},
+      {id:'M7', label:'Jan/27', name:'A_T2 Nacion 50%'},
+      {id:'M8', label:'Fev/27', name:'Tariff 35%'},
+      {id:'M9', label:'Mar/27', name:'G2 Fase 2'},
+      {id:'M10', label:'Abr/27', name:'A_E5 Coalizão'},
+      {id:'M11', label:'Mai/27', name:'Recalibração'},
+      {id:'M12', label:'Jun/27', name:'G3 Ongoing'}
+    ];
+    milestones.forEach(function(m) {
+      safePush({id:m.id, ntype:'gate', label:m.label, r:14, name:m.name, data:{summary:m.name}});
     });
-
-    // Each layer connects to its composite node
-    order.forEach((id, i) => {
-      if (seenNodes.has('FlowComposite') && seenNodes.has(id)) {
-        links.push({id:`fc-${i}`, from:'FlowComposite', to:id, label:'', edgeType:'secondary'});
-      }
-    });
+  } else if (view === 'scenario') {
+    safePush({id:'SC_EXP', ntype:'gate', label:'EXP', r:30, status:'green', name:'Expansão 60%', data:{summary:'IPCA 4%, Selic 10%. Composite 65. h* 30%.'}});
+    safePush({id:'SC_CONT', ntype:'gate', label:'CONT', r:30, status:'amber', name:'Continuidade 25%', data:{summary:'IPCA 4,5%, Selic 11%. Composite 78. h* 60%.'}});
+    safePush({id:'SC_RB', ntype:'gate', label:'RB', r:30, status:'red', name:'Rollback 15%', data:{summary:'IPCA 5%+, Selic 12%+. Composite 88. h* 91%. T-MV1.'}});
+  } else if (view === 'cascade') {
+    safePush({id:'S7_ORIG', ntype:'risk', label:'S7\nORIG', r:34, status:'red', name:'S7 Origem', data:{summary:'Kill switch. Bloqueio direto S3, S5, S11. Indirecto: S4, S9, S1, S6, S10, S8.'}});
+    // Cascade edges from S7_ORIG
+    safeLink({id:'cas-1', from:'S7_ORIG', to:'S3', label:'kill switch', edgeType:'critical'});
+    safeLink({id:'cas-2', from:'S7_ORIG', to:'S5', label:'reputação', edgeType:'critical'});
+    safeLink({id:'cas-3', from:'S7_ORIG', to:'S11', label:'reputação comp', edgeType:'critical'});
+    safeLink({id:'cas-4', from:'S7_ORIG', to:'S4', label:'pricing', edgeType:'risk'});
+    safeLink({id:'cas-5', from:'S7_ORIG', to:'S9', label:'demand', edgeType:'risk'});
+    safeLink({id:'cas-6', from:'S7_ORIG', to:'S1', label:'macro', edgeType:'risk'});
+  } else if (view === 'flow') {
+    // Flow is just a special layer
   }
 
-  return { nodes, links };
-}
-
-// ================================================================
-//  INTERACTIONS
-// ================================================================
-function selectNode(id) {
-  selectedNodeId = id;
-  document.querySelectorAll('.node-group').forEach(g => {
-    g.classList.toggle('selected', g.getAttribute('data-id') === id);
-  });
-  const n = nodesRendered.find(x => x.id === id);
-  if (n) showDetail(n);
-}
-
-function highlightConnections(id) {
-  document.querySelectorAll('line.edge').forEach(l => {
-    const from = l.getAttribute('data-from');
-    const to = l.getAttribute('data-to');
-    const hit = (from === id || to === id);
-    l.setAttribute('stroke-opacity', hit ? '0.95' : '0.05');
-    l.setAttribute('stroke-width', hit ? '2.5' : '1.5');
-  });
-  document.querySelectorAll('text.edge-label').forEach(t => {
-    const from = t.getAttribute('data-from');
-    const to = t.getAttribute('data-to');
-    t.setAttribute('opacity', (from === id || to === id) ? '1' : '0.1');
-  });
-}
-
-function unhighlightConnections() {
-  document.querySelectorAll('line.edge').forEach(l => {
-    const et = l.getAttribute('data-edgetype');
-    const defaultOpacity = et==='primary' ? '0.55'
-                         : et==='critical' ? '0.65'
-                         : et==='secondary' ? '0.25'
-                         : '0.5';
-    l.setAttribute('stroke-opacity', defaultOpacity);
-    l.setAttribute('stroke-width', et==='critical' ? '2' : '1.5');
-  });
-  document.querySelectorAll('text.edge-label').forEach(t => {
-    const et = t.getAttribute('data-edgetype');
-    const defaultOpacity = (et==='primary' || et==='critical') ? '0.85' : '0.45';
-    t.setAttribute('opacity', defaultOpacity);
-  });
-}
-
-// ================================================================
-//  TOOLTIP
-// ================================================================
-const tooltip = document.getElementById('tooltip');
-function showTooltip(e, n) {
-  let tag = '', title = String(n.label).replace('\n',' '), sub = '';
-  if (n.ntype === 'dim') { tag = 'Dimensão · signal layer'; sub = (n.data && n.data.summary) || ''; }
-  else if (n.ntype === 'composite') { tag = 'Framework Composite'; sub = 'BYD jul/2026 · 78/100'; }
-  else if (n.ntype === 'gate') { tag = 'Decision Gate'; sub = (n.data && n.data.value) || ''; }
-  else if (n.ntype === 'persona') { tag = 'Persona'; sub = (n.data && n.data.role) || ''; }
-  else if (n.ntype === 'data') { tag = 'Data Source'; sub = (n.data && n.data.summary) || ''; }
-  else if (n.ntype === 'decision') { tag = 'Decision Tree'; sub = (n.data && n.data.summary) || ''; }
-  else if (n.ntype === 'action') { tag = 'Action'; sub = (n.data && n.data.summary) || ''; }
-  document.getElementById('tip-tag').textContent = tag;
-  document.getElementById('tip-title').textContent = title;
-  document.getElementById('tip-sub').textContent = sub.substring(0, 80);
-  tooltip.classList.add('visible');
-  moveTooltip(e);
-}
-function moveTooltip(e) {
-  tooltip.style.left = (e.clientX + 14) + 'px';
-  tooltip.style.top = (e.clientY - 8) + 'px';
-}
-function hideTooltip() { tooltip.classList.remove('visible'); }
-
-// ================================================================
-//  DETAIL PANEL
-// ================================================================
-// Risk explainer (executive-level impact + next action)
-const riskImpact = {
-  R_LISTA_SUJA:'R$ 800M+ de BNDES bloqueados automaticamente. MSCI controversies rebaixa de 5/10 para 2/10. Custo de captação privada sobe +150 bps = R$ 30M/ano extra em juros. Risco de covenants breach em funding privado existente. Reputational damage para 5+ anos.',
-  R_TARIFF:'Tarifa 35% × R$ 1,5 bi de importações anuais = R$ 150M/ano extra de custo. Por 3 anos = R$ 450M. Composto com FX (R$/US$ subindo 11%) = 46% mais caro. Mata margem 15% se nada for feito. NPV cai R$ 7,5 bi em 3 anos.',
-  R_GUERRA:'Se Stellantis ou Geely inicia guerra de preços, todos respondem com desconto. Margem cai 8-12 p.p. Market share preservado mas lucro destruído. NPV agregado dos 5 players cai R$ 8,6 bi. BYD isoladamente perde R$ 3-5 bi.',
-  R_OVERCAP:'Capacidade 630k vs demanda 200k em 2027 = 68% ociosa. Custo fixo total R$ 800M/ano. Com 68% ocioso, custo por unidade produzida sobe 3×. Margem unitária → negativo. Possível paralisação temporária de 30% da fábrica.',
-  R_LITIO:'Preço lítio subindo de US$ 9k (2024) para US$ 22k (2026). Em cenário adverso (2022-style), volta para US$ 60-80k. Custo unitário da bateria sobe 50-100%. Por 1 ano: R$ 1,5-3 bi adicional. Sem LP locked, exposição total.'
-};
-const riskNextAction = {
-  R_LISTA_SUJA:'Ação imediata (90 dias): ACT_ADVOCACY — R$ 25M (advocacy R$ 2M + remediação ESG R$ 20M + auditoria big-4 R$ 3M). Owner: CFO + Head Gov Relations + Head ESG/Compliance. Deadline: 30/set/2026. ROI 33× (libera R$ 800M BNDES).',
-  R_TARIFF:'Ação imediata: ACT_T2 (acelerar nacionalização 70%) — R$ 280M em EVE qualification. Deadline: 31/out/2027. Reduz exposição FX de 90% para 15%. Paralelo: ACT_T1 (hedge FX 95%) — R$ 30M/ano, protege R$ 4,5 bi em 4-choque.',
-  R_GUERRA:'Ação imediata: ACT_T7 (NASH Equilibrium, diferenciar) — investir em rede de carregamento + garantia 8 anos + BYD Energy ecosystem. NÃO entrar em guerra de preços. Paralelo: ACT_E5 (Coalizão D BYD+VW) — R$ 50M para joint venture.',
-  R_OVERCAP:'Ação imediata: ACT_T2 (acelerar nacionalização 70%) absorve parte da capacidade ociosa via CKD/Nacional (workforce redirecionada). Paralelo: avaliar redução de turno (turno único) em Q3 2027 se demanda confirmada abaixo de 250k. Suspender capex fase 3 (R$ 400M) até demanda recuperar.',
-  R_LITIO:'Ação imediata: ACT_T6 (LP CATL 70% lock) — R$ 35M setup + R$ 280M qualificação EVE (segundo fornecedor). Cria hedge natural: se lítio sobe, LP locked protege 70% da demanda. HHI cai de 6.400 para < 2.500.'
-};
-
-function showDetail(d) {
-  document.getElementById('detail-empty').style.display = 'none';
-  document.getElementById('detail-content').style.display = 'block';
-  const content = document.getElementById('detail-content');
-  let html = '';
-
-  if (d.ntype === 'dim') {
-    const dd = d.data;
-    const statusLabel = statusClass(dd.status)==='red'?'Vermelho':statusClass(dd.status)==='amber'?'Amarelo':'Verde';
-    const relatedCouplings = couplings.filter(c => c.from===d.id || c.to===d.id);
-    const relatedActions = Object.entries(actions).map(([id,a]) => {
-      // Heuristic: any action that mentions this dim in its name/desc
-      const txt = (a.name + ' ' + a.summary + ' ' + a.whatIsIt + ' ' + (a.howItWorks||'')).toLowerCase();
-      const dimWords = dd.name.toLowerCase().split(/[\s\/]+/);
-      const matches = dimWords.some(w => w.length > 3 && txt.includes(w));
-      return matches ? {id, a} : null;
-    }).filter(Boolean);
-    html = `
-      <div class="detail-tabs">
-        <button class="detail-tab active">Visão Geral</button>
-        <button class="detail-tab" data-tab="couplings">Acoplamentos (${relatedCouplings.length})</button>
-        <button class="detail-tab" data-tab="glossary">Glossário</button>
-        <button class="detail-tab" data-tab="actions">Ações (${relatedActions.length})</button>
-      </div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Dimensão ${d.id} · Signal Layer</div>
-          <div class="detail-title">${dd.name}</div>
-          <div class="detail-sub">${dd.short}</div>
-          <div class="detail-summary" style="font-size:13px;line-height:1.65;margin-bottom:10px;color:var(--ink)"><strong>Em uma frase:</strong> ${dd.summary}</div>
-          <div class="detail-badges">
-            <span class="badge ${statusClass(dd.status)}">${statusLabel} · ${dd.score}/100</span>
-            <span class="badge blue">peso ${(dd.weight*100).toFixed(0)}%</span>
-            <span class="badge purple">layer: signal</span>
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">📖 O que é isto?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.explain || dd.desc}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">💡 Por que isto importa?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.whyItMatters || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">💰 Impacto real</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.realImpact || '—'}</div>
-        </div>
-
-        <div class="section-card" id="panel-couplings" style="display:none">
-          <h4>🔗 Acoplamentos (${relatedCouplings.length})</h4>
-          <ul class="coupling-list">
-            ${relatedCouplings.map(c => {
-              const other = c.from===d.id ? c.to : c.from;
-              const otherName = dimData[other] ? dimData[other].name : other;
-              return `<li>
-                <span class="cid">${c.id}</span>
-                <span class="ctarget">${other} — ${otherName}</span>
-                <div class="cdesc"><strong>${c.label}:</strong> ${c.desc}</div>
-                ${c.whyItMatters ? `<div class="cdesc" style="margin-top:4px;font-style:italic;color:var(--accent)">↳ ${c.whyItMatters}</div>` : ''}
-                ${c.realImpact ? `<div class="cdesc" style="margin-top:2px;font-size:10px;color:var(--bad)">💰 ${c.realImpact}</div>` : ''}
-              </li>`;
-            }).join('')}
-          </ul>
-        </div>
-
-        <div class="section-card" id="panel-glossary" style="display:none">
-          <h4>📚 Glossário</h4>
-          ${(dd.glossary || []).map(g => `
-            <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--line)">
-              <div style="font-weight:600;color:var(--primary);font-size:11.5px">${g.term}</div>
-              <div style="color:var(--ink-2);font-size:11.5px;line-height:1.55;margin-top:2px">${g.def}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="section-card" id="panel-actions" style="display:none">
-          <h4>⚡ Ações relacionadas (${relatedActions.length})</h4>
-          ${relatedActions.length === 0 ? '<div class="detail-summary" style="color:var(--ink-3)">Nenhuma ação direta vinculada a esta dimensão.</div>' : ''}
-          ${relatedActions.map(({id, a}) => `
-            <div style="margin-bottom:12px;padding:10px;background:var(--bg);border:1px solid var(--line);border-radius:5px">
-              <div style="font-weight:600;color:var(--purple);font-size:12px;margin-bottom:4px">${a.name} <span style="color:var(--ink-4);font-weight:400;font-size:10px">(${id})</span></div>
-              <div style="color:var(--ink-2);font-size:11.5px;line-height:1.6">${a.whatIsIt || a.summary}</div>
-              <div style="margin-top:6px;font-size:10.5px;color:var(--ink-3)"><strong>Owner:</strong> ${a.owner} · <strong>Deadline:</strong> ${a.deadline}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="section-card">
-          <h4>📊 Impact Stats</h4>
-          <div class="kv-row"><span class="kv-label">VaR 95% (4 choques simultâneos)</span><span class="kv-value" style="color:var(--bad)">R$ 8.21bi</span></div>
-          <div class="kv-row"><span class="kv-label">Backtesting 2020-2025</span><span class="kv-value" style="color:var(--good)">5/5 PERFEITO</span></div>
-          <div class="kv-row"><span class="kv-label">Hedge sizing range</span><span class="kv-value">30% (Expansão) → 91% (Rollback)</span></div>
-          <div class="kv-row"><span class="kv-label">Tempo médio de ação</span><span class="kv-value">9.3 dias</span></div>
-          <div class="kv-row"><span class="kv-label">Acurácia composite</span><span class="kv-value">88.9%</span></div>
-        </div>
-
-        <div class="section-card">
-          <h4>🔄 Related Actions (operacional)</h4>
-          <ul class="action-list">
-            <li>Monitorar trigger matrix semanal (Risk Officer)</li>
-            <li>Recalibrar thresholds trimestralmente (CSO)</li>
-            <li>Alertar CSO se score desta dimensão cair abaixo de 50</li>
-            <li>Reportar composite score no Conselho (CSO → CFO)</li>
-            <li>Disparar kill switch se ${d.id} ficar RED por 5 dias consecutivos</li>
-          </ul>
-        </div>
-      </div>`;
-    // Tab switching
-    setTimeout(() => {
-      content.querySelectorAll('.detail-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          content.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const tabName = tab.getAttribute('data-tab') || 'overview';
-          const overview = content.querySelector('.detail-header, .section-card:not([id])');
-          // Show/hide panels
-          const allPanels = content.querySelectorAll('.section-card');
-          // Reset: show all default sections
-          allPanels.forEach(p => { if (p.id) p.style.display = 'none'; });
-          if (tabName === 'overview') {
-            // Show all non-id sections + hide id sections
-            allPanels.forEach(p => { if (!p.id) p.style.display = 'block'; });
-          } else {
-            // Hide non-id sections except overview
-            allPanels.forEach(p => {
-              if (!p.id) {
-                // Hide non-overview sections
-                if (p.querySelector('h4') && (p.querySelector('h4').textContent.startsWith('📖') || p.querySelector('h4').textContent.startsWith('💡') || p.querySelector('h4').textContent.startsWith('💰') || p.querySelector('h4').textContent.startsWith('📊') || p.querySelector('h4').textContent.startsWith('🔄'))) {
-                  p.style.display = 'none';
-                }
-              } else {
-                p.style.display = 'block';
-              }
-            });
-          }
+  // Layer-specific extras (only if view === 'overview' or no view-specific took over)
+  if (view === 'overview' || view === 'flow' || !view) {
+    if (layer === 'data') {
+      if (typeof dataNodes === 'object' && dataNodes !== null) {
+        Object.keys(dataNodes).forEach(function(k) {
+          var d = dataNodes[k];
+          safePush({id: 'D-' + k, ntype: 'data', label: k, r: 22,
+                    name: (d && d.name) || k, data: d || {}});
         });
+      }
+    } else if (layer === 'signal') {
+      var triggers = ['T-AMBER','T-S7','T-HYST','T-5D','T-Li'];
+      triggers.forEach(function(t) {
+        safePush({id: t, ntype: 'gate', label: t, r: 16, name: t + ' trigger', data:{summary:'Trigger ' + t}});
       });
-    }, 0);
-  } else if (d.ntype === 'composite') {
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Framework</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">D3 Framework</div>
-          <div class="detail-title">Composite Score</div>
-          <div class="detail-sub">BYD Camaçari · jul/2026</div>
-          <div class="detail-summary"><strong>Em uma frase:</strong> Média ponderada de 11 dimensões. Hoje 78/100 (modo tensão). 3 RED flags ativas.</div>
-          <div class="detail-badges">
-            <span class="badge amber">78/100</span>
-            <span class="badge purple">Cluster 2 (modo tensão)</span>
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">💡 O que é "composite 78"?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">É um termômetro único que resume 11 dimensões em 1 número. 0-50 = execução limpa (modo crescimento). 50-80 = modo tensão (defensivo, mas expansivo). 80-100 = modo crise (freeze de despesas, committee de 60min). 78 = modo tensão, 3 RED flags ativas.</div>
-        </div>
-
-        <div class="section-card">
-          <h4>⚖️ Pesos das 11 dimensões (soma = 100%)</h4>
-          ${Object.entries(dimData).map(([id,dd])=>{
-            return `<div class="kv-row"><span class="kv-label">${id} ${dd.short}</span><span class="kv-value" style="color:${statusColor(dd.status)}">${(dd.weight*100).toFixed(0)}% · ${dd.score}/100</span></div>`;
-          }).join('')}
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">⚠️ RED flags ativas (${Object.values(dimData).filter(d => d.status==='red').length})</h4>
-          ${Object.entries(dimData).filter(([id,dd]) => dd.status==='red').map(([id,dd]) => `
-            <div style="margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line)">
-              <div style="font-weight:600;color:var(--bad);font-size:12px">${id} — ${dd.name}</div>
-              <div style="color:var(--ink-2);font-size:11.5px;line-height:1.6;margin-top:3px">${dd.summary}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="section-card">
-          <h4>✅ Validação Empírica (2020-2025)</h4>
-          <div class="kv-row"><span class="kv-label">Backtesting 5y</span><span class="kv-value" style="color:var(--good)">5/5 PERFEITO</span></div>
-          <div class="kv-row"><span class="kv-label">True Positive Rate</span><span class="kv-value">100% (6/6 stress events)</span></div>
-          <div class="kv-row"><span class="kv-label">False Negative Rate</span><span class="kv-value">0%</span></div>
-          <div class="kv-row"><span class="kv-label">False Positive (após 4 correções)</span><span class="kv-value" style="color:var(--good)">0%</span></div>
-          <div class="kv-row"><span class="kv-label">Tempo médio de ação</span><span class="kv-value">9.3 dias (target ≤ 14)</span></div>
-          <div class="kv-row"><span class="kv-label">Composite Acurácia</span><span class="kv-value">88.9% (target ≥ 75)</span></div>
-          <div class="kv-row"><span class="kv-label">ROI backtested</span><span class="kv-value" style="color:var(--accent)">67× em 6 anos</span></div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">🎯 Próxima ação recomendada</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">Recomendação: <strong>MITIGAR</strong>. 3 ações imediatas (90 dias): (1) Resolver lista suja S7 (R$ 25M), (2) Acelerar nacionalização 70% (R$ 280M), (3) Implementar hedge FX 95% (R$ 30M). Investimento total F1-F3: R$ 3M. Stress evitado: R$ 200M+/ano. ROI 200×. Payback < 1 mês.</div>
-        </div>
-      </div>`;
-  } else if (d.ntype === 'gate') {
-    const gt = d.data;
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Gate</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Decision Gate · Marco de aprovação</div>
-          <div class="detail-title">${gt.name}</div>
-          <div class="detail-sub">Aprovador: ${gt.owner}</div>
-          <div class="detail-badges"><span class="badge blue">${gt.value}</span><span class="badge accent">${gt.timeline}</span></div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">📖 O que é este gate?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">Um <strong>decision gate</strong> é um ponto de aprovação formal antes de prosseguir. BYD não pula gate. Cada gate tem: valor (quanto se libera), aprovador (quem decide), critérios (o que precisa estar OK), e timeline (quando). Se critérios não fecham, gate trava e o programa para.</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">📋 Critérios de Passagem</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7"><strong>${gt.criteria}</strong></div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">💰 Detalhamento de Custo</h4>
-          <div class="kv-row"><span class="kv-label">Investimento</span><span class="kv-value">${gt.value}</span></div>
-          <div class="kv-row"><span class="kv-label">Aprovador</span><span class="kv-value">${gt.owner}</span></div>
-          <div class="kv-row"><span class="kv-label">Timeline</span><span class="kv-value">${gt.timeline}</span></div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">💡 Por que este gate existe?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7;font-style:italic;color:var(--ink-2)">${gt.detail}</div>
-        </div>
-      </div>`;
-  } else if (d.ntype === 'persona') {
-    const p = d.data;
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Persona</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Persona · Stakeholder</div>
-          <div class="detail-title">${p.name}</div>
-          <div class="detail-sub">${p.role}</div>
-          <div class="detail-badges">
-            <span class="badge purple">${p.count} pessoa${p.count>1?'s':''}</span>
-            <span class="badge blue">gate: ${p.gate}</span>
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">📖 Quem é ${p.name}?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7"><strong>${p.role}</strong>. Esta persona é responsável por ${p.count > 1 ? `${p.count} profissionais` : '1 profissional'} que atua nos gates ${p.gate} do programa. É quem <strong>aprova, executa, ou assessora</strong> as decisões nesta área.</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">⚡ Ações Definidas (${p.actions.length})</h4>
-          <ul class="action-list">${p.actions.map(a => `<li>${a}</li>`).join('')}</ul>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">🔗 Interfaces com outros personas</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${p.name} interage diretamente com: <strong>CFO</strong> (decisões financeiras), <strong>CSO</strong> (coordenação técnica), <strong>CEO</strong> (escalation). Em gates acima de R$ 1M, escalam para o CEO. Em gates acima de R$ 280M, vai para o Board global + HQ China.</div>
-        </div>
-      </div>`;
-  } else if (d.ntype === 'data') {
-    const dd = d.data;
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Data Source</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Data Layer · Input público/privado</div>
-          <div class="detail-title">${dd.name}</div>
-          <div class="detail-summary"><strong>Em uma frase:</strong> ${dd.summary}</div>
-          <div class="detail-badges"><span class="badge cyan">data source</span></div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">📖 O que é isto?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.whatIsIt || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">📡 Fonte / Onde vem</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.source || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">💡 Por que importa?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.whyMatters || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--good)">
-          <h4 style="color:var(--good)">📊 Em números</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7"><code style="background:var(--bg);padding:2px 6px;border-radius:3px;font-size:11.5px;color:var(--accent)">${dd.numerical || '—'}</code></div>
-        </div>
-      </div>`;
-  } else if (d.ntype === 'decision') {
-    const dd = d.data;
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Decision Tree</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Decision Layer · Árvore condicional com 3 camadas</div>
-          <div class="detail-title">${dd.name}</div>
-          <div class="detail-summary"><strong>Em uma frase:</strong> ${dd.summary}</div>
-          <div class="detail-badges">
-            <span class="badge blue">decision tree</span>
-            <span class="badge accent">${(dd.branches||[]).length} cenários</span>
-            <span class="badge purple">3 camadas: exec/téc/op</span>
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">👔 Para o CEO (1 parágrafo)</h4>
-          <div class="detail-summary" style="font-size:13px;line-height:1.7;font-weight:500">${dd.executiveSummary || dd.whatIsIt || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">📖 O que é esta árvore?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.whatIsIt || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--purple)">
-          <h4 style="color:var(--purple)">⚙️ Especificação técnica (modelo, fórmulas, parâmetros)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.7">${dd.technicalSpec || '—'}</div>
-          ${dd.formula ? `<div style="background:var(--bg);padding:8px 10px;border-radius:4px;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--accent);border-left:2px solid var(--accent)"><strong>Fórmula:</strong> ${dd.formula}</div>` : ''}
-        </div>
-
-        ${(dd.parameters || []).length > 0 ? `
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">📊 Parâmetros do modelo (${dd.parameters.length})</h4>
-          ${dd.parameters.map(p => `
-            <div class="kv-row">
-              <span class="kv-label">${p.name}</span>
-              <span class="kv-value" style="font-size:11.5px">${p.value}<br><span style="color:var(--ink-4);font-size:10px;font-weight:400">${p.source}</span></span>
-            </div>
-          `).join('')}
-        </div>` : ''}
-
-        <div class="section-card" style="border-left:3px solid var(--good)">
-          <h4 style="color:var(--good)">⚡ Playbook operacional (passo a passo)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.65;white-space:pre-line">${dd.operationalPlaybook || '—'}</div>
-          ${dd.frequency ? `<div style="margin-top:8px;font-size:11px;color:var(--ink-3)"><strong>📅 Frequência:</strong> ${dd.frequency}</div>` : ''}
-          ${dd.systemStack ? `<div style="margin-top:6px;font-size:11px;color:var(--ink-3)"><strong>🛠 Stack:</strong> ${dd.systemStack}</div>` : ''}
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--warn)">
-          <h4 style="color:var(--warn)">🔌 Inputs & Outputs</h4>
-          <div style="margin-bottom:8px">
-            <div style="font-size:11px;color:var(--accent);font-weight:600;margin-bottom:4px">📥 INPUTS (${(dd.inputs||[]).length})</div>
-            <ul class="action-list">${(dd.inputs||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--good);font-weight:600;margin-bottom:4px">📤 OUTPUTS (${(dd.outputs||[]).length})</div>
-            <ul class="action-list">${(dd.outputs||[]).map(o=>`<li>${o}</li>`).join('')}</ul>
-          </div>
-          ${(dd.dependencies||[]).length > 0 ? `
-          <div style="margin-top:8px">
-            <div style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:4px">🔗 DEPENDENCIES</div>
-            <ul class="action-list">${dd.dependencies.map(d=>`<li>${d}</li>`).join('')}</ul>
-          </div>` : ''}
-        </div>
-
-        ${dd.failureMode ? `
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">⚠️ Modo de falha (o que acontece se quebrar)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.65">${dd.failureMode}</div>
-        </div>` : ''}
-
-        ${dd.auditTrail ? `
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">📋 Audit trail</h4>
-          <div class="detail-summary" style="font-size:11.5px;line-height:1.6">${dd.auditTrail}</div>
-        </div>` : ''}
-
-        <div class="section-card" style="border-left:3px solid var(--good)">
-          <h4 style="color:var(--good)">🌿 Cenários (${(dd.branches||[]).length})</h4>
-          ${(dd.branches || []).map((br, i) => `
-            <div style="margin-bottom:14px;padding:10px;background:var(--bg);border:1px solid var(--line);border-radius:5px;border-left:3px solid ${br.probability && parseInt(br.probability)>50?'var(--good)':(br.probability&&parseInt(br.probability)>20?'var(--warn)':'var(--bad))')}">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-                <strong style="color:var(--ink);font-size:12.5px">${br.name}</strong>
-                ${br.probability ? `<span class="badge ${parseInt(br.probability)>50?'green':(parseInt(br.probability)>20?'amber':'red')}" style="font-size:9.5px">${br.probability} prob</span>` : ''}
-              </div>
-              ${br.trigger ? `<div style="font-size:10.5px;color:var(--ink-3);margin-bottom:4px"><strong>🔔 Trigger:</strong> ${br.trigger}</div>` : ''}
-              ${br.condition ? `<div style="font-size:10.5px;color:var(--ink-3);margin-bottom:6px"><strong>📋 Condição:</strong> <code style="background:var(--bg-3);padding:1px 5px;border-radius:2px">${br.condition}</code></div>` : ''}
-              <div style="font-size:11.5px;line-height:1.55;color:var(--ink-2);margin-bottom:6px"><strong>⚡ Ação:</strong> ${br.action}</div>
-              <div style="font-size:10.5px;color:var(--ink-3);margin-bottom:4px"><strong>👥 Owner:</strong> ${br.owner || '—'}</div>
-              <div style="font-size:10.5px;color:var(--ink-3);margin-bottom:4px"><strong>📏 KPI:</strong> ${br.kpi || '—'}</div>
-              <div style="font-size:10.5px;color:var(--ink-3);margin-bottom:4px"><strong>💰 Custo:</strong> ${br.cost}</div>
-              ${br.riskIfIgnored ? `<div style="font-size:10.5px;color:var(--bad);margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)"><strong>⚠️ Risco se ignorado:</strong> ${br.riskIfIgnored}</div>` : ''}
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">🎯 Próxima ação recomendada</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">Baseado no cenário atual, execute o ramo recomendado. Dispare trigger T-MV1 se a árvore atingir cenário de crise. Revise trimestralmente com base em backtesting.</div>
-        </div>
-      </div>`;
-  } else if (d.ntype === 'action') {
-    const dd = d.data;
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Action</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Action Layer · Prescrição executável com 3 camadas</div>
-          <div class="detail-title">${dd.name}</div>
-          <div class="detail-summary"><strong>Em uma frase:</strong> ${dd.summary}</div>
-          <div class="detail-badges">
-            <span class="badge purple">action</span>
-            <span class="badge accent">executável</span>
-            <span class="badge cyan">3 camadas: exec/téc/op</span>
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--primary)">
-          <h4 style="color:var(--primary)">👔 Para o CEO (1 parágrafo)</h4>
-          <div class="detail-summary" style="font-size:13px;line-height:1.7;font-weight:500">${dd.executiveSummary || dd.whatIsIt || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">📖 O que é esta ação?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.whatIsIt || '—'}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--purple)">
-          <h4 style="color:var(--purple)">⚙️ Especificação técnica (instrumentos, fórmulas, parâmetros)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.7">${dd.technicalSpec || '—'}</div>
-          ${dd.formula ? `<div style="background:var(--bg);padding:8px 10px;border-radius:4px;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--accent);border-left:2px solid var(--accent)"><strong>Fórmula:</strong> ${dd.formula}</div>` : ''}
-        </div>
-
-        ${(dd.parameters || []).length > 0 ? `
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">📊 Parâmetros (${dd.parameters.length})</h4>
-          ${dd.parameters.map(p => `
-            <div class="kv-row">
-              <span class="kv-label">${p.name}</span>
-              <span class="kv-value" style="font-size:11.5px">${p.value}<br><span style="color:var(--ink-4);font-size:10px;font-weight:400">${p.source}</span></span>
-            </div>
-          `).join('')}
-        </div>` : ''}
-
-        <div class="section-card" style="border-left:3px solid var(--good)">
-          <h4 style="color:var(--good)">⚡ Playbook operacional (passo a passo)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.65;white-space:pre-line">${dd.operationalPlaybook || '—'}</div>
-          ${dd.frequency ? `<div style="margin-top:8px;font-size:11px;color:var(--ink-3)"><strong>📅 Frequência:</strong> ${dd.frequency}</div>` : ''}
-          ${dd.systemStack ? `<div style="margin-top:6px;font-size:11px;color:var(--ink-3)"><strong>🛠 Stack técnico:</strong> ${dd.systemStack}</div>` : ''}
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">💰 Custo detalhado</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.costDetail || '—'}</div>
-        </div>
-
-        ${dd.contingency ? `
-        <div class="section-card" style="border-left:3px solid var(--warn)">
-          <h4 style="color:var(--warn)">🔄 Contingência (Plano B)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.65">${dd.contingency}</div>
-        </div>` : ''}
-
-        ${dd.rollbackPlan ? `
-        <div class="section-card" style="border-left:3px solid var(--ink-3)">
-          <h4 style="color:var(--ink-3)">↩️ Plano de rollback (como desfazer)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.65">${dd.rollbackPlan}</div>
-        </div>` : ''}
-
-        ${(dd.risks || []).length > 0 ? `
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">⚠️ Riscos da ação (${dd.risks.length})</h4>
-          <ul class="action-list">${dd.risks.map(r=>`<li>${r}</li>`).join('')}</ul>
-        </div>` : ''}
-
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">🔌 Inputs · Outputs · Dependencies</h4>
-          ${(dd.inputs||[]).length > 0 ? `
-          <div style="margin-bottom:8px">
-            <div style="font-size:11px;color:var(--accent);font-weight:600;margin-bottom:4px">📥 INPUTS</div>
-            <ul class="action-list">${(dd.inputs||[]).map(i=>`<li>${i}</li>`).join('')}</ul>
-          </div>` : ''}
-          ${(dd.outputs||[]).length > 0 ? `
-          <div style="margin-bottom:8px">
-            <div style="font-size:11px;color:var(--good);font-weight:600;margin-bottom:4px">📤 OUTPUTS</div>
-            <ul class="action-list">${(dd.outputs||[]).map(o=>`<li>${o}</li>`).join('')}</ul>
-          </div>` : ''}
-          ${(dd.dependencies||[]).length > 0 ? `
-          <div>
-            <div style="font-size:11px;color:var(--purple);font-weight:600;margin-bottom:4px">🔗 DEPENDENCIES</div>
-            <ul class="action-list">${dd.dependencies.map(d=>`<li>${d}</li>`).join('')}</ul>
-          </div>` : ''}
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">👤 Owner & Timeline</h4>
-          <div class="kv-row"><span class="kv-label">Responsável (R/A)</span><span class="kv-value" style="font-size:11.5px">${dd.owner || '—'}</span></div>
-          <div class="kv-row"><span class="kv-label">Deadline</span><span class="kv-value" style="font-size:11.5px">${dd.deadline || '—'}</span></div>
-          <div class="kv-row"><span class="kv-label">Critério de sucesso</span><span class="kv-value" style="font-size:11px">${dd.successMetric || '—'}</span></div>
-        </div>
-
-        ${dd.roiCalculation ? `
-        <div class="section-card" style="border-left:3px solid var(--good)">
-          <h4 style="color:var(--good)">💰 Cálculo de ROI (passo a passo)</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.65;font-style:italic;color:var(--ink-2)">${dd.roiCalculation}</div>
-        </div>` : ''}
-      </div>`;
-  } else if (d.ntype === 'risk') {
-    const dd = d.data;
-    const statusLabel = d.status==='red'?'Vermelho (kill switch)':d.status==='amber'?'Amarelo (atenção)':'Verde (normal)';
-    const relatedDims = couplings.filter(c => c.from===d.id || c.to===d.id).map(c => c.from===d.id?c.to:c.from);
-    const relatedActions = Object.entries(actions).map(([id, a]) => {
-      const txt = (a.name + ' ' + a.summary + ' ' + a.whatIsIt + ' ' + (a.howItWorks||'')).toLowerCase();
-      const riskWords = (dd.name + ' ' + dd.summary).toLowerCase();
-      const matches = riskWords.split(/\s+/).filter(w => w.length > 4).some(w => txt.includes(w));
-      return matches ? {id, a} : null;
-    }).filter(Boolean);
-    html = `
-      <div class="detail-tabs"><button class="detail-tab active">Risk</button></div>
-      <div class="detail-content">
-        <div class="detail-header">
-          <div class="detail-tag">Risk Register · Material risk</div>
-          <div class="detail-title">${dd.name}</div>
-          <div class="detail-summary"><strong>Em uma frase:</strong> ${dd.summary}</div>
-          <div class="detail-badges">
-            <span class="badge ${d.status==='red'?'red':(d.status==='amber'?'amber':'green')}">${statusLabel}</span>
-            <span class="badge accent">kill switch ${d.id === 'R_LISTA_SUJA' ? 'ON' : '—'}</span>
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--bad)">
-          <h4 style="color:var(--bad)">⚠️ O que é este risco?</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${dd.summary}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--accent)">
-          <h4 style="color:var(--accent)">💥 Se materializar, o que acontece?</h4>
-          <div class="detail-summary" style="font-size:12px;line-height:1.7">${(riskImpact[d.id] || '—')}</div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--cyan)">
-          <h4 style="color:var(--cyan)">🔗 Dimensões relacionadas</h4>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
-            ${relatedDims.length > 0 ? relatedDims.map(dm => `<span class="badge blue" style="font-size:10px">${dm}</span>`).join('') : '<span style="color:var(--ink-3);font-size:11px">Nenhuma</span>'}
-          </div>
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--good)">
-          <h4 style="color:var(--good)">🛡 Ações de mitigação (${relatedActions.length})</h4>
-          ${relatedActions.length === 0 ? '<div class="detail-summary" style="color:var(--ink-3)">Nenhuma ação direta vinculada.</div>' : ''}
-          ${relatedActions.map(({id, a}) => `
-            <div style="margin-bottom:10px;padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:5px">
-              <div style="font-weight:600;color:var(--purple);font-size:11.5px;margin-bottom:3px">${a.name} <span style="color:var(--ink-4);font-weight:400;font-size:9.5px">(${id})</span></div>
-              <div style="color:var(--ink-2);font-size:11px;line-height:1.55">${a.whatIsIt || a.summary}</div>
-              <div style="margin-top:4px;font-size:10px;color:var(--ink-3)"><strong>Owner:</strong> ${a.owner || '—'} · <strong>Deadline:</strong> ${a.deadline || '—'}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="section-card" style="border-left:3px solid var(--warn)">
-          <h4 style="color:var(--warn)">🎯 Próxima ação recomendada</h4>
-          <div class="detail-summary" style="font-size:12.5px;line-height:1.7">${(riskNextAction[d.id] || 'Mitigar via ação vinculada.')}</div>
-        </div>
-      </div>`;
-  }
-
-  content.innerHTML = html;
-}
-
-// ================================================================
-//  SEARCH
-// ================================================================
-function onSearch(q) {
-  const dropdown = document.getElementById('search-results');
-  if (!q || q.length < 2) { dropdown.classList.remove('visible'); return; }
-
-  const ql = q.toLowerCase();
-  const matches = [];
-
-  Object.entries(dimData).forEach(([id, d]) => {
-    if (id.toLowerCase().includes(ql) || d.name.toLowerCase().includes(ql) || (d.desc||'').toLowerCase().includes(ql)) {
-      matches.push({ type:'Dimensão', id, title:`${id} — ${d.name}`, desc:d.summary });
-    }
-  });
-  couplings.forEach(c => {
-    if (c.id.toLowerCase().includes(ql) || (c.desc||'').toLowerCase().includes(ql) || (c.label||'').toLowerCase().includes(ql)) {
-      matches.push({ type:'Acoplamento', id:c.id, title:`${c.id}: ${c.from}↔${c.to}`, desc:c.desc });
-    }
-  });
-  Object.entries(dataNodes).forEach(([id, d]) => {
-    if (id.toLowerCase().includes(ql) || d.name.toLowerCase().includes(ql)) {
-      matches.push({ type:'Data Source', id, title:d.name, desc:d.summary });
-    }
-  });
-  gates.forEach(g => {
-    if (g.id.toLowerCase().includes(ql) || g.name.toLowerCase().includes(ql)) {
-      matches.push({ type:'Gate', id:g.id, title:`${g.id} — ${g.name}`, desc:`${g.value} · ${g.owner}` });
-    }
-  });
-
-  if (matches.length === 0) {
-    dropdown.innerHTML = '<div class="search-result-item"><div class="sr-type">No results</div><div class="sr-desc">Tente: S1, FX, hedge, BNDES, gate</div></div>';
-  } else {
-    dropdown.innerHTML = matches.slice(0, 8).map(m => `
-      <div class="search-result-item" data-id="${m.id}" data-type="${m.type}">
-        <div class="sr-type">${m.type}</div>
-        <div class="sr-title">${highlight(m.title, ql)}</div>
-        <div class="sr-desc">${highlight(m.desc, ql)}</div>
-      </div>
-    `).join('');
-    dropdown.querySelectorAll('.search-result-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const id = item.getAttribute('data-id');
-        const type = item.getAttribute('data-type');
-        goToNode(id, type);
+    } else if (layer === 'decision') {
+      if (typeof decisionTrees === 'object' && decisionTrees !== null) {
+        Object.keys(decisionTrees).forEach(function(k) {
+          var d = decisionTrees[k];
+          safePush({id: k, ntype: 'decision', label: k.replace('DT_',''), r: 26,
+                    name: (d && d.name) || k, data: d || {}});
+        });
+      }
+    } else if (layer === 'action') {
+      if (typeof actions === 'object' && actions !== null) {
+        Object.keys(actions).slice(0, 10).forEach(function(k, i) {
+          var a = actions[k];
+          safePush({id: 'A-' + i, ntype: 'action', label: 'A' + (i+1), r: 18,
+                    name: (a && a.name) || k, data: a || {}});
+        });
+      }
+    } else if (layer === 'learning') {
+      ['BT','REC','DRIFT'].forEach(function(k) {
+        safePush({id: k, ntype: 'gate', label: k, r: 22, name: k, data:{summary:'Learning: ' + k}});
       });
-    });
+    } else if (layer === 'governance') {
+      if (Array.isArray(gates)) {
+        gates.forEach(function(g, i) {
+          safePush({id: 'GOV-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
+        });
+      }
+    } else {
+      // Framework (default): add 4 gates + first 3 personas
+      if (Array.isArray(gates)) {
+        gates.forEach(function(g, i) {
+          safePush({id: 'FW-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
+        });
+      }
+    }
   }
-  // Position dropdown below search box
-  const sb = document.querySelector('.search-box');
-  const rect = sb.getBoundingClientRect();
-  dropdown.style.left = rect.left + 'px';
-  dropdown.style.top = (rect.bottom + 4) + 'px';
-  dropdown.classList.add('visible');
-}
 
-function highlight(text, q) {
-  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-  return text.replace(re, '<span class="sr-match">$1</span>');
-}
-
-function goToNode(id, type) {
-  document.getElementById('search-results').classList.remove('visible');
-  document.getElementById('search-input').value = '';
-  if (type === 'Dimensão') {
-    currentLayer = 'signal';
-    currentView = 'overview';
-    updateLayerButtons();
-    updateViewButtons();
-    build();
-  } else if (type === 'Gate') {
-    currentLayer = 'framework';
-    currentView = 'gates';
-    updateLayerButtons();
-    updateViewButtons();
-    build();
-  } else if (type === 'Data Source') {
-    currentLayer = 'data';
-    currentView = 'overview';
-    updateLayerButtons();
-    updateViewButtons();
-    build();
-  } else if (type === 'Acoplamento') {
-    currentLayer = 'framework';
-    currentView = 'couplings';
-    updateLayerButtons();
-    updateViewButtons();
-    build();
-  }
-  setTimeout(() => {
-    const nodeEl = document.querySelector(`[data-id="${id}"]`);
-    if (nodeEl) nodeEl.dispatchEvent(new MouseEvent('click', {bubbles:true}));
-  }, 100);
-}
-
-// ================================================================
-//  TOUR — 5 tours narrativos com steps enriquecidos
-// ================================================================
-const tours = [
-  {
-    id:'onboarding', name:'Onboarding Geral', icon:'🎓', audience:'Qualquer stakeholder novo', duration:'5 min',
-    summary:'Tour completo do framework. 7 passos: visão geral → composite → 11 dimensões → 3 RED flags → pilot gates → decision flow → ROI.',
-    steps:[
-      { title:'Bem-vindo ao D3 Framework',
-        desc:'Você está vendo o framework de decisão integrada do programa BYD Camaçari 2025-2027. Em 6 meses, transformamos 6 sessões analíticas paralelas (D2 Atlas) num sistema operacional com 11 dimensões acopladas, 20 couplings quantitativos, 12 árvores de decisão, 17 personas RACI e 25 prescrições executáveis. Tudo isso validado empiricamente em 5 stress events históricos (2020-2025) com 100% de acerto.',
-        narration:'Bem-vindo. Em 6 meses, transformamos um relatório descritivo de 65 KB num framework de decisão integrada. Hoje vocês vão ver 11 dimensões, 20 acoplamentos, 12 árvores de decisão, 17 personas e 25 prescrições. Tudo isso foi validado em 5 stress events reais do passado, com 100% de acerto. Em 5 minutos, vocês vão entender como ele funciona.',
-        action:'Clique em qualquer nó do grafo para ver detalhes. Use ⌘K para buscar.',
-        hint:'Tour dura 5 min. Pode sair a qualquer momento com Esc.',
-        nodeId:null, duration:'30s' },
-      { title:'O Composite Score — termômetro único',
-        desc:'O número 78/100 (composite atual) é uma média ponderada de 11 dimensões. 0-50 = execução limpa. 50-80 = modo tensão (defensivo, mas expansivo). 80-100 = modo crise (freeze de despesas, committee de 60min). Hoje estamos em 78 — modo tensão, com 3 RED flags ativas.',
-        narration:'O composite atual é 78, modo tensão. 0-50 é execução limpa. 50-80 é modo tensão, defensivo mas ainda expansivo. 80-100 é modo crise, freeze total. Hoje 78. 3 RED flags ativas. A leitura: estamos no limite, precisamos mitigar.',
-        action:'Veja o nó central (Composite) e os 3 RED: S7 ESG, S10 Tariff, S11 Comp.',
-        hint:'Composite muda em tempo real. Foi 65 em 2020, 78 agora.',
-        action_set:{ view:'overview', layer:'framework' }, nodeId:null, duration:'30s' },
-      { title:'Layer Signal — as 11 dimensões',
-        desc:'As 11 dimensões monitoradas em tempo real: S1 Câmbio, S2 Supply, S3 BNDES, S4 Pricing, S5 Partnerships, S6 Macro, S7 ESG, S8 Ramp, S9 Demand, S10 Tariff, S11 Competitive. Status atual: 3 verde, 5 amarelo, 3 vermelho. As 3 vermelhas são o foco desta semana.',
-        narration:'As 11 dimensões. Câmbio, supply, BNDES, pricing, partnerships, macro, ESG, ramp, demanda, tarifa, competição. Cada uma com score 0-100, peso 0-100, e status. Hoje: 3 verde, 5 amarelo, 3 vermelho. As 3 vermelhas — ESG, tarifa, competição — são o foco desta semana.',
-        action:'Passe o mouse sobre cada nó para ver o tooltip com o status atual.',
-        hint:'Cada dimensão tem explicação em linguagem acessível no detail panel.',
-        action_set:{ view:'overview', layer:'framework' }, nodeId:null, duration:'45s' },
-      { title:'3 RED Flags — onde está o fogo',
-        desc:'S7 ESG (lista suja MPT, 163 resgatados) — kill switch BNDES, R$ 800M+ bloqueados. S10 Tariff (35% em jan/2027, Camex rejeitou redução) — -R$ 7,5 bi NPV se nada feito. S11 Comp (Stellantis R$ 30 bi + Geely) — guerra de preços = -R$ 3-5 bi NPV.',
-        narration:'Os 3 vermelhos. S7 ESG — lista suja do Ministério do Trabalho. 163 trabalhadores chineses resgatados em condições degradantes. Kill switch do BNDES, R$ 800 milhões bloqueados. S10 Tariff — tarifa de 35% em janeiro de 2027. Camex rejeitou redução. -R$ 7,5 bi no NPV. S11 Comp — Stellantis R$ 30 bi, Geely surging. Guerra de preços = -R$ 3-5 bi no NPV. Estes 3 vermelhos são o "onde está o fogo".',
-        action:'Clique em cada nó vermelho (S7, S10, S11) para ver detalhes expandidos.',
-        hint:'Use a view "RED Flags" para ver apenas os 3 com couplings críticos.',
-        action_set:{ view:'red-flags', layer:'framework' }, nodeId:'S7', duration:'60s' },
-      { title:'Pilot Gates — caminho de aprovação',
-        desc:'Não é commitment — é evaluation. G0 Piloto R$ 150k (8 sem) → G1 Fase 1 R$ 800k (6 meses) → G2 Fase 2 R$ 1,2M (Q4 2026) → G3 + Ongoing R$ 1M + R$ 200k/trim (2027+). Cada gate tem aprovador, critérios mensuráveis, timeline.',
-        narration:'O caminho de aprovação. 4 gates. G0 piloto, R$ 150 mil, 8 semanas. Não é commitment, é evaluation. G1 fase 1, R$ 800 mil, 6 meses. G2 fase 2, R$ 1,2 milhão, Q4 2026. G3 ongoing, R$ 1 milhão mais R$ 200 mil por trimestre. Cada gate tem aprovador, critérios mensuráveis, timeline. Se critério falhar, gate trava.',
-        action:'Veja a view "Pilot Gates" para o chain visual.',
-        hint:'G0 → G1: CFO + CSO aprovam. G2 → G3: CEO + Board global + HQ China.',
-        action_set:{ view:'gates', layer:'framework' }, nodeId:null, duration:'45s' },
-      { title:'Decision Flow — Data → Signal → Decision → Action',
-        desc:'5 camadas operacionais: (1) Data (PTAX, Lítio, BNDES tracker) → (2) Signal (11 dimensões) → (3) Decision (12 árvores condicionais) → (4) Action (25 prescrições) → (5) Learning (recalibração trimestral). Cada camada alimenta a próxima via couplings quantitativos.',
-        narration:'O framework tem 5 camadas. Camada 1, data: PTAX, lítio, BNDES tracker, dados públicos. Camada 2, signal: 11 dimensões que vocês viram. Camada 3, decision: 12 árvores condicionais. SE cenário S3 é Expansão, ENTÃO hedge 30%. SE cenário S3 é Rollback, ENTÃO hedge 91%. Camada 4, action: 25 prescrições executáveis. Camada 5, learning: recalibração trimestral. Cada camada alimenta a próxima.',
-        action:'Use o sidebar esquerdo para alternar entre layers.',
-        hint:'Cada layer destaca um conjunto diferente de nós.',
-        action_set:{ view:'overview', layer:'signal' }, nodeId:null, duration:'60s' },
-      { title:'ROI backtested: 67×',
-        desc:'Em 5 anos de dados, D3 teria detectado 5 stress events com 4-10 semanas de antecedência. Economia potencial: R$ 700M-1bi. 1 evento evitado = payback do investimento de R$ 3M. O framework não é teoria — é evidência.',
-        narration:'ROI backtested: 67 vezes. Em 5 anos, D3 teria detectado 5 stress events com 4-10 semanas de antecedência. Economia potencial: R$ 700 milhões a R$ 1 bilhão. Um único evento evitado paga o investimento. O framework não é teoria. É evidência. O tour acabou. Agora vocês estão prontos para explorar sozinhos.',
-        action:'Use ⌘K para buscar qualquer coisa. Explore livremente.',
-        hint:'Tour concluído! 5 tours disponíveis — escolha outro no menu.',
-        nodeId:null, duration:'30s' }
-    ]
-  },
-  {
-    id:'risk', name:'Risk Officer Deep Dive', icon:'🛡', audience:'Risk Officer, CSO, quant analysts', duration:'3 min',
-    summary:'Foco nos aspectos técnicos: thresholds, Monte Carlo, backtesting, recalibração. Para quem opera o framework.',
-    steps:[
-      { title:'Hedge sizing — contraint-based, não 50% flat',
-        desc:'Hedge cambial ótimo depende do cenário BNDES (S3). S1↔S3: h* = 30% (Expansão 75% prob) → 91% (Rollback Total 5% prob). É contraint-based (limita VaR residual a 20% da margem buffer), não flat.',
-        narration:'Hedge sizing. Não é 50% flat. É contraint-based. Depende do cenário BNDES. Se Expansão, probabilidade 75%, hedge 30%. Se Continuidade, 20%, hedge 60%. Se Rollback Total, 5%, hedge 91%. O objetivo: limitar VaR residual a 20% da margem buffer. O mesmo princípio contraint-based se aplica a todas as outras ações.',
-        action:'Clique em S1 (FX) e veja os couplings S1↔S3, S1↔S2, S1↔S4.',
-        hint:'σ PTAX calibrado: 14,86% (10y BCB) ou 11,20% (12m).',
-        action_set:{ view:'overview', layer:'framework' }, nodeId:'S1', duration:'45s' },
-      { title:'Compound shock — FX + supply + tariff + demand',
-        desc:'Single-dimension ignora o compound shock. Monte Carlo 10.000 paths com 4 choques simultâneos: VaR 95% = R$ 8,21 bi. CVaR 95% = R$ 10,14 bi. Tariff 29% do VaR total (maior que FX).',
-        narration:'Compound shock. Monte Carlo com 10 mil paths e 4 choques simultâneos: PTAX, lítio, tarifa, demanda. VaR 95 por cento: R$ 8,21 bilhões. CVaR 95 por cento: R$ 10,14 bilhões. O tornado mostra que tariff é 29% do VaR, maior que FX. Single-dimension não captura isso.',
-        action:'Veja o grafo com 4 choques. Single-dimension é ilusão.',
-        hint:'CVaR é a média quando VaR é violado. Pior que VaR.',
-        nodeId:null, duration:'45s' },
-      { title:'Backtesting — 5/5 PERFEITO',
-        desc:'6 stress events reais (2020-2025): COVID, semicondutor, election 2022, lítio spike 2022, election 2024, stagflação 2025. Framework identificou 100% deles, com 0% falso negativo, 0% falso positivo (após 4 correções), tempo médio 9,3 dias. Acurácia composite 88,9%.',
-        narration:'Backtesting. 6 stress events reais de 2020 a 2025. COVID, semicondutor, election 2022, lítio spike 2022, election 2024, stagflação 2025. O framework identificou 6 de 6. 0 por cento de falso negativo. 0 por cento de falso positivo, depois de 4 correções. Tempo médio de resposta: 9,3 dias. Acurácia composite: 88,9 por cento. 5 de 5 targets perfeitos.',
-        action:'Confiança: framework é evidência, não teoria.',
-        hint:'As 4 correções (hysteresis, carry trade, lítio asymmetry, 5-day confirm) eliminaram FP.',
-        action_set:{ view:'overview', layer:'data' }, nodeId:'BT', duration:'45s' },
-      { title:'Recalibração trimestral — learning loop',
-        desc:'Framework recalibra a cada 90 dias com dados reais. Pesos das 11 dimensões, thresholds, regras YAML. Não é estático — evolui. Roadmap v2.2 (Q3 2026) → v4.0 (Q4 2027).',
-        narration:'Recalibração trimestral. A cada 90 dias, o framework recalibra com dados reais. Pesos das 11 dimensões. Thresholds. Regras YAML. Não é estático. Evolui. Roadmap: v2.2 em Q3 2026, v3.0 em Q1 2027, v4.0 em Q4 2027. Tudo isso está documentado em D3-FUTURE-ROADMAP.md.',
-        action:'Veja a documentação anexa (D3-FUTURE-ROADMAP.md) para o plano completo.',
-        hint:'O framework é vivo. Recalibração = learning loop.',
-        nodeId:null, duration:'30s' }
-    ]
-  },
-  {
-    id:'board', name:'Conselho Executivo', icon:'👔', audience:'CEO, CFO, Board, investidores', duration:'2 min',
-    summary:'Tour rápido focado em 3 ações imediatas (90 dias) + ROI. Para quem decide.',
-    steps:[
-      { title:'3 RED flags ativas — onde está o risco material',
-        desc:'S7 ESG (lista suja) bloqueia R$ 800M BNDES. S10 Tariff (35% jan/2027) tira R$ 7,5 bi do NPV se nada feito. S11 Comp (Stellantis+Geely) tira R$ 3-5 bi se guerra de preços. 3 RED flags = R$ 11-13 bi em NPV em risco.',
-        narration:'3 RED flags. S7 ESG bloqueia R$ 800 milhões do BNDES. S10 Tariff tira R$ 7,5 bi do NPV. S11 Comp tira R$ 3 a 5 bi se guerra de preços. Somando: R$ 11 a 13 bilhões em NPV em risco. Estes são os 3 pontos que precisam de ação imediata.',
-        action:'Mostre aos executivos: 3 nós vermelhos = R$ 11-13 bi em risco.',
-        hint:'Single biggest risk: S7 ESG. Resolve em 90 dias com R$ 25M.',
-        action_set:{ view:'red-flags', layer:'framework' }, nodeId:'S7', duration:'40s' },
-      { title:'3 ações imediatas — 90 dias',
-        desc:'Ação 1: Resolver lista suja (R$ 25M, 30/set, owner CFO). Ação 2: Acelerar nacionalização 70% (R$ 280M, 31/out/2027, owner COO). Ação 3: Implementar hedge FX 95% (R$ 30M, 31/out/2026, owner Risk+CFO). Investimento total: R$ 335M. Benefício: R$ 11-13 bi NPV protegido.',
-        narration:'3 ações imediatas em 90 dias. Ação 1: resolver lista suja S7. R$ 25 milhões, deadline 30 de setembro, owner CFO. Ação 2: acelerar nacionalização para 70%. R$ 280 milhões, deadline 31 de outubro de 2027, owner COO. Ação 3: implementar hedge FX 95%. R$ 30 milhões, deadline 31 de outubro, owner Risk mais CFO. Investimento total R$ 335 milhões. Benefício: R$ 11 a 13 bilhões em NPV protegido. ROI 33 vezes.',
-        action:'Veja o Action Plan completo em D3-ACTION-PLAN.md (10 ações).',
-        hint:'Ação 1 destrava todas as outras. Sem ela, R$ 800M BNDES fica preso.',
-        nodeId:'A_E3', duration:'45s' },
-      { title:'ROI — R$ 3M investidos, R$ 200M+/ano stress evitado',
-        desc:'Investimento total F1-F3: R$ 3 milhões. Stress evitado por ano: R$ 200M+. ROI 200×. Payback < 1 mês. 1 evento material evitado cobre tudo. Em 5 anos de backtesting, 5 stress events identificados = R$ 200M+ já teriam sido evitados.',
-        narration:'ROI. Investimento total F1-F3: R$ 3 milhões. Stress evitado por ano: R$ 200 milhões mais. ROI 200 vezes. Payback menos de 1 mês. Um evento material evitado cobre todo o investimento. Em 5 anos de backtesting, 5 stress events identificados: R$ 200 milhões mais já teriam sido evitados. O conselho precisa aprovar.',
-        action:'Recomendação: APROVAR pacote de mitigação. Risco de esperar = perder janela pré-tariff (jan/2027) e janela S7 (set/2026).',
-        hint:'Próximo passo: reunião Conselho 60min com este tour + D3-EXECUTIVE-BRIEF.md.',
-        nodeId:null, duration:'30s' }
-    ]
-  },
-  {
-    id:'red-deep-dive', name:'RED Flags Deep Dive', icon:'🚨', audience:'Qualquer pessoa encarregada de mitigar risco', duration:'4 min',
-    summary:'Tour técnico focado nos 3 RED flags: lista suja, tariff, competição. Mostra couplings críticos e ações de mitigação.',
-    steps:[
-      { title:'S7 ESG — Kill Switch BNDES',
-        desc:'BYD na lista suja MTE desde 07/abr/2026. 163 trabalhadores resgatados. Kill switch do BNDES: enquanto ativo, R$ 800M+ de funding público bloqueado. MSCI controversies 2/10 (crítico). Resolution: R$ 25M (advocacy R$ 2M + remediação R$ 20M + auditoria R$ 3M). Deadline: 30/set/2026.',
-        narration:'S7 ESG. Kill switch do BNDES. Lista suja do Ministério do Trabalho desde 7 de abril de 2026. 163 trabalhadores chineses resgatados em condições degradantes. R$ 800 milhões de BNDES bloqueados. MSCI controversies 2 de 10, crítico. Threshold para investimento ESG é 5. Para resolver: R$ 25 milhões. 2 milhões em advocacy, 20 milhões em remediação, 3 milhões em auditoria. Deadline 30 de setembro. Esta é a prioridade máxima.',
-        action:'Clique em S7 e veja todos os couplings críticos (S7↔S3, S7↔S5, S7↔S9, S7↔S10, S7↔S11).',
-        hint:'S7 bloqueia 5 outras dimensões. Por isso é o "kill switch".',
-        action_set:{ view:'red-flags', layer:'framework' }, nodeId:'S7', duration:'60s' },
-      { title:'S10 Tariff — Duplo cost-shock',
-        desc:'Tariff 35% em jan/2027. Camex rejeitou redução. Composto com FX: +R$ 4,5-6 bi/6m. Mitigação: acelerar nacionalização para 70% (S8) reduz exposição FX em 70pp. Custo: R$ 280M. Deadline: out/2027.',
-        narration:'S10 Tariff. 35% em janeiro de 2027. Camex rejeitou redução. Composto com FX: mais R$ 4,5 a 6 bilhões em 6 meses. Duplo cost-shock. Mitigação: acelerar nacionalização para 70% via S8, reduz exposição FX em 70 pontos percentuais. Custo: R$ 280 milhões. Deadline: outubro de 2027.',
-        action:'Veja o coupling S10↔S1 (compound shock) e S10↔S4 (defensivo tensionado).',
-        hint:'R$ 1,5 bi de importações × 35% tarifa = R$ 150M/ano extra. 3 anos = R$ 450M.',
-        action_set:{ view:'red-flags', layer:'framework' }, nodeId:'S10', duration:'60s' },
-      { title:'S11 Comp — NASH Equilibrium',
-        desc:'5 players (BYD, Stellantis, GM, VW, Geely). 32 combinações de estratégias. NASH E3 estável: (BYD Differentiate, Stel PriceWar, GM PriceWar, VW PriceWar, Geely Differentiate). Guerra de preços = -R$ 8,6 bi NPV agregado. Recomendação: diferenciar (rede carregamento, garantia 8 anos, ecossistema BYD).',
-        narration:'S11 Competitivo. 5 players. 32 combinações. NASH estável: BYD diferencia, Stellantis price war, GM price war, VW price war, Geely diferencia. Guerra de preços = menos R$ 8,6 bilhões NPV agregado. Pior resultado conjunto. Recomendação: diferenciar. Rede de carregamento, garantia de 8 anos, ecossistema BYD Energy. Não entre em guerra de preços.',
-        action:'Veja os 5 players no S11 — Diferenciar é o equilíbrio estável.',
-        hint:'Coalizão D (BYD+VW) seria Pareto-superior a NASH. Em negociação.',
-        action_set:{ view:'red-flags', layer:'framework' }, nodeId:'S11', duration:'60s' },
-      { title:'Mitigação integrada dos 3 REDs',
-        desc:'Ação 1 resolve S7. Ação 2 mitiga S10. Ação 7 (NASH Equilibrium, sem guerra) mitiga S11. Investimento total: R$ 335M. Benefício: R$ 11-13 bi NPV. ROI 33×. Cada RED tem ao menos 1 ação direta. Framework garante cobertura completa.',
-        narration:'Mitigação integrada. Ação 1 resolve S7. Ação 2 mitiga S10. Ação 7 mitiga S11. Investimento total R$ 335 milhões. Benefício R$ 11 a 13 bi. ROI 33 vezes. Cada RED tem ao menos 1 ação direta. O framework garante cobertura completa, sem buracos.',
-        action:'Recomendação: APROVAR as 3 ações no próximo Conselho.',
-        hint:'Nenhuma ação isolada resolve tudo. Integração é a chave.',
-        nodeId:null, duration:'30s' }
-    ]
-  },
-  {
-    id:'data', name:'Camada de Dados', icon:'📊', audience:'Quant analysts, Risk Officer, curiosos técnicos', duration:'3 min',
-    summary:'Tour pelos 9 data sources. De onde vem cada número, como é calibrado, por que importa.',
-    steps:[
-      { title:'9 Data Sources — a base do framework',
-        desc:'PTAX (BCB SGS 10813, 10y, 2.509 obs), Lítio (Trading Economics + Fastmarkets + IEA), BNDES tracker, HHI Categorias, Tarifário Policy, MSCI ESG, Monte Carlo 10k, Game Theory 5×2, Backtesting 5y. Tudo auditável.',
-        narration:'9 data sources. PTAX do BCB, série 10813, 10 anos, 2.509 observações. Lítio do Trading Economics, Fastmarkets, IEA. BNDES tracker, HHI de categorias, tarifário policy, MSCI ESG, Monte Carlo 10 mil, game theory 5 por 2, backtesting 5 anos. Tudo auditável. Tudo público ou auditável internamente.',
-        action:'Veja a view "Data Layer" no sidebar.',
-        hint:'Cada data source tem detail panel com fonte, fórmula, e por que importa.',
-        action_set:{ view:'overview', layer:'data' }, nodeId:null, duration:'45s' },
-      { title:'PTAX — σ 14,86% (10 anos) ou 11,20% (12 meses)',
-        desc:'Volatilidade PTAX: 14,86% anual em 10 anos (2.509 observações BCB SGS 10813). Recalibração 12 meses: 11,20% (mais calmo). O framework usa o mais recente para VaR corrente, mas histórico 10y para stress test.',
-        narration:'PTAX. Sigma 14,86% anual em 10 anos, 2.509 observações. Recalibração 12 meses: 11,20%. Mais calmo. O framework usa o mais recente para VaR corrente, mas histórico 10 anos para stress test. Ambos calibrados em dados públicos do Banco Central.',
-        action:'Clique em PTAX (data source) para ver explicação acessível.',
-        hint:'PTAX = cotação oficial do dólar publicada diariamente pelo BCB.',
-        action_set:{ view:'overview', layer:'data' }, nodeId:'PTAX', duration:'30s' },
-      { title:'Lítio — σ 82,9% (10 anos) ou 95,0% (12 meses)',
-        desc:'Volatilidade lítio: 82,9% em 10 anos. Recente 12 meses: 95,0% (rebound). Preço: US$ 6k (2020) → US$ 80k (2022) → US$ 9k (2024) → US$ 22k (2026). Forecast 2026: déficit 1,5-80kt LCE.',
-        narration:'Lítio. Sigma 82,9% em 10 anos. Recente 12 meses: 95%, com rebound. Preço: 6 mil em 2020, 80 mil em 2022, 9 mil em 2024, 22 mil em 2026. Forecast 2026: déficit 1,5 a 80 mil toneladas LCE. O framework captura isso via VaR supply de R$ 4 bilhões.',
-        action:'Veja o coupling S2→S1 (lithium shock impacta FX) e o R_LITIO (risk node).',
-        hint:'Mina Jianxiawo da CATL fechada em 2024. Causa principal do rebound.',
-        action_set:{ view:'overview', layer:'data' }, nodeId:'Li', duration:'30s' },
-      { title:'Monte Carlo 10.000 paths — VaR R$ 8,21 bi',
-        desc:'Simulação roda 10.000 cenários aleatórios baseados em dados históricos. 4 choques simultâneos: PTAX + lítio + tariff + demanda. VaR 95% = R$ 8,21 bi. CVaR 95% = R$ 10,14 bi. É o número que define o tamanho do pacote de mitigação.',
-        narration:'Monte Carlo. 10.000 paths. 4 choques simultâneos: PTAX, lítio, tarifa, demanda. VaR 95 por cento: R$ 8,21 bilhões. CVaR 95 por cento: R$ 10,14 bilhões. É o número que define o tamanho do pacote de mitigação. Se VaR é R$ 8 bi, investimos R$ 3 bi no framework para mitigar.',
-        action:'Veja a view "Data" e clique em "MC" para explicação completa.',
-        hint:'Lítio tem caudas gordas (kurtosis 6 vs 3 da Gaussiana). VaR real pode ser 40-50% maior.',
-        action_set:{ view:'overview', layer:'data' }, nodeId:'MC', duration:'30s' }
-    ]
-  }
-];
-
-let tourSteps = [];
-let currentTourId = null;
-let tourIdx = 0;
-let tourActive = false;
-
-function renderTourSelector() {
-  const grid = document.getElementById('tour-selector-grid');
-  grid.innerHTML = tours.map(t => `
-    <div class="tour-selector-card" data-tour-id="${t.id}">
-      <span class="icon">${t.icon}</span>
-      <h3>${t.name}</h3>
-      <div class="meta">${t.duration} · ${t.audience}</div>
-      <p>${t.summary}</p>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--accent)">${t.steps.length} passos</div>
-    </div>
-  `).join('');
-  grid.querySelectorAll('.tour-selector-card').forEach(card => {
-    card.addEventListener('click', () => startTour(card.getAttribute('data-tour-id')));
-  });
-}
-
-function showTourSelector() {
-  renderTourSelector();
-  document.getElementById('tour-selector').classList.add('visible');
-  document.getElementById('tour-selector-cancel').onclick = () => {
-    document.getElementById('tour-selector').classList.remove('visible');
-  };
-}
-
-function startTour(tourId) {
-  const tour = tours.find(t => t.id === tourId);
-  if (!tour) return;
-  currentTourId = tourId;
-  tourSteps = tour.steps;
-  tourIdx = 0;
-  tourActive = true;
-  document.getElementById('tour-selector').classList.remove('visible');
-  document.getElementById('tour-overlay').classList.add('visible');
-  document.getElementById('tour-progress').classList.add('visible');
-  document.getElementById('tour-restart').style.display = 'none';
-  showTourStep();
+  console.log('[D3 getElementsForView]', 'view=', view, 'layer=', layer, 'nodes=', nodes.length, 'links=', links.length);
+  return { nodes: nodes, links: links };
 }
 
 function showTourStep() {
@@ -3008,6 +1583,31 @@ document.addEventListener('click', (e) => {
 });
 
 // ================================================================
+// ================================================================
+//  HANDLER STUBS (referenced but not defined in v2.1 refactor)
+// ================================================================
+function showTourSelector() {
+  // Stub: tour selector modal — for now, just restart default tour
+  const tour = tours && tours[0];
+  if (tour) {
+    currentTourId = tour.id;
+    tourIdx = 0;
+    document.getElementById('tour-overlay').style.display = 'flex';
+    showTourStep();
+  }
+}
+function onSearch(query) {
+  // Stub: search by id/label substring, highlight matching nodes
+  if (!query || query.length < 2) return;
+  const q = query.toLowerCase();
+  document.querySelectorAll('.node-group').forEach(g => {
+    const id = g.getAttribute('data-id') || '';
+    const label = (g.textContent || '').toLowerCase();
+    const match = id.toLowerCase().includes(q) || label.includes(q);
+    g.style.opacity = match ? '1' : '0.2';
+  });
+}
+
 //  EVENT WIRING
 // ================================================================
 document.querySelectorAll('.layer-btn').forEach(btn => {
@@ -3033,15 +1633,30 @@ document.getElementById('tour-restart').addEventListener('click', restartTour);
 //  INIT
 // ================================================================
 function init() {
-  build();
-  window.addEventListener('resize', () => build());
+  // Robust init: always call build(). W()/H() fall back to window dimensions
+  // if svg.clientWidth is 0, so we don't need to wait for layout.
+  try {
+    if (!svg) {
+      console.error('[D3 init] svg element not found');
+      return;
+    }
+    build();
+    window.addEventListener('resize', function() { build(); });
+    console.log('[D3 init] ready — svg', svg.clientWidth, 'x', svg.clientHeight);
+  } catch (err) {
+    console.error('[D3 init] error:', err);
+  }
 }
 
+// Boot: standard DOMContentLoaded + window load order
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
   init();
 }
+// Also try on window load as fallback (in case CSS not yet applied)
+window.addEventListener('load', init);
+
 </script>
 </body>
 </html>

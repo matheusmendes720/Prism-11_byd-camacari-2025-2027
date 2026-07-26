@@ -1,8 +1,9 @@
 # D3-Understand-Anything — Grafo de Conhecimento Interativo
 
 **Princípio**: "Graphs that teach > graphs that impress" (Egonex-AI/Understand-Anything)
-**Data**: 25/jul/2026
+**Data**: 25/jul/2026 (v3) / 25/jul/2026 22h (v4 — 7 layers, 9 views)
 **Localização**: `6_pitch/D3-UNDERSTAND-ANYTHING.html` + `6_pitch/D3-KNOWLEDGE-GRAPH.json`
+**Versão relacionada**: `D3-PITCH-GRAPH.html` v2.1 (7 layers × 9 views, mutual exclusivity)
 
 ---
 

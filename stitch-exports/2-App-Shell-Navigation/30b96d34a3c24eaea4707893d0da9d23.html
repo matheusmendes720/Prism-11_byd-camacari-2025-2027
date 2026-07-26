@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<title>AI Assistant Widget</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1173d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-800 antialiased">
+<div class="fixed bottom-6 right-6">
+<button class="bg-primary text-white rounded-full p-4 shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark" id="ai-widget-button">
+<span class="material-symbols-outlined text-3xl">auto_awesome</span>
+</button>
+</div>
+<div class="fixed inset-y-0 right-0 w-96 bg-background-light dark:bg-background-dark shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out font-display" id="ai-widget-panel">
+<div class="flex flex-col h-full">
+<div class="flex items-center justify-between p-4 border-b border-black/10 dark:border-white/10">
+<h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">AI Assistant</h2>
+<button class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200" id="close-widget-panel">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-4 flex-grow overflow-y-auto">
+<p class="text-sm text-gray-600 dark:text-gray-400">I can help you create goals and objectives based on your dreams. What are your aspirations?</p>
+<div class="space-y-2">
+<label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="dream-input">Describe your dreams</label>
+<textarea class="w-full h-36 p-3 rounded-lg border bg-background-light dark:bg-background-dark border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary focus:border-primary text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-shadow" id="dream-input" placeholder="e.g., 'I want to travel the world and learn to play the piano.'"></textarea>
+</div>
+<div class="flex justify-end pt-2">
+<button class="w-full flex items-center justify-center bg-primary text-white font-bold py-2 px-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark transition-colors">
+<span class="material-symbols-outlined mr-2">auto_awesome</span>
+            Generate Goals
+          </button>
+</div>
+<div class="pt-4">
+<h3 class="text-md font-semibold text-gray-800 dark:text-gray-100 mb-2">Suggestions</h3>
+<div class="space-y-2">
+<button class="w-full text-left p-3 rounded-lg bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 text-primary transition-colors">
+<p class="font-medium text-sm">Create a plan to learn a new language</p>
+</button>
+<button class="w-full text-left p-3 rounded-lg bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 text-primary transition-colors">
+<p class="font-medium text-sm">Outline steps to start a side business</p>
+</button>
+<button class="w-full text-left p-3 rounded-lg bg-primary/10 hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 text-primary transition-colors">
+<p class="font-medium text-sm">Develop a fitness and health routine</p>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    const widgetButton = document.getElementById('ai-widget-button');
+    const widgetPanel = document.getElementById('ai-widget-panel');
+    const closeButton = document.getElementById('close-widget-panel');
+    widgetButton.addEventListener('click', () => {
+      widgetPanel.classList.toggle('translate-x-full');
+    });
+    closeButton.addEventListener('click', () => {
+      widgetPanel.classList.add('translate-x-full');
+    });
+  </script>
+
+</body></html>

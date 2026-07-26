@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Journal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        :root {
+          --background-light: #f8fafc;
+          --background-dark: #0f172a;
+          --primary: #3b82f6;
+          --card-light: #ffffff;
+          --card-dark: #1e293b;
+          --text-light: #0f172a;
+          --text-dark: #f8fafc;
+          --text-muted-light: #64748b;
+          --text-muted-dark: #94a3b8;
+          --border-light: #e2e8f0;
+          --border-dark: #334155;
+        }
+        .dark {
+          --background-light: var(--background-dark);
+          --background-dark: var(--background-light);
+          --card-light: var(--card-dark);
+          --card-dark: var(--card-light);
+          --text-light: var(--text-dark);
+          --text-dark: var(--text-light);
+          --text-muted-light: var(--text-muted-dark);
+          --text-muted-dark: var(--text-muted-light);
+          --border-light: var(--border-dark);
+          --border-dark: var(--border-light);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+          font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .highlight-task { background-color: rgba(250, 204, 21, 0.2); }
+        .highlight-goal { background-color: rgba(59, 130, 246, 0.2); }
+    </style>
+</head>
+<body class="bg-background-light text-text-light antialiased">
+<div class="flex h-screen">
+<aside class="w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark flex flex-col">
+<div class="p-6">
+<h1 class="text-2xl font-bold text-primary">DreamTrack</h1>
+</div>
+<nav class="flex-1 px-4 py-2 space-y-2">
+<a class="flex items-center px-4 py-2 text-text-light dark:text-text-dark bg-blue-500/10 dark:bg-primary/20 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">edit_note</span>
+<span>Daily Entry</span>
+</a>
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">flag</span>
+<span>Goals</span>
+</a>
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">rocket_launch</span>
+<span>Objectives</span>
+</a>
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">checklist</span>
+<span>Tasks</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<a class="flex items-center px-4 py-2 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8 overflow-y-auto">
+<div class="max-w-7xl mx-auto">
+<header class="mb-8">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="text-3xl font-bold text-text-light dark:text-text-dark">NLP Extraction Details</h2>
+<p class="text-text-muted-light dark:text-text-muted-dark mt-1">Analysis of your entry from October 26, 2023</p>
+</div>
+<button class="bg-primary text-white font-semibold py-2 px-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark transition-colors flex items-center">
+<span class="material-symbols-outlined mr-2">arrow_back</span>
+                            Back to Entry
+                        </button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+<h3 class="text-xl font-bold text-text-light dark:text-text-dark mb-4">Narrative</h3>
+<div class="prose prose-slate dark:prose-invert max-w-none text-text-light dark:text-text-dark text-base leading-relaxed">
+<p>Managed to <mark class="highlight-task rounded px-1 py-0.5">finish the presentation slides</mark> for the quarterly review. Felt a huge sense of relief. Also, had a great brainstorming session with the team for the <mark class="highlight-goal rounded px-1 py-0.5">upcoming project</mark>. The energy was fantastic, and I'm really optimistic about the direction we're heading. This feels like a major step in my <mark class="highlight-goal rounded px-1 py-0.5">career growth</mark>.</p>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+<div class="flex items-center mb-3">
+<span class="material-symbols-outlined mr-3 text-yellow-500">task_alt</span>
+<h4 class="font-bold text-text-light dark:text-text-dark text-lg">"finish the presentation slides"</h4>
+</div>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Label:</span>
+<span class="font-medium bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs dark:bg-yellow-900 dark:text-yellow-300">Task</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Confidence:</span>
+<span class="font-semibold text-text-light dark:text-text-dark">92%</span>
+</div>
+<div class="pt-3 mt-3 border-t border-border-light dark:border-border-dark">
+<h5 class="font-semibold text-text-light dark:text-text-dark mb-2">Actions</h5>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-center text-left p-2 rounded-md bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-500/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">link</span>
+<span>Link to existing Task</span>
+</button>
+<button class="w-full flex items-center justify-center text-left p-2 rounded-md bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">add_task</span>
+<span>Create new Task</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+<div class="flex items-center mb-3">
+<span class="material-symbols-outlined mr-3 text-blue-500">flag</span>
+<h4 class="font-bold text-text-light dark:text-text-dark text-lg">"upcoming project"</h4>
+</div>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Label:</span>
+<span class="font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300">Goal</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Confidence:</span>
+<span class="font-semibold text-text-light dark:text-text-dark">85%</span>
+</div>
+<div class="pt-3 mt-3 border-t border-border-light dark:border-border-dark">
+<h5 class="font-semibold text-text-light dark:text-text-dark mb-2">Suggested Links</h5>
+<div class="space-y-1">
+<div class="flex items-center justify-between p-2 rounded-md bg-gray-50 dark:bg-gray-800/50">
+<span class="text-text-light dark:text-text-dark text-xs">Goal: "Launch Q4 Initiative"</span>
+<button class="text-primary hover:underline text-xs font-semibold">Link</button>
+</div>
+</div>
+</div>
+<div class="pt-3 mt-3 border-t border-border-light dark:border-border-dark">
+<h5 class="font-semibold text-text-light dark:text-text-dark mb-2">Actions</h5>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-center text-left p-2 rounded-md bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">add_circle</span>
+<span>Create new Goal</span>
+</button>
+<button class="w-full flex items-center justify-center text-left p-2 rounded-md bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">wrong_location</span>
+<span>Mark as missing snippet</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-border-light dark:border-border-dark">
+<div class="flex items-center mb-3">
+<span class="material-symbols-outlined mr-3 text-blue-500">rocket_launch</span>
+<h4 class="font-bold text-text-light dark:text-text-dark text-lg">"career growth"</h4>
+</div>
+<div class="space-y-3 text-sm">
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Label:</span>
+<span class="font-medium bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300">Objective</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Confidence:</span>
+<span class="font-semibold text-text-light dark:text-text-dark">78%</span>
+</div>
+<div class="pt-3 mt-3 border-t border-border-light dark:border-border-dark">
+<h5 class="font-semibold text-text-light dark:text-text-dark mb-2">Actions</h5>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-center text-left p-2 rounded-md bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-500/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">link</span>
+<span>Link to existing Objective</span>
+</button>
+<button class="w-full flex items-center justify-center text-left p-2 rounded-md bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors">
+<span class="material-symbols-outlined mr-2 text-sm">add_circle</span>
+<span>Create new Objective</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple dark mode toggle for demonstration
+        const html = document.querySelector('html');
+        // A button would normally handle this. For now, we can toggle it via console.
+        // e.g., html.classList.toggle('dark');
+    </script>
+
+</body></html>

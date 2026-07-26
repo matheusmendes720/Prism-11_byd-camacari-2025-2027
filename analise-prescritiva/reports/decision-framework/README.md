@@ -167,3 +167,15 @@ Layer 1: DATA         — D2 sessions, composite, refresh automático
 - [Decision framework](./1_framework/DECISION-FRAMEWORK.md)
 - [D3 spec](./1_framework/D3-PRESCRIPTIVE-SPEC.md)
 - [Planning files](./.planning/)
+
+---
+
+## Apresentações Visuais (6_pitch/)
+
+| Arquivo | Descrição |
+|---------|-----------|
+| `6_pitch/D3-PITCH-GRAPH.html` | **Grafo interativo D3** — 11 dimensões, 28 couplings, 4 gates, 5 personas. Visualização principal. |
+| `6_pitch/D3-INDEX-TECHNICAL-SUMMARY.md` | **Sumário técnico de índice** — referência rápida em português para apresentações. |
+| `6_pitch/D3-EXECUTIVE-BRIEF.md` | Brief executivo do framework. |
+| `6_pitch/D3-PITCH-1PAGE.md` | Pitch de 1 página para anexos de vaga. |
+| `../../../../Screen Recording 2026-07-25 201415.mp4` | Vídeo de apresentação do projeto. |

@@ -1055,7 +1055,9 @@ function build() {
         'data-from': l.from, 'data-to': l.to,
         'data-edgetype': l.edgeType,
         class: 'edge-label',
-        opacity: l.edgeType==='primary' || l.edgeType==='critical' ? '0.85' : '0.45'
+        // v2.1.2: hide edge labels by default, show on hover
+        opacity: '0',
+        'pointer-events': 'none'
       });
       text.textContent = l.label;
       edgesG.appendChild(text);
@@ -1075,40 +1077,40 @@ function build() {
     let fillColor, strokeColor, r = n.r, labelColor = '#e6e8ec', labelFont = 'Inter, sans-serif';
 
     if (n.ntype === 'composite') {
-      fillColor = 'rgba(224,164,94,0.15)';
+      fillColor = 'rgba(224,164,94,0.18)';
       strokeColor = COLORS.accent;
-      r = 50;
+      r = 62;
       labelColor = COLORS.accent;
       labelFont = 'Source Serif Pro, Georgia, serif';
     } else if (n.ntype === 'gate') {
       fillColor = 'rgba(74,222,128,0.15)';
       strokeColor = COLORS.green;
-      r = 22;
+      r = 28;
       labelColor = COLORS.green;
     } else if (n.ntype === 'persona') {
       fillColor = 'rgba(180,139,255,0.15)';
       strokeColor = COLORS.purple;
-      r = 18;
+      r = 24;
       labelColor = COLORS.purple;
     } else if (n.ntype === 'data') {
       fillColor = 'rgba(95,209,232,0.20)';
       strokeColor = COLORS.cyan;
-      r = 22;
+      r = 28;
       labelColor = COLORS.cyan;
     } else if (n.ntype === 'decision') {
       fillColor = 'rgba(107,149,240,0.20)';
       strokeColor = COLORS.primary;
-      r = 24;
+      r = 30;
       labelColor = COLORS.primary;
     } else if (n.ntype === 'action') {
       fillColor = 'rgba(180,139,255,0.15)';
       strokeColor = COLORS.purple;
-      r = 22;
+      r = 26;
       labelColor = COLORS.purple;
     } else if (n.ntype === 'trigger') {
       fillColor = 'rgba(180,139,255,0.20)';
       strokeColor = COLORS.purple;
-      r = 16;
+      r = 22;
       labelColor = COLORS.purple;
     } else if (n.ntype === 'learning') {
       fillColor = 'rgba(95,209,232,0.20)';
@@ -1130,7 +1132,7 @@ function build() {
     } else { // dim
       fillColor = 'rgba(74,222,128,0.18)';
       strokeColor = statusColor(n.status);
-      r = n.r;
+      r = (n.r && n.r > 0) ? Math.max(n.r, 34) : 34;
       labelColor = n.status===STATUS.RED ? COLORS.red : '#e6e8ec';
     }
 
@@ -1236,8 +1238,9 @@ function viewLabel(v) {
 function computePositions(nodes, links) {
   const w = W(), h = H();
   const cx = w / 2, cy = h / 2;
-  let R = Math.min(w, h) * 0.32;
-  if (!isFinite(R) || R < 50) R = 250; // safe fallback
+  // Use up to 40% of the smaller dimension, with bigger fallback
+  let R = Math.min(w, h) * 0.40;
+  if (!isFinite(R) || R < 50) R = 360; // bigger fallback so 11 dims spread out
   if (!isFinite(cx)) cx = 600;
   if (!isFinite(cy)) cy = 400;
 
@@ -1387,7 +1390,7 @@ function getElementsForView(view, layer) {
       nodes.push({
         id: k, ntype: 'dim', label: d.short || k, name: d.name || k,
         status: d.status || 'green', score: d.score || 70,
-        weight: d.weight || 0.1, desc: d.desc || '', r: 30
+        weight: d.weight || 0.1, desc: d.desc || '', r: 36
       });
     });
   }
@@ -1812,27 +1815,32 @@ function selectNode(nodeId) {
     svgEl.querySelectorAll('.node-group').forEach(g => {
       g.classList.remove('selected');
     });
-    const target = svgEl.querySelector('.node-group[data-id="' + CSS.escape(nodeId) + '"]');
+    // Manual escape (CSS.escape may not exist in all browsers)
+    var safeId = String(nodeId).replace(/[\\"\]]/g, '\\$&');
+    var target = svgEl.querySelector('.node-group[data-id="' + safeId + '"]');
     if (target) target.classList.add('selected');
     // Dim everything that is not the selected node or a direct neighbour
-    const connected = new Set([nodeId]);
-    svgEl.querySelectorAll('.edge').forEach(edge => {
-      const src = edge.getAttribute('data-src') || '';
-      const dst = edge.getAttribute('data-dst') || '';
+    var connected = new Set([nodeId]);
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      var src = edge.getAttribute('data-from') || '';
+      var dst = edge.getAttribute('data-to') || '';
       if (src === nodeId || dst === nodeId) {
         connected.add(src);
         connected.add(dst);
       }
     });
-    svgEl.querySelectorAll('.node-group').forEach(g => {
-      const id = g.getAttribute('data-id') || '';
+    svgEl.querySelectorAll('.node-group').forEach(function(g) {
+      var id = g.getAttribute('data-id') || '';
       g.style.opacity = connected.has(id) ? '1' : '0.15';
     });
-    svgEl.querySelectorAll('.edge').forEach(edge => {
-      const src = edge.getAttribute('data-src') || '';
-      const dst = edge.getAttribute('data-dst') || '';
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      var src = edge.getAttribute('data-from') || '';
+      var dst = edge.getAttribute('data-to') || '';
       edge.style.opacity = (src === nodeId || dst === nodeId) ? '1' : '0.05';
     });
+    // Update detail panel
+    var nodeObj = (typeof nodesRendered !== 'undefined' && nodesRendered) ? nodesRendered.find(function(n) { return n.id === nodeId; }) : null;
+    if (nodeObj && typeof showDetail === 'function') showDetail(nodeObj);
   } catch (err) {
     console.error('[D3 selectNode] error:', err);
   }
@@ -1844,12 +1852,19 @@ function highlightConnections(nodeId) {
     if (!nodeId) return;
     const svgEl = document.getElementById('main-svg');
     if (!svgEl) return;
-    svgEl.querySelectorAll('.edge').forEach(edge => {
-      const src = edge.getAttribute('data-src') || '';
-      const dst = edge.getAttribute('data-dst') || '';
-      const lit = (src === nodeId || dst === nodeId);
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
+      var src = edge.getAttribute('data-from') || '';
+      var dst = edge.getAttribute('data-to') || '';
+      var lit = (src === nodeId || dst === nodeId);
       edge.style.opacity = lit ? '1' : '0.15';
       edge.style.strokeWidth = lit ? '2.5' : '1';
+    });
+    // Show edge labels for connected edges
+    svgEl.querySelectorAll('text.edge-label').forEach(function(label) {
+      var src = label.getAttribute('data-from') || '';
+      var dst = label.getAttribute('data-to') || '';
+      var lit = (src === nodeId || dst === nodeId);
+      label.style.opacity = lit ? '0.85' : '0';
     });
   } catch (err) {
     console.error('[D3 highlightConnections] error:', err);
@@ -1861,9 +1876,12 @@ function unhighlightConnections() {
   try {
     const svgEl = document.getElementById('main-svg');
     if (!svgEl) return;
-    svgEl.querySelectorAll('.edge').forEach(edge => {
+    svgEl.querySelectorAll('.edge').forEach(function(edge) {
       edge.style.opacity = '';
       edge.style.strokeWidth = '';
+    });
+    svgEl.querySelectorAll('text.edge-label').forEach(function(label) {
+      label.style.opacity = '0';
     });
     // Restore non-selected node opacity (selectNode dimmed the rest)
     const selected = svgEl.querySelector('.node-group.selected');
@@ -1876,6 +1894,72 @@ function unhighlightConnections() {
     }
   } catch (err) {
     console.error('[D3 unhighlightConnections] error:', err);
+  }
+}
+
+// ================================================================
+//  DETAIL PANEL — populates the right-side panel with node info
+// ================================================================
+function showDetail(n) {
+  try {
+    if (!n) return;
+    var empty = document.getElementById('detail-empty');
+    var content = document.getElementById('detail-content');
+    if (empty) empty.style.display = 'none';
+    if (content) content.style.display = 'block';
+
+    // Try to find rich data
+    var rich = null;
+    if (n.id && typeof dimData !== 'undefined' && dimData[n.id]) rich = dimData[n.id];
+    if (!rich && n.id && typeof dataNodes !== 'undefined' && dataNodes[n.id]) rich = dataNodes[n.id];
+    if (!rich && n.id && typeof decisionTrees !== 'undefined' && decisionTrees[n.id]) rich = decisionTrees[n.id];
+    if (!rich && n.id && typeof actions !== 'undefined' && actions[n.id]) rich = actions[n.id];
+
+    var name = (rich && rich.name) || n.name || n.label || n.id || 'Node';
+    var summary = (rich && (rich.summary || rich.desc)) || n.desc || '';
+    var ntype = n.ntype || 'node';
+    var status = n.status || (rich && rich.status) || '';
+    var score = (typeof n.score === 'number') ? n.score : (rich && typeof rich.score === 'number' ? rich.score : null);
+    var explain = (rich && rich.explain) || '';
+    var whyItMatters = (rich && rich.whyItMatters) || '';
+    var realImpact = (rich && rich.realImpact) || '';
+    var glossary = (rich && rich.glossary) || [];
+
+    var html = '<div class="detail-header">';
+    html += '<div class="detail-tag">' + String(ntype).toUpperCase() + (status ? ' · ' + String(status).toUpperCase() : '') + '</div>';
+    html += '<div class="detail-title">' + name + '</div>';
+    if (n.id) html += '<div class="detail-sub">' + n.id + '</div>';
+    if (summary) html += '<div class="detail-summary">' + summary + '</div>';
+    if (score !== null) {
+      html += '<div class="detail-badges">';
+      var bc = (status === 'red') ? 'red' : (status === 'amber') ? 'amber' : (status === 'green') ? 'green' : 'blue';
+      html += '<span class="badge ' + bc + '">Score: ' + score + '/100</span>';
+      html += '</div>';
+    }
+    html += '</div>';
+
+    if (explain) {
+      html += '<div class="section-card"><h4>O que é</h4><div style="font-size:12px;line-height:1.6;color:var(--ink-2)">' + explain + '</div></div>';
+    }
+    if (whyItMatters) {
+      html += '<div class="section-card"><h4>Por que importa</h4><div style="font-size:12px;line-height:1.6;color:var(--ink-2)">' + whyItMatters + '</div></div>';
+    }
+    if (realImpact) {
+      html += '<div class="section-card"><h4>Impacto real</h4><div style="font-size:12px;line-height:1.6;color:var(--ink-2)">' + realImpact + '</div></div>';
+    }
+    if (glossary && glossary.length) {
+      html += '<div class="section-card"><h4>Glossário</h4>';
+      for (var i = 0; i < glossary.length; i++) {
+        var g = glossary[i];
+        html += '<div class="kv-row"><span class="kv-label">' + g.term + '</span></div>';
+        html += '<div style="font-size:11px;color:var(--ink-3);margin-bottom:6px">' + g.def + '</div>';
+      }
+      html += '</div>';
+    }
+
+    content.innerHTML = html;
+  } catch (err) {
+    console.error('[D3 showDetail] error:', err);
   }
 }
 

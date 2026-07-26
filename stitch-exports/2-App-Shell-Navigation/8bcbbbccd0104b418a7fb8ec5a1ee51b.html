@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+          },
+        },
+      };
+    </script>
+<style>
+      .bg-glass {
+        background-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      .dark .bg-glass {
+        background-color: rgba(16, 25, 34, 0.5);
+      }
+      .dark .border-glass {
+          border-color: rgba(255,255,255,0.1);
+      }
+      .border-glass {
+          border-color: rgba(0,0,0,0.1);
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white">
+<div class="flex h-screen w-full">
+<aside class="w-80 flex-shrink-0 border-r border-glass bg-white/50 dark:bg-background-dark/50">
+<div class="flex h-full flex-col">
+<div class="p-4">
+<h2 class="px-2 text-xl font-bold tracking-tight">Documents &amp; Reconstructor</h2>
+</div>
+<div class="px-4 pb-4">
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<svg class="text-gray-400 dark:text-gray-500" fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</div>
+<input class="w-full rounded-lg border-glass bg-white/20 dark:bg-black/20 py-2 pl-10 pr-4 text-sm focus:border-primary focus:ring-primary" placeholder="Search" type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<nav class="space-y-1 p-2">
+<a class="group flex items-center gap-3 rounded-lg bg-primary/10 dark:bg-primary/20 px-3 py-2 text-primary" href="#">
+<div class="flex size-8 items-center justify-center rounded-lg bg-primary/20 dark:bg-primary/30">
+<svg fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path>
+</svg>
+</div>
+<div>
+<p class="text-sm font-medium">Baseline Document 1</p>
+<p class="text-xs text-primary/80">2024-01-01</p>
+</div>
+</a>
+<a class="group flex items-center gap-3 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-200/50 dark:text-gray-300 dark:hover:bg-white/5" href="#">
+<div class="flex size-8 items-center justify-center rounded-lg bg-gray-200/50 dark:bg-white/5 group-hover:bg-gray-300/50 dark:group-hover:bg-white/10">
+<svg class="text-gray-500 dark:text-gray-400" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path>
+</svg>
+</div>
+<div>
+<p class="text-sm font-medium">Baseline Document 2</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">2024-01-02</p>
+</div>
+</a>
+<a class="group flex items-center gap-3 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-200/50 dark:text-gray-300 dark:hover:bg-white/5" href="#">
+<div class="flex size-8 items-center justify-center rounded-lg bg-gray-200/50 dark:bg-white/5 group-hover:bg-gray-300/50 dark:group-hover:bg-white/10">
+<svg class="text-gray-500 dark:text-gray-400" fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
+<path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path>
+</svg>
+</div>
+<div>
+<p class="text-sm font-medium">Baseline Document 3</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">2024-01-03</p>
+</div>
+</a>
+</nav>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto">
+<div class="p-8">
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+<div class="space-y-6">
+<div>
+<h2 class="text-2xl font-bold tracking-tight">Chunk Viewer</h2>
+<p class="mt-1 text-gray-600 dark:text-gray-400">Content of the selected baseline document, displayed in chunks.</p>
+</div>
+<div class="space-y-4">
+<div>
+<label class="text-sm font-medium" for="chunk-1">Chunk 1</label>
+<textarea class="mt-1 w-full rounded-lg border-glass bg-white/20 dark:bg-black/20 p-3 text-sm focus:border-primary focus:ring-primary" id="chunk-1" rows="5"></textarea>
+</div>
+<div>
+<label class="text-sm font-medium" for="chunk-2">Chunk 2</label>
+<textarea class="mt-1 w-full rounded-lg border-glass bg-white/20 dark:bg-black/20 p-3 text-sm focus:border-primary focus:ring-primary" id="chunk-2" rows="5"></textarea>
+</div>
+<div>
+<label class="text-sm font-medium" for="chunk-3">Chunk 3</label>
+<textarea class="mt-1 w-full rounded-lg border-glass bg-white/20 dark:bg-black/20 p-3 text-sm focus:border-primary focus:ring-primary" id="chunk-3" rows="5"></textarea>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div>
+<h2 class="text-2xl font-bold tracking-tight">Reconstructed Document</h2>
+<p class="mt-1 text-gray-600 dark:text-gray-400">Review the document with proposed insertions.</p>
+</div>
+<div class="rounded-xl border-glass bg-glass p-6">
+<div class="space-y-4">
+<p class="text-sm text-gray-700 dark:text-gray-300">This is the original content from the baseline document. It provides the context for the proposed changes. The system analyzes this content to suggest relevant additions.</p>
+<div class="rounded-lg border-l-4 border-green-500 bg-green-500/10 p-4">
+<h4 class="font-semibold text-green-800 dark:text-green-300">Inserted Content</h4>
+<p class="mt-2 text-sm text-green-700 dark:text-green-400">This is the new content suggested by the reconstructor. It is designed to enhance the original text. You can choose to accept or decline this insertion.</p>
+</div>
+<p class="text-sm text-gray-700 dark:text-gray-300">Following the inserted content, here is more of the original text. This helps maintain the flow and ensures the new content fits seamlessly within the existing document structure.</p>
+</div>
+<div class="mt-6 flex justify-end gap-3">
+<button class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-300 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">Decline</button>
+<button class="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary/90">Accept</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

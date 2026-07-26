@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>COMMAND_CORE // PETROSHIELD</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#eaf2f6",
+                        "surface": "#0d0e10",
+                        "on-surface": "#e5e5ea",
+                        "inverse-primary": "#106f00",
+                        "outline": "#74757a",
+                        "on-primary-fixed": "#064200",
+                        "surface-variant": "#24262a",
+                        "on-tertiary-fixed": "#41494c",
+                        "primary-dim": "#27d600",
+                        "tertiary-fixed-dim": "#dce4e7",
+                        "outline-variant": "#46484c",
+                        "error-dim": "#c44f34",
+                        "on-tertiary-fixed-variant": "#5e6669",
+                        "surface-tint": "#8eff71",
+                        "background": "#0d0e10",
+                        "surface-bright": "#2a2c30",
+                        "on-error": "#450900",
+                        "on-tertiary-container": "#50585b",
+                        "on-primary-fixed-variant": "#0d6200",
+                        "on-background": "#e5e5ea",
+                        "surface-container-high": "#1e2023",
+                        "secondary-fixed": "#e2e2e5",
+                        "on-secondary": "#3f4042",
+                        "tertiary": "#f3fbfe",
+                        "on-primary": "#0d6100",
+                        "secondary-container": "#3a3c3e",
+                        "primary-fixed": "#2ff801",
+                        "error-container": "#85230a",
+                        "on-secondary-fixed-variant": "#5a5c5e",
+                        "surface-container-low": "#121316",
+                        "primary-fixed-dim": "#2be800",
+                        "secondary-dim": "#b8b9bb",
+                        "surface-container-highest": "#24262a",
+                        "secondary": "#c6c6c9",
+                        "primary": "#8eff71",
+                        "on-primary-container": "#0b5800",
+                        "secondary-fixed-dim": "#d4d4d7",
+                        "primary-container": "#2ff801",
+                        "error": "#f97758",
+                        "on-secondary-fixed": "#3e3f42",
+                        "on-surface-variant": "#aaabb0",
+                        "on-error-container": "#ff9b82",
+                        "tertiary-container": "#e4ecf0",
+                        "surface-dim": "#0d0e10",
+                        "on-tertiary": "#586063",
+                        "inverse-on-surface": "#555557",
+                        "on-secondary-container": "#bfbfc2",
+                        "inverse-surface": "#faf9fb",
+                        "surface-container": "#181a1d",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-dim": "#dce4e7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glow-sm { text-shadow: 0 0 8px rgba(142, 255, 113, 0.4); }
+        .bg-scanlines {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 2px, 3px 100%;
+        }
+        .ghost-border { border: 0.5px solid rgba(255, 255, 255, 0.1); }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary antialiased overflow-hidden h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#0d0e10]/80 backdrop-blur-xl border-b-[0.5px] border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#39FF14] text-2xl" data-icon="terminal">terminal</span>
+<h1 class="text-[#39FF14] font-['Space_Grotesk'] font-bold tracking-tighter text-xl uppercase">COMMAND_CORE</h1>
+</div>
+<div class="flex items-center gap-8">
+<nav class="hidden md:flex gap-6 items-center">
+<span class="font-['Space_Grotesk'] uppercase tracking-tighter text-sm text-[#39FF14] glow-sm cursor-default">NETWORK_STATUS</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-tighter text-sm text-neutral-500 hover:text-[#39FF14] transition-all duration-300 cursor-pointer">ENCRYPTION_LINK</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-tighter text-sm text-neutral-500 hover:text-[#39FF14] transition-all duration-300 cursor-pointer">NODE_MAP</span>
+</nav>
+<div class="flex items-center gap-2 border-l border-white/10 pl-6">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-['Space_Grotesk'] uppercase tracking-tighter text-sm text-[#39FF14]">SYSTEM_STATUS: ACTIVE</span>
+</div>
+</div>
+</header>
+<div class="flex flex-1 pt-16 h-full">
+<!-- NavigationDrawer -->
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col pt-20 bg-[#0d0e10] w-72 border-r-[0.5px] border-white/10">
+<!-- Profile Section -->
+<div class="px-6 py-6 mb-4 flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-highest border-[0.5px] border-primary/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover grayscale brightness-75" data-alt="Professional identification portrait of a senior security operator in a dark techwear uniform with subtle green lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo9RMnbKnA3KUvASVgUzKGGx3St9F9RR1DRsl8CstSH0TjerGMad2mK90XoLWZfGL0pjmEfOv7WNq_J1hq4kBvG35Hyirj1PgY8ci7DyI_8oT8fDeSte_Lr_P0vEKtNQaRZl26pc_NuIlQ6EqRqTVzYFE3_fX2tqrdPA6Un3sBcLPA5xxz361tnL3WRUnqJn8O2g-WRlDChDhV9gY3ruEQTOGU3Bl9hE0cnEk1rBzvR9tKrp2nBIEqjxFw7FMdmr5-vHorxF8hOY0"/>
+</div>
+<div class="flex flex-col">
+<span class="font-['Space_Grotesk'] text-[#39FF14] font-black text-xs tracking-widest uppercase">S. MONOLITH</span>
+<span class="font-['Inter'] text-[10px] text-neutral-500 font-medium tracking-[0.1em] uppercase">LEVEL_5_CLEARANCE</span>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 gap-4 bg-[#1e2023] text-[#39FF14] border-l-2 border-[#39FF14] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="security">security</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-medium tracking-[0.1em]">THREAT_INTEL</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-4 text-neutral-400 opacity-70 hover:bg-[#1e2023] hover:opacity-100 hover:text-[#39FF14] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="lan">lan</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-medium tracking-[0.1em]">NETWORK_OPS</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-4 text-neutral-400 opacity-70 hover:bg-[#1e2023] hover:opacity-100 hover:text-[#39FF14] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="database">database</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-medium tracking-[0.1em]">LOG_ARCHIVE</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-4 text-neutral-400 opacity-70 hover:bg-[#1e2023] hover:opacity-100 hover:text-[#39FF14] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="priority_high">priority_high</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-medium tracking-[0.1em]">INCIDENT_REPORTS</span>
+</a>
+<a class="flex items-center px-6 py-3 gap-4 text-neutral-400 opacity-70 hover:bg-[#1e2023] hover:opacity-100 hover:text-[#39FF14] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-['Space_Grotesk'] text-[12px] font-medium tracking-[0.1em]">SYSTEM_SETTINGS</span>
+</a>
+</nav>
+<div class="mt-auto p-6 border-t border-white/5">
+<div class="p-4 bg-surface-container-low rounded border border-white/5">
+<span class="font-['Inter'] text-[8px] text-neutral-600 block mb-2 tracking-widest">ENCRYPTION_STRENGTH</span>
+<div class="h-1 bg-neutral-800 w-full">
+<div class="h-full bg-primary w-[94%]"></div>
+</div>
+<span class="font-['Space_Grotesk'] text-[10px] text-primary mt-1 block text-right font-bold">94%</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-72 flex-1 relative overflow-y-auto p-6 space-y-6">
+<!-- Hero Header Section -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<div class="col-span-8">
+<div class="p-8 bg-surface-container-high relative overflow-hidden ghost-border group">
+<div class="absolute inset-0 bg-scanlines pointer-events-none opacity-10"></div>
+<div class="absolute -right-24 -top-24 w-96 h-96 bg-primary/5 rounded-full blur-[100px]"></div>
+<div class="relative z-10">
+<div class="inline-flex items-center gap-2 mb-4">
+<span class="w-8 h-[1px] bg-primary"></span>
+<span class="font-['Space_Grotesk'] text-primary tracking-[0.3em] text-xs uppercase font-bold">PetroShield Core</span>
+</div>
+<h2 class="text-4xl md:text-5xl font-['Space_Grotesk'] font-bold leading-none mb-6 tracking-tight text-white max-w-2xl">
+                                QUANTUM LEVEL <span class="text-primary glow-sm">DATA DEFENSE</span>
+</h2>
+<p class="font-['Inter'] text-on-surface-variant max-w-lg mb-8 leading-relaxed text-sm">
+                                Autonomous threat mitigation and cryptographic resilience for critical infrastructure. Monitoring real-time vector incursions across global node networks.
+                            </p>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-6 py-2 font-['Space_Grotesk'] font-bold text-xs tracking-widest flex items-center gap-3 transition-transform active:scale-95">
+                                    INITIALIZE SCAN
+                                    <span class="material-symbols-outlined text-sm">rocket_launch</span>
+</button>
+<button class="border border-outline-variant hover:bg-white/5 px-6 py-2 font-['Space_Grotesk'] font-bold text-xs tracking-widest flex items-center gap-3 text-on-surface transition-all">
+                                    THREAT_LOGS
+                                    <span class="material-symbols-outlined text-sm">history</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-4 grid grid-rows-2 gap-6 h-full">
+<div class="bg-surface-container-high p-6 ghost-border flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-['Space_Grotesk'] text-[10px] text-neutral-500 tracking-[0.2em]">INTRUSION_ATTEMPTS</span>
+<span class="material-symbols-outlined text-primary text-lg" data-icon="radar">radar</span>
+</div>
+<div>
+<div class="text-4xl font-['Space_Grotesk'] font-bold text-white">1,402</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="text-error text-xs font-bold font-['Space_Grotesk']">+14% INC_RATE</span>
+<span class="text-neutral-600 text-[10px] uppercase tracking-tighter font-medium">Last 24h</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-6 ghost-border flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-['Space_Grotesk'] text-[10px] text-neutral-500 tracking-[0.2em]">ACTIVE_NODES</span>
+<span class="material-symbols-outlined text-primary text-lg" data-icon="hub">hub</span>
+</div>
+<div>
+<div class="text-4xl font-['Space_Grotesk'] font-bold text-white">48/50</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="text-primary text-xs font-bold font-['Space_Grotesk']">STABLE_UPTIME</span>
+<span class="text-neutral-600 text-[10px] uppercase tracking-tighter font-medium">99.9% SL_A</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Geospatial & Terminal Area -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Map Section -->
+<div class="col-span-12 xl:col-span-8 bg-surface-container relative h-[500px] overflow-hidden ghost-border">
+<div class="absolute top-4 left-4 z-20 flex flex-col gap-2">
+<div class="bg-black/60 backdrop-blur px-3 py-1 border border-white/10 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error animate-ping"></div>
+<span class="font-['Space_Grotesk'] text-[10px] text-white tracking-widest font-bold">THREAT_VECTOR: DETECTED [BERLIN_NODE_4]</span>
+</div>
+</div>
+<!-- Map Image -->
+<div class="absolute inset-0 opacity-40 brightness-50 contrast-125">
+<img class="w-full h-full object-cover" data-alt="Highly detailed dark satellite map of urban topography with digital green neon overlays showing connection lines and data nodes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGu6IRjEzdHitADKnCPxjYZc28LEyX7T05A9crW2HaCchGAGTec_YrL_dVWRkPL-rRXWDVE3_ww5NOx--YuEjjMTId54ShDm9bj3MRZjrrjgyX6wZ7ccW8Xzh7MVDdH131vhxxbiRLlwmvvEB3SFDYWnSbZrEobi_NTOkqU8unQV_qYhOfwdjYOce1vr80Oo-muKunlQrYKBeViuHgr1sSbREUQozMcQ7Ls79eeedHE7pXY9HE_hwpT7GKYsL4ZuCS9Ew4bjryYnU"/>
+</div>
+<!-- SVG Overlay for Data Vectors -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewbox="0 0 1000 500">
+<path d="M 200,100 Q 400,50 600,150" fill="none" stroke="#8eff71" stroke-dasharray="2,2" stroke-width="0.5"></path>
+<path d="M 600,150 Q 750,250 850,200" fill="none" stroke="#f97758" stroke-dasharray="4,2" stroke-width="1"></path>
+<circle cx="200" cy="100" fill="#8eff71" r="2"></circle>
+<circle class="animate-pulse" cx="600" cy="150" fill="#8eff71" r="3"></circle>
+<circle cx="850" cy="200" fill="#f97758" r="4"></circle>
+</svg>
+<div class="absolute bottom-4 right-4 z-20 flex gap-2">
+<div class="bg-black/60 backdrop-blur-md p-3 ghost-border flex flex-col gap-1 w-48">
+<span class="font-['Space_Grotesk'] text-[8px] text-neutral-500 tracking-[0.2em]">GEOSPATIAL_METRICS</span>
+<div class="flex justify-between items-center text-[10px] text-on-surface">
+<span>LATITUDE</span>
+<span class="font-mono">52.5200° N</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface">
+<span>LONGITUDE</span>
+<span class="font-mono">13.4050° E</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal / Log Section -->
+<div class="col-span-12 xl:col-span-4 bg-surface-container-lowest ghost-border flex flex-col h-[500px]">
+<div class="p-4 border-b border-white/5 flex justify-between items-center bg-surface-container-high">
+<span class="font-['Space_Grotesk'] text-[10px] text-primary tracking-[0.2em] font-bold">LIVE_SYSTEM_LOGS</span>
+<span class="material-symbols-outlined text-xs text-neutral-500" data-icon="fullscreen">fullscreen</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 font-mono text-[11px] space-y-2 text-neutral-400">
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:02:11]</span>
+<span class="text-primary">CORE_SYSTEM: INITIALIZING_NEURAL_LINK...</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:02:12]</span>
+<span class="text-white">ENCRYPTION: SHARDED_BLOCK_SUCCESS(4096bit)</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:02:15]</span>
+<span class="text-error">WARNING: UNKNOWN_VECTOR_DETECTED @ NODE_ALPHA</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:02:16]</span>
+<span class="text-primary-dim">MITIGATION: FIREWALL_PROTOCOL_E6_ENGAGED</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:02:18]</span>
+<span class="text-white">TRACING_ROUTE: 192.168.1.101 -&gt; 142.250.190.46</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:02:22]</span>
+<span class="text-on-surface-variant">PACKET_LOSS: 0.0004% (OPTIMAL)</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-600 shrink-0">[14:03:01]</span>
+<span class="text-primary">HEARTBEAT: OK // SESSION_ID: PETRO_8829</span>
+</div>
+<div class="flex gap-4 opacity-50">
+<span class="text-neutral-600 shrink-0">[14:03:05]</span>
+<span>BACKGROUND_PROCESS: SYNC_COMPLETE</span>
+</div>
+<div class="flex gap-4 opacity-50">
+<span class="text-neutral-600 shrink-0">[14:03:10]</span>
+<span>NODE_STATUS: ALL_SYSTEMS_GO</span>
+</div>
+</div>
+<div class="p-2 border-t border-white/5 bg-surface-container-high flex items-center gap-3">
+<span class="text-primary font-bold text-xs ml-2">&gt;</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs font-mono w-full text-primary placeholder:text-primary/30" placeholder="ENTER_COMMAND_..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Detailed Grid Modules -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Module 1 -->
+<div class="bg-surface-container-low p-5 ghost-border hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="font-['Space_Grotesk'] text-[10px] text-neutral-500 tracking-[0.2em] font-medium">NEURAL_TRAFFIC</span>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="monitoring">monitoring</span>
+</div>
+<div class="flex items-end gap-1 h-12 mb-3">
+<div class="bg-primary/20 h-[30%] w-full"></div>
+<div class="bg-primary/40 h-[60%] w-full"></div>
+<div class="bg-primary/60 h-[80%] w-full"></div>
+<div class="bg-primary h-[40%] w-full"></div>
+<div class="bg-primary/50 h-[90%] w-full"></div>
+<div class="bg-primary/30 h-[20%] w-full"></div>
+<div class="bg-primary h-[70%] w-full"></div>
+</div>
+<span class="font-['Inter'] text-[10px] text-on-surface-variant">THROUGHPUT: 1.2 GB/S</span>
+</div>
+<!-- Module 2 -->
+<div class="bg-surface-container-low p-5 ghost-border hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="font-['Space_Grotesk'] text-[10px] text-neutral-500 tracking-[0.2em] font-medium">KEY_ROTATION</span>
+<span class="material-symbols-outlined text-primary" data-icon="key">key</span>
+</div>
+<div class="text-xl font-['Space_Grotesk'] font-bold text-white mb-1">04:12:44</div>
+<span class="font-['Inter'] text-[10px] text-on-surface-variant uppercase tracking-widest">Until Next Cycle</span>
+</div>
+<!-- Module 3 -->
+<div class="bg-surface-container-low p-5 ghost-border hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="font-['Space_Grotesk'] text-[10px] text-neutral-500 tracking-[0.2em] font-medium">NODE_STABILITY</span>
+<span class="material-symbols-outlined text-primary" data-icon="cloud_done">cloud_done</span>
+</div>
+<div class="text-xl font-['Space_Grotesk'] font-bold text-white mb-1">STABLE</div>
+<div class="h-1 bg-neutral-800 w-full rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[98%]"></div>
+</div>
+</div>
+<!-- Module 4 -->
+<div class="bg-surface-container-low p-5 ghost-border hover:bg-surface-bright transition-colors cursor-pointer group">
+<div class="flex justify-between items-center mb-4">
+<span class="font-['Space_Grotesk'] text-[10px] text-neutral-500 tracking-[0.2em] font-medium">PENDING_UPDATES</span>
+<span class="material-symbols-outlined text-primary" data-icon="update">update</span>
+</div>
+<div class="text-xl font-['Space_Grotesk'] font-bold text-white mb-1">03</div>
+<span class="font-['Inter'] text-[10px] text-on-surface-variant">CRITICAL PATCHES READY</span>
+</div>
+</div>
+<!-- Push bottom spacer for footer -->
+<div class="h-16"></div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="fixed bottom-0 w-full py-4 px-8 flex justify-between items-center bg-[#0d0e10] border-t-[0.5px] border-white/10 z-50">
+<div class="flex items-center gap-6">
+<span class="font-['Inter'] text-[10px] tracking-widest uppercase text-neutral-600 font-medium">© 2024 MONOLITH_SYSTEMS // PRECISION_MONOLITH_V1.0</span>
+</div>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-neutral-600 hover:text-white transition-colors" href="#">ENCRYPTION_PROTOCOLS</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-neutral-600 hover:text-white transition-colors" href="#">API_ENDPOINT</a>
+<a class="font-['Inter'] text-[10px] tracking-widest uppercase text-neutral-600 hover:text-white transition-colors" href="#">SYSTEM_LOGS</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-['Space_Grotesk'] text-[10px] text-primary font-bold">LATENCY: 12ms</span>
+<div class="w-[1px] h-3 bg-white/10"></div>
+<span class="font-['Space_Grotesk'] text-[10px] text-on-surface-variant">UTC: 14:04:12</span>
+</div>
+</footer>
+</body></html>

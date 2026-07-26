@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<title>Narrative Detail</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+        :root {
+          --primary: #1173d4;
+          --background-light: #f8fafc;
+          --background-dark: #0f172a;
+          --card-light: #ffffff;
+          --card-dark: #1e293b;
+          --text-light: #0f172a;
+          --text-dark: #f8fafc;
+          --text-muted-light: #64748b;
+          --text-muted-dark: #94a3b8;
+          --border-light: #e2e8f0;
+          --border-dark: #334155;
+        }
+        .dark {
+            --primary: #38bdf8;
+            --background-light: #0f172a;
+            --background-dark: #020617;
+            --card-light: #1e293b;
+            --card-dark: #0f172a;
+            --text-light: #f8fafc;
+            --text-dark: #e2e8f0;
+            --text-muted-light: #94a3b8;
+            --text-muted-dark: #64748b;
+            --border-light: #334155;
+            --border-dark: #475569;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+          font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased">
+<div class="container mx-auto p-4 sm:p-6 lg:p-8">
+<div class="max-w-4xl mx-auto">
+<div class="flex items-center justify-between mb-6">
+<h1 class="text-2xl font-bold text-text-light dark:text-text-dark">Narrative Detail</h1>
+<button class="flex items-center gap-2 text-sm text-text-muted-light dark:text-text-muted-dark hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+                Back to Narratives
+            </button>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-lg overflow-hidden">
+<div class="p-6">
+<p class="text-base text-text-light dark:text-text-dark leading-relaxed">"I had a dream that I was flying over a futuristic city, soaring between skyscrapers made of crystal. I want to capture this feeling of freedom and innovation in my next project. Maybe I can <span class="bg-primary/10 text-primary px-1 py-0.5 rounded">design a new kind of drone</span> or <span class="bg-green-500/10 text-green-600 dark:text-green-400 px-1 py-0.5 rounded">write a sci-fi novel</span>. The goal is to finish the first draft by the end of the year."</p>
+<div class="mt-4 text-xs text-text-muted-light dark:text-text-muted-dark">
+<span>Recorded: 2023-10-27 10:30 AM</span> | <span>Source: Voice Note</span>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark/50 p-6 border-t border-border-light dark:border-border-dark">
+<h2 class="text-lg font-semibold mb-4 text-text-light dark:text-text-dark">NLP Extraction</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<h3 class="font-medium text-text-light dark:text-text-dark mb-2">Labels &amp; Confidence</h3>
+<div class="space-y-2 text-sm">
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Goal</span>
+<div class="w-1/2 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+<div class="bg-blue-500 h-2.5 rounded-full" style="width: 92%"></div>
+</div>
+<span class="font-semibold text-blue-500">92%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Task</span>
+<div class="w-1/2 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+<div class="bg-green-500 h-2.5 rounded-full" style="width: 85%"></div>
+</div>
+<span class="font-semibold text-green-500">85%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-text-muted-light dark:text-text-muted-dark">Dream</span>
+<div class="w-1/2 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+<div class="bg-purple-500 h-2.5 rounded-full" style="width: 78%"></div>
+</div>
+<span class="font-semibold text-purple-500">78%</span>
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-medium text-text-light dark:text-text-dark mb-2">Extracted Entities</h3>
+<div class="flex flex-wrap gap-2 text-sm">
+<span class="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-md">ACTION: design a new kind of drone</span>
+<span class="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 px-2 py-1 rounded-md">ACTION: write a sci-fi novel</span>
+<span class="bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-300 px-2 py-1 rounded-md">TIMEFRAME: by the end of the year</span>
+<span class="bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-300 px-2 py-1 rounded-md">THEME: freedom and innovation</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-border-light dark:border-border-dark">
+<h2 class="text-lg font-semibold mb-4 text-text-light dark:text-text-dark">Semantic Matches</h2>
+<div class="space-y-3">
+<div class="p-4 rounded-lg bg-background-light dark:bg-background-dark/50 border border-border-light dark:border-border-dark">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-medium text-sm text-text-light dark:text-text-dark">"develop a prototype for a personal flying device"</p>
+<p class="text-xs text-text-muted-light dark:text-text-muted-dark mt-1">From Goal: "Build Personal Aerial Vehicle"</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-primary">0.89</span>
+<button class="p-1.5 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-base">link</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-background-light dark:bg-background-dark/50 border border-border-light dark:border-border-dark">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-medium text-sm text-text-light dark:text-text-dark">"finish the first three chapters of my book"</p>
+<p class="text-xs text-text-muted-light dark:text-text-muted-dark mt-1">From Goal: "Become a Published Author"</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-primary">0.82</span>
+<button class="p-1.5 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-base">link</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-background-light dark:bg-background-dark/50 border border-border-light dark:border-border-dark">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-medium text-sm text-text-light dark:text-text-dark">"launch a creative project that pushes boundaries"</p>
+<p class="text-xs text-text-muted-light dark:text-text-muted-dark mt-1">From Objective: "Q3 2024 Innovation Sprint"</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-primary">0.76</span>
+<button class="p-1.5 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-base">link</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-background-dark/30 p-6 border-t border-border-light dark:border-border-dark">
+<h2 class="text-lg font-semibold mb-4 text-text-light dark:text-text-dark">Actions</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<button class="w-full flex items-center justify-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30 font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm">
+<span class="material-symbols-outlined text-base">link</span>
+                        Link to Existing
+                    </button>
+<button class="w-full flex items-center justify-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary hover:bg-primary/20 dark:hover:bg-primary/30 font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm">
+<span class="material-symbols-outlined text-base">add_circle</span>
+                        Create New Task
+                    </button>
+<button class="w-full flex items-center justify-center gap-2 bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/20 font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm">
+<span class="material-symbols-outlined text-base">content_cut</span>
+                        Mark as Snippet
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dreamer - Empty States</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1173d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex flex-col min-h-screen">
+<header class="border-b border-gray-200 dark:border-gray-700/50">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-4">
+<svg class="h-6 w-6 text-primary" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z" fill="currentColor"></path>
+</svg>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">Dreamer</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-primary dark:text-primary" href="#">Dreams</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Objectives</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Goals</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Tasks</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAz9Ci4WMylJDoCSx7Bi5XCZko-nV8pDD6Di5pN1FpiRV81IWZAcbHTUnTvxtkK4DSedsNRsHnVDqd0XOVHMxKDdEAx0oS799LSeyKa9w6OqbrlSexs96NicJdTsfWPDLo2Un8WaJPGaogjrUNAzhnofMaXhKJNllZagl4j-Pr7xS0r55-VcpE174WR5QCcaHTHhHgy-Gca6qPFIXtz_OHvXnJ-qwAeDlePLD4o1O5_pTOAggW8YyPcBoicWS1RAIXJyTnZOTeumaJO");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="space-y-16">
+<section>
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Dreams</h2>
+<div class="text-center bg-gray-50 dark:bg-background-dark/50 p-8 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+<div class="w-full max-w-xs mx-auto mb-6">
+<img alt="Illustration of clouds and stars" class="w-full h-auto rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK_85uwEU_4UkVR5rnU4Knwe_bhgaLYBl3U3BTd6_iljnneFGP-b7dlnprxWAtTwqF78kmwEEIxfHf1-_QHiPZG5NrIdWvB1Lmls69yCq7vRhtsG_2L9cOpc7rtoYHBMbmZAcTEavj34Ncsv3AyNlcRrnlWhZPJaN9PTph2wlIHeSRPAKxmrLyJ9_g9uhrhuFP0T2EhL6eV0aJfTbngziwpWWc2x59fDDGlc2UNdVZxIGUBVaXmMsGAwlBe8JnuIvaI54D-nwn1AhS"/>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No dreams yet</h3>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">Dreams are the foundation of your journey. They give you a vision for the future and a reason to strive for more.</p>
+<button class="bg-primary text-white font-bold text-sm px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2 mx-auto">
+<span class="material-symbols-outlined">add</span>
+<span>Add your first dream</span>
+</button>
+</div>
+</section>
+<section>
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Objectives</h2>
+<div class="text-center bg-gray-50 dark:bg-background-dark/50 p-8 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+<div class="w-full max-w-xs mx-auto mb-6">
+<img alt="Illustration of a person climbing a mountain" class="w-full h-auto rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJaSxsm98c7_qrGDUZtKFW3f-cOpAkggP1G8LBCmRSqnpXbrPaspBcllEyqySgDIIgCoiMI73aP3KvaOdsN6FRSpvmTJdtUhOInXofPhJ2e91OilABWjsipUbCfhxLDuo3G6CtY8QMcvbH-ywL6z62i_RcG1YkuhnVuwBwdunTXR_zktlEF_EcAI0qFWT3-xynB11y67j7ZciYzh6-Xu-sdMB_IMC0BcAdPqtoKXa95iXATTdnUzKG8fjWjQQhxJdcxJRFDGqrfHeq"/>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No objectives yet</h3>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">Objectives are the stepping stones to achieving your dreams. Let our AI help you break down your grand vision.</p>
+<button class="bg-primary/20 dark:bg-primary/30 text-primary font-bold text-sm px-6 py-2.5 rounded-lg hover:bg-primary/30 dark:hover:bg-primary/40 transition-colors flex items-center gap-2 mx-auto">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>Suggest objectives with AI</span>
+</button>
+</div>
+</section>
+<section>
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Goals</h2>
+<div class="text-center bg-gray-50 dark:bg-background-dark/50 p-8 rounded-lg border border-dashed border-gray-300 dark:border-gray-700">
+<div class="w-full max-w-xs mx-auto mb-6">
+<img alt="Illustration of a target with an arrow" class="w-full h-auto rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvP1WOGl7vnb_BqzqZOQ3Cs0yQ7olnJfxAzVJR3Jc3iztatB5zXlCrYxOI0AEDh4PzcodLRT9BaIHLXtn9hmMzHBToNsfdp3QDxqXSJ2MZsimJslt_TBVj2640hvqCcMDA0mmvpQlRWsSHm_LA4h6FcYFolmv3Tj0P9v4vDfh5YJdQ2pldJAKdrOch24EfB0nx2UcDWs-hhrjKr4l5kkR7m5EXBMEZCgHwxvoa9IK10wKEHiVf-GjMtOH4-oIIUvAJ_DfYLVCK782x"/>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No goals yet</h3>
+<p class="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">Goals are specific, measurable steps you'll take to reach your objectives. Let our AI help you define them.</p>
+<button class="bg-primary/20 dark:bg-primary/30 text-primary font-bold text-sm px-6 py-2.5 rounded-lg hover:bg-primary/30 dark:hover:bg-primary/40 transition-colors flex items-center gap-2 mx-auto">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>Suggest goals with AI</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+</div>
+
+</body></html>

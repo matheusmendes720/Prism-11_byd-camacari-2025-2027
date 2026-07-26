@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Public+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div class="relative flex size-full min-h-screen flex-col bg-[#181b18] dark group/design-root overflow-x-hidden" style='font-family: "Public Sans", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#323932] px-10 py-3">
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">EduSched</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9">
+              <a class="text-white text-sm font-medium leading-normal" href="#">Dashboard</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">Schedule</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">Students</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">Reports</a>
+              <a class="text-white text-sm font-medium leading-normal" href="#">Settings</a>
+            </div>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBRkfiY_s5hlP3RJUTOcLtSWoeFZqCNYyfNci9r4E26apKth_XYXyb6BikbFCy2UV1-5Q49cKmm0CO2KnParpTUYXyllCbgnwzwMWBuxnGXmeEA3anW7fpA_bec_88nCHQAMjRSUfJoy63KtY2YDhqScZGbeN0t1osgQcBccqtkURurALz7TQBrE5yMSmR5F1sCDX2ZC6h_d0Txxpu1ZFAqM2hCBPQChwCcFCca74QTr-LMsaA-63o1ZP5gnmht4sdJwbOWBOi64vU");'
+            ></div>
+          </div>
+        </header>
+        <div class="px-40 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4">
+              <div class="flex min-w-72 flex-col gap-3">
+                <p class="text-white tracking-light text-[32px] font-bold leading-tight">Student Details</p>
+                <p class="text-[#a9b2a9] text-sm font-normal leading-normal">Manage student information and preferences</p>
+              </div>
+            </div>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-xl border border-[#485148] bg-[#181b18]">
+                <table class="flex-1">
+                  <thead>
+                    <tr class="bg-[#242924]">
+                      <th class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120 px-4 py-3 text-left text-white w-[400px] text-sm font-medium leading-normal">Name</th>
+                      <th class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240 px-4 py-3 text-left text-white w-[400px] text-sm font-medium leading-normal">Group</th>
+                      <th class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360 px-4 py-3 text-left text-white w-[400px] text-sm font-medium leading-normal">Preferences</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-t border-t-[#485148]">
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">
+                        Owen Mitchell
+                      </td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">Group A</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">
+                        Prefers morning sessions
+                      </td>
+                    </tr>
+                    <tr class="border-t border-t-[#485148]">
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">
+                        Sophia Reynolds
+                      </td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">Group B</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">
+                        No preference
+                      </td>
+                    </tr>
+                    <tr class="border-t border-t-[#485148]">
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">Lucas Hayes</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">Group A</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">
+                        Prefers specific teacher
+                      </td>
+                    </tr>
+                    <tr class="border-t border-t-[#485148]">
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">
+                        Isabella Foster
+                      </td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">Group C</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">
+                        Prefers afternoon sessions
+                      </td>
+                    </tr>
+                    <tr class="border-t border-t-[#485148]">
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120 h-[72px] px-4 py-2 w-[400px] text-white text-sm font-normal leading-normal">Jackson Reed</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">Group B</td>
+                      <td class="table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360 h-[72px] px-4 py-2 w-[400px] text-[#a9b2a9] text-sm font-normal leading-normal">
+                        No preference
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <style>
+                          @container(max-width:120px){.table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-120{display: none;}}
+                @container(max-width:240px){.table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-240{display: none;}}
+                @container(max-width:360px){.table-8decc525-dd87-4b8b-89ce-fa0275449f93-column-360{display: none;}}
+              </style>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

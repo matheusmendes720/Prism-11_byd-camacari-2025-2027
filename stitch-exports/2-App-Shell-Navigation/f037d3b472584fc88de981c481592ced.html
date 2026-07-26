@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter"],
+            },
+            borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+          },
+        },
+      };
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex h-screen flex-col">
+<header class="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-6 py-3">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.36 14.83c-1.43-1.72-3.64-3.33-6.36-3.33s-4.93 1.61-6.36 3.33C4.61 15.41 4 13.78 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.78-.61 3.41-1.64 4.83zM12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6z"></path>
+</svg>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">Dream Weaver</h1>
+</div>
+<nav class="flex items-center gap-4">
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary" href="#">Dashboard</a>
+<a class="text-sm font-medium text-primary" href="#">Knowledge Map</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary" href="#">Journal</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary" href="#">Community</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">search</span>
+<input class="w-full rounded bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary pl-10 pr-4 py-2 text-sm" placeholder="Search" type="search"/>
+</div>
+<button class="relative rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-400">notifications</span>
+</button>
+<img alt="User avatar" class="h-10 w-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoFGx5a7TGG2wAWnLqx0mXed_v7mXe3f8TxT6FWWzb6tI6ypdeAY4N6kT3cK2c8r0hjPPgA4RXodRKxVMXS1wGEWnIkzcfmjYF8Ep1ZUBfEZ2bqGVliQQX3Mk_jAoxzj5YkyfN75W4dvYGwQmI9rff1xl57IaCV9XtFLl0uQIKYaDNWUI2KaoXQZLgDP00MykmzQ-C6S9PGiUW9F0MwMek4RdQTqeg7CB7IoE4m5ib8Vxk6H-QZXVysOzx7yvFqMhxDIh8-ZxFyrow"/>
+</div>
+</header>
+<main class="flex-1 overflow-hidden">
+<div class="flex h-full flex-col p-6">
+<div class="mb-6">
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white">Knowledge Map</h2>
+<p class="text-sm text-gray-600 dark:text-gray-400">Visualize your dreams, objectives, goals, and tasks in an interactive graph. Drag and drop nodes to restructure and expand/collapse details.</p>
+</div>
+<div class="relative flex-1 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIEAwevjwyBN84YL6Ak0WpQuQYxJZnTKtEh60KYFA4De4iSsQO8ecOFr0AkWpnrgVtsZKl4i8YBqpHEJthnei0cyHBeRLeeosIXmKLkcGF21YFLj_2ge1QQnpahIBTGGBEV9W3NZz8Z4sAFuy7w1v408yNYo9D2zFZGnjaXdCS10zfErKFySvyIEDRzdO6Q6DNn3eZJt14rKXcAzebdmI84aWRbA3zbr-OzGJkRSdD673gaV82_1OVLJbSBS9qMuvmTjVCQdQIQELL");'>
+<div class="absolute inset-0 bg-black/30 rounded-lg"></div>
+<div class="relative flex h-full flex-col justify-between p-6">
+<div class="max-w-sm">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-300">search</span>
+<input class="w-full rounded bg-white/20 dark:bg-black/20 backdrop-blur-sm border-transparent focus:border-primary focus:ring-primary pl-10 pr-4 py-2 text-sm text-white placeholder-gray-300" placeholder="Search your knowledge map" type="search"/>
+</div>
+</div>
+<div class="flex flex-col items-end gap-3">
+<div class="flex flex-col rounded-lg bg-white/20 dark:bg-black/20 backdrop-blur-sm shadow-lg">
+<button class="flex items-center justify-center p-2 text-white hover:bg-white/10 dark:hover:bg-black/10 rounded-t-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="flex items-center justify-center p-2 text-white hover:bg-white/10 dark:hover:bg-black/10 rounded-b-lg">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<button class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 dark:bg-black/20 backdrop-blur-sm text-white shadow-lg hover:bg-white/10 dark:hover:bg-black/10">
+<span class="material-symbols-outlined">near_me</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

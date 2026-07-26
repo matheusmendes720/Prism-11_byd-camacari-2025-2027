@@ -79,7 +79,8 @@ button { cursor: pointer; }
 .legend-row .swatch.circle { border-radius: 50%; }
 
 /* MAIN CANVAS */
-.canvas-area { grid-column: 2; grid-row: 2; position: relative; overflow: hidden; background: var(--bg); background-image: radial-gradient(circle at 1px 1px, rgba(38,42,51,0.7) 1px, transparent 0); background-size: 32px 32px; }
+.canvas-area { grid-column: 2; grid-row: 2; position: relative; overflow: hidden; background: var(--bg); background-image: radial-gradient(circle at 1px 1px, rgba(38,42,51,0.7) 1px, transparent 0); background-size: 32px 32px; min-width: 0; min-height: 0; width: 100%; height: 100%; }
+#main-svg { min-width: 200px; min-height: 200px; }
 #main-svg { width: 100%; height: 100%; display: block; cursor: grab; }
 #main-svg:active { cursor: grabbing; }
 #main-svg text { user-select: none; }
@@ -352,7 +353,7 @@ button { cursor: pointer; }
 
 <!-- MAIN CANVAS -->
 <div class="canvas-area">
-  <svg id="main-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  <svg id="main-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></svg>
 
   <div id="graph-legend">
     <div class="g"><div class="dot" style="background:var(--good)"></div>Verde: ≥ 70</div>
@@ -1341,12 +1342,13 @@ function computePositions(nodes, links) {
 }
 
 function W() {
-  const w = svg.clientWidth || (window.innerWidth - 620);
-  return w > 0 ? w : 1200; // safe default if layout not ready
+  // Try real width first, then window-based fallback, then safe default.
+  const w = (svg && svg.clientWidth) || (window.innerWidth - 620) || 1200;
+  return w > 0 ? w : 1200;
 }
 function H() {
-  const h = svg.clientHeight || (window.innerHeight - 96);
-  return h > 0 ? h : 800; // safe default
+  const h = (svg && svg.clientHeight) || (window.innerHeight - 96) || 800;
+  return h > 0 ? h : 800;
 }
 
 // ================================================================
@@ -1955,29 +1957,54 @@ document.getElementById('tour-restart').addEventListener('click', restartTour);
 //  INIT
 // ================================================================
 function init() {
-  // Robust init: always call build(). W()/H() fall back to window dimensions
-  // if svg.clientWidth is 0, so we don't need to wait for layout.
+  // Robust init: defer build via rAF to ensure layout is computed.
+  // Also retry until SVG has non-zero dimensions.
   try {
     if (!svg) {
       console.error('[D3 init] svg element not found');
       return;
     }
-    build();
-    window.addEventListener('resize', function() { build(); });
-    console.log('[D3 init] ready — svg', svg.clientWidth, 'x', svg.clientHeight);
+    // Defer initial build to next animation frame so layout is computed
+    requestAnimationFrame(function() {
+      build();
+      window.addEventListener('resize', function() { build(); });
+
+      // ResizeObserver: rebuild if SVG element actually resizes (zoom, panel toggle, etc.)
+      if (typeof ResizeObserver !== 'undefined') {
+        try {
+          const ro = new ResizeObserver(function(entries) {
+            for (const e of entries) {
+              const r = e.contentRect;
+              if (r.width > 0 && r.height > 0) build();
+            }
+          });
+          ro.observe(svg);
+        } catch (e) { /* ResizeObserver unavailable — ignore */ }
+      }
+      console.log('[D3 init] ready — svg', svg.clientWidth, 'x', svg.clientHeight);
+    });
   } catch (err) {
     console.error('[D3 init] error:', err);
   }
 }
 
-// Boot: standard DOMContentLoaded + window load order
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
+// Boot: standard DOMContentLoaded + window load order, deduped.
+// First init() is deferred via requestAnimationFrame inside init() to wait for layout.
+if (typeof window.__d3InitFired === 'undefined') {
+  window.__d3InitFired = true;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  // Also run once on window.load as fallback (CSS might not have been applied yet at DOMContentLoaded)
+  window.addEventListener('load', function() {
+    // Only run if SVG actually got sized in between
+    if (svg && svg.clientWidth > 0 && svg.clientHeight > 0) {
+      build();
+    }
+  });
 }
-// Also try on window load as fallback (in case CSS not yet applied)
-window.addEventListener('load', init);
 
 </script>
 </body>

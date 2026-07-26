@@ -908,7 +908,14 @@ function el(tag, attrs, text) {
 }
 function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 
-function statusColor(s) { return s===STATUS.GREEN?COLORS.green : s===STATUS.AMBER?COLORS.amber : COLORS.red; }
+function statusColor(s) { return s===STATUS.GREEN?COLORS.green : s===STATUS.AMBER?COLORS.amber : COLORS.red; }function hexToRgba(hex, alpha) {
+  if (!hex || hex[0] !== '#') return 'rgba(255,255,255,' + (alpha||1) + ')';
+  var r = parseInt(hex.slice(1,3), 16);
+  var g = parseInt(hex.slice(3,5), 16);
+  var b = parseInt(hex.slice(5,7), 16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha||1) + ')';
+}
+
 function statusClass(s) { return s===STATUS.GREEN?'green' : s===STATUS.AMBER?'amber' : 'red'; }
 
 // ================================================================
@@ -1043,6 +1050,28 @@ function build() {
       strokeColor = COLORS.purple;
       r = 22;
       labelColor = COLORS.purple;
+    } else if (n.ntype === 'trigger') {
+      fillColor = 'rgba(180,139,255,0.20)';
+      strokeColor = COLORS.purple;
+      r = 16;
+      labelColor = COLORS.purple;
+    } else if (n.ntype === 'learning') {
+      fillColor = 'rgba(95,209,232,0.20)';
+      strokeColor = COLORS.cyan;
+      r = n.r;
+      labelColor = COLORS.cyan;
+    } else if (n.ntype === 'milestone') {
+      fillColor = 'rgba(224,164,94,0.20)';
+      strokeColor = COLORS.accent;
+      r = n.r;
+      labelColor = COLORS.accent;
+    } else if (n.ntype === 'scenario') {
+      // Fix #2: scenario color by status
+      var sc = statusColor(n.status);
+      fillColor = hexToRgba(sc, 0.18);
+      strokeColor = sc;
+      r = n.r;
+      labelColor = sc;
     } else { // dim
       fillColor = 'rgba(74,222,128,0.18)';
       strokeColor = statusColor(n.status);
@@ -1160,10 +1189,14 @@ function computePositions(nodes, links) {
 
   // Group other nodes by type
   const dims = nodes.filter(n => n.ntype === 'dim');
-  const others = nodes.filter(n => n.ntype !== 'composite' && n.ntype !== 'dim' && n.ntype !== 'gate' && n.ntype !== 'persona' && n.ntype !== 'risk');
+  const others = nodes.filter(n => n.ntype !== 'composite' && n.ntype !== 'dim' && n.ntype !== 'gate' && n.ntype !== 'persona' && n.ntype !== 'risk' && n.ntype !== 'trigger' && n.ntype !== 'learning' && n.ntype !== 'milestone' && n.ntype !== 'scenario');
   const gates = nodes.filter(n => n.ntype === 'gate');
   const persons = nodes.filter(n => n.ntype === 'persona');
   const risks = nodes.filter(n => n.ntype === 'risk');
+  const triggers = nodes.filter(n => n.ntype === 'trigger');
+  const learnings = nodes.filter(n => n.ntype === 'learning');
+  const milestones = nodes.filter(n => n.ntype === 'milestone');
+  const scenarios = nodes.filter(n => n.ntype === 'scenario');
 
   // Place dim nodes in inner circle
   if (dims.length) {
@@ -1208,6 +1241,41 @@ function computePositions(nodes, links) {
       const mid = (risks.length - 1) / 2;
       n.x = cx + (i - mid) * 100;
       n.y = 60;
+    });
+  }
+
+  // Triggers (signal layer) — top-right cluster
+  if (triggers.length) {
+    triggers.forEach((n, i) => {
+      n.x = w - 120;
+      n.y = 80 + i * 50;
+    });
+  }
+
+  // Learnings (governance / learning layer) — right rail
+  if (learnings.length) {
+    learnings.forEach((n, i) => {
+      const mid = (learnings.length - 1) / 2;
+      n.x = Math.max(w - 80, 100);
+      n.y = cy + (i - mid) * 60 + 200;
+    });
+  }
+
+  // Milestones (timeline / flow) — bottom rail
+  if (milestones.length) {
+    milestones.forEach((n, i) => {
+      const mid = (milestones.length - 1) / 2;
+      n.x = cx + (i - mid) * 80;
+      n.y = h - 80;
+    });
+  }
+
+  // Scenarios — center column
+  if (scenarios.length) {
+    scenarios.forEach((n, i) => {
+      const mid = (scenarios.length - 1) / 2;
+      n.x = cx;
+      n.y = 100 + i * 90;
     });
   }
 
@@ -1293,10 +1361,17 @@ function getElementsForView(view, layer) {
     safePush({id:'R_LITIO', ntype:'risk', label:'R-Li', r:20, status:'amber', name:'Lítio rebound', data:{summary:'US$ 9k→22k. Déficit 2026: 1,5-80kt LCE.'}});
   } else if (view === 'red-flags') {
     // 3 RED dims highlighted (others filtered)
-    var keepIds = ['S2','S7','S10','S11'];
+    var keepIds = ['S7','S10','S11'];
+    var keep = new Set(keepIds);
     for (var i = nodes.length - 1; i >= 0; i--) {
-      if (nodes[i].ntype === 'dim' && keepIds.indexOf(nodes[i].id) === -1) {
+      if (nodes[i].ntype === 'dim' && !keep.has(nodes[i].id)) {
         nodes.splice(i, 1);
+      }
+    }
+    // Fix #1: drop edges whose endpoints were removed
+    for (var j = links.length - 1; j >= 0; j--) {
+      if (!keep.has(links[j].from) || !keep.has(links[j].to)) {
+        links.splice(j, 1);
       }
     }
   } else if (view === 'gates') {
@@ -1330,12 +1405,12 @@ function getElementsForView(view, layer) {
       {id:'M12', label:'Jun/27', name:'G3 Ongoing'}
     ];
     milestones.forEach(function(m) {
-      safePush({id:m.id, ntype:'gate', label:m.label, r:14, name:m.name, data:{summary:m.name}});
+      safePush({id:m.id, ntype:'milestone', label:m.label, r:14, name:m.name, data:{summary:m.name}});
     });
   } else if (view === 'scenario') {
-    safePush({id:'SC_EXP', ntype:'gate', label:'EXP', r:30, status:'green', name:'Expansão 60%', data:{summary:'IPCA 4%, Selic 10%. Composite 65. h* 30%.'}});
-    safePush({id:'SC_CONT', ntype:'gate', label:'CONT', r:30, status:'amber', name:'Continuidade 25%', data:{summary:'IPCA 4,5%, Selic 11%. Composite 78. h* 60%.'}});
-    safePush({id:'SC_RB', ntype:'gate', label:'RB', r:30, status:'red', name:'Rollback 15%', data:{summary:'IPCA 5%+, Selic 12%+. Composite 88. h* 91%. T-MV1.'}});
+    safePush({id:'SC_EXP', ntype:'scenario', label:'EXP', r:30, status:'green', name:'Expansão 60%', data:{summary:'IPCA 4%, Selic 10%. Composite 65. h* 30%.'}});
+    safePush({id:'SC_CONT', ntype:'scenario', label:'CONT', r:30, status:'amber', name:'Continuidade 25%', data:{summary:'IPCA 4,5%, Selic 11%. Composite 78. h* 60%.'}});
+    safePush({id:'SC_RB', ntype:'scenario', label:'RB', r:30, status:'red', name:'Rollback 15%', data:{summary:'IPCA 5%+, Selic 12%+. Composite 88. h* 91%. T-MV1.'}});
   } else if (view === 'cascade') {
     safePush({id:'S7_ORIG', ntype:'risk', label:'S7\nORIG', r:34, status:'red', name:'S7 Origem', data:{summary:'Kill switch. Bloqueio direto S3, S5, S11. Indirecto: S4, S9, S1, S6, S10, S8.'}});
     // Cascade edges from S7_ORIG
@@ -1346,7 +1421,30 @@ function getElementsForView(view, layer) {
     safeLink({id:'cas-5', from:'S7_ORIG', to:'S9', label:'demand', edgeType:'risk'});
     safeLink({id:'cas-6', from:'S7_ORIG', to:'S1', label:'macro', edgeType:'risk'});
   } else if (view === 'flow') {
-    // Flow is just a special layer
+    // Flow view: time-ordered sequence as horizontal rail
+    var flowMilestones = [
+      {id:'FM1', label:'G0', name:'Piloto'},
+      {id:'FM2', label:'A_T4', name:'Rules'},
+      {id:'FM3', label:'A_E3', name:'Lista'},
+      {id:'FM4', label:'A_T6', name:'LP CATL'},
+      {id:'FM5', label:'G1', name:'Fase 1'},
+      {id:'FM6', label:'A_E2', name:'Bridge'},
+      {id:'FM7', label:'A_T2', name:'Nacion'},
+      {id:'FM8', label:'A_E5', name:'Coalizão'},
+      {id:'FM9', label:'G2', name:'Fase 2'},
+      {id:'FM10', label:'G3', name:'Ongoing'}
+    ];
+    flowMilestones.forEach(function(m) {
+      safePush({id: m.id, ntype:'milestone', label: m.label, r: 18, name: m.name, data:{summary: m.name}});
+    });
+  } else if (view === 'couplings') {
+    // Couplings view: highlight primary edges, dim secondary
+    links.forEach(function(l) {
+      l._primary = (l.edgeType === 'primary');
+      l._secondary = (l.edgeType === 'secondary');
+    });
+    safePush({id:'C_IN', ntype:'composite', label:'C-IN', r:18, status:'green', name:'Coupling In', data:{summary:'Origem dos acoplamentos S×S.'}});
+    safePush({id:'C_OUT', ntype:'composite', label:'C-OUT', r:18, status:'amber', name:'Coupling Out', data:{summary:'Destino dos acoplamentos S×S.'}});
   }
 
   // Layer-specific extras (only if view === 'overview' or no view-specific took over)
@@ -1362,7 +1460,7 @@ function getElementsForView(view, layer) {
     } else if (layer === 'signal') {
       var triggers = ['T-AMBER','T-S7','T-HYST','T-5D','T-Li'];
       triggers.forEach(function(t) {
-        safePush({id: t, ntype: 'gate', label: t, r: 16, name: t + ' trigger', data:{summary:'Trigger ' + t}});
+        safePush({id: t, ntype: 'trigger', label: t, r: 16, name: t + ' trigger', data:{summary:'Trigger ' + t}});
       });
     } else if (layer === 'decision') {
       if (typeof decisionTrees === 'object' && decisionTrees !== null) {
@@ -1382,16 +1480,36 @@ function getElementsForView(view, layer) {
       }
     } else if (layer === 'learning') {
       ['BT','REC','DRIFT'].forEach(function(k) {
-        safePush({id: k, ntype: 'gate', label: k, r: 22, name: k, data:{summary:'Learning: ' + k}});
+        safePush({id: k, ntype: 'learning', label: k, r: 22, name: k, data:{summary:'Learning: ' + k}});
       });
     } else if (layer === 'governance') {
+      // Real governance concepts (not duplicate gates)
+      var gov = [
+        {id:'GOV-AUDIT',   label:'AUDIT',   r:24, name:'Audit Trail',   summary:'Trilha auditoria SAS-70 / SOX.'},
+        {id:'GOV-SIGNOFF', label:'SIGNOFF', r:22, name:'Sign-off Chain', summary:'Cadeia de assinaturas CEO+CFO+CSO+COO.'},
+        {id:'GOV-RACI',    label:'RACI',    r:22, name:'RACI Matrix',   summary:'Responsabilidade × Accountability × Consulted × Informed.'},
+        {id:'GOV-COMPL',   label:'COMPL',   r:22, name:'Compliance',     summary:'Compliance check MPT/CVM/IBAMA/Cade.'}
+      ];
+      gov.forEach(function(g) {
+        safePush({id: g.id, ntype: 'learning', label: g.label, r: g.r,
+                  name: g.name, data: {summary: g.summary}});
+      });
+    } else if (layer === 'framework') {
+      // Framework (default): 4 gates + first 3 personas
       if (Array.isArray(gates)) {
         gates.forEach(function(g, i) {
-          safePush({id: 'GOV-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
+          safePush({id: 'FW-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
+        });
+      }
+      if (Array.isArray(personas)) {
+        personas.slice(0, 3).forEach(function(p, i) {
+          safePush({id: 'FW-P' + i, ntype: 'persona',
+                    label: (p.role || p.name || ('P' + i)).slice(0, 8),
+                    r: 20, name: p.name || '', data: p});
         });
       }
     } else {
-      // Framework (default): add 4 gates + first 3 personas
+      // Unknown layer — fall back to framework defaults
       if (Array.isArray(gates)) {
         gates.forEach(function(g, i) {
           safePush({id: 'FW-G' + i, ntype: 'gate', label: g.id, r: 22, name: g.name, data: g});
@@ -1548,12 +1666,22 @@ function setLayer(layer) {
 function setView(view) {
   currentView = view;
   updateViewButtons();
+  updateLayerButtons();  // Fix #5: refresh layer button state
   build();
   document.getElementById('detail-empty').style.display = '';
   document.getElementById('detail-content').style.display = 'none';
 }
 function updateLayerButtons() {
-  document.querySelectorAll('.layer-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-layer') === currentLayer));
+  // Fix #5: layer buttons only apply to overview and flow views
+  const layerActive = (currentView === 'overview' || currentView === 'flow');
+  document.querySelectorAll('.layer-btn').forEach(btn => {
+    const isActive = btn.getAttribute('data-layer') === currentLayer;
+    btn.classList.toggle('active', isActive);
+    btn.disabled = !layerActive;
+    btn.style.opacity = layerActive ? '1' : '0.4';
+    btn.style.cursor = layerActive ? 'pointer' : 'not-allowed';
+    btn.title = layerActive ? '' : 'Layers apply only to Overview / Flow views';
+  });
 }
 function updateViewButtons() {
   document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-view') === currentView));

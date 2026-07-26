@@ -1608,6 +1608,146 @@ function onSearch(query) {
   });
 }
 
+// ----------------------------------------------------------------
+// v2.1 — missing handlers called by build() event listeners.
+// These were referenced but never defined in the v2.1 refactor.
+// ----------------------------------------------------------------
+
+// Click handler — highlight the selected node and dim non-neighbours.
+function selectNode(nodeId) {
+  try {
+    if (!nodeId) return;
+    const svgEl = document.getElementById('main-svg');
+    if (!svgEl) return;
+    // Mark selected
+    svgEl.querySelectorAll('.node-group').forEach(g => {
+      g.classList.remove('selected');
+    });
+    const target = svgEl.querySelector('.node-group[data-id="' + CSS.escape(nodeId) + '"]');
+    if (target) target.classList.add('selected');
+    // Dim everything that is not the selected node or a direct neighbour
+    const connected = new Set([nodeId]);
+    svgEl.querySelectorAll('.edge').forEach(edge => {
+      const src = edge.getAttribute('data-src') || '';
+      const dst = edge.getAttribute('data-dst') || '';
+      if (src === nodeId || dst === nodeId) {
+        connected.add(src);
+        connected.add(dst);
+      }
+    });
+    svgEl.querySelectorAll('.node-group').forEach(g => {
+      const id = g.getAttribute('data-id') || '';
+      g.style.opacity = connected.has(id) ? '1' : '0.15';
+    });
+    svgEl.querySelectorAll('.edge').forEach(edge => {
+      const src = edge.getAttribute('data-src') || '';
+      const dst = edge.getAttribute('data-dst') || '';
+      edge.style.opacity = (src === nodeId || dst === nodeId) ? '1' : '0.05';
+    });
+  } catch (err) {
+    console.error('[D3 selectNode] error:', err);
+  }
+}
+
+// Hover-in: highlight edges connected to this node.
+function highlightConnections(nodeId) {
+  try {
+    if (!nodeId) return;
+    const svgEl = document.getElementById('main-svg');
+    if (!svgEl) return;
+    svgEl.querySelectorAll('.edge').forEach(edge => {
+      const src = edge.getAttribute('data-src') || '';
+      const dst = edge.getAttribute('data-dst') || '';
+      const lit = (src === nodeId || dst === nodeId);
+      edge.style.opacity = lit ? '1' : '0.15';
+      edge.style.strokeWidth = lit ? '2.5' : '1';
+    });
+  } catch (err) {
+    console.error('[D3 highlightConnections] error:', err);
+  }
+}
+
+// Hover-out / click-outside: restore default opacity.
+function unhighlightConnections() {
+  try {
+    const svgEl = document.getElementById('main-svg');
+    if (!svgEl) return;
+    svgEl.querySelectorAll('.edge').forEach(edge => {
+      edge.style.opacity = '';
+      edge.style.strokeWidth = '';
+    });
+    // Restore non-selected node opacity (selectNode dimmed the rest)
+    const selected = svgEl.querySelector('.node-group.selected');
+    if (selected) {
+      const selId = selected.getAttribute('data-id') || '';
+      svgEl.querySelectorAll('.node-group').forEach(g => {
+        g.style.opacity = '';
+        g.classList.remove('selected');
+      });
+    }
+  } catch (err) {
+    console.error('[D3 unhighlightConnections] error:', err);
+  }
+}
+
+// Tooltip element — created lazily, reused.
+let _tooltipEl = null;
+function _getTooltip() {
+  if (_tooltipEl && _tooltipEl.isConnected) return _tooltipEl;
+  _tooltipEl = document.createElement('div');
+  _tooltipEl.id = 'd3-node-tooltip';
+  _tooltipEl.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;' +
+    'background:rgba(15,23,42,0.95);color:#f1f5f9;border:1px solid #475569;' +
+    'border-radius:6px;padding:8px 10px;font:12px/1.4 ui-sans-serif,system-ui,sans-serif;' +
+    'max-width:280px;box-shadow:0 4px 12px rgba(0,0,0,0.4);display:none;';
+  document.body.appendChild(_tooltipEl);
+  return _tooltipEl;
+}
+
+function showTooltip(event, node) {
+  try {
+    if (!node) return;
+    const tt = _getTooltip();
+    const id = node.id || node.dimension || '';
+    const label = node.label || node.name || id;
+    const ntype = node.ntype || node.type || '';
+    const status = node.status || '';
+    const score = (typeof node.score === 'number') ? node.score.toFixed(0) : '';
+    let html = '<div style="font-weight:600;color:#e2e8f0;margin-bottom:4px;">' + label + '</div>';
+    html += '<div style="opacity:0.7;font-size:11px;margin-bottom:4px;">' + id + ' · ' + ntype + '</div>';
+    if (status) html += '<div>Status: <b>' + status + '</b></div>';
+    if (score) html += '<div>Score: <b>' + score + '/100</b></div>';
+    if (node.description) html += '<div style="margin-top:4px;opacity:0.85;">' + node.description + '</div>';
+    tt.innerHTML = html;
+    tt.style.display = 'block';
+    moveTooltip(event);
+  } catch (err) {
+    console.error('[D3 showTooltip] error:', err);
+  }
+}
+
+function moveTooltip(event) {
+  try {
+    const tt = _getTooltip();
+    if (!tt || tt.style.display === 'none') return;
+    const x = (event.clientX || 0) + 14;
+    const y = (event.clientY || 0) + 14;
+    tt.style.left = x + 'px';
+    tt.style.top = y + 'px';
+  } catch (err) {
+    // Silent — mouse-move is high-frequency
+  }
+}
+
+function hideTooltip() {
+  try {
+    const tt = _getTooltip();
+    if (tt) tt.style.display = 'none';
+  } catch (err) {
+    // Silent
+  }
+}
+
 //  EVENT WIRING
 // ================================================================
 document.querySelectorAll('.layer-btn').forEach(btn => {

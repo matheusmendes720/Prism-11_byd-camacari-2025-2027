@@ -1146,15 +1146,18 @@ function build() {
       g.appendChild(inner);
     }
 
-    // Label (single line)
+    // Label (single line) — for dim nodes, shift up so it doesn't collide with inner status dot
     const labelLines = String(n.label).split('\n');
     const labelSize = n.ntype==='composite' ? 11 : (n.ntype==='dim' || n.ntype==='data' ? 10.5 : 9.5);
     const labelWeight = n.ntype==='composite' ? '700' : '600';
+    // For dim nodes, push label up by r/3 so the inner status dot (rendered earlier at center) is below the label
+    const labelYOffset = n.ntype === 'dim' ? -(r * 0.35) : 0;
     if (labelLines.length === 1) {
       const t = el('text', {
         'text-anchor':'middle', 'dominant-baseline':'central',
         'font-family': labelFont, 'font-size': labelSize,
-        'font-weight': labelWeight, fill: labelColor
+        'font-weight': labelWeight, fill: labelColor,
+        y: labelYOffset
       });
       t.textContent = n.label;
       g.appendChild(t);
@@ -1164,7 +1167,7 @@ function build() {
           'text-anchor':'middle', 'dominant-baseline':'central',
           'font-family': labelFont, 'font-size': labelSize,
           'font-weight': labelWeight, fill: labelColor,
-          y: (i - (labelLines.length-1)/2) * 12
+          y: (i - (labelLines.length-1)/2) * 12 + labelYOffset
         });
         t.textContent = line;
         g.appendChild(t);

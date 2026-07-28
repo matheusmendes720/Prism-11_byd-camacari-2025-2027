@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>D3 v2.1 — Knowledge Graph · BYD Camaçari 2025–2027</title>
+<title>D3 v2.1 — Grafo de Conhecimento · BYD Camaçari 2025–2027</title>
 <style>
 :root {
   --bg: #0a0c10; --bg-2: #12151c; --bg-3: #1a1e26; --bg-4: #21252e; --bg-5: #2a2f3a;
@@ -77,6 +77,14 @@ button { cursor: pointer; }
 .legend-row { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink-3); margin-bottom: 5px; }
 .legend-row .swatch { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
 .legend-row .swatch.circle { border-radius: 50%; }
+
+/* E12 — STATUS_THRESHOLDS runtime toggle (segmented control) */
+.threshold-toggle { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); }
+.threshold-toggle-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 6px; }
+.threshold-toggle-buttons { display: flex; gap: 4px; }
+.threshold-btn { flex: 1; padding: 5px 6px; background: var(--bg-3); border: 1px solid var(--line-2); border-radius: 4px; color: var(--ink-3); font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.04em; cursor: pointer; transition: all 0.12s; text-align: center; line-height: 1.25; }
+.threshold-btn:hover { background: var(--bg-4); color: var(--ink-2); border-color: var(--line-2); }
+.threshold-btn.active { background: var(--primary-dim); border-color: var(--primary); color: var(--primary); font-weight: 600; }
 
 /* MAIN CANVAS */
 .canvas-area { grid-column: 2; grid-row: 2; position: relative; overflow: hidden; background: var(--bg); background-image: radial-gradient(circle at 1px 1px, rgba(38,42,51,0.7) 1px, transparent 0); background-size: 32px 32px; min-width: 0; min-height: 0; width: 100%; height: 100%; }
@@ -214,9 +222,9 @@ button { cursor: pointer; }
 <!-- TOUR SELECTOR (modal inicial com escolha de tour) -->
 <div id="tour-selector">
   <div style="text-align:center;padding:0 20px;max-width:860px;width:100%">
-    <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Escolha seu tour</div>
-    <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;margin-bottom:6px">5 tours guiados</h2>
-    <p style="font-size:13px;color:var(--ink-3);margin-bottom:20px;line-height:1.6">Cada tour narra um caminho narrativo diferente. Comece pelo que combina com seu papel.</p>
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.16em;color:var(--accent);text-transform:uppercase;margin-bottom:8px">Escolha um tour guiado</div>
+    <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;margin-bottom:6px"><span id="tour-selector-count">…</span> tours guiados</h2>
+    <p style="font-size:13px;color:var(--ink-3);margin-bottom:20px;line-height:1.6">Cada tour é um <strong>roteiro narrado</strong> que mostra o grafo de um ângulo diferente. Comece pelo que combina com o seu papel — ou rode todos em sequência para entender a história completa em 4 minutos.</p>
     <div class="tour-selector-grid" id="tour-selector-grid"></div>
     <div style="margin-top:16px"><button class="tour-btn secondary" id="tour-selector-cancel" style="font-size:12px">Cancelar</button></div>
   </div>
@@ -251,22 +259,22 @@ button { cursor: pointer; }
 <!-- TOP BAR -->
 <div class="top-bar">
   <span class="logo">D3 v2.1</span>
-  <span class="title">Knowledge Graph</span>
+  <span class="title">Grafo de Conhecimento</span>
   <span class="tag">BYD Camaçari · 2025–2027</span>
   <div class="search-box">
     <span class="search-icon">⌕</span>
-    <input id="search-input" placeholder="Buscar dimensão, coupling, gate…" />
+    <input id="search-input" placeholder="Buscar frente de risco, conexão, trava de aprovação…" />
     <span class="search-shortcut">⌘K</span>
   </div>
   <div class="spacer"></div>
   <div class="meta-stats">
-    <div class="stat"><span class="n" id="stat-nodes">11</span> dimensões</div>
-    <div class="stat"><span class="n" id="stat-edges">28</span> couplings</div>
-    <div class="stat"><span class="n">5/5</span> backtesting</div>
+    <div class="stat"><span class="n" id="stat-nodes">—</span> frentes de risco</div>
+    <div class="stat"><span class="n" id="stat-edges">—</span> conexões</div>
+    <div class="stat"><span class="n">5/5</span> crises testadas</div>
   </div>
   <div class="top-actions">
-    <button class="top-btn primary" id="btn-start-tour">▶ Tour guiado</button>
-    <button class="top-btn" id="btn-export">↓ Export</button>
+    <button class="top-btn primary" id="btn-start-tour">▶ Iniciar tour guiado</button>
+    <button class="top-btn" id="btn-export">↓ Exportar</button>
   </div>
 </div>
 
@@ -276,94 +284,69 @@ button { cursor: pointer; }
 <!-- LEFT SIDEBAR -->
 <div class="sidebar">
   <div class="section">
-    <div class="section-title">Layers (7)</div>
+    <div class="section-title">Camadas do grafo (7)</div>
     <button class="layer-btn active" data-layer="framework">
-      <span class="icon" style="background:var(--accent-dim);color:var(--accent)">◉</span>Framework
+      <span class="icon" style="background:var(--accent-dim);color:var(--accent)">◉</span>O que é (Framework)
       <span class="count">5</span>
     </button>
     <button class="layer-btn" data-layer="data">
-      <span class="icon" style="background:var(--cyan-dim);color:var(--cyan)">⌗</span>Data
+      <span class="icon" style="background:var(--cyan-dim);color:var(--cyan)">⌗</span>De onde vem (Dados)
       <span class="count">13</span>
     </button>
     <button class="layer-btn" data-layer="signal">
-      <span class="icon" style="background:var(--primary-dim);color:var(--primary)">▣</span>Signal
+      <span class="icon" style="background:var(--primary-dim);color:var(--primary)">▣</span>Quem dispara (Sinais)
       <span class="count">11</span>
     </button>
     <button class="layer-btn" data-layer="decision">
-      <span class="icon" style="background:var(--good-dim);color:var(--good)">◆</span>Decision
+      <span class="icon" style="background:var(--good-dim);color:var(--good)">◆</span>Como decide (Lógica)
       <span class="count">12</span>
     </button>
     <button class="layer-btn" data-layer="action">
-      <span class="icon" style="background:var(--purple-dim);color:var(--purple)">▸</span>Action
+      <span class="icon" style="background:var(--purple-dim);color:var(--purple)">▸</span>O que fazer (Ações)
       <span class="count">36</span>
     </button>
     <button class="layer-btn" data-layer="learning">
-      <span class="icon" style="background:var(--warn-dim);color:var(--warn)">↻</span>Learning
+      <span class="icon" style="background:var(--warn-dim);color:var(--warn)">↻</span>Como aprende (Recalibra)
       <span class="count">7</span>
     </button>
     <button class="layer-btn" data-layer="governance">
-      <span class="icon" style="background:var(--purple-dim);color:var(--purple)">⚖</span>Governance
+      <span class="icon" style="background:var(--purple-dim);color:var(--purple)">⚖</span>Quem responde (RACI)
       <span class="count">26</span>
     </button>
   </div>
 
   <div class="section">
-    <div class="section-title">Views (9)</div>
-    <button class="view-btn active" data-view="overview"><span class="icon">◎</span>Visão Geral</button>
-    <button class="view-btn" data-view="risk"><span class="icon">⚠</span>Risk Register (5)</button>
-    <button class="view-btn" data-view="red-flags"><span class="icon">!</span>RED Flags (3)</button>
-    <button class="view-btn" data-view="couplings"><span class="icon">⬌</span>28 Couplings</button>
-    <button class="view-btn" data-view="gates"><span class="icon">▸</span>Pilot Gates</button>
-    <button class="view-btn" data-view="personas"><span class="icon">◉</span>Personas</button>
-    <button class="view-btn" data-view="flow"><span class="icon">⊳</span>5-Layer Flow</button>
-    <button class="view-btn" data-view="timeline"><span class="icon">◷</span>18m Timeline</button>
-    <button class="view-btn" data-view="scenario"><span class="icon">▦</span>3 Scenarios</button>
-    <button class="view-btn" data-view="cascade"><span class="icon">↯</span>Cascade</button>
+    <div class="section-title">Visões de leitura (10)</div>
+    <button class="view-btn active" data-view="overview"><span class="icon">◎</span>Visão geral</button>
+    <button class="view-btn" data-view="risk"><span class="icon">⚠</span>Caderno de riscos (5)</button>
+    <button class="view-btn" data-view="red-flags"><span class="icon">!</span>Alertas vermelhos (3)</button>
+    <button class="view-btn" data-view="couplings"><span class="icon">⬌</span>28 conexões entre frentes</button>
+    <button class="view-btn" data-view="gates"><span class="icon">▸</span>Travas de aprovação</button>
+    <button class="view-btn" data-view="personas"><span class="icon">◉</span>Pessoas-chave (17)</button>
+    <button class="view-btn" data-view="flow"><span class="icon">⊳</span>Caminho do sinal à ação</button>
+    <button class="view-btn" data-view="timeline"><span class="icon">◷</span>Cronograma 18 meses</button>
+    <button class="view-btn" data-view="scenario"><span class="icon">▦</span>3 cenários políticos</button>
+    <button class="view-btn" data-view="cascade"><span class="icon">↯</span>Como uma crise vira desastre</button>
   </div>
 
-  <div class="section">
-    <div class="section-title">Diferença entre layers</div>
-    <div style="font-size:10.5px;color:var(--ink-3);line-height:1.65;padding:0 14px">
-      <strong style="color:var(--accent)">Framework</strong> (O QUE): composite + 11 dims + 20 couplings + 5 ações E + 4 gates<br>
-      <strong style="color:var(--cyan)">Data</strong> (DE ONDE): 9 fontes + 11 dims consumidores<br>
-      <strong style="color:var(--primary)">Signal</strong> (QUEM/COMO): triggers + cadência + 17 personas<br>
-      <strong style="color:var(--good)">Decision</strong> (LÓGICA): 3 DT + 4 outcomes + 3 triggers ativam<br>
-      <strong style="color:var(--purple)">Action</strong> (EXECUÇÃO): 25 ações + RACI + status<br>
-      <strong style="color:var(--warn)">Learning</strong> (RECALIBRA): 5 stress events + BT + REC + DRIFT<br>
-      <strong style="color:var(--purple)">Governance</strong> (RACI): 17 personas + 9 gates + audit WORM
-    </div>
-  </div>
-
-  <div class="sidebar-legend">
-    <div class="legend-title">Status</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--good)"></div>Verde · ≥ 70/100</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--warn)"></div>Amarelo · 50–69</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--bad)"></div>Vermelho · &lt; 50</div>
-    <div class="legend-title" style="margin-top:10px">Tipos (10)</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--accent)"></div>Composite (5)</div>
-    <div class="legend-row"><div class="swatch" style="background:var(--primary);border-radius:0"></div>Dim (11)</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--green)"></div>Gate (4+)</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--purple)"></div>Persona (17)</div>
-    <div class="legend-row"><div class="swatch circle" style="background:var(--cyan)"></div>Data (9)</div>
-    <div class="legend-row"><div class="swatch" style="background:var(--primary);border-radius:0"></div>Decision (3)</div>
-    <div class="legend-row"><div class="swatch" style="background:var(--purple);border-radius:0"></div>Action (25)</div>
-    <div class="legend-row"><div class="swatch" style="background:var(--bad);border-radius:0"></div>Risk (5)</div>
-  </div>
+  <!-- E2 — sidebar glossary block; rendered by renderGlossary() from
+       glossaryTexts + STATUS_THRESHOLDS + PALETTE_TOKENS + getCounts().
+       Pre-E2 was static HTML that drifted from every underlying dict. -->
+  <div id="glossary-root"></div>
 </div>
 
 <!-- MAIN CANVAS -->
 <div class="canvas-area">
   <svg id="main-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet"></svg>
 
-  <div id="graph-legend">
-    <div class="g"><div class="dot" style="background:var(--good)"></div>Verde: ≥ 70</div>
-    <div class="g"><div class="dot" style="background:var(--warn)"></div>Amarelo: 50–69</div>
-    <div class="g"><div class="dot" style="background:var(--bad)"></div>Vermelho: &lt; 50</div>
-    <div class="g" style="margin-top:4px;padding-top:4px;border-top:1px solid var(--line)"><div class="dot" style="background:var(--accent)"></div>Coupling</div>
-  </div>
+  <!-- E12 — canvas legend rendered by renderCanvasLegend() from
+       STATUS_THRESHOLDS[STATUS_THRESHOLDS.active].green/amber. Pre-E12
+       was hardcoded literal "≥70 / 50-69 / <50" that drifted from the
+       sidebar's threshold range. -->
+  <div id="graph-legend"></div>
 
-  <div id="layer-label">Framework · Visão Geral</div>
-  <div id="graph-title">D3 v2.1 · 7 layers · 9 views · BYD Camaçari · jul/2026</div>
+  <div id="layer-label">…</div>
+  <div id="graph-title">…</div>
 
   <div class="zoom-controls">
     <button class="zoom-btn" id="btn-zoom-in">+</button>
@@ -381,19 +364,19 @@ button { cursor: pointer; }
 <div class="detail-panel" id="detail-panel">
   <div class="detail-empty" id="detail-empty">
     <div class="icon">◎</div>
-    <div class="msg">Selecione qualquer nó para explorar detalhes. Use <b>⌘K</b> para buscar ou <b>▶ Tour guiado</b> no topo.</div>
+    <div class="msg">Selecione qualquer nó do grafo para ler a explicação acessível da frente de risco, da conexão ou da trava de aprovação. Use <b>⌘K</b> para buscar por nome, ou clique em <b>▶ Iniciar tour guiado</b> no topo para uma narrativa de 30 a 60 segundos.</div>
   </div>
   <div id="detail-content" style="display:none"></div>
 </div>
 
 <!-- BOTTOM BAR -->
 <div class="bottom-bar">
-  <div class="item"><div class="dot" style="background:var(--good)"></div>5/5 Backtesting PERFEITO</div>
-  <div class="item"><div class="dot" style="background:var(--warn)"></div>Composite 78/100</div>
-  <div class="item"><div class="dot" style="background:var(--bad)"></div>3 RED ativas</div>
+  <div class="item"><div class="dot" style="background:var(--good)"></div><span id="bottom-backtesting">…</span></div>
+  <div class="item"><div class="dot" style="background:var(--warn)"></div><span id="bottom-composite">…</span></div>
+  <div class="item"><div class="dot" style="background:var(--bad)"></div><span id="bottom-red-count">…</span></div>
   <div class="spacer" style="flex:1"></div>
-  <div class="item">D3 v2.1 · jul/2026</div>
-  <div class="item">⌘K buscar · ⇥ tour · esc fechar</div>
+  <div class="item" id="bottom-version">…</div>
+  <div class="item">⌘K buscar · ⇥ tour · Esc fechar painel</div>
 </div>
 </div>
 
@@ -402,7 +385,7 @@ button { cursor: pointer; }
   <div class="tip-tag" id="tip-tag"></div>
   <div class="tip-title" id="tip-title"></div>
   <div class="tip-sub" id="tip-sub">
-      <span style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--ink-4)">build 0ea5a27 · 2026-07-26 · 146892 bytes</span>
+      <span id="build-stamp" style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--ink-4)">build …</span>
     </div>
 </div>
 
@@ -418,6 +401,1659 @@ const COLORS = {
   primary:'#6b95f0', accent:'#e0a45e', purple:'#b48bff', cyan:'#5fd1e8',
   neutral:'#898d96', border:'#262a33'
 };
+
+// ================================================================
+//  E1 — ID NORMALIZER + DERIVED COUNTS (centralized)
+// ================================================================
+// All node IDs in the canvas are generated from here. New layers or
+// node-types should add a new prefix; never inline-concatenate IDs in
+// getElementsForView() / build() / selectNode().
+//
+//  Prefix → Layer / node-type mapping (single source of truth):
+//    FW-  framework gates + personas       (layer 0)
+//    D-   data sources / dim consumers      (layer 1)
+//    SG-  signal / trigger / cadence       (layer 2)
+//    DC-  decision trees + outcomes         (layer 3)
+//    A-   actions (strategic/tactical/operational)  (layer 4)
+//    L-   learning (backtest, recalibration, drift) (layer 5)
+//    G-   governance gates (pilot phase)    (layer ⊥)
+//    AC-  audit / compliance (WORM + RACI)  (layer ⊥', post-H5)
+//    TN-  guided tour step anchors         (cross-cutting ⊥'')
+//    C-   couplings (S↔S edges)            (inter-layer)
+//    T-   triggers (cadence-bound)          (post-H6)
+//
+//  This module is pure: no DOM, no state, no side-effects. It only
+//  normalizes identifiers so that showDetail(), selectNode(), and the
+//  SVG export can resolve a node by ID without knowing where it came
+//  from.
+
+const SVG_ID_GENERATOR = {
+  framework: (value) => `FW-${value}`,
+  frameworkGate: (i) => `FW-G${i}`,
+  frameworkPersona: (i) => `FW-P${i}`,
+  data: (value) => `D-${value}`,
+  signal: (value) => `SG-${value}`,
+  decision: (value) => `DC-${value}`,
+  action: (i) => `A-${i}`,
+  learning: (value) => `L-${value}`,
+  governance: (value) => `G-${value}`,
+  audit: (value) => `AC-${value}`,
+  narration: (value) => `TN-${value}`,
+  coupling: (i) => `C-${i}`,
+  trigger: (value) => `T-${value}`,
+  // E17: OUT-* (outcomes de decision trees) e LE-* (learning events de H3 unified schema).
+  // Pre-allocated como prefix reservation análoga a 'T-' (triggers), 'OUT-' (outcomes),
+  // 'A_E' (estratégicas), 'DT_' (decisions) — cf. comments L2476/L2526/L2627/L3402.
+  outcome: (value) => `OUT-${value}`,
+  learningEvent: (value) => `LE-${value}`
+};
+
+// Lookup table for resolving prefixes back to layer / node-type.
+// Used by showDetail() and highlightConnections() to look up the
+// originating dictionary from an arbitrary node ID.
+const SVG_ID_TO_LAYER = {
+  'FW': 'framework',
+  'D':  'data',
+  'SG': 'signal',
+  'DC': 'decision',
+  'A':  'action',
+  'L':  'learning',
+  'G':  'governance',
+  'AC': 'audit',
+  'TN': 'narration',
+  'C':  'coupling',
+  'T':  'trigger',
+  // E17: OUT-* resolve para 'decision' (outcomes são filhos de DT_* — saídas
+  // probabilísticas do decision tree) e LE-* resolve para 'learning' (learning
+  // events do schema unificado H3 = stress|backtest|recalibration|drift).
+  'OUT': 'decision',
+  'LE':  'learning'
+};
+
+// SCENARIO_REFS — closed-world navigation targets used by guided tours.
+// These IDs are semantic anchors rather than generated SVG IDs, so they
+// must declare the layer that owns their detail/highlight context.
+const SCENARIO_REFS = {
+  'C_S1S3':  'coupling',
+  'C_S7S10': 'coupling',
+  'C_IN':    'coupling',
+  'SC_RB':   'framework'
+};
+
+// ================================================================
+//  ID_PREFIXES — canonical SVG ID prefix reservation table (E17).
+//
+//  Single source of truth para TODOS os prefixos reservados pelo D3
+//  framework. Subagente `10-F4` (cf. 14-audit-coverage-matrix.md §2.2
+//  D18) sinalizou que a regra de prefixo estava implícita no
+//  SVG_ID_GENERATOR mas sem tabela canônica — perguntas do tipo
+//  "tem exception além de FW-/D-/SG-/DC-/A-/L-/G-?" não tinham
+//  resposta direta.
+//
+//  Estrutura: array de {prefix, owner, generator, layer} — cada
+//  entrada documenta:
+//    - prefix:    o prefix literal usado nas IDs (e.g. 'FW', 'OUT')
+//    - owner:     nome canônico do dicionário/fábrica dona do prefixo
+//    - generator: a função em SVG_ID_GENERATOR que produz o prefixo
+//                 (string → string). Permite validação round-trip.
+//    - layer:     a layer canônica para qual o prefixo resolve
+//                 (mesma key do SVG_ID_TO_LAYER).
+//
+//  Convenção: 1 prefix ↔ 1 owner ↔ 1 generator ↔ 1 layer. Sem
+//  ambiguidade. O array é ordenado por layer canônica (mesma ordem
+//  que SVG_ID_GENERATOR / SVG_ID_TO_LAYER) para diff-friendly.
+//
+//  Acoplamento com outros dicts:
+//    - SVG_ID_GENERATOR: cada `prefix` deve ter factory `{prefix}: (v) => '${prefix}-${v}'` (com tratamento case-by-case: FW-G/FW-P usam prefixos longos, A-/C- usam índice)
+//    - SVG_ID_TO_LAYER: cada `prefix` deve ser key com value === `layer`
+//    - resolveIdLayer(): o regex `^([A-Z]{1,3})-/ cobre todos os prefixos
+// ================================================================
+const ID_PREFIXES = [
+  { prefix: 'FW',   owner: 'framework',          generator: 'framework',        layer: 'framework'  },
+  { prefix: 'FW-G', owner: 'frameworkGate',      generator: 'frameworkGate',    layer: 'framework'  },
+  { prefix: 'FW-P', owner: 'frameworkPersona',   generator: 'frameworkPersona', layer: 'framework'  },
+  { prefix: 'D',    owner: 'dataNodes',          generator: 'data',            layer: 'data'       },
+  { prefix: 'SG',   owner: 'signals',            generator: 'signal',          layer: 'signal'     },
+  { prefix: 'DC',   owner: 'decisionTrees',      generator: 'decision',        layer: 'decision'   },
+  { prefix: 'OUT',  owner: 'outcomeRegistry',    generator: 'outcome',         layer: 'decision'   },
+  { prefix: 'A',    owner: 'actions',            generator: 'action',          layer: 'action'     },
+  { prefix: 'LE',   owner: 'learningEvents',     generator: 'learningEvent',   layer: 'learning'   },
+  { prefix: 'L',    owner: 'learningSchema',     generator: 'learning',        layer: 'learning'   },
+  { prefix: 'G',    owner: 'governance',         generator: 'governance',      layer: 'governance' },
+  { prefix: 'AC',   owner: 'auditCompliance',    generator: 'audit',           layer: 'audit'      },
+  { prefix: 'TN',   owner: 'narrationTours',     generator: 'narration',       layer: 'narration'  },
+  { prefix: 'C',    owner: 'couplings',          generator: 'coupling',        layer: 'coupling'   },
+  { prefix: 'T',    owner: 'triggers',           generator: 'trigger',         layer: 'trigger'    }
+];
+
+// Resolve any node ID → originating layer (or null if unrecognized).
+// IDs that already match the FW-/D-/SG-/… shape go through the prefix
+// table; bare IDs like "S1", "PTAX", "G0", "composite" fall back to
+// heuristics so legacy references still resolve.
+function resolveIdLayer(id) {
+  if (!id || typeof id !== 'string') return null;
+  if (id === 'composite') return 'framework';
+  if (Object.prototype.hasOwnProperty.call(SCENARIO_REFS, id)) return SCENARIO_REFS[id];
+  const m = id.match(/^([A-Z]{1,3})-/);
+  if (m && SVG_ID_TO_LAYER[m[1]]) return SVG_ID_TO_LAYER[m[1]];
+  if (/^S\d+$/.test(id)) return 'data';        // S1..S11 dim consumers
+  if (/^G\d+$/.test(id)) return 'governance';  // G0..N governance gates
+  if (/^P\d+$/.test(id)) return 'framework';   // P1..N personas
+  return null;
+}
+
+// getCounts() — single source of truth for inventory counts.
+// Derived from the dictionaries declared below. Used by the top bar
+// stats, sidebar layer counts, and any other widget that needs an
+// inventory total (rather than the active view's filtered count).
+// Dicts are referenced lazily at call time (not definition time) so
+// reordering of the data block does not break this module.
+function getCounts() {
+  return {
+    dimensions: Object.keys(dimData).length,
+    dataSources: Object.keys(dataNodes).length,
+    decisionTrees: Object.keys(decisionTrees).length,
+    actions: Object.keys(actions).length,
+    frameworkGates: gates.length,
+    frameworkPersonas: personas.length,
+    couplings: couplings.length,
+    tours: tours.length,
+    // E15 lift — H6 Trigger dict (cross-cutting sub-camada of Signal):
+    //   T-AMBER, T-S7, T-HYST, T-5D, T-Li = 5 typed triggers.
+    triggers: Object.keys(triggerRegistry).length,
+    // E15 lift — H7 Outcome dict (sub-camada between Decision and Action):
+    //   OUT_S3_1..3, OUT_S6_1..3, OUT_S7_1..2 = 8 typed outcomes.
+    outcomes: Object.keys(outcomeRegistry).length,
+    // E16 lift — H3 IMPROVÁVEL (1 unified schema, NÃO 4 dicionários):
+    //   LE_S1..5 + LE_BT + LE_REC + LE_DRIFT = 8 learning events
+    //   cobrindo stress (5) + backtest (1) + recalibration (1) + drift (1).
+    learningEvents: Object.keys(learningEvents).length,
+    // Aliases used by the existing top-bar DOM. Labels stay as-is
+    // ("dimensões", "couplings") so the badge reads naturally even
+    // after the literal is removed.
+    nodes: Object.keys(dimData).length,
+    edges: couplings.length
+  };
+}
+
+// renderTopbarStats() — populate the top-bar inventory spans with
+// derived counts. Called from init() before build() so the user
+// never sees the hardcoded "11" / "28" placeholders.
+function renderTopbarStats() {
+  try {
+    const counts = getCounts();
+    const sNodes = document.getElementById('stat-nodes');
+    const sEdges = document.getElementById('stat-edges');
+    if (sNodes) sNodes.textContent = counts.nodes;
+    if (sEdges) sEdges.textContent = counts.edges;
+  } catch (e) {
+    // Silently degrade — the build() override will re-populate later.
+    console.warn('[D3 E1] renderTopbarStats failed:', e);
+  }
+}
+
+// validateDataLayer() — runs the §3.3 invariants from
+// 09-unified-data-model.md at init time:
+//   1. JSON_ENVELOPE.schema_version is a positive number
+//   2. SVG_ID_TO_LAYER prefixes are all backed by a SVG_ID_GENERATOR fn
+//   3. Dict keys normalize to unique SVG IDs (no collisions)
+//   4. getCounts() returns non-negative integers for every field
+//   5. .layer-btn[data-layer] count matches LAYER_IDS.length
+//   6. .view-btn[data-view] count matches VIEW_IDS.length
+//   7. STATUS_THRESHOLDS.active ∈ {'legacy', 'authoritative'}
+//   8. dimData entries' statuses ∈ {STATUS.GREEN, STATUS.AMBER, STATUS.RED}
+// Returns {ok, issues} where ok is true iff issues.length === 0. Logs
+// to console with prefix [D3 E8] and exposes the result as
+// window.__d3_validation for manual inspection in devtools.
+function validateDataLayer() {
+  const issues = [];
+  function fail(msg) { issues.push(msg); }
+
+  // 1. Schema version
+  try {
+    const sv = JSON_ENVELOPE && JSON_ENVELOPE.schema_version;
+    if (typeof sv !== 'number' || sv < 1) {
+      fail('JSON_ENVELOPE.schema_version missing or invalid: ' + sv);
+    }
+  } catch (e) { fail('JSON_ENVELOPE access threw: ' + e.message); }
+
+  // 2. ID prefix coverage (forward direction: SVG_ID_TO_LAYER ⊆ SVG_ID_GENERATOR).
+  //    E17 expansion: the inverse direction (SVG_ID_GENERATOR ⊆ ID_PREFIXES ⊆
+  //    SVG_ID_TO_LAYER, plus generator output round-trip) is enforced by the
+  //    16th invariant on ID_PREFIXES. Keep this as a fast-fail for the most
+  //    common typo (prefix added to TO_LAYER without matching factory).
+  try {
+    Object.keys(SVG_ID_TO_LAYER).forEach(function (p) {
+      if (typeof SVG_ID_GENERATOR[p] !== 'function') {
+        fail('SVG_ID_TO_LAYER has prefix "' + p + '" but SVG_ID_GENERATOR has no factory');
+      }
+    });
+  } catch (e) { fail('SVG_ID_* enumeration threw: ' + e.message); }
+
+  // 3. ID uniqueness across the 7 source dictionaries
+  try {
+    const seen = Object.create(null);
+    const dup = [];
+    function scan(dict, prefixKey) {
+      if (!dict || typeof dict !== 'object') return;
+      Object.keys(dict).forEach(function (k) {
+        let id;
+        try {
+          id = (typeof SVG_ID_GENERATOR[prefixKey] === 'function')
+            ? SVG_ID_GENERATOR[prefixKey](k)
+            : k;
+        } catch (e) { return; }
+        if (seen[id]) dup.push(id);
+        else seen[id] = true;
+      });
+    }
+    scan(dimData,        'data');           // bare S1..S11 keys
+    scan(dataNodes,      'data');           // D-<key>
+    scan(decisionTrees,  'decision');       // DC-<key>
+    scan(actions,        'action');         // A-<i>
+    scan(gates,          'frameworkGate');  // FW-G<i>
+    scan(personas,       'frameworkPersona');// FW-P<i>
+    if (Array.isArray(couplings)) couplings.forEach(function (_, i) {
+      const id = SVG_ID_GENERATOR.coupling(i);
+      if (seen[id]) dup.push(id); else seen[id] = true;
+    });
+    if (Array.isArray(tours)) tours.forEach(function (_, i) {
+      const id = 'tour-' + i;
+      if (seen[id]) dup.push(id); else seen[id] = true;
+    });
+    if (dup.length) fail('Duplicate SVG IDs across dicts: ' + dup.join(', '));
+  } catch (e) { fail('ID-uniqueness scan threw: ' + e.message); }
+
+  // 4. getCounts() sanity
+  try {
+    const c = getCounts();
+    Object.keys(c).forEach(function (k) {
+      const v = c[k];
+      if (typeof v !== 'number' || v < 0 || !isFinite(v)) {
+        fail('getCounts().' + k + ' is not a non-negative number: ' + v);
+      }
+    });
+  } catch (e) { fail('getCounts() threw: ' + e.message); }
+
+  // 5 & 6. DOM layer/view button sync
+  try {
+    const layerBtns = document.querySelectorAll('.layer-btn[data-layer]');
+    if (layerBtns.length !== LAYER_IDS.length) {
+      fail('layer-btn count (' + layerBtns.length + ') != LAYER_IDS.length (' + LAYER_IDS.length + ')');
+    }
+    const viewBtns = document.querySelectorAll('.view-btn[data-view]');
+    if (viewBtns.length !== VIEW_IDS.length) {
+      fail('view-btn count (' + viewBtns.length + ') != VIEW_IDS.length (' + VIEW_IDS.length + ')');
+    }
+  } catch (e) { fail('DOM layer/view sync threw: ' + e.message); }
+
+  // 7. Threshold source-of-truth
+  try {
+    const st = STATUS_THRESHOLDS && STATUS_THRESHOLDS.active;
+    if (st !== 'legacy' && st !== 'authoritative') {
+      fail('STATUS_THRESHOLDS.active is not legacy|authoritative: ' + st);
+    }
+  } catch (e) { fail('STATUS_THRESHOLDS access threw: ' + e.message); }
+
+  // 8. dimData statuses are valid enum values
+  try {
+    const allowed = { green: 1, amber: 1, red: 1 };
+    Object.keys(dimData || {}).forEach(function (k) {
+      const s = dimData[k] && dimData[k].status;
+      if (!allowed[s]) fail('dimData.' + k + '.status not in {green,amber,red}: ' + s);
+    });
+  } catch (e) { fail('dimData status scan threw: ' + e.message); }
+
+  // 9. Estratégica sub-camada — exactly 5 entries A_E1..A_E5 with
+  //    category='strategic' + non-empty executiveSummary. Resolves the
+  //    H1 hypothesis (PROVÁVEL sub-camada) by pinning the Estratégica
+  //    set as a first-class subset of `actions{}`. Backtesting target:
+  //    5/5 entries present (matches analise-prescritiva/CLAUDE.md
+  //    "5/5 backtesting targets perfect" — v2.0.1 fix pack).
+  try {
+    const expected = ['A_E1', 'A_E2', 'A_E3', 'A_E4', 'A_E5'];
+    expected.forEach(function (id) {
+      const e = (typeof actions === 'object' && actions !== null) ? actions[id] : null;
+      if (!e) {
+        fail('actions.' + id + ' missing (Estratégica sub-camada must have 5 entries)');
+        return;
+      }
+      if (e.category !== 'strategic') {
+        fail('actions.' + id + '.category !== "strategic": ' + e.category);
+      }
+      if (typeof e.executiveSummary !== 'string' || e.executiveSummary.trim().length < 20) {
+        fail('actions.' + id + '.executiveSummary missing or too short (≥ 20 chars)');
+      }
+    });
+  } catch (e) { fail('Estratégica sub-camada scan threw: ' + e.message); }
+
+  // 10. Workflow RACI sub-camada — exactly 17 entries P_CONSELHO..P_ANALYST
+  //     with category='workflow' + non-empty desc. Resolves the H4
+  //     hypothesis (PROVÁVEL 2 camadas) by pinning the 17-RACI roster as
+  //     a first-class subset distinct from the 5-decisor `personas{}`
+  //     dict. Mirrors D3-KNOWLEDGE-GRAPH.json L99–115 inline (HTML does
+  //     not load JSON at runtime). Convention mirrors the Estratégica
+  //     sub-camada (9th invariant) with `category='workflow'` instead.
+  try {
+    const expectedWF = [
+      'P_CONSELHO', 'P_CEO', 'P_CFO', 'P_CSO', 'P_COO', 'P_CMO',
+      'P_RISK', 'P_HEAD_PROC', 'P_HEAD_ESG', 'P_HEAD_STR',
+      'P_HEAD_SUPPLY', 'P_HEAD_GOV', 'P_TREASURY', 'P_GOV',
+      'P_BOARD', 'P_ENG', 'P_ANALYST'
+    ];
+    expectedWF.forEach(function (id) {
+      const e = (typeof personas_workflow === 'object' && personas_workflow !== null) ? personas_workflow[id] : null;
+      if (!e) {
+        fail('personas_workflow.' + id + ' missing (Workflow RACI must have 17 entries)');
+        return;
+      }
+      if (e.category !== 'workflow') {
+        fail('personas_workflow.' + id + '.category !== "workflow": ' + e.category);
+      }
+      if (typeof e.desc !== 'string' || e.desc.trim().length < 20) {
+        fail('personas_workflow.' + id + '.desc missing or too short (≥ 20 chars)');
+      }
+    });
+  } catch (e) { fail('Workflow RACI scan threw: ' + e.message); }
+
+  // 11. STATUS_THRESHOLDS round-trip — localStorage key + dimData
+  //     reclassification coherence. Resolves the D19 STATUS_THRESHOLDS
+  //     gap (14-audit-coverage-matrix §2.2): every dimData[k].status
+  //     must equal STATUS_THRESHOLDS.status(dimData[k].score), so a
+  //     desync (e.g. legacy button toggled without re-classifying) is
+  //     caught at boot. Also validates the localStorage key either
+  //     resolves to a known threshold or is absent (first-visit
+  //     default). Distinct from invariant #8 (valid enum) which only
+  //     checks the status is in {green,amber,red} — this one enforces
+  //     it matches the score under the active threshold rule.
+  try {
+    const allowedStored = { legacy: 1, authoritative: 1 };
+    let stored = null;
+    try { stored = (typeof localStorage !== 'undefined') ? localStorage.getItem('d3:status_threshold') : null; } catch (e) { /* SSR / private mode — treat as absent */ }
+    if (stored !== null && !allowedStored[stored]) {
+      fail('localStorage d3:status_threshold has invalid value: ' + stored + ' (expected legacy|authoritative or absent)');
+    }
+    if (typeof STATUS_THRESHOLDS === 'object' && STATUS_THRESHOLDS !== null && typeof STATUS_THRESHOLDS.status === 'function') {
+      Object.keys(dimData || {}).forEach(function (k) {
+        const node = dimData[k];
+        if (!node) return;
+        const score = node.score;
+        const actual = node.status;
+        const expected = STATUS_THRESHOLDS.status(score);
+        if (actual !== expected) {
+          fail('dimData.' + k + '.status desync (actual=' + actual + ' but STATUS_THRESHOLDS.status(' + score + ') under ' + STATUS_THRESHOLDS.active + ' returns ' + expected + ')');
+        }
+      });
+    } else {
+      fail('STATUS_THRESHOLDS.status is not callable — round-trip invariant skipped');
+    }
+  } catch (e) { fail('STATUS_THRESHOLDS round-trip threw: ' + e.message); }
+
+  // 12. governanceAudit[] — H5 POSSÍVEL (camada ⊥' post-E13) — WORM +
+  //     RACI + compliance trail registry coherence. Asserts: (a) the
+  //     dict is an array with ≥ 4 entries, (b) every entry has the
+  //     required schema (id, label, r, ntype, name), (c) the 4 canvas-
+  //     layer IDs (GOV-AUDIT / GOV-SIGNOFF / GOV-RACI / GOV-COMPL) are
+  //     all present (no duplicates, no missing), (d) GOV-RACI.cross-
+  //     links to personas_workflow[] (the 10th invariant already
+  //     asserts that array is 17 entries).
+  try {
+    if (typeof governanceAudit !== 'object' || governanceAudit === null || !Array.isArray(governanceAudit)) {
+      fail('governanceAudit must be an array (got ' + (typeof governanceAudit) + ')');
+    } else {
+      if (governanceAudit.length < 4) {
+        fail('governanceAudit.length=' + governanceAudit.length + ' is below expected ≥ 4 (GOV-AUDIT/SIGNOFF/RACI/COMPL)');
+      }
+      const required = ['id', 'label', 'r', 'ntype', 'name'];
+      const requiredIds = ['GOV-AUDIT', 'GOV-SIGNOFF', 'GOV-RACI', 'GOV-COMPL'];
+      const seenIds = {};
+      governanceAudit.forEach(function (entry, idx) {
+        if (!entry || typeof entry !== 'object') {
+          fail('governanceAudit[' + idx + '] is not an object');
+          return;
+        }
+        required.forEach(function (k) {
+          if (typeof entry[k] === 'undefined' || entry[k] === null || entry[k] === '') {
+            fail('governanceAudit[' + idx + '] missing required field "' + k + '"');
+          }
+        });
+        if (entry.id) {
+          if (seenIds[entry.id]) {
+            fail('governanceAudit has duplicate id: ' + entry.id);
+          }
+          seenIds[entry.id] = (seenIds[entry.id] || 0) + 1;
+        }
+      });
+      requiredIds.forEach(function (rid) {
+        if (!seenIds[rid]) {
+          fail('governanceAudit is missing required canvas-layer id: ' + rid);
+        }
+      });
+      // GOV-RACI must cross-link to personas_workflow[] roster.
+      try {
+        const raciEntry = governanceAudit.find(function (e) { return e && e.id === 'GOV-RACI'; });
+        if (raciEntry && typeof raciEntry.raciLink === 'string') {
+          const link = raciEntry.raciLink;
+          const mentionsWorkflow = link.indexOf('personas_workflow') !== -1;
+          if (!mentionsWorkflow) {
+            fail('GOV-RACI.raciLink does not mention personas_workflow[]: "' + link + '"');
+          }
+          // personas_workflow must have ≥17 entries (the 10th invariant
+          // asserts this; we duplicate the guard here for symmetry).
+          const pw = (typeof personas_workflow !== 'undefined' && Array.isArray(personas_workflow)) ? personas_workflow : null;
+          if (!pw || pw.length < 17) {
+            fail('GOV-RACI cross-link expects personas_workflow[].length ≥ 17, found ' + (pw ? pw.length : 'undefined'));
+          }
+        } else if (raciEntry) {
+          fail('GOV-RACI exists but raciLink is not a string — cross-link invariant skipped');
+        }
+      } catch (e) { fail('GOV-RACI cross-link check threw: ' + e.message); }
+    }
+  } catch (e) { fail('governanceAudit invariant threw: ' + e.message); }
+
+  // 13. triggerRegistry{} — H6 POSSÍVEL (sub-camada de Signal post-E14) —
+  //     T-* trigger dict coherence + cadence enum + ID coverage. Asserts:
+  //     (a) the dict is a non-null object with ≥ 5 keys, (b) each entry
+  //     has the required fields (ntype/label/name/cadence), (c) the 5
+  //     expected IDs (T-AMBER/T-S7/T-HYST/T-5D/T-Li) are all present (no
+  //     duplicates, no missing), (d) cadence ∈ the 5-value enum
+  //     {intraday, real-time, continuous, every 5d, weekly}. The signal-
+  //     layer switch at L3006 consumes this dict via Object.keys.forEach
+  //     and emits 5 safePush nodes with ntype:'trigger' so the layout
+  //     consumer at L2679 (filter n.ntype==='trigger') + L2731 (triggers
+  //     .forEach → x/y assignment) keeps working transparently.
+  try {
+    if (typeof triggerRegistry !== 'object' || triggerRegistry === null || Array.isArray(triggerRegistry)) {
+      fail('triggerRegistry must be an object (got ' + (typeof triggerRegistry) + ')');
+    } else {
+      const triggerIds = Object.keys(triggerRegistry);
+      if (triggerIds.length < 5) {
+        fail('triggerRegistry.length=' + triggerIds.length + ' is below expected ≥ 5 (T-AMBER/T-S7/T-HYST/T-5D/T-Li)');
+      }
+      const requiredTriggerFields = ['ntype', 'label', 'name', 'cadence'];
+      const requiredTriggerIds = ['T-AMBER', 'T-S7', 'T-HYST', 'T-5D', 'T-Li'];
+      const allowedCadences = ['intraday', 'real-time', 'continuous', 'every 5d', 'weekly'];
+      const seenTriggerIds = {};
+      triggerIds.forEach(function (tid) {
+        const entry = triggerRegistry[tid];
+        if (!entry || typeof entry !== 'object') {
+          fail('triggerRegistry[' + tid + '] is not an object');
+          return;
+        }
+        requiredTriggerFields.forEach(function (k) {
+          if (typeof entry[k] === 'undefined' || entry[k] === null || entry[k] === '') {
+            fail('triggerRegistry[' + tid + '] missing required field "' + k + '"');
+          }
+        });
+        if (entry.cadence && allowedCadences.indexOf(entry.cadence) === -1) {
+          fail('triggerRegistry[' + tid + '].cadence="' + entry.cadence + '" is not in allowed enum: [' + allowedCadences.join(', ') + ']');
+        }
+        if (seenTriggerIds[tid]) fail('triggerRegistry has duplicate id: ' + tid);
+        seenTriggerIds[tid] = (seenTriggerIds[tid] || 0) + 1;
+      });
+      requiredTriggerIds.forEach(function (rid) {
+        if (!seenTriggerIds[rid]) fail('triggerRegistry is missing required id: ' + rid);
+      });
+    }
+  } catch (e) { fail('triggerRegistry invariant threw: ' + e.message); }
+
+  // 14th invariant (E15 — H7 outcomeRegistry):
+  //     Lifts 8 outcomes from decisionTrees[].branches[] into a typed
+  //     client-side dict with full metadata (probability, trigger, condition,
+  //     action, owner, kpi, cost, riskIfIgnored). Resolves
+  //     15-unconfirmed-layers-hypotheses.md §H7 (verdict POSSÍVEL →
+  //     sub-camada confirmed, since outcomes now have metadata, not just
+  //     string array). Asserts: (a) the dict is a non-null object with
+  //     ≥ 8 keys, (b) each entry has the required fields (ntype/label/
+  //     name/parentDT/probability), (c) parentDT ∈ the allowed enum
+  //     {DT_S3, DT_S6, DT_S7}, (d) the 8 expected IDs (OUT_S3_1..3,
+  //     OUT_S6_1..3, OUT_S7_1..2) are all present (no duplicates, no
+  //     missing). The outcome-layer switch at L3184 consumes this dict
+  //     via Object.keys.forEach and emits 8 safePush nodes with
+  //     ntype:'outcome', r:22 — visually nested between decision (r:26)
+  //     and trigger (r:16). The ID prefix 'OUT-' is pre-allocated in
+  //     SVG_ID_GENERATOR (see 14-audit-coverage-matrix.md D14).
+  try {
+    if (typeof outcomeRegistry !== 'object' || outcomeRegistry === null || Array.isArray(outcomeRegistry)) {
+      fail('outcomeRegistry must be an object (got ' + (typeof outcomeRegistry) + ')');
+    } else {
+      const outcomeIds = Object.keys(outcomeRegistry);
+      if (outcomeIds.length < 8) {
+        fail('outcomeRegistry.length=' + outcomeIds.length + ' is below expected ≥ 8 (OUT_S3_1..3, OUT_S6_1..3, OUT_S7_1..2)');
+      }
+      const requiredOutcomeFields = ['ntype', 'label', 'name', 'parentDT', 'probability'];
+      const requiredOutcomeIds = ['OUT_S3_1', 'OUT_S3_2', 'OUT_S3_3', 'OUT_S6_1', 'OUT_S6_2', 'OUT_S6_3', 'OUT_S7_1', 'OUT_S7_2'];
+      const allowedParentDTs = ['DT_S3', 'DT_S6', 'DT_S7'];
+      const seenOutcomeIds = {};
+      outcomeIds.forEach(function (oid) {
+        const entry = outcomeRegistry[oid];
+        if (!entry || typeof entry !== 'object') {
+          fail('outcomeRegistry[' + oid + '] is not an object');
+          return;
+        }
+        requiredOutcomeFields.forEach(function (k) {
+          if (typeof entry[k] === 'undefined' || entry[k] === null || entry[k] === '') {
+            fail('outcomeRegistry[' + oid + '] missing required field "' + k + '"');
+          }
+        });
+        if (entry.parentDT && allowedParentDTs.indexOf(entry.parentDT) === -1) {
+          fail('outcomeRegistry[' + oid + '].parentDT="' + entry.parentDT + '" is not in allowed enum: [' + allowedParentDTs.join(', ') + ']');
+        }
+        if (seenOutcomeIds[oid]) fail('outcomeRegistry has duplicate id: ' + oid);
+        seenOutcomeIds[oid] = (seenOutcomeIds[oid] || 0) + 1;
+      });
+      requiredOutcomeIds.forEach(function (rid) {
+        if (!seenOutcomeIds[rid]) fail('outcomeRegistry is missing required id: ' + rid);
+      });
+    }
+  } catch (e) { fail('outcomeRegistry invariant threw: ' + e.message); }
+
+  // 15th invariant (E16 — H3 learningEvents unified schema):
+  //     Lifts 8 learning events (5 stress + 1 backtest + 1 recalibration
+  //     + 1 drift) from hardcoded HTML strings into a typed dict with
+  //     ONE unified schema (method ∈ {stress, backtest, recalibration,
+  //     drift}), NOT 4 separate dicts. Resolves 15-unconfirmed-layers-
+  //     hypotheses.md §H3 (verdict IMPROVÁVEL → confirmou-se 1 único
+  //     schema; verbos BT/REC/DRIFT + stress compartilham o mesmo
+  //     registro). Asserts: (a) the dict is a non-null object & not an
+  //     array, (b) ≥ 8 entries, (c) each entry has the required fields
+  //     (ntype/label/name/method/summary/trigger/owner/kpi), (d) method
+  //     ∈ allowed enum {'stress','backtest','recalibration','drift'}
+  //     (proves H3 single-schema), (e) the 8 expected IDs are all
+  //     present (no duplicates, no missing): LE_S1..5 + LE_BT + LE_REC
+  //     + LE_DRIFT, (f) summary length ≥ 8 chars (defensive floor).
+  //     ID prefix 'LE-' is pre-allocated in SVG_ID_GENERATOR (L-family
+  //     reservation, since L is otherwise unused — see 14-audit-coverage-
+  //     matrix.md D18 prefix reservation table).
+  try {
+    if (typeof learningEvents !== 'object' || learningEvents === null || Array.isArray(learningEvents)) {
+      fail('learningEvents must be an object (got ' + (typeof learningEvents) + ')');
+    } else {
+      const learningIds = Object.keys(learningEvents);
+      if (learningIds.length < 8) {
+        fail('learningEvents.length=' + learningIds.length + ' is below expected ≥ 8 (LE_S1..5, LE_BT, LE_REC, LE_DRIFT)');
+      }
+      const requiredLearningFields = ['ntype', 'label', 'name', 'method', 'summary', 'trigger', 'owner', 'kpi'];
+      const requiredLearningIds = ['LE_S1', 'LE_S2', 'LE_S3', 'LE_S4', 'LE_S5', 'LE_BT', 'LE_REC', 'LE_DRIFT'];
+      const allowedMethods = ['stress', 'backtest', 'recalibration', 'drift'];
+      const seenLearningIds = {};
+      learningIds.forEach(function (lid) {
+        const entry = learningEvents[lid];
+        if (!entry || typeof entry !== 'object') {
+          fail('learningEvents[' + lid + '] is not an object');
+          return;
+        }
+        requiredLearningFields.forEach(function (k) {
+          if (typeof entry[k] === 'undefined' || entry[k] === null || entry[k] === '') {
+            fail('learningEvents[' + lid + '] missing required field "' + k + '"');
+          }
+        });
+        if (entry.method && allowedMethods.indexOf(entry.method) === -1) {
+          fail('learningEvents[' + lid + '].method="' + entry.method + '" is not in H3 unified enum: [' + allowedMethods.join(', ') + ']');
+        }
+        if (typeof entry.summary !== 'undefined' && String(entry.summary).length < 8) {
+          fail('learningEvents[' + lid + '].summary length=' + String(entry.summary).length + ' is below minimum 8 chars');
+        }
+        if (seenLearningIds[lid]) fail('learningEvents has duplicate id: ' + lid);
+        seenLearningIds[lid] = (seenLearningIds[lid] || 0) + 1;
+      });
+      requiredLearningIds.forEach(function (rid) {
+        if (!seenLearningIds[rid]) fail('learningEvents is missing required id: ' + rid);
+      });
+    }
+  } catch (e) { fail('learningEvents invariant threw: ' + e.message); }
+
+  // 16. ID_PREFIXES reservation table (E17) — canonical SVG ID prefix registry.
+  //    Single source of truth para 15 prefixos reservados. Cruza contra
+  //    SVG_ID_GENERATOR (factories), SVG_ID_TO_LAYER (prefix→layer) e
+  //    resolveIdLayer (regex coverage). 6 checks × 15 prefixes = 90 asserts.
+  //
+  //    E17: fecha o gap D18 do 14-audit-coverage-matrix.md §2.2 ("regra de
+  //    prefixo não documentada") + valida que OUT-/LE- (E15/E16 lifts) estão
+  //    de fato integrados na machinery existente (não orphan prefixes).
+  try {
+    if (!Array.isArray(ID_PREFIXES) || ID_PREFIXES.length === 0) {
+      fail('ID_PREFIXES must be a non-empty array (got ' + (typeof ID_PREFIXES) + ')');
+    } else {
+      // 16a. Schema completeness — every entry has 4 required fields
+      const REQUIRED = ['prefix', 'owner', 'generator', 'layer'];
+      ID_PREFIXES.forEach(function (entry, idx) {
+        REQUIRED.forEach(function (field) {
+          if (!entry || typeof entry[field] !== 'string' || entry[field].length === 0) {
+            fail('ID_PREFIXES[' + idx + '].' + field + ' missing or empty (entry=' + JSON.stringify(entry) + ')');
+          }
+        });
+      });
+
+      // 16b. Prefix uniqueness — no two entries may claim the same prefix.
+      //      IMPORTANT: use `in` (or !== undefined), NOT truthiness —
+      //      seenPrefixes[prefix] stores the INDEX (a number), and index 0
+      //      is falsy in JS (`if (0)` is false). Using `if (...)` here would
+      //      silently miss the duplicate when the first occurrence is at
+      //      idx=0 (e.g. prefix 'FW'). Found via adversarial Test 3 in
+      //      E17-verify (mirror harness).
+      const seenPrefixes = Object.create(null);
+      ID_PREFIXES.forEach(function (entry, idx) {
+        if (entry && entry.prefix) {
+          if (entry.prefix in seenPrefixes) {
+            fail('ID_PREFIXES has duplicate prefix "' + entry.prefix + '" at indexes ' + seenPrefixes[entry.prefix] + ' and ' + idx);
+          }
+          seenPrefixes[entry.prefix] = idx;
+        }
+      });
+
+      // 16c. Generator ↔ SVG_ID_GENERATOR — every entry.generator must be a factory in SVG_ID_GENERATOR
+      ID_PREFIXES.forEach(function (entry, idx) {
+        if (entry && entry.generator) {
+          if (typeof SVG_ID_GENERATOR[entry.generator] !== 'function') {
+            fail('ID_PREFIXES[' + idx + '].generator="' + entry.generator + '" is not a factory in SVG_ID_GENERATOR (prefix="' + entry.prefix + '")');
+          }
+        }
+      });
+
+      // 16d. Prefix ↔ SVG_ID_TO_LAYER — every entry.prefix must be a key with value === entry.layer
+      ID_PREFIXES.forEach(function (entry, idx) {
+        if (entry && entry.prefix && entry.layer) {
+          if (!(entry.prefix in SVG_ID_TO_LAYER)) {
+            fail('ID_PREFIXES[' + idx + '].prefix="' + entry.prefix + '" missing from SVG_ID_TO_LAYER keys: [' + Object.keys(SVG_ID_TO_LAYER).join(', ') + ']');
+          } else if (SVG_ID_TO_LAYER[entry.prefix] !== entry.layer) {
+            fail('ID_PREFIXES[' + idx + '].layer="' + entry.layer + '" contradicts SVG_ID_TO_LAYER["' + entry.prefix + '"]="' + SVG_ID_TO_LAYER[entry.prefix] + '"');
+          }
+        }
+      });
+
+      // 16e. Factory output shape — calling the generator with a sample value must produce an ID whose prefix matches.
+      //      Shape-tolerant: the output must (a) start with the literal prefix and (b) have at least one
+      //      additional character of suffix. This handles both styles of factory emission —
+      //      'PREFIX-${value}' (e.g. A-0, C-0, FW-TEST) and composite '${PREFIX}${i}' (e.g. FW-G0, FW-P0).
+      ID_PREFIXES.forEach(function (entry, idx) {
+        if (!entry || !entry.generator || !entry.prefix) return;
+        const fn = SVG_ID_GENERATOR[entry.generator];
+        if (typeof fn !== 'function') return; // already flagged in 16c
+        // Sample value: numeric for indexed (A-/C-), short string for symbolic (FW/D/SG/DC/etc.)
+        const isIndexed = (entry.generator === 'action' || entry.generator === 'coupling' || entry.generator === 'frameworkGate' || entry.generator === 'frameworkPersona');
+        const sample = isIndexed ? '0' : 'TEST';
+        let out;
+        try { out = fn(sample); } catch (e) {
+          fail('ID_PREFIXES[' + idx + '].generator="' + entry.generator + '" threw on sample "' + sample + '": ' + e.message);
+          return;
+        }
+        if (typeof out !== 'string' || out.length === 0) {
+          fail('ID_PREFIXES[' + idx + '].generator="' + entry.generator + '" returned non-string: ' + JSON.stringify(out));
+        } else if (out.indexOf(entry.prefix) !== 0) {
+          fail('ID_PREFIXES[' + idx + '].generator="' + entry.generator + '" output "' + out + '" does not start with prefix "' + entry.prefix + '"');
+        } else if (out.length <= entry.prefix.length) {
+          fail('ID_PREFIXES[' + idx + '].generator="' + entry.generator + '" output "' + out + '" has no suffix after prefix "' + entry.prefix + '"');
+        }
+      });
+
+      // 16f. resolveIdLayer regex coverage — sample ID per prefix must round-trip via resolveIdLayer to the declared layer.
+      //      Catches prefixes that are declared in ID_PREFIXES but NOT actually resolvable (regex too narrow, key absent, etc.)
+      ID_PREFIXES.forEach(function (entry, idx) {
+        if (!entry || !entry.prefix || !entry.layer) return;
+        // Build a sample ID; for 'FW-G'/'FW-P' use 0; for 'A'/'C' use 0; for others use the prefix + '0'
+        let sampleId;
+        if (entry.generator === 'frameworkGate') sampleId = 'FW-G0';
+        else if (entry.generator === 'frameworkPersona') sampleId = 'FW-P0';
+        else if (entry.generator === 'action') sampleId = 'A-0';
+        else if (entry.generator === 'coupling') sampleId = 'C-0';
+        else sampleId = entry.prefix + '-X';
+        const resolved = resolveIdLayer(sampleId);
+        if (resolved !== entry.layer) {
+          fail('resolveIdLayer("' + sampleId + '") returned "' + resolved + '" but ID_PREFIXES[' + idx + '] declares layer="' + entry.layer + '" (prefix="' + entry.prefix + '")');
+        }
+      });
+    }
+  } catch (e) { fail('ID_PREFIXES invariant threw: ' + e.message); }
+
+  // 17. Tours schema integrity (E18) — guided-narratives registry. Closes
+  //    the remaining closed-world gap on tours[] after E9 brought HTML to
+  //    4 entries (badge dynamic via tours.length). Re-asserts the
+  //    contract any future tour author must satisfy:
+  //
+  //      - Tour carries {id, name, duration, description} (non-empty strings)
+  //        + steps[] (array, ≥1 entry).
+  //      - Step carries {title, desc} (non-empty strings). Narration,
+  //        nodeId, action_set, action, hint are optional — don't flag
+  //        absent optionals.
+  //      - Tour IDs are globally unique.
+  //      - action_set (when present) references a known view in VIEW_IDS
+  //        and a known layer in LAYER_IDS — never a phantom chrome.
+  //      - duration follows "N (s|min|m)" — analyst-readable cadence.
+  //      - #tour-selector-count == tours.length (the E4 fix that closed
+  //        the 3-vs-5 button drift would re-fire if a re-add regresses).
+  //
+  //    E18 deliberately does NOT cross-reference step.nodeId via
+  //    resolveIdLayer — scenario refs like 'SC_RB' / 'G1' / 'C_S7S10'
+  //    are logical navigation targets, not SVG_ID_GENERATOR outputs.
+  //    That cross-reference belongs to E19. Closed-world here catches
+  //    the schema-level regressions (missing field, dup id, bad layer
+  //    ref, drift on the badge) without coupling to SVG ID machinery.
+  //
+  //    7 in-data checks (17i 17j skipped in node) × 4 tours × 3-5 steps
+  //    ≈ 40 asserts on baseline, gated on optional field presence.
+  try {
+    if (!Array.isArray(tours) || tours.length === 0) {
+      fail('tours must be a non-empty array (got ' + (typeof tours) + ')');
+    } else {
+      const seenTourIds = Object.create(null);
+      const TOUR_REQ = ['id', 'name', 'duration', 'description'];
+      const STEP_REQ = ['title', 'desc'];
+      const DURATION_RE = /^\d+\s+(?:s|min|m)$/;
+
+      tours.forEach(function (t, tIdx) {
+        if (!t || typeof t !== 'object') {
+          fail('tours[' + tIdx + '] is not an object');
+          return;
+        }
+        // 17a. Tour schema completeness (id/name/duration/description required; steps handled below)
+        TOUR_REQ.forEach(function (field) {
+          if (typeof t[field] !== 'string' || t[field].length === 0) {
+            fail('tours[' + tIdx + '].' + field + ' missing or empty (entry=' + JSON.stringify(t) + ')');
+          }
+        });
+        if (!Array.isArray(t.steps)) {
+          fail('tours[' + tIdx + '].steps must be an array (got ' + (typeof t.steps) + ')');
+          return;
+        }
+
+        // 17c. Tour IDs unique globally. Use `in` (NOT truthiness) — first
+        //      occurrence at idx=0 stored in seenTourIds is falsy in JS,
+        //      same falsy-zero class of bug that E17 caught in 16b. A naive
+        //      `if (seenTourIds[t.id])` would silently miss the duplicate
+        //      when the first occurrence is at idx=0.
+        if (typeof t.id === 'string' && t.id.length > 0) {
+          if (t.id in seenTourIds) {
+            fail('tours has duplicate id "' + t.id + '" at indexes ' + seenTourIds[t.id] + ' and ' + tIdx);
+          } else {
+            seenTourIds[t.id] = tIdx;
+          }
+        }
+
+        // 17h. Duration format — analyst-readable cadence: "30 s", "2 min", "1 m".
+        if (typeof t.duration === 'string' && t.duration.length > 0) {
+          if (!DURATION_RE.test(t.duration)) {
+            fail('tours[' + tIdx + '].duration="' + t.duration + '" does not match /' + DURATION_RE.source + '/');
+          }
+        }
+
+        // 17d. ≥1 step per tour — empty tours[] silently render an empty overlay.
+        if (t.steps.length === 0) {
+          fail('tours[' + tIdx + '] (id="' + t.id + '") has empty steps[]');
+          return;
+        }
+
+        t.steps.forEach(function (step, sIdx) {
+          if (!step || typeof step !== 'object') {
+            fail('tours[' + tIdx + '].steps[' + sIdx + '] is not an object');
+            return;
+          }
+          // 17b. Step schema completeness (required fields only — optional
+          //      fields like narration, nodeId, action_set, action, hint
+          //      are NOT flagged when absent).
+          STEP_REQ.forEach(function (field) {
+            if (typeof step[field] !== 'string' || step[field].length === 0) {
+              fail('tours[' + tIdx + '].steps[' + sIdx + '].' + field + ' missing or empty');
+            }
+          });
+          // 17f + 17g. action_set (if present) must reference known chrome.
+          if (typeof step.action_set !== 'undefined') {
+            if (!step.action_set || typeof step.action_set !== 'object') {
+              fail('tours[' + tIdx + '].steps[' + sIdx + '].action_set is not an object');
+            } else {
+              if (typeof step.action_set.view !== 'string' ||
+                  VIEW_IDS.indexOf(step.action_set.view) === -1) {
+                fail('tours[' + tIdx + '].steps[' + sIdx + '].action_set.view="' + step.action_set.view + '" not in VIEW_IDS');
+              }
+              if (typeof step.action_set.layer !== 'string' ||
+                  LAYER_IDS.indexOf(step.action_set.layer) === -1) {
+                fail('tours[' + tIdx + '].steps[' + sIdx + '].action_set.layer="' + step.action_set.layer + '" not in LAYER_IDS');
+              }
+            }
+          }
+        });
+      });
+
+      // 17i. Badge consistency — only assertable when DOM is available
+      //      (Node-runnable verification has no document, so this branch
+      //      is naturally skipped in the harness). The E4 fix made
+      //      renderTourSelectorCount use tours.length; this catches a
+      //      future regression that hardcodes a literal.
+      try {
+        if (typeof document !== 'undefined' && document && document.getElementById) {
+          const badge = document.getElementById('tour-selector-count');
+          if (badge && typeof badge.textContent === 'string' &&
+              badge.textContent.trim() !== '' &&
+              badge.textContent !== String(tours.length)) {
+            fail('#tour-selector-count has "' + badge.textContent + '" but tours.length is ' + tours.length);
+          }
+        }
+      } catch (e) { /* no DOM (Node) — skip */ }
+    }
+  } catch (e) { fail('tours invariant threw: ' + e.message); }
+
+  // 18. Tour nodeId cross-reference (E19) — every optional navigation target
+  //     must resolve to a known layer. Generated IDs use SVG_ID_TO_LAYER;
+  //     bare legacy IDs use resolveIdLayer() heuristics; semantic scenario
+  //     anchors must be declared explicitly in SCENARIO_REFS. This prevents a
+  //     tour step from rendering as a dead click after new narration is added.
+  try {
+    if (Array.isArray(tours)) {
+      tours.forEach(function (t, tIdx) {
+        if (!t || !Array.isArray(t.steps)) return;
+        t.steps.forEach(function (step, sIdx) {
+          if (!step || typeof step.nodeId === 'undefined' || step.nodeId === null) return;
+          if (typeof step.nodeId !== 'string' || step.nodeId.trim().length === 0) {
+            fail('tours[' + tIdx + '].steps[' + sIdx + '].nodeId=' + JSON.stringify(step.nodeId) + ' not a non-empty string');
+            return;
+          }
+          if (resolveIdLayer(step.nodeId) === null) {
+            fail('tours[' + tIdx + '].steps[' + sIdx + '].nodeId="' + step.nodeId + '" does not resolve to any known layer (unscoped phantom)');
+          }
+        });
+      });
+    }
+  } catch (e) { fail('tour nodeId cross-reference invariant threw: ' + e.message); }
+
+  const report = { ok: issues.length === 0, issues: issues };
+  if (report.ok) {
+    console.log('[D3 E19] validateDataLayer: PASS (18 invariants clean — inclui H1 Estratégica 5/5 + H4 RACI 17/17 + threshold round-trip + H5 governanceAudit ⊥\' + H6 triggerRegistry sub-camada + H7 outcomeRegistry sub-camada + H3 unified schema + E17 ID_PREFIXES reservation table 15 prefixes × 6 checks + E18 tours schema integrity 7 checks + E19 tour nodeId cross-reference 1 check)');
+  } else {
+    console.warn('[D3 E8] validateDataLayer: FAIL — ' + issues.length + ' issue(s):');
+    issues.forEach(function (i) { console.warn('  · ' + i); });
+  }
+  try { window.__d3_validation = report; } catch (e) { /* noop — non-browser env */ }
+  return report;
+}
+
+// JSON_ENVELOPE — versioned build stamp source-of-truth. Mirrors the
+// top-level "meta" block of D3-KNOWLEDGE-GRAPH.json. Single source of
+// truth for the build-stamp <span>; never inline-edit the literal in
+// the tooltip — call renderBuildStamp() instead.
+const JSON_ENVELOPE = {
+  schema_version: 1,             // bumped on backward-incompatible dict shape
+  meta_version: 'v2.0.1',        // matches D3-KNOWLEDGE-GRAPH.json::meta.version
+  meta_date: '2026-07-25',        // matches D3-KNOWLEDGE-GRAPH.json::meta.date
+  git_commit: '7b8ab3c',         // HEAD when this envelope was authored
+  build_date: '2026-07-27',      // date the HTML was last edited
+  // Empirical recalibration backtesting — counts how many of the N
+  // backtest targets landed within tolerance. Source:
+  // D3-FALSE-POSITIVE-FIXES.md (the v2.0.1 fix pack).
+  backtesting: { perfect: 5, total: 5 }
+};
+
+// LAYER_IDS / VIEW_IDS — single source of truth for the canvas title
+// counts ("7 layers · 10 views"). The buttons in the left rail must
+// stay in sync with these arrays; never inline-edit the count literal
+// in #graph-title — call renderCanvasLabels() instead.
+const LAYER_IDS = ['framework', 'data', 'signal', 'decision', 'action', 'learning', 'governance'];
+const VIEW_IDS  = ['overview', 'risk', 'red-flags', 'couplings', 'gates', 'personas', 'flow', 'timeline', 'scenario', 'cascade'];
+
+// renderBuildStamp() — populate #build-stamp from JSON_ENVELOPE and
+// recompute the live HTML byte size so the stamp can never drift.
+// Called from init() before build().
+function renderBuildStamp() {
+  try {
+    const el = document.getElementById('build-stamp');
+    if (!el) return;
+    const bytes = (document.documentElement.outerHTML || '').length;
+    const fmt = bytes.toLocaleString('en-US');
+    el.textContent =
+      'build ' + JSON_ENVELOPE.git_commit +
+      ' · ' + JSON_ENVELOPE.build_date +
+      ' · ' + fmt + ' bytes';
+  } catch (e) {
+    console.warn('[D3 E5] renderBuildStamp failed:', e);
+  }
+}
+
+// renderCanvasLabels() — populate #layer-label + #graph-title from the
+// canonical LAYER_IDS / VIEW_IDS arrays and JSON_ENVELOPE so the canvas
+// chrome can never drift from the data layer. Called from init() before
+// build() and from setLayer() / setView() so the labels stay in sync.
+function renderCanvasLabels() {
+  try {
+    const layerEl = document.getElementById('layer-label');
+    if (layerEl) {
+      const layerCap = (typeof currentLayer === 'string' && currentLayer)
+        ? currentLayer.charAt(0).toUpperCase() + currentLayer.slice(1)
+        : '—';
+      layerEl.textContent = layerCap + ' · ' + viewLabel(currentView);
+    }
+    const titleEl = document.getElementById('graph-title');
+    if (titleEl) {
+      // Compact month label derived from the envelope build date
+      // (e.g. "2026-07-27" → "jul/2026") so we don't hardcode it.
+      const bd = (JSON_ENVELOPE && JSON_ENVELOPE.build_date) || '';
+      const m = bd.match(/^(\d{4})-(\d{2})-/);
+      const monthLabel = m
+        ? ({'01':'jan','02':'fev','03':'mar','04':'abr','05':'mai','06':'jun',
+            '07':'jul','08':'ago','09':'set','10':'out','11':'nov','12':'dez'}[m[2]] || m[2]) + '/' + m[1]
+        : '';
+      titleEl.textContent =
+        'D3 ' + JSON_ENVELOPE.meta_version +
+        ' · ' + LAYER_IDS.length + ' layers' +
+        ' · ' + VIEW_IDS.length  + ' views' +
+        ' · BYD Camaçari' +
+        (monthLabel ? ' · ' + monthLabel : '');
+    }
+  } catch (e) {
+    console.warn('[D3 E6] renderCanvasLabels failed:', e);
+  }
+}
+
+// computeCompositeScore() — weighted Σ(score_d × weight_d) across all
+// dimData entries that expose both fields. Returns null if dimData is
+// missing or no dimension has a numeric weight/score pair. Used by
+// renderBottomBar() so the "Composite NN/100" chip never drifts from
+// the source scores.
+function computeCompositeScore() {
+  try {
+    if (typeof dimData !== 'object' || !dimData) return null;
+    let num = 0, den = 0;
+    Object.keys(dimData).forEach(function (k) {
+      const d = dimData[k];
+      if (!d) return;
+      const s = (typeof d.score === 'number') ? d.score : null;
+      const w = (typeof d.weight === 'number') ? d.weight : null;
+      if (s === null || w === null) return;
+      num += s * w;
+      den += w;
+    });
+    if (den === 0) return null;
+    return num / den;  // weights sum to 1.00 by construction, but we
+                       // guard anyway so an incomplete dimData still
+                       // produces a sane number.
+  } catch (e) {
+    console.warn('[D3 E7] computeCompositeScore failed:', e);
+    return null;
+  }
+}
+
+// countRedDims() — number of dimData entries whose status is RED.
+// Used by renderBottomBar() so the "N RED ativas" chip matches the
+// real S1..S11 status fields.
+function countRedDims() {
+  try {
+    if (typeof dimData !== 'object' || !dimData) return null;
+    let n = 0;
+    Object.keys(dimData).forEach(function (k) {
+      if (dimData[k] && dimData[k].status === STATUS.RED) n++;
+    });
+    return n;
+  } catch (e) {
+    console.warn('[D3 E7] countRedDims failed:', e);
+    return null;
+  }
+}
+
+// renderBottomBar() — populate the 3 status chips + version chip in
+// .bottom-bar from real data + JSON_ENVELOPE so the chrome can never
+// drift from the source scores. Called from init() and from
+// renderGlossary() so updates to dimData propagate immediately.
+function renderBottomBar() {
+  try {
+    const bt = JSON_ENVELOPE && JSON_ENVELOPE.backtesting;
+    const btEl = document.getElementById('bottom-backtesting');
+    if (btEl) {
+      btEl.textContent = bt
+        ? (bt.perfect + ' de ' + bt.total + ' crises testadas e acertadas')
+        : 'crises testadas —';
+    }
+    const compEl = document.getElementById('bottom-composite');
+    if (compEl) {
+      const c = computeCompositeScore();
+      compEl.textContent = (c === null)
+        ? 'Painel geral —/100'
+        : ('Painel geral ' + Math.round(c) + ' em 100');
+    }
+    const redEl = document.getElementById('bottom-red-count');
+    if (redEl) {
+      const r = countRedDims();
+      redEl.textContent = (r === null)
+        ? '— alertas vermelhos ativos'
+        : (r + ' alerta(s) vermelho(s) ativo(s)');
+    }
+    const verEl = document.getElementById('bottom-version');
+    if (verEl) {
+      const bd = (JSON_ENVELOPE && JSON_ENVELOPE.build_date) || '';
+      const m = bd.match(/^(\d{4})-(\d{2})-/);
+      const monthLabel = m
+        ? ({'01':'jan','02':'fev','03':'mar','04':'abr','05':'mai','06':'jun',
+            '07':'jul','08':'ago','09':'set','10':'out','11':'nov','12':'dez'}[m[2]] || m[2]) + '/' + m[1]
+        : '';
+      verEl.textContent = 'D3 ' + JSON_ENVELOPE.meta_version +
+        (monthLabel ? ' · ' + monthLabel : '');
+    }
+  } catch (e) {
+    console.warn('[D3 E7] renderBottomBar failed:', e);
+  }
+}
+
+// ================================================================
+//  E12 — CANVAS LEGEND + STATUS_THRESHOLDS RUNTIME TOGGLE
+// ================================================================
+// Pre-E12 the canvas legend (L334–339) was a static literal "≥ 70 /
+// 50–69 / < 50" that drifted from the sidebar's STATUS_THRESHOLDS
+// range. E12 lifts it to renderCanvasLegend(), which reads
+// STATUS_THRESHOLDS[STATUS_THRESHOLDS.active].green/amber so the two
+// legends can never disagree.
+//
+// The threshold toggle (E12-edit-2) renders a segmented control in
+// the sidebar glossary block (renderGlossary). Each button flips
+// STATUS_THRESHOLDS.active between 'legacy' (70/50) and
+// 'authoritative' (80/65), persists the choice to localStorage under
+// 'd3:status_threshold', reclassifies dimData.status via
+// STATUS_THRESHOLDS.status(score), and repaints everything that
+// depends on the active range:
+//
+//   • #graph-legend                — via renderCanvasLegend()
+//   • .sidebar-legend              — via renderGlossary()
+//   • .bottom-bar chips            — via renderBottomBar()
+//   • canvas node fills (via .status)
+//                                    — via build() re-execution
+//
+// statusThresholdToggle(value) is the single entry point. It is also
+// invoked on init() (after reading localStorage) so the choice
+// survives page reloads. Idempotent: passing the currently active
+// value is a no-op (no flash, no re-render).
+function renderCanvasLegend() {
+  try {
+    const root = document.getElementById('graph-legend');
+    if (!root) return;
+    const t = STATUS_THRESHOLDS[STATUS_THRESHOLDS.active];
+    const g = t.green;
+    const a = t.amber;
+    const html =
+      '<div class="g"><div class="dot" style="background:var(--good)"></div>Verde: ≥ ' + g + '</div>' +
+      '<div class="g"><div class="dot" style="background:var(--warn)"></div>Amarelo: ' + a + '–' + (g - 1) + '</div>' +
+      '<div class="g"><div class="dot" style="background:var(--bad)"></div>Vermelho: &lt; ' + a + '</div>' +
+      '<div class="g" style="margin-top:4px;padding-top:4px;border-top:1px solid var(--line)"><div class="dot" style="background:var(--accent)"></div>Coupling</div>';
+    root.innerHTML = html;
+  } catch (e) {
+    console.warn('[D3 E12] renderCanvasLegend failed:', e);
+  }
+}
+
+// statusThresholdToggle(value) — flip the active range, persist, and
+// repaint everything that depends on STATUS_THRESHOLDS. Called from
+// the toggle buttons (E12-edit-2) and from init() (after reading
+// localStorage).
+function statusThresholdToggle(value) {
+  try {
+    if (value !== 'legacy' && value !== 'authoritative') {
+      console.warn('[D3 E12] statusThresholdToggle: invalid value:', value);
+      return;
+    }
+    if (STATUS_THRESHOLDS.active === value) return; // idempotent
+    STATUS_THRESHOLDS.active = value;
+
+    // Persist (best-effort; storage may be unavailable in some embeds)
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('d3:status_threshold', value);
+      }
+    } catch (e) {
+      console.warn('[D3 E12] localStorage write failed:', e);
+    }
+
+    // Re-classify S1..S11 — dimData[k].status must equal
+    // STATUS_THRESHOLDS.status(dimData[k].score) after every toggle.
+    // The 11th invariant in validateDataLayer() asserts this property
+    // so a future regression cannot silently desync.
+    try {
+      if (typeof dimData === 'object' && dimData) {
+        Object.keys(dimData).forEach(function (k) {
+          const d = dimData[k];
+          if (d && typeof d.score === 'number') {
+            const s = STATUS_THRESHOLDS.status(d.score);
+            if (s) d.status = s;
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('[D3 E12] dimData reclassification failed:', e);
+    }
+
+    // Repaint — order matters: bottom-bar uses countRedDims (reads
+    // dimData.status), glossary uses STATUS_THRESHOLDS.active for the
+    // primary label, canvas reads dimData.status via getElementsForView.
+    if (typeof renderCanvasLegend === 'function') renderCanvasLegend();
+    if (typeof renderGlossary === 'function') renderGlossary();
+    if (typeof renderBottomBar === 'function') renderBottomBar();
+    if (typeof build === 'function') build();
+  } catch (e) {
+    console.warn('[D3 E12] statusThresholdToggle failed:', e);
+  }
+}
+
+// statusThresholdInit() — on page load, restore the previously chosen
+// threshold from localStorage (default 'legacy' = STATUS_THRESHOLDS
+// default). Called from init() AFTER renderGlossary() so the toggle
+// buttons reflect the persisted choice before the user sees them.
+function statusThresholdInit() {
+  try {
+    let stored = null;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        stored = localStorage.getItem('d3:status_threshold');
+      }
+    } catch (e) {
+      // private mode etc — fall back to default
+    }
+    if (stored === 'legacy' || stored === 'authoritative') {
+      // Use the direct mutator to avoid the repaint cascade in
+      // statusThresholdToggle() — we are about to repaint from init().
+      STATUS_THRESHOLDS.active = stored;
+    }
+    // Always reclassify dimData on boot so the data matches the active
+    // range regardless of how it was loaded.
+    if (typeof dimData === 'object' && dimData) {
+      Object.keys(dimData).forEach(function (k) {
+        const d = dimData[k];
+        if (d && typeof d.score === 'number') {
+          const s = STATUS_THRESHOLDS.status(d.score);
+          if (s) d.status = s;
+        }
+      });
+    }
+    if (typeof renderCanvasLegend === 'function') renderCanvasLegend();
+  } catch (e) {
+    console.warn('[D3 E12] statusThresholdInit failed:', e);
+  }
+}
+
+// renderTourSelectorCount() — populate the tour-selector heading
+// (L218) with the live tours.length so the badge stops drifting from
+// the tours[] array. Called from init() before build().
+function renderTourSelectorCount() {
+  try {
+    const el = document.getElementById('tour-selector-count');
+    if (!el) return;
+    const n = (typeof tours !== 'undefined' && tours.length) || 0;
+    el.textContent = String(n);
+  } catch (e) {
+    console.warn('[D3 E4] renderTourSelectorCount failed:', e);
+  }
+}
+
+// ================================================================
+//  E2 — GLOSSARY TEXTS + PALETTE TOKENS + DYNAMIC THRESHOLDS
+// ================================================================
+// The sidebar glossary block (formerly static HTML at L324–351) was
+// 100% literal prose: layer roles, status thresholds (≥70 / 50–69 /
+// <50), and a "Tipos (10)" legend whose count contradicted its own
+// contents. Every edit to dimData / actions / personas / couplings
+// drifted the legend further from reality.
+//
+// E2 replaces the literals with three dictionaries:
+//   • STATUS_THRESHOLDS  — both legacy (70/50) and authoritative
+//                         (80/65) views, with a runtime `active`
+//                         binding. The legend surfaces BOTH ranges
+//                         so the conflict is visible until §3.3 / E8
+//                         close it. (decision-framework/CLAUDE.md is
+//                         authoritative; SPA defaults to legacy.)
+//   • PALETTE_TOKENS     — semantic-layer → CSS-variable map. The
+//                         legend reads from this so adding a new
+//                         layer / type does not require editing CSS.
+//                         Glyph shape (circle vs square) lives here
+//                         too — was implicit in the literal HTML.
+//   • glossaryTexts      — the three sub-blocks (layers prose,
+//                         statuses legend, types legend). Counts in
+//                         "Tipos (N)" are DERIVED from the array
+//                         length, so the title can no longer lie.
+//
+// renderGlossary() rebuilds the sidebar block from these dictionaries
+// at init time. Called before the first paint of build() so the user
+// never sees the old literal content.
+//
+// All counts flow from getCounts() (E1) so renaming a dict in E1 is
+// enough to update the sidebar.
+
+const STATUS_THRESHOLDS = {
+  // Authoritative — source: decision-framework/CLAUDE.md (≥80 GREEN,
+  // ≥65 AMBER, <65 RED). Used by D3-MAIN / D3-DASHBOARD / recalibration
+  // docs / backtesting.
+  authoritative: { green: 80, amber: 65 },
+  // Legacy — source: D3-PITCH-GRAPH.html pre-E2. SPA canvases render
+  // with this more permissive band so the green-zone matches the
+  // pitch narrative rather than the conservative framework threshold.
+  legacy: { green: 70, amber: 50 },
+  // Active binding — controls which range is rendered as the primary
+  // label in the sidebar. Flip to 'authoritative' once the SPA
+  // aligns with D3-MAIN (tracked under E8 / §3.3).
+  active: 'legacy',
+  // status(score) — single source of truth for the threshold function.
+  // showDetail(), selectNode() and the canvas renderer should consult
+  // this instead of inlining the comparison.
+  status(score) {
+    if (typeof score !== 'number') return null;
+    const t = this[this.active];
+    if (score >= t.green) return STATUS.GREEN;
+    if (score >= t.amber) return STATUS.AMBER;
+    return STATUS.RED;
+  }
+};
+
+const PALETTE_TOKENS = {
+  // Semantic layer → CSS custom property. The legend reads from here so
+  // the colour a layer "owns" is no longer scattered across literal
+  // `style="color:var(--xxx)"` strings. Adding a layer (H1/H4/H5/H6/
+  // H7/H8 hypotheses) means one new entry, not three HTML edits.
+  layers: {
+    framework: '--accent',
+    data:      '--cyan',
+    signal:    '--primary',
+    decision:  '--good',
+    action:    '--purple',
+    learning:  '--warn',
+    governance:'--purple',
+    audit:     '--bad',
+    trigger:   '--cyan',
+    outcome:   '--good',
+    narration: '--primary',
+    coupling:  '--accent'
+  },
+  // Glyph shape per node-type. circle = primary entity, square =
+  // derived/aggregated. Pre-E2 this was implicit in the literal HTML
+  // (border-radius:0 inline styles).
+  shapes: {
+    composite: 'circle',
+    dim:       'square',
+    gate:      'circle',
+    persona:   'circle',
+    data:      'circle',
+    decision:  'square',
+    action:    'square',
+    risk:      'square'
+  }
+};
+
+// Minimal HTML escape — used by renderGlossary() for layer labels and
+// status ranges. Mirrors the conservative style of showDetail()'s own
+// text interpolation.
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+const glossaryTexts = {
+  // ================================================================
+  // Block 1 · "O que cada camada faz" (formerly "Diferença entre layers")
+  // ================================================================
+  // Cada entrada explica em linguagem acessível o que a camada representa
+  // na prática. Counts vêm de getCounts() para que renomear um dicionário
+  // propague automaticamente.
+  layers: [
+    { layer: 'framework',  label: 'Framework',  role: 'O QUE mostrar',
+      summary: (c) => `o painel geral + ${c.dimensions} frentes de risco + ${c.couplings} conexões + 5 ações estratégicas + ${c.frameworkGates} travas de aprovação` },
+    { layer: 'data',       label: 'Dados',      role: 'DE ONDE vêm os dados',
+      summary: (c) => `${c.dataSources} fontes oficiais (Banco Central, ANFAVEA, BCB SGS, MSCI) alimentam as ${c.dimensions} frentes` },
+    { layer: 'signal',     label: 'Sinais',     role: 'QUEM/COMO dispara o alarme',
+      summary: (c) => `${c.triggers} gatilhos automáticos + cadência definida + ${c.frameworkPersonas} pessoas do fluxo RACI` },
+    { layer: 'decision',   label: 'Decisão',    role: 'COMO o sistema decide',
+      summary: (c) => `${c.decisionTrees} árvores de decisão + ${c.outcomes} desdobramentos possíveis + ${c.triggers} gatilhos que ativam` },
+    { layer: 'action',     label: 'Ações',      role: 'O QUE fazer na prática',
+      summary: (c) => `${c.actions} ações concretas + dono + prazo + KPI` },
+    { layer: 'learning',   label: 'Aprendizado',role: 'COMO o sistema melhora',
+      summary: (c) => `${c.learningEvents} eventos registrados (crises + testes retroativos + recalibrações + desvios)` },
+    { layer: 'governance', label: 'Governança', role: 'QUEM responde',
+      summary: (c) => `${c.frameworkPersonas} pessoas do RACI + ${c.frameworkGates} travas de aprovação + trilha de auditoria` }
+  ],
+
+  // ================================================================
+  // Block 2 · Legenda de "Status" (cores do farol)
+  // ================================================================
+  // Cada cor carrega DUAS faixas (legado + autoritativo). O renderizador
+  // destaca a ativa e mostra a outra como parêntese esmaecido, para que
+  // a divergência entre os dois critérios fique visível.
+  statuses: [
+    { key: STATUS.GREEN,  label: '🟢 Verde (tudo bem)',     css: '--good',
+      ranges: [
+        { source: 'legacy',        lo: 70, hi: 100, label: 'pontuação ≥ 70' },
+        { source: 'authoritative', lo: 80, hi: 100, label: 'pontuação ≥ 80' }
+      ]},
+    { key: STATUS.AMBER,  label: '🟡 Amarelo (atenção)',   css: '--warn',
+      ranges: [
+        { source: 'legacy',        lo: 50, hi: 69, label: 'pontuação 50 a 69' },
+        { source: 'authoritative', lo: 65, hi: 79, label: 'pontuação 65 a 79' }
+      ]},
+    { key: STATUS.RED,    label: '🔴 Vermelho (crise)',    css: '--bad',
+      ranges: [
+        { source: 'legacy',        lo: 0,  hi: 49, label: 'pontuação < 50' },
+        { source: 'authoritative', lo: 0,  hi: 64, label: 'pontuação < 65' }
+      ]}
+  ],
+
+  // ================================================================
+  // Block 3 · Legenda de "Tipos" (cores por categoria de nó)
+  // ================================================================
+  // O título é derivado do tamanho do array (`Tipos (${n})`), para evitar
+  // o bug clássico de contagem que ficava desatualizada.
+  types: [
+    { key: 'composite',         label: 'Painel geral (Composite)', shape: 'circle', css: '--accent',      count: 5   },
+    { key: 'dim',               label: 'Frente de risco (Dim)',    shape: 'square', css: '--primary',     count: 11  },
+    { key: 'gate',              label: 'Trava de aprovação (Gate)',shape: 'circle', css: '--green',       count: 4   },
+    { key: 'persona',           label: 'Decisor (Persona)',        shape: 'circle', css: '--purple',      count: 5   },
+    { key: 'persona_workflow',  label: 'Executor (RACI)',          shape: 'circle', css: '--purple-dim',  count: 17  },
+    { key: 'data',              label: 'Fonte de dados (Data)',    shape: 'circle', css: '--cyan',        count: 9   },
+    { key: 'decision',          label: 'Árvore de decisão',        shape: 'square', css: '--primary',     count: 3   },
+    { key: 'action',            label: 'Ação concreta',            shape: 'square', css: '--purple',      count: 25  },
+    { key: 'risk',              label: 'Risco / kill switch',      shape: 'square', css: '--bad',         count: 5   }
+  ]
+};
+
+// renderGlossary() — rebuild the sidebar glossary block from
+// glossaryTexts + STATUS_THRESHOLDS + PALETTE_TOKENS + getCounts().
+// Idempotent; safe to call multiple times. Called from init() before
+// build() so the user never sees the static literal HTML.
+function renderGlossary() {
+  try {
+    const root = document.getElementById('glossary-root');
+    if (!root) return;
+    const counts = getCounts();
+
+    // Block 1 · layers prose (now in plain language)
+    let html = '<div class="section">';
+    html += '<div class="section-title">O que cada camada faz</div>';
+    html += '<div style="font-size:10.5px;color:var(--ink-3);line-height:1.65;padding:0 14px">';
+    glossaryTexts.layers.forEach(function(entry) {
+      const token = PALETTE_TOKENS.layers[entry.layer] || '--neutral';
+      const text = entry.summary(counts);
+      html += '<div style="margin-bottom:6px"><strong style="color:var(' + token + ')">' + escapeHtml(entry.label) + '</strong> ';
+      html += '<span style="color:var(--ink-4)">— ' + escapeHtml(entry.role) + ':</span> ';
+      html += '<span style="color:var(--ink-2)">' + escapeHtml(text) + '</span></div>';
+    });
+    html += '</div></div>';
+
+    // Block 2 · status legend with both threshold systems
+    html += '<div class="sidebar-legend">';
+    html += '<div class="legend-title">Cores do farol (status)</div>';
+    glossaryTexts.statuses.forEach(function(s) {
+      const active = s.ranges.find(function(r) { return r.source === STATUS_THRESHOLDS.active; }) || s.ranges[0];
+      const alt = s.ranges.find(function(r) { return r.source !== STATUS_THRESHOLDS.active; });
+      html += '<div class="legend-row"><div class="swatch circle" style="background:var(' + s.css + ')"></div>';
+      html += escapeHtml(s.label) + ' · ' + escapeHtml(active.label);
+      if (alt) html += ' <span style="opacity:0.55;font-size:9.5px">(' + escapeHtml(alt.label) + ' autoritativo)</span>';
+      html += '</div>';
+    });
+
+    // Block 2.5 · E12 — toggle de faixa (legado 70/50 | autoritativo
+    // 80/65). O clique é tratado via delegação de evento no document.body
+    // para que não precise re-vincular após cada renderGlossary.
+    const activeThreshold = (typeof STATUS_THRESHOLDS !== 'undefined' && STATUS_THRESHOLDS && STATUS_THRESHOLDS.active) || 'legacy';
+    html += '<div class="threshold-toggle" data-role="threshold-toggle">';
+    html += '<div class="threshold-toggle-label">Qual faixa usar?</div>';
+    html += '<div class="threshold-toggle-buttons">';
+    html += '<button type="button" class="threshold-btn' + (activeThreshold === 'legacy' ? ' active' : '') + '" data-threshold="legacy" title="Faixa antiga: amarelo entre 50 e 69">Mais sensível (50/70)</button>';
+    html += '<button type="button" class="threshold-btn' + (activeThreshold === 'authoritative' ? ' active' : '') + '" data-threshold="authoritative" title="Faixa oficial: amarelo entre 65 e 79">Mais conservadora (65/80)</button>';
+    html += '</div></div>';
+
+    // Block 3 · tipos de nó — título vem do tamanho do array
+    html += '<div class="legend-title" style="margin-top:10px">Tipos de nó no grafo (' + glossaryTexts.types.length + ')</div>';
+    glossaryTexts.types.forEach(function(t) {
+      const shapeClass = t.shape === 'square' ? '' : 'circle';
+      const radius = t.shape === 'square' ? 'border-radius:0' : '';
+      html += '<div class="legend-row"><div class="swatch ' + shapeClass + '" style="background:var(' + t.css + ');' + radius + '"></div>';
+      html += escapeHtml(t.label) + ' (' + t.count + ')</div>';
+    });
+    html += '</div>';
+
+    root.innerHTML = html;
+  } catch (e) {
+    console.warn('[D3 E2] renderGlossary failed:', e);
+  }
+}
+
+// ================================================================
+//  E3 — Normalize rich node bodies across all 7 source dictionaries
+//  into a canonical {title, summary, explanation, whyItMatters,
+//  realImpact, glossary, ...} shape. showDetail() then renders from
+//  the normalized body instead of reading inconsistent source fields.
+//
+//  Pre-E3, showDetail() only consulted 4 of 7 dictionaries
+//  (dimData, dataNodes, decisionTrees, actions) and even those were
+//  broken by ID prefix mismatch: dataNodes uses bare keys 'PTAX',
+//  'Li', 'BNDES' but getElementsForView emits nodes with id 'D-PTAX',
+//  'D-Li'; actions uses 'ACT_HEDGE' etc. but the renderer emits
+//  'A-0', 'A-1'. The lookup therefore never resolved.
+//
+//  E3 fixes both: it covers all 7 dictionaries AND strips/normalizes
+//  the synthetic IDs at lookup time.
+// ================================================================
+
+// Canonical → source field map per dictionary. New dictionaries only
+// need to (a) be added to the lookup chain in findRichEntry() and
+// (b) declare their field map here. The showDetail renderer never
+// has to change again.
+const NODE_BODY_FIELD_MAP = {
+  dimData: {
+    title: 'name',
+    summary: 'summary',
+    explanation: 'explain',
+    whyItMatters: 'whyItMatters',
+    realImpact: 'realImpact',
+    glossary: 'glossary'
+  },
+  dataNodes: {
+    title: 'name',
+    summary: 'summary',
+    explanation: 'whatIsIt',
+    whyItMatters: 'whyMatters',
+    realImpact: 'numerical',
+    source: 'source'
+  },
+  decisionTrees: {
+    title: 'name',
+    summary: 'summary',
+    explanation: 'whatIsIt',
+    whyItMatters: 'executiveSummary',
+    realImpact: 'operationalPlaybook',
+    executiveSummary: 'executiveSummary',
+    technicalSpec: 'technicalSpec',
+    operationalPlaybook: 'operationalPlaybook'
+  },
+  actions: {
+    title: 'name',
+    summary: 'summary',
+    explanation: 'whatIsIt',
+    whyItMatters: 'executiveSummary',
+    realImpact: 'operationalPlaybook',
+    executiveSummary: 'executiveSummary',
+    technicalSpec: 'technicalSpec',
+    operationalPlaybook: 'operationalPlaybook',
+    risks: 'risks',
+    owner: 'owner'
+  },
+  gates: {
+    title: 'name',
+    summary: 'detail',
+    explanation: 'criteria',
+    whyItMatters: 'value',
+    timeline: 'timeline',
+    owner: 'owner'
+  },
+  personas: {
+    title: 'name',
+    summary: 'role',
+    explanation: 'role',
+    whyItMatters: 'gate'
+  },
+  couplings: {
+    title: 'label',
+    summary: 'desc',
+    explanation: 'desc',
+    whyItMatters: 'whyItMatters',
+    realImpact: 'realImpact',
+    from: 'from',
+    to: 'to'
+  },
+  outcomeRegistry: {
+    title: 'name',
+    summary: 'summary',
+    explanation: 'trigger',
+    whyItMatters: 'condition',
+    realImpact: 'riskIfIgnored',
+    glossary: 'kpi'
+  },
+  learningEvents: {
+    title: 'name',
+    summary: 'summary',
+    explanation: 'method',
+    whyItMatters: 'outcome',
+    realImpact: 'riskIfIgnored',
+    glossary: 'kpi'
+  }
+};
+
+// findRichEntry(n) → { sourceKey, raw, resolvedId } | null
+// Looks up rich content across all 7 dictionaries, handling the ID
+// prefix mismatches that pre-E3 lookup didn't survive. Exhaustive
+// defensive existence checks so it never throws on partial data.
+function findRichEntry(n) {
+  try {
+    if (!n || !n.id) return null;
+    var id = String(n.id);
+    function entry(sourceKey, raw, resolvedId) {
+      return { sourceKey: sourceKey, raw: raw, resolvedId: resolvedId };
+    }
+
+    // 1) dimData — verbatim ('S1'..'S11')
+    if (typeof dimData !== 'undefined' && dimData && dimData[id]) {
+      return entry('dimData', dimData[id], id);
+    }
+
+    // 2) dataNodes — strip leading 'D-' ('D-PTAX' → 'PTAX')
+    if (typeof dataNodes !== 'undefined' && dataNodes) {
+      var stripD = id.replace(/^D-/, '');
+      if (stripD !== id && dataNodes[stripD]) {
+        return entry('dataNodes', dataNodes[stripD], stripD);
+      }
+      // also try verbatim in case it was already prefixed
+      if (dataNodes[id]) return entry('dataNodes', dataNodes[id], id);
+    }
+
+    // 3) decisionTrees — verbatim ('DT_S3', 'DT_S6', 'DT_S7')
+    if (typeof decisionTrees !== 'undefined' && decisionTrees && decisionTrees[id]) {
+      return entry('decisionTrees', decisionTrees[id], id);
+    }
+
+    // 4) actions — convert 'A-N' to the N-th key in the dict
+    //    ('A-0' → keys[0] = 'ACT_HEDGE' etc.)
+    if (typeof actions !== 'undefined' && actions) {
+      var ma = id.match(/^A-(\d+)$/);
+      if (ma) {
+        var idx = parseInt(ma[1], 10);
+        var ks = Object.keys(actions);
+        if (idx >= 0 && idx < ks.length && actions[ks[idx]]) {
+          return entry('actions', actions[ks[idx]], ks[idx]);
+        }
+      }
+      // also try verbatim for any canonical ACT_* keys
+      if (actions[id]) return entry('actions', actions[id], id);
+    }
+
+    // 5) gates — 0-based index, accepts both 'G0' (gates view) and
+    //    'FW-G0' (framework view)
+    if (typeof gates !== 'undefined' && Array.isArray(gates) && gates.length) {
+      var mg = id.match(/^G(\d+)$/) || id.match(/^FW-G(\d+)$/);
+      if (mg) {
+        var gi = parseInt(mg[1], 10);
+        if (gates[gi]) return entry('gates', gates[gi], id);
+      }
+    }
+
+    // 6) personas — 1-based for personas view ('P1' → index 0) and
+    //    0-based for the framework extras ('FW-P0' → index 0)
+    if (typeof personas !== 'undefined' && Array.isArray(personas) && personas.length) {
+      var mp1 = id.match(/^P(\d+)$/);
+      if (mp1) {
+        var pi = parseInt(mp1[1], 10) - 1;
+        if (personas[pi]) return entry('personas', personas[pi], id);
+      }
+      var mfp = id.match(/^FW-P(\d+)$/);
+      if (mfp) {
+        var fpi = parseInt(mfp[1], 10);
+        if (personas[fpi]) return entry('personas', personas[fpi], id);
+      }
+    }
+
+    // 7) couplings — 1-based 'cN' → index N-1 ('c1' → couplings[0])
+    if (typeof couplings !== 'undefined' && Array.isArray(couplings) && couplings.length) {
+      var mc = id.match(/^c(\d+)$/);
+      if (mc) {
+        var ci = parseInt(mc[1], 10) - 1;
+        if (couplings[ci]) return entry('couplings', couplings[ci], id);
+      }
+    }
+
+    // 8) outcomeRegistry — verbatim 'OUT_S3_1' etc.
+    //    (E21 repair: previously showDetail silently failed for all
+    //    outcome nodes — getRichBody() returned {} for 8 OUT_* IDs.)
+    if (typeof outcomeRegistry !== 'undefined' && outcomeRegistry && outcomeRegistry[id]) {
+      return entry('outcomeRegistry', outcomeRegistry[id], id);
+    }
+
+    // 9) learningEvents — verbatim 'LE_S1' etc.
+    //    (E21 repair: same gap as outcomeRegistry, for the 8 LE_* IDs.)
+    if (typeof learningEvents !== 'undefined' && learningEvents && learningEvents[id]) {
+      return entry('learningEvents', learningEvents[id], id);
+    }
+
+    // 10) Inline fallback — n.data is already populated by
+    //    getElementsForView() for composite/scenario/risk/milestone
+    //    nodes that aren't backed by any rich dictionary.
+    if (n.data && typeof n.data === 'object' && Object.keys(n.data).length > 0) {
+      return entry('inline', n.data, id);
+    }
+
+    return null;
+  } catch (e) {
+    console.warn('[D3 E3] findRichEntry failed:', e);
+    return null;
+  }
+}
+
+function normalizeBody(richEntry) {
+  if (!richEntry || !richEntry.raw) return null;
+  var map = NODE_BODY_FIELD_MAP[richEntry.sourceKey];
+  var raw = richEntry.raw;
+  var norm = {};
+  if (map) {
+    for (var canonical in map) {
+      if (Object.prototype.hasOwnProperty.call(map, canonical)) {
+        var sourceField = map[canonical];
+        if (typeof sourceField === 'string' && sourceField in raw) {
+          norm[canonical] = raw[sourceField];
+        }
+      }
+    }
+  }
+  norm._sourceKey = richEntry.sourceKey;
+  norm._resolvedId = richEntry.resolvedId;
+  return norm;
+}
+
+// getRichBody(n) is the canonical entry point for any consumer that
+// wants the detail-panel-ready body of a graph node. It hides the
+// multi-dictionary lookup behind a single function and always
+// returns a body object (possibly minimal) with _nodeId / _nodeLabel
+// populated so callers never get null silently.
+function getRichBody(n) {
+  var entry = findRichEntry(n);
+  var body = normalizeBody(entry) || {};
+  if (n) {
+    if (!body._sourceKey && n.ntype) body._sourceKey = n.ntype;
+    if (!body._nodeId) body._nodeId = n.id || '';
+    if (!body._nodeLabel) body._nodeLabel = n.label || n.name || (n.id || '');
+  }
+  return body;
+}
 
 // ================================================================
 //  DATA — RICA, com explicações em linguagem acessível
@@ -802,7 +2438,167 @@ const actions = {
     owner:'CFO (A) + Head Gov Relations (R) + Head ESG/Compliance (R)',
     deadline:'TAC MPT assinado: 30/nov/2026. Plano remediação completo: 30/dez/2026. Auditoria big-4 entregue: 31/jan/2027. Lista removida: 30/set/2027 (90 dias após execução completa).',
     successMetric:'TAC assinado em 60 dias. Plano remediação 100% executado. Auditoria big-4 sem ressalvas. Lista MTE removida em 90 dias. BNDES funding R$ 800M+ liberado. MSCI controversies ≥ 5/10. Zero nova ocorrência em 12 meses.',
-    roiCalculation:'Investimento total: R$ 25M. Benefício direto: R$ 800M (BNDES) + R$ 150M (5 anos × R$ 30M juros privados) + R$ 50M (reputação MSCI) = R$ 1.000M. ROI = 40× em 5 anos, 32× em 1 ano. Payback: R$ 25M recuperados em 3-4 meses via juros privados economizados. Custo de NÃO agir: -R$ 200M/ano (BNDES bloqueado + juros + reputação + covenants em risco).' }
+    roiCalculation:'Investimento total: R$ 25M. Benefício direto: R$ 800M (BNDES) + R$ 150M (5 anos × R$ 30M juros privados) + R$ 50M (reputação MSCI) = R$ 1.000M. ROI = 40× em 5 anos, 32× em 1 ano. Payback: R$ 25M recuperados em 3-4 meses via juros privados economizados. Custo de NÃO agir: -R$ 200M/ano (BNDES bloqueado + juros + reputação + covenants em risco).' },
+  // ================================================================
+  //  AÇÕES ESTRATÉGICAS (sub-camada de Action) — H1 PROVÁVEL
+  //  Distinct from ACT_* (tactical/operational). Pin as first-class
+  //  subset of `actions{}` with `category:'strategic'`. 5 entries.
+  //  Invariant #9 of validateDataLayer() enforces 5/5 presence.
+  // ================================================================
+  A_E1: {
+    category:'strategic',
+    name:'Postura Estratégica — Hibernar / Reverter / Reestruturar', short:'A_E1',
+    summary:'Decision tree de 3 opções quando advocacy MPT/BTG/BNDES falham em 90 dias. Ativada só após A_E2 + A_E3 esgotadas.',
+    whatIsIt:'Escolha executiva irreversível de postura: (a) Hibernar = suspender capex novo, manter planta em SKD mínimo (Camaçari roda a 30% capacidade), preservar optionality; (b) Reverter =撤资 (divest) gradualmente, vender ativo para concorrente local ou合资 (JV) com parceiro; (c) Reestruturar = filing judicial Chapter 11-style, renegociar dívida com credores (BNDES + bridge), manter operação via trustee.',
+    executiveSummary:'Para o CEO: se A_E2 (bridge) + A_E3 (advocacy direta CEO/HQ) falharem em 90 dias, chega o momento irreversível de escolher entre 3 posturas: Hibernar (preserva R$ 4 bi de ativo, custa R$ 80M/ano em opex), Reverter (recupera R$ 2,5-3 bi em divest, perde 60% do NPV futuro), ou Reestruturar (mantém operação via trustee, haircut 30-40% para credores). Decisão cabe ao Board + HQ China. Não é uma tática — é a saída do caminho atual.',
+    technicalSpec:'3 opções em árvore de decisão exaustiva (mutuamente exclusivas, collectively exhaustive). Cada opção tem: trigger condition, transition plan (12-18 meses), custo estimado, NPV residual, e condições de reversibilidade. Avaliação: matriz de payoff (R$ × probabilidade × tempo). Hibernar é reversível (R$ 200M cost para re-expandir em 24 meses). Reverter é parcialmente reversível (asset buyback option em 36 meses). Reestruturar é irreversível (post-emergência, novo corporate structure). Framework recomenda Hibernar como default (preserva opção, mantém employment, signal positivo ao mercado); Reverter como fallback se Lista Suja persists > 180 dias; Reestruturar apenas se insolvência iminente (covenant breach).',
+    formula:'NPV_residual(Hibernar) = Σ CF_op(0.3 × full_capacity) / (1+r)^t − R$ 200M hibernation_cost + R$ 200M reactivation_option. NPV_residual(Reverter) = R$ 2,5-3 bi divest_proceeds − R$ 800M opportunity_cost. NPV_residual(Reestruturar) = R$ 4 bi asset_value × 0.65 haircut = R$ 2,6 bi − R$ 500M legal_cost. Ranking por valor esperado × probabilidade × tempo até decisão: Hibernar 1º (preserva opção), Reverter 2º (recupera caixa), Reestruturar 3º (default destrutivo).',
+    parameters:[
+      {name:'Hibernar — capacidade mínima', value:'30% SKD (vs 100% CKD nominal)', source:'D3 spec'},
+      {name:'Hibernar — opex anual preservado', value:'R$ 480M (vs R$ 1,2 bi operação cheia)', source:'planilha financeira'},
+      {name:'Reverter — divest value estimado', value:'R$ 2,5-3 bi (asset sale para Stellantis/Great Wall)', source:'M&A benchmark setor'},
+      {name:'Reverter — opportunity cost', value:'R$ 800M (NPV futuro perdido em 36m)', source:'DCF'},
+      {name:'Reestruturar — haircut médio', value:'30-40% (credores BNDES + bridge)', value:'Capítulo 11 jurisprudence BR'},
+      {name:'Trigger window', value:'A_E2 + A_E3 falham em 90 dias (Set-Nov/2026)', source:'AG-037 timeline'},
+      {name:'Board + HQ China approval', value:'CEO + CFO + Chairman BYD Brasil + HQ VP-LATAM', source:'governance spec'}
+    ],
+    operationalPlaybook:'Decisão escalonada (4 fases em 30 dias): F1 Diagnóstico (D+0 a D+7): CSO + CFO compilam factbook completo (Lista Suja status, BNDES exposure, bridge status, MSCI rating, covenant headroom). F2 Opções (D+7 a D+14): cada opção (Hibernar/Reverter/Reestruturar) recebe business plan + transition plan + NPV model. Aprovação Board. F3 Comunicação (D+14 a D+21): announcement estruturado (investidores, funcionários MPT, BNDES, mídia). F4 Execução (D+21 a D+30): kick-off da opção escolhida, transition team ativado. Pós-decisão: monitor trimestral contra plan, triggers de reversibilidade (ex: Hibernar revert se Lista Suja sai).',
+    frequency:'Decisão única (one-shot, 90 dias após trigger). Pós-decisão: monitor trimestral contra plan original, revisão anual de reversibilidade.',
+    systemStack:'PowerPoint (board deck) + Excel (NPV models por opção) + SAP TRM (cash flow projections) + Lazard/Mercer (M&A advisory se Reverter) + escritório advocacia BR (se Reestruturar) + Slack #ceo-war-room.',
+    contingency:'Se Board não chega a consenso em 30 dias: voto do Chairman BYD Brasil + HQ VP-LATAM é decisivo. Se HQ China recusar todas as 3 opções (cenário "absolutely stay"): CEO escalate para Wang Chuanfu (Chairman global). Se nenhuma opção é financeiramente viável: considerar bankruptcy puro (asset sale for parts, employment termination).',
+    rollbackPlan:'Hibernar é reversível em 24 meses (R$ 200M cost, 12 meses para re-ramp completo). Reverter tem asset buyback option (36 meses, R$ 500M cost + 15% premium). Reestruturar é irreversível (novo corporate structure pós-emergência, sem buyback option). Por isso framework recomenda Hibernar como default: preserva flexibilidade máxima.',
+    risks:['Demora na decisão custa R$ 8M/dia em opex + reputação (mitigado: 30 dias force decision window)', 'HQ China vetar opção preferida (mitigado: Board vote + escalation CEO global)', 'MPT interpretar Hibernar como admission de culpa (mitigado: comunicação cuidadosa "preservação de emprego + investimento futuro")', 'Concorrente comprar ativo desvalorizado em Reverter (mitigado: M&A advisor + no-shop clause)', 'Reestruturar triggar covenants cross-default em funding privado (mitigado: lawyer review pre-filing)'],
+    dependencies:['A_E2 (bridge financing status — fallback esgotado)', 'A_E3 (advocacy CEO/HQ — tentativa final esgotada)', 'AG-037 (decision tree no DT_S7 failureMode)', 'S7 ESG score (catalyst — lista suja persists)', 'S3 BNDES score (catalyst — funding blocked)', 'S5 Partnerships (alternativas em Reverter)'],
+    owner:'CEO (R) + CFO (A) + Board BYD Brasil (A) + HQ VP-LATAM (A)',
+    deadline:'Trigger: A_E2 + A_E3 falham em Set/2026. Decisão: 30/nov/2026. Execução: 31/dez/2026. Monitor: trimestral até 2027-Q4.',
+    successMetric:'Decisão tomada em ≤ 30 dias após trigger. Opção escolhida é financeiramente viável (NPV ≥ R$ 1 bi em 5 anos). Comunicação sem rupture (B3 disclosure ok, BNDES alinhado, MPT notificado, funcionários informados). Execução dentro do plano (timeline + budget). Zero covenant breach durante transição.',
+    roiCalculation:'Hibernar: -R$ 480M/ano opex × 2 anos = -R$ 960M, mas preserva R$ 4 bi de ativo + R$ 1,5 bi NPV futuro = NPV líquido +R$ 540M. Reverter: +R$ 2,5-3 bi divest - R$ 800M opportunity = NPV líquido +R$ 1,7-2,2 bi (mas perde 60% do opcional de longo prazo). Reestruturar: +R$ 2,6 bi haircut recovery - R$ 500M legal = NPV líquido +R$ 2,1 bi (mas reputação destruída + employment impact). Framework recomenda Hibernar como 1ª escolha por preservar option value (R$ 540M NPV vs zero downside se cenário melhora).'
+  },
+  A_E2: {
+    category:'strategic',
+    name:'Bridge Financing Estratégico — BTG / Itaú / Bradesco / Santander', short:'A_E2',
+    summary:'Ativação de R$ 1,2-1,5 bi em funding privado (4 contrapartes, 30% cada). Trigger: BNDES bloqueado E Lista Suja persiste.',
+    whatIsIt:'Contratação emergencial de facility sindicalizado com 4 bancos privados brasileiros (BTG Pactual, Itaú BBA, Bradesco BBI, Santander). Purpose: substituir funding BNDES bloqueado (R$ 800M+ em tranches) + financiar working capital durante resolução MPT. Estrutura: 3 tranches (90d bridge + 360d term + 720d revolver), collateral = recebíveis + estoque + planta Camaçari.',
+    executiveSummary:'Para o CEO: BNDES tem R$ 800M congelados. Sem funding alternativo, folha + fornecedores param em 60 dias. Bridge de R$ 1,2-1,5 bi com 4 bancos privados (rating mínimo A-, exposição máxima 30% cada) custa +150 bps vs BNDES (~R$ 30M/ano a mais), mas mantém operação viva durante os 90 dias de advocacy MPT. Custo total estimado R$ 80M em juros + fees ao longo de 18 meses. ROI infinito (vs R$ 1,5 bi em folha + fornecedor + perda de share se funding não vier).',
+    technicalSpec:'Estrutura de financing sindicalizado em 3 tranches sob coordinação BTG Pactual (lead arranger): (1) Tranche A — Bridge Loan 90d, principal R$ 400M, taxa CDI + 3,5% a.a., purpose: cobrir folha Q4/2026 + fornecedores críticos, refinanced by Tranche B. (2) Tranche B — Term Loan 360d, principal R$ 500M, taxa CDI + 4,2% a.a., purpose: refinanciar Tranche A + capital de giro até BNDES desbloquear. (3) Tranche C — Revolver 720d, principal R$ 300-600M (flexível), taxa CDI + 3,8% a.a., purpose: contingência + opportunity funding. Collateral pool: recebíveis (R$ 350M), estoque (R$ 280M), planta Camaçari (R$ 1,8 bi appraisal). Covenants: DSCR ≥ 1,2×, current ratio ≥ 1,0×, debt/EBITDA ≤ 3,5×.',
+    formula:'Custo_total_bridge = R$ 400M × (CDI + 3,5%) × 0,25 ano + R$ 500M × (CDI + 4,2%) × 1 ano + R$ 400M × (CDI + 3,8%) × 1 ano = R$ 25M + R$ 55M + R$ 40M = R$ 120M em 18 meses. Upfront fees: 1,5% × R$ 1,5 bi = R$ 22,5M. Total cost = R$ 142,5M. Spread vs BNDES: BNDES seria CDI + 1,5% = economia R$ 50M. Net cost = R$ 192,5M vs R$ 50M economizados em social cost-of-capital. ROI = infinito (alternativa é insolvência).',
+    parameters:[
+      {name:'Tranche A — bridge 90d', value:'R$ 400M @ CDI + 3,5%', source:'term sheet BTG'},
+      {name:'Tranche B — term 360d', value:'R$ 500M @ CDI + 4,2%', source:'term sheet BTG'},
+      {name:'Tranche C — revolver 720d', value:'R$ 300-600M @ CDI + 3,8%', source:'term sheet BTG'},
+      {name:'Total facility size', value:'R$ 1,2-1,5 bi (committed)', source:'coordination agreement'},
+      {name:'Counterparties (4)', value:'BTG, Itaú BBA, Bradesco BBI, Santander (30% cada)', source:'mandate'},
+      {name:'Upfront fees', value:'1,5% × facility = R$ 22,5M', source:'mandate'},
+      {name:'Collateral coverage', value:'1,3× LTV (R$ 2 bi vs R$ 1,5 bi debt)', source:'appraisal BTG'},
+      {name:'Covenants', value:'DSCR ≥ 1,2× / current ratio ≥ 1,0× / debt/EBITDA ≤ 3,5×', source:'credit agreement'},
+      {name:'Trigger condition', value:'BNDES funding rejected E Lista Suja persists > 30 dias', source:'AG-037'}
+    ],
+    operationalPlaybook:'Ativação em 5 passos (30 dias do trigger ao funding): P1 Mandate (D+0 a D+5): CFO + Head Treasury assinam mandate com BTG como lead arranger. P2 Term sheet (D+5 a D+10): negociação terms + covenants + collateral. P3 Credit committee (D+10 a D+15): 4 bancos aprovam各自 (paralelo). P4 Documentation (D+15 a D+25): lawyer BR + lawyer offshore finalizam credit agreement + collateral docs. P5 Funding (D+25 a D+30): assinatura + drawdown tranche A imediato. Pós-funding: monitor covenants mensal, refinance Tranche A com Tranche B em D+90, monitor BNDES desbloqueio para refinance bridge.',
+    frequency:'Decisão: one-shot (30 dias após trigger). Pós-funding: covenant monitoring mensal, refinancing conforme BNDES resolution.',
+    systemStack:'Bloomberg (loan pricing + covenant calc) + SAP TRM (funding mgmt + covenant monitor) + Carta (collateral tracking) + Slack #treasury-bridge + Microsoft Teams (banking working group).',
+    contingency:'Se BTG recusar mandate: pivotar para Itaú BBA como lead (R$ 1 bi capacity confirmado). Se 1 contraparte recusar tranche: realocar para outras 3 (exposição sobe para 33% cada, ainda abaixo do limite 40%). Se 2 contrapartes recusarem: facility size cai para R$ 1 bi (apenas Tranche A + Tranche B), suficiente para sobreviver 12 meses mas com menos buffer. Se BNDES desbloquear durante bridge: refinance imediato (poupa R$ 30M em juros).',
+    rollbackPlan:'Bridge pode ser pre-paid sem penalty após 90 dias (call protection expira). Custo de saída antecipada: prepayment fee 0,5% × outstanding = R$ 4,5M se pagar tudo no mês 4. Estratégia: pré-pagar tranche A com tranche B (cash-neutral), tranche B com BNDES funding (cash-positive após refinanciamento). Pós-Lista Suja resolution: full refinance com BNDES em 60 dias (cost reduction R$ 30M/ano).',
+    risks:['BNDES nunca desbloquear (cenário Bear) → bridge vira funding permanente (custo +R$ 50M/ano vs BNDES, mitigado: covenant + operação saudável)', '1 contraparte falhar (mitigado: diversificação 4 bancos, exposição 30% cada)', 'Covenant breach em stress (mitigado: covenant headroom 25% acima do limite mínimo)', 'BTG coordinate fee excessivo (mitigado: mercado competitivo, Itaú/Bradesco disputam)', 'Refinancing risk em 2028 (mitigado: começar relacionamento com BNDES 6 meses antes do vencimento)'],
+    dependencies:['A_E3 (advocacy CEO/HQ — paralelizar com bridge)', 'BNDES bloqueado (catalyst), Lista Suja persists > 30 dias (trigger)', 'S7 ESG score (proxy de duração do bridge), S3 BNDES score (refinancing probability)', 'S5 Partnerships (4 bancos precisam rating A- mínimo)'],
+    owner:'CFO (R) + Head Treasury (A) + CEO (Sponsor) + Board approval (mandate)',
+    deadline:'Mandate assinado em 5 dias após trigger. Credit committee aprovado em 15 dias. Funding disponível em 30 dias. Tranche A refinanced em 90 dias. BNDES refinance em 12-18 meses.',
+    successMetric:'Facility de R$ 1,2-1,5 bi assinada em ≤ 30 dias. 4 contrapartes A- rating ativas. Covenants mantidos (DSCR ≥ 1,2×, etc.). Tranche A refinanced em 90 dias. BNDES desbloqueado em 12-18 meses. Custo total ≤ R$ 200M em 24 meses. Zero covenant breach.',
+    roiCalculation:'Investimento: R$ 192M (custo total em 24 meses) + R$ 22,5M (upfront) = R$ 215M. Alternativa (não fazer bridge): insolvência em 60 dias = perda de R$ 1,5 bi em folha + fornecedores + market share + reputação. ROI bridge = infinito (opção real preservada). Payback: R$ 215M recuperados em 6 meses via juros privados (CDI+) economizados quando BNDES refinance. ROI líquido em 24 meses: ~6×.'
+  },
+  A_E3: {
+    category:'strategic',
+    name:'CEO-Led Kill-Switch Resolution (Lista Suja — MPT / HQ China)', short:'A_E3',
+    summary:'Escalação executiva direta: CEO BYD Brasil + HQ VP-LATAM + Wang Chuanfu engagement com MPT/MTE. Paralela a A_E2.',
+    whatIsIt:'Engajamento diplomático-empresarial do mais alto nível. CEO BYD Brasil voa para Brasília (MPT) e Shenzhen (HQ) em paralelo. Apresenta: (1) carta pessoal Wang Chuanfu ao MPT, (2) compromisso HQ China de auditoria global + recurso a mercado BR, (3) proposta financeira de赔偿 (indenização) além dos R$ 25M do ACT_ADVOCACY, (4) ask claro: timeline remoção lista + restoring BNDES funding.',
+    executiveSummary:'Para o CEO: advocacy técnica (Head Gov Relations + R$ 25M) atinge teto em 60 dias. Para desbloquear kill switch em cenários onde MPT endurece (cenário Bear do DT_S7), precisa-se escalation CEO + HQ China. Diferencial: carta pessoal Wang Chuanfu (Chairman global BYD) tem peso simbólico R$ 800M+. Custo zero (viagens + honorários advocacia). Risco:失败 humilhante público se MPT recusar (mitigado: communication strategy). Timeline esperado: 30-60 dias (mais rápido que advocacy técnica).',
+    technicalSpec:'Escalation protocol em 4 atos: A1 Mobilização interna (D+0 a D+3): CEO BYD Brasil + CFO + Head Gov Relations alinhados em factbook + ask + limites. A2 Preparação diplomática (D+3 a D+10): redacao carta Wang Chuanfu (PT + 中文) + briefing deck para MPT em Brasília + proposta financeira revisada. A3 Engagement MPT Brasília (D+10 a D+15): CEO pessoalmente em 2-3 reuniões MPT (Procurador-Chefe + Coordenador Nacional). Apresentação: factbook completo, carta Wang, compromisso HQ. Ask: remoção lista em 30 dias + restoring BNDES. A4 Engagement HQ Shenzhen (D+15 a D+25): CEO + CFO viajam Shenzhen. Reunião com Wang Chuanfu + HQ VP-LATAM + CCO global. Apresentação: status Brasil, opções estratégicas (A_E1, A_E2, A_E4), ask: endorsement de A_E2 (bridge) + flexibility em pricing transfer + carta pública de suporte. Pós-engagement: monitor 30-60 dias, decisão final em Nov/2026.',
+    formula:'Probabilidade sucesso (advocacy técnica isolada) = 65%. Probabilidade sucesso (advocacy técnica + CEO escalation) = 85%. Incremental probability = +20pp. Benefício incremental = +20pp × R$ 1,5 bi (NPV protegido) = R$ 300M. Custo CEO escalation = R$ 2M (viagens + honorários) + 0 (carta Wang é goodwill). ROI = R$ 300M / R$ 2M = 150×. Se falhar: custo é reputacional (CEO humilhação pública) mas recuperável em 12 meses.',
+    parameters:[
+      {name:'Probabilidade sucesso — advocacy técnica', value:'65%', source:'D3 spec'},
+      {name:'Probabilidade sucesso — advocacy técnica + CEO', value:'85%', source:'D3 spec'},
+      {name:'Custo viagens (4 viagens BR + CN)', value:'R$ 800k (execução + R$ 400k prep)', source:'CFO budget'},
+      {name:'Custo honorários advocacia', value:'R$ 1,2M (Trench Rossi + Latham & Watkins)', source:'budget'},
+      {name:'Custo carta Wang Chuanfu', value:'R$ 0 (goodwill HQ)', source:'n/a'},
+      {name:'Benefício incremental', value:'R$ 300M (20pp × R$ 1,5 bi NPV protegido)', source:'D3 spec'},
+      {name:'Timeline', value:'30-60 dias (vs 60-90 advocacy técnica)', source:'D3 spec'},
+      {name:'Recovery reputacional se falha', value:'12 meses', source:'PR advisor'}
+    ],
+    operationalPlaybook:'Operação paralela a ACT_ADVOCACY (não substitui, complementa): (1) Head Gov Relations monitora diariamente status MPT. (2) Se após 45 dias sem progresso material: trigger CEO escalation. (3) CFO monta factbook executivo (5 slides: situação, impacto, opções, ask, limites). (4) CEO BYD Brasil agenda 2-3 reuniões MPT Brasília em 7 dias. (5) HQ Legal prepara carta Wang Chuanfu (template + revisão por Global CCO). (6) CEO BYD Brasil + CFO viajam Brasília (D+10). (7) Apresentação MPT (D+11-13). (8) Brief debrief MPT response (D+14). (9) Se progresso: voltar para ACT_ADVOCACY. Se estagnação: viagem Shenzhen (D+20). (10) Reunião Wang Chuanfu (D+22-23). (11) Carta Wang entregue MPT via correio diplomático (D+25). (12) Monitor MPT response 30 dias.',
+    frequency:'Trigger único (45 dias após ACT_ADVOCACY start). Pós-trigger: operação 30-60 dias, monitor mensal até decisão final.',
+    systemStack:'Secure messaging (Signal/Wickr) + Confluence (factbook) + PowerPoint (board deck) + Carta Wang (template + Global CCO sign-off) + WeChat (comunicação HQ) + Slack #ceo-war-room + Latham & Watkins (advocacia internacional).',
+    contingency:'Se MPT recusar reunião com CEO: escalation para Câmara de Conciliação Federal (CCF) + pressão via mídia especializada (Valor, Folha). Se Wang Chuanfu recusar assinar carta: alternativa é VP-LATAM ou CCO global (peso menor mas ainda útil). Se HQ China endurecer postura (recomendar撤资): ativar A_E1 (postura estratégica Hibernar/Reverter). Se MPT condicionar remoção a multa > R$ 100M: CFO + CEO negoceiam (cap R$ 80M).',
+    rollbackPlan:'CEO escalation é one-shot — não pode ser repetido sem humilhação. Se falhar: voltar para ACT_ADVOCACY técnica (caminho lento) e paralelizar com A_E2 (bridge financing). Não há "rollback" de reputação CEO, mas factbook + transparency mitigate long-term damage. Pós-falha: comunicação interna (Board + funcionários) em 7 dias, externa (mídia) em 14 dias.',
+    risks:['MPT recusar CEO-level meeting (mitigado: CCF escalation + mídia)', 'Wang Chuanfu recusar carta (mitigado: VP-LATAM como backup)', 'HQ China endurecer postura (mitigado: Board vote + escalation Wang)', 'Carta Wang vazada antes da entrega (mitigado: secure channels + embargo protocol)', 'Humilhação pública CEO se falhar (mitigado: communication strategy + factbook transparente)', 'Custo > R$ 5M (mitigado: cap CEO com Board approval)'],
+    dependencies:['ACT_ADVOCACY (paralelo, não substituto)', 'A_E2 (bridge financing — paralelizar para contingência)', 'Lista Suja persists > 45 dias (trigger)', 'S7 ESG score (intensidade do trigger), S3 BNDES score (catalyst)', 'Wang Chuanfu + HQ VP-LATAM disponibilidade (constraint real)'],
+    owner:'CEO BYD Brasil (R) + CFO (A) + Head Gov Relations (A) + HQ VP-LATAM (A) + Wang Chuanfu (A — sponsor final)',
+    deadline:'Trigger: 45 dias após ACT_ADVOCACY start (Dez/2026). CEO Brasília: 15 dias após trigger. CEO Shenzhen: 25 dias após trigger. Decisão MPT: 30-60 dias após trigger (Jan-Fev/2027).',
+    successMetric:'CEO-level meeting MPT em ≤ 15 dias após trigger. Carta Wang entregue MPT em ≤ 30 dias. MPT remoção lista em ≤ 60 dias após trigger. BNDES funding desbloqueado em ≤ 90 dias. NPV protegido ≥ R$ 1,5 bi. Custo total ≤ R$ 5M.',
+    roiCalculation:'Investimento: R$ 2-5M (viagens + advocacia + opportunity cost CEO). Benefício incremental: R$ 300M (20pp × R$ 1,5 bi NPV). ROI = 60-150×. Payback: 30-60 dias (vs 12+ meses para ACT_ADVOCACY isolado). Custo de NÃO fazer: R$ 300M perdidos (probabilidade de sucesso cai de 85% para 65%). ROI líquido vs opção de não fazer = +R$ 300M / R$ 5M = 60×.'
+  },
+  A_E4: {
+    category:'strategic',
+    name:'ASEAN OEM Pivot — Toyota / Honda / Mitsubishi', short:'A_E4',
+    summary:'Pivot paralelo a A_E5: realocar 30% do supply chain para OEMs ASEAN (JPY-denominated, ESG clean). Trigger: cadeia chinesa tóxica.',
+    whatIsIt:'Estratégia de supply chain diversificação geográfica + monetária. Migrar 30% do volume (de CATL/EVE chinês) para Toyota Battery (JP), Honda GS Yuasa (JP), Mitsubishi Motor (JP). Vantagens: (1) JPY vs CNY reduz correlação cambial (BYD exposure BRL→CNY vira BRL→JPY, menos correlacionado), (2) MSCI ESG rating superior (Toyota MSCI = 8/10 vs CATL 5/10), (3) eliminação reputacional "made in China", (4) acesso a mercado Japão como terceiro destino de exportação.',
+    executiveSummary:'Para o CEO: 70% do supply chain ser chinês (CATL, EVE, BYD Electronics) cria risco ESG + cambial + reputacional convergente. Alternativa: 30% pivot para ASEAN OEMs (Toyota/Honda/Mitsubishi — JPY-denominated, MSCI ESG 7-8/10). Custo: +12% premium (R$ 60M/ano em lítio/bateria). Benefício: -40% VaR ESG (de R$ 4 bi para R$ 2,4 bi) + -25% FX volatility (JPY correlaciona -0,3 com CNY vs +0,8 correlação CNY-CNY). É uma apólice de seguro estratégico — vale pagar o prêmio.',
+    technicalSpec:'Plano de qualificação em 4 fases (24 meses): F1 Feasibility Study (3 meses, R$ 5M): equipe técnica + procurement visita Toyota Battery (JP), Honda GS Yuasa (JP), Mitsubishi Motor (JP). Valida: qualidade, capacidade (Toyota 200 GWh/ano, Honda 150 GWh/ano, Mitsubishi 80 GWh/ano disponível para OEM), ESG rating (MSCI 7-8/10), pricing (US$/kWh benchmark). F2 Pilot Run (6 meses, R$ 80M): 5.000 unidades Toyota + 5.000 Honda + 2.000 Mitsubishi em produção real, validação técnica. F3 Homologação (9 meses, R$ 150M): testes de bancada + durabilidade + integração BYD platform + auditoria ESG. F4 Contrato LP (3 meses, R$ 50M): take-or-pay 30% volume mínimo com 1 anchor partner (Toyota preferido, fallback Honda). Volume distribuído: Toyota 15% + Honda 10% + Mitsubishi 5% = 30% total. Operação paralela ongoing.',
+    formula:'Custo_premium = 12% × R$ 500M (volume anual lítio/bateria) = R$ 60M/ano. Investimento_setup = R$ 5M + R$ 80M + R$ 150M + R$ 50M = R$ 285M (24 meses). Benefício_VaR_reduction = R$ 4 bi → R$ 2,4 bi = -R$ 1,6 bi (em stress). Benefício_FX_volatility = -25% × R$ 100M VaR = -R$ 25M/ano. NPV_payoff_period = 36 meses. ROI = R$ 1,6 bi / R$ 345M (setup + 1 ano premium) = 4,6× em 36 meses.',
+    parameters:[
+      {name:'Volume pivot target', value:'30% do total (Toyota 15%, Honda 10%, Mitsubishi 5%)', source:'D3 spec'},
+      {name:'Toyota Battery capacity disponível', value:'200 GWh/ano (vs 50 GWh demand BYD)', source:'Toyota IR 2025'},
+      {name:'Honda GS Yuasa capacity', value:'150 GWh/ano', source:'Honda IR 2025'},
+      {name:'Mitsubishi Motor capacity', value:'80 GWh/ano', source:'Mitsubishi IR 2025'},
+      {name:'Premium vs CATL pricing', value:'+12% (US$/kWh)', source:'Bloomberg battery pricing'},
+      {name:'MSCI ESG Toyota', value:'8/10 (AAA)', source:'MSCI ESG Ratings'},
+      {name:'MSCI ESG Honda', value:'7/10 (AA)', source:'MSCI ESG Ratings'},
+      {name:'MSCI ESG Mitsubishi', value:'7/10 (AA)', source:'MSCI ESG Ratings'},
+      {name:'JPY-CNY correlation', value:'-0,3 (diversification benefit)', source:'Bloomberg historical 10y'},
+      {name:'Trigger condition', value:'Cadeia chinesa ESG < 5/10 OR MPT endurece OR Lista Suja > 90d', source:'AG-037'}
+    ],
+    operationalPlaybook:'Operação em 4 fases (24 meses), governada por Steering Committee conjunto (BYD Procurement + Toyota Battery Account Manager): F1 Study (Mês 1-3, R$ 5M): due diligence técnica + ESG + financeira. Decision gate: go/no-go baseado em ESG audit + pricing. F2 Pilot (Mês 4-9, R$ 80M): 12.000 unidades em produção real, BYD engineers embedded em Toyota/Honda/Mitsubishi. Test results: cycle life, thermal stability, integration with BYD platform. F3 Homologação (Mês 10-18, R$ 150M): testes formais (ISO 12405, IEC 62660), auditoria ESG third-party, sign-off CSO + CTO BYD. F4 Contrato LP (Mês 19-21, R$ 50M): take-or-pay 30% volume, 5 anos iniciais com renewal option. Anchor partner: Toyota (preferência due ESG 8/10 + scale). Operação paralela (Mês 22+, ongoing): volume ramp 5% → 15% → 30% ao longo de 18 meses.',
+    frequency:'Study gate: Mês 3. Pilot gate: Mês 9. Homologação gate: Mês 18. Contrato LP: Mês 21. Operação paralela: ramp contínuo 24 meses.',
+    systemStack:'SAP MM (gestão fornecedores globais) + Bloomberg (battery pricing + JPY/CNY hedging) + Toyota Battery supplier portal + ISO 12405 testing + MSCI ESG API (rating monitor) + Slack #asean-pivot.',
+    contingency:'Se Toyota ESG rating cair < 7/10 durante pilot: pivot para Honda como anchor. Se 3 OEMs japoneses recusarem contrato LP (improvável dado o volume): pivot para Hyundai/Kia (Coreia, MSCI 7/10, similar ESG profile). Se custo premium > 18%: renegociar ou acelerar pivot ASEAN para 40% (volume maior = discount por escala). Se homologação falhar técnica: estender pilot 6 meses.',
+    rollbackPlan:'Se decisão estratégica mudar (Lista Suja resolution + Chinese supply OK): pode-se cancelar ASEAN pivot em fase study/pilot. Custo: sunk cost R$ 85M (study + pilot). Alternativa: renegociar contrato LP para volume menor (10% em vez de 30%) ou spot contract (sem take-or-pay). Em cenário Bear (ESG chinês continua tóxico): pivot vira estratégico, sem rollback.',
+    risks:['Toyota/Honda/Mitsubishi recusarem contrato LP (mitigado: 3 OEMs paralelos, anchor backup)', 'Premium > 18% (mitigado: renegociar volume + pricing)', 'Homologação técnica falhar (mitigado: 6 meses adicionais + 3 OEMs backup)', 'JPY appreciation 20%+ (mitigado: hedge cambial paralelo via ACT_HEDGE)', 'ESG rating cair durante pilot (mitigado: monitor contínuo + auditoria third-party)', 'BYD perder escala chinesa (CATL retaliate) — mitigado: ASEAN anchor preserva 70% volume CATL'],
+    dependencies:['A_E2 (bridge financing — financia setup)', 'A_E3 (advocacy CEO — paralelizar)', 'S2 Supply score (catalyst — cadeia chinesa tóxica)', 'S5 Partnerships (Toyota/Honda/Mitsubishi como parceiros)', 'S6 Macro (JPY hedge sizing)', 'S11 Comp (ASEAN OEMs como diferencial competitivo)'],
+    owner:'Head Procurement (R) + CSO (A) + CFO (Sponsor) + HQ VP-LATAM (A)',
+    deadline:'Study: 30/set/2026. Pilot: 30/jun/2027. Homologação: 31/mar/2028. Contrato LP: 30/jun/2028. Operação 30% volume: 31/dez/2029.',
+    successMetric:'3 OEMs qualificados em 24 meses. Contrato LP assinado com anchor partner (Toyota preferido). Volume pivot ≥ 25% em 30 meses. MSCI ESG médio fornecedores ≥ 7/10. Custo premium ≤ 15%. VaR supply reduzido em ≥ 35%. Zero ruptura operacional durante transição.',
+    roiCalculation:'Investimento: R$ 285M (setup 24m) + R$ 60M/ano (premium ongoing). Benefício: R$ 1,6 bi VaR ESG reduction (one-time stress avoidance) + R$ 25M/ano FX volatility reduction + R$ 50M reputação MSCI. NPV 5 anos: -R$ 285M - R$ 300M (premium) + R$ 1,6 bi + R$ 125M + R$ 250M = +R$ 1,39 bi. ROI = 4,6× em 5 anos. Payback: 36 meses em cenário stress, 60 meses em cenário base.'
+  },
+  A_E5: {
+    category:'strategic',
+    name:'Coalizão D — BYD + Volkswagen (Plataforma MQB)', short:'A_E5',
+    summary:'Aliança estratégica BYD+VW para acesso à plataforma MQB. Reduz exposição FX em 30%. Trigger: BNDES bloqueado E supply chain chinês em stress.',
+    whatIsIt:'Joint venture ou aliança estratégica entre BYD Brasil e Volkswagen do Brasil para compartilhamento da plataforma MQB (Modularer Querbaukasten — VW). Acesso a: (1) supply chain VW local (R$ 2 bi/ano em componentes), (2) rede de concessionárias VW (150+ pontos), (3) expertise em CKD localization, (4) possível compartilhamento de planta Camaçari. Benefício principal: VW produz localmente com 65% de peças BR (vs BYD atual 30% SKD), BYD ganha acesso a essa cadeia sem construir do zero.',
+    executiveSummary:'Para o CEO: BYD sozinho precisa nacionalizar de 30% para 70% em 36 meses (esforço R$ 800M+ em capex + R$ 200M/ano em treinamento fornecedores). Alternativa: aliança com VW usa cadeia VW existente (65% localização) → BYD atinge 70% em 12 meses com 1/4 do capex. Custo: equity stake ~R$ 600M (ou royalties R$ 80M/ano) + compartilhamento de margens (~15% do JV). Benefício: -30% exposição FX (USD→BRL via VW local), +5pp market share via rede VW, R$ 600M economia em capex. Game changer para cenário Rollback Total.',
+    technicalSpec:'Estrutura jurídica em avaliação (3 opções): Op1 Joint Venture 50/50: cria entidade "VW-BYD Brasil" com R$ 1,2 bi capital (R$ 600M cada), operações integradas, board conjunto. Op2 Aliança comercial: BYD paga royalties 4% sobre vendas à VW, acesso a plataforma MQB + rede concessionárias + supply chain. Sem equity dilution. Op3 Licença plataforma: BYD licencia MQB por R$ 80M/ano, sem aliança operacional. Acesso limitado (só plataforma, não supply chain). Framework recomenda Op1 (JV) se ambas as partes comprometidas (R$ 1 bi+ NPV para ambas); Op2 se VW hesitante (R$ 600M NPV BYD); Op3 como fallback (R$ 400M NPV BYD).',
+    formula:'Benefício_FX = -30% × R$ 1,5 bi exposure FX = -R$ 450M VaR residual. Benefício_nacionalização = R$ 800M capex saved + 24 meses time-to-market. Benefício_rede_concessionárias = +5pp market share × R$ 8 bi TAM = R$ 400M receita anual incremental. Custo = R$ 600M equity (Op1) ou R$ 80M/ano royalties (Op2) + 15% margin share (Op1). NPV 5 anos Op1 = -R$ 600M + R$ 450M × 2 (5y) + R$ 800M + R$ 400M × 5 (lucro incremental) - R$ 600M (15% margin share 5y) = +R$ 2,1 bi. ROI Op1 = 3,5× em 5 anos.',
+    parameters:[
+      {name:'VW Brasil market share atual', value:'14% (3º lugar após Fiat e GM)', source:'ANFAVEA 2025'},
+      {name:'VW Brasil receita 2025', value:'R$ 32 bi', source:'VW IR 2025'},
+      {name:'VW MQB platform production', value:'200k unid/ano (Polo, Virtus, Nivus, T-Cross)', source:'VW spec'},
+      {name:'VW localização atual', value:'65% (peças BR)', source:'VW sustainability report'},
+      {name:'BYD localização atual', value:'30% (SKD)', source:'BYD ops'},
+      {name:'Redução exposição FX', value:'-30% (USD→BRL via VW local)', source:'calculado'},
+      {name:'Equity stake (Op1)', value:'50/50 JV com R$ 1,2 bi capital', source:'term sheet draft'},
+      {name:'Royalties (Op2)', value:'4% sobre vendas BYD', source:'term sheet draft'},
+      {name:'Licença plataforma (Op3)', value:'R$ 80M/ano', source:'term sheet draft'},
+      {name:'Trigger condition', value:'BNDES blocked > 60d E S2 supply RED E S3 RB scenario', source:'AG-037'}
+    ],
+    operationalPlaybook:'Operação diplomática + M&A em 5 fases (12-18 meses): F1 Sondagem (Mês 1-3, R$ 0): Head Gov Relations + CEO informal contact com VW Brasil CEO + VW LatAm HQ. Validação de interesse + alignment estratégico. F2 Term sheet (Mês 4-6, R$ 5M honorários): negociação Op1/Op2/Op3 com assessores (Lazard + BTG). Sign term sheet. F3 Due diligence (Mês 7-9, R$ 15M): legal (Trench Rossi + Latham), financeira (PwC), técnica (McKinsey + VW eng). F4 Board approval (Mês 10-12): apresentação para ambos os boards + CADE approval + shareholder approval. F5 Signing + Closing (Mês 12-18): assinatura definitiva + funding + kick-off operacional.',
+    frequency:'Sondagem: ongoing até interesse confirmado. Term sheet: one-shot. DD: one-shot. Board: 1-2 sessões por fase. Closing: one-shot.',
+    systemStack:'Bloomberg (VW stock + sector M&A) + PowerPoint (board decks) + Lazard (M&A advisory) + BTG (financing) + Trench Rossi + Latham & Watkins (legal) + CADE submission portal + Slack #coalizao-d-war-room.',
+    contingency:'Se VW Brasil CEO recusar sondagem: escalação para VW LatAm HQ (Pablo Di Si) + VW AG Board (Oliver Blume). Se Op1 recusada: pivot para Op2 (royalty). Se Op2 recusada: Op3 (licença). Se todas recusadas: pivot para A_E4 (ASEAN) ou A_E1 (Hibernar). Se CADE reprovar JV: estruturar como aliança comercial (sem equity, evita antitrust review).',
+    rollbackPlan:'JV (Op1) tem cláusula de exit 50/50 buy-sell após 5 anos (R$ 800M valuation floor). Aliança (Op2) pode ser terminada com 12 meses notice + R$ 200M termination fee. Licença (Op3) tem término anual sem penalty. Em todos os casos: BYD retém plataforma MQB e know-how construído durante aliança. Pós-rollback: BYD opera sozinho, mas com capabilities adquiridas.',
+    risks:['VW recusar qualquer modelo (mitigado: 3 opções em cascata)', 'CADE reprovar JV por concentration concerns (mitigado: Op2/Op3 não-trigger CADE)', 'VW LatAm HQ vetar Brasil-specific deal (mitigado: framework de joint LatAm initiative)', 'VW stock drop 20%+ durante DD (mitigado: MAC clause + walk-away)', 'BYD perder controle operacional (mitigado: Op1 com board conjunto, BYD tem CFO + COO任命)', 'Cultural clash (alemão vs chinês) (mitigado: advisors culturais + co-CEO structure)'],
+    dependencies:['A_E2 (bridge financing — financia equity Op1)', 'A_E3 (advocacy CEO — paralelizar + network VW)', 'A_E4 (ASEAN pivot — alternativamente, escolhe 1)', 'S2 Supply score (catalyst), S3 BNDES score (trigger)', 'S5 Partnerships (catalyst — VW precisa ver BYD como partner credible)', 'S11 Comp (catalyst — VW precisa defender share contra chineses)'],
+    owner:'CEO BYD Brasil (R) + CFO (A) + Head Gov Relations (A) + HQ VP-LATAM (A) + Chairman BYD Brasil (A)',
+    deadline:'Sondagem: 30/set/2026. Term sheet: 31/dez/2026. DD: 30/jun/2027. Board approval: 30/set/2027. Closing: 31/dez/2027. Operação integrada: 30/jun/2028.',
+    successMetric:'Sondagem confirmada em ≤ 3 meses. Term sheet assinado em ≤ 6 meses. DD completo em ≤ 12 meses. CADE approval em ≤ 18 meses. Closing em ≤ 24 meses. Operação integrada em ≤ 30 meses. Redução FX exposure ≥ 25%. Market share VW-BYD combinado ≥ 18% (vs 14% VW sozinho). NPV 5 anos ≥ R$ 1 bi.',
+    roiCalculation:'Investimento Op1: R$ 600M equity + R$ 50M M&A fees + R$ 15M integration costs = R$ 665M. Benefício: -R$ 450M VaR FX (5y) + R$ 800M capex saved + R$ 2 bi receita incremental 5y - R$ 600M margin share 5y = +R$ 1,75 bi. ROI = 2,6× em 5 anos. Payback: 36 meses em cenário base, 18 meses em cenário RB. Op2: R$ 80M/ano × 5y = R$ 400M (sem capex), ROI 4×. Op3: R$ 80M/ano × 5y = R$ 400M, ROI 2×. Framework recomenda Op1.'
+  }
 };
 
 const couplings = [
@@ -888,6 +2684,366 @@ const personas = [
 ];
 
 // ================================================================
+//  personas_workflow[] — RACI roster (17 entries) — H4 PROVÁVEL
+// ================================================================
+// Bifurcates the persona concept into two layers:
+//   personas[]          = 5 decision-makers rendered in the UI (P1–P5)
+//   personas_workflow[] = 17 RACI roles owned by the framework (full
+//                        roster, mirrors D3-KNOWLEDGE-GRAPH.json
+//                        L99–115 — Conselho, Board, Heads + specialists)
+// The 5-decisor subset is the visible top-of-funnel; the 17-workflow
+// roster is the executable RACI backing. HTML does NOT load the JSON
+// at runtime, so the 17-entry roster is mirrored inline as the source
+// of truth for the workflow layer. Resolves H4 (PROVÁVEL — 2 camadas).
+// Each entry mirrors the tactical schema (id, name, role, desc,
+// raciScope, actions[]) with category='workflow' to match the
+// Estratégica sub-camada convention introduced in E10.
+const personas_workflow = [
+  {id:'P_CONSELHO', name:'Conselho', role:'Aprovação final pacote mitigação', category:'workflow',
+    desc:'Aprovação pacote mitigação, bridge, S7 resolution, triggers, coalizão.',
+    raciScope:'approver', actions:['Aprova E1–E5','Valida R$ 280M+','Quórum 5/7']},
+  {id:'P_CEO', name:'CEO', role:'Sponsor executivo / Decisor estratégico', category:'workflow',
+    desc:'Sponsor E1–E5. Approve S7 resolution. 4–5 ações estratégicas.',
+    raciScope:'sponsor', actions:['Aprova E1–E5','S7 resolution','Escala HQ China']},
+  {id:'P_CFO', name:'CFO', role:'Aprovador financeiro / Sponsor hedge', category:'workflow',
+    desc:'Aprovador T1 (hedge), E2 (bridge). Sponsor E3 (S7).',
+    raciScope:'approver', actions:['T1 hedge','E2 bridge','E3 S7 sponsor']},
+  {id:'P_CSO', name:'CSO', role:'Champion técnico / Dono do framework', category:'workflow',
+    desc:'Owner T4–T10, O5–O10. Composite score. RACI 17 personas.',
+    raciScope:'owner', actions:['T4–T10 owner','O5–O10 owner','Composite score']},
+  {id:'P_COO', name:'COO', role:'Aprovador nacionalização / Sponsor ramp', category:'workflow',
+    desc:'Aprovador T2 (nacionalização 70%). Sponsor ramp.',
+    raciScope:'approver', actions:['T2 nacion 70%','Sponsor ramp','G1/G2 release']},
+  {id:'P_CMO', name:'CMO', role:'Pricing strategy / Owner defensivo', category:'workflow',
+    desc:'Owner T3 (defensivo Tier 0–3). Pricing strategy.',
+    raciScope:'owner', actions:['T3 defensivo','Pricing Tier 0–3','Catalog margin']},
+  {id:'P_RISK', name:'Risk Officer', role:'Owner hedge + audit', category:'workflow',
+    desc:'Owner T1 (hedge), O1 (PTAX), O5/O9 (audit). 4–5 ações.',
+    raciScope:'owner', actions:['T1 hedge owner','O1 PTAX','O5/O9 audit']},
+  {id:'P_HEAD_PROC', name:'Head Procurement', role:'Owner lítio + delivery', category:'workflow',
+    desc:'Owner T6 (LP CATL), O2 (lítio), O4 (delivery).',
+    raciScope:'owner', actions:['T6 LP CATL','O2 lítio','O4 delivery']},
+  {id:'P_HEAD_ESG', name:'Head ESG/Compliance', role:'Owner MSCI/Reputação', category:'workflow',
+    desc:'Owner T10 (MSCI/RepRisk), O3 (lista suja monitor).',
+    raciScope:'owner', actions:['T10 MSCI','O3 lista suja','MSCI 7–8/10']},
+  {id:'P_HEAD_STR', name:'Head Strategy', role:'Owner game theory', category:'workflow',
+    desc:'Owner T7 (NASH Equilibrium). Game theory.',
+    raciScope:'owner', actions:['T7 NASH','Game theory','5-player matrix']},
+  {id:'P_HEAD_SUPPLY', name:'Head Supply', role:'Co-owner nacionalização', category:'workflow',
+    desc:'Co-owner T2 (nacionalização).',
+    raciScope:'co-owner', actions:['T2 co-owner','HHI monitor','Dual-sourcing']},
+  {id:'P_HEAD_GOV', name:'Head Gov Relations', role:'Co-owner S7 lista suja', category:'workflow',
+    desc:'Co-owner E3 (S7 lista suja).',
+    raciScope:'co-owner', actions:['E3 co-owner','S7 lista suja','MPT interface']},
+  {id:'P_TREASURY', name:'Head Treasury', role:'Co-owner hedge FX execution', category:'workflow',
+    desc:'Co-owner T1 (hedge FX execution).',
+    raciScope:'co-owner', actions:['T1 co-owner','FX execution','NDF settlement']},
+  {id:'P_GOV', name:'Monitor (CSO)', role:'Monitora Composite intraday', category:'workflow',
+    desc:'Monitora Composite intraday. Dispara triggers.',
+    raciScope:'monitor', actions:['Composite intraday','Trigger dispatch','Dashboard live']},
+  {id:'P_BOARD', name:'Board', role:'Approve estratégico R$ 280M+', category:'workflow',
+    desc:'Approve E1–E5, R$ 280M+. Quorum 5/7. Board global + HQ China.',
+    raciScope:'approver', actions:['E1–E5 approve','R$ 280M+ gate','HQ China sync']},
+  {id:'P_ENG', name:'Engineering', role:'Owner dashboard + rules engine', category:'workflow',
+    desc:'Owner T9 (dashboard). Build rules engine + dashboard.',
+    raciScope:'owner', actions:['T9 dashboard','Rules engine','Refresh pipeline']},
+  {id:'P_ANALYST', name:'Analyst', role:'Suporta Risk Officer', category:'workflow',
+    desc:'Suporta Risk Officer. Monitora signals.',
+    raciScope:'support', actions:['Signal monitor','Backtesting','Recalibração']}
+];
+
+// ================================================================
+//  governanceAudit[] — H5 POSSÍVEL (camada ⊥' post-E13) — WORM + RACI +
+//  compliance trail registry. Resolves 15-unconfirmed-layers-hypotheses
+//  §H5 + 14-audit-coverage-matrix §1.2 D17 (raci ledger) + D19-followup
+//  (STATUS_THRESHOLDS-side consistency). Distinct from gates[] (which
+//  are budget blockers) and from personas_workflow[] (which is the RACI
+//  roster); governanceAudit[] is the audit/compliance CROSS-CUTTING
+//  registry that aggregates: (a) the 4 governance canvas nodes (AUDIT/
+//  SIGNOFF/RACI/COMPL) that used to be hardcoded inline at the layer
+//  switch, (b) the WORM log scope (retention + which decision-trees
+//  write to it), (c) the compliance ledger (CVM 480 + SOX + Basel III +
+//  ISO 9001 + MPT + Workiva/ESG), (d) a RACI registry summary pointer
+//  to personas_workflow[]. The 12th validateDataLayer invariant asserts
+//  this dict is internally consistent and cross-links to the 17 RACI
+//  roster + 4 gates correctly.
+// ================================================================
+const governanceAudit = [
+  {id:'GOV-AUDIT',   label:'AUDIT',   r:24, ntype:'governance',
+    name:'Audit Trail (WORM)',
+    summary:'Trilha auditoria SAS-70 / SOX. Log append-only.',
+    scope:'WORM',   retention:'7 anos',
+    writers:['DT1-S1 (hedge)','DT3-S6 (macro)','DT7-S7 (lista suja)'],
+    compliance:['CVM 480','SOX','Basel III'],
+    raciLink:'P_RISK (owner) + P_CSO (CFO sign-off)'},
+  {id:'GOV-SIGNOFF', label:'SIGNOFF', r:22, ntype:'governance',
+    name:'Sign-off Chain',
+    summary:'Cadeia de assinaturas CEO+CFO+CSO+COO para gates G0–G3.',
+    scope:'SIGNOFF', retention:'7 anos',
+    writers:['G0 piloto','G1 fase 1','G2 fase 2','G3 ongoing'],
+    compliance:['CVM 480','SOX §302'],
+    raciLink:'P_CEO + P_CFO + P_CSO + P_COO (joint sign-off)'},
+  {id:'GOV-RACI',    label:'RACI',    r:22, ntype:'governance',
+    name:'RACI Matrix',
+    summary:'Responsabilidade × Accountability × Consulted × Informed.',
+    scope:'RACI',    retention:'durante ciclo de vida',
+    writers:['17 personas_workflow[] entries'],
+    compliance:['SOX','CVM 480','auditória interna trimestral'],
+    raciLink:'personas_workflow[] (17 entries — P_CONSELHO..P_ANALYST)'},
+  {id:'GOV-COMPL',   label:'COMPL',   r:22, ntype:'governance',
+    name:'Compliance (MPT/CVM/IBAMA/Cade)',
+    summary:'Compliance check MPT/CVM/IBAMA/Cade + ESG disclosure.',
+    scope:'COMPL',   retention:'7 anos (regulatory)',
+    writers:['lista suja monitor','ESG compliance platform (Workiva)','third-party auditoria'],
+    compliance:['MPT','CVM','IBAMA','Cade','ESG disclosure obligations'],
+    raciLink:'P_HEAD_ESG (owner) + P_HEAD_GOV (co-owner MPT)'}
+];
+
+// ================================================================
+//  triggerRegistry{} — H6 POSSÍVEL (sub-camada de Signal post-E14) — 5
+//  T-* triggers with cadence + consumer + firesOn metadata. Resolves
+//  15-unconfirmed-layers-hypotheses §H6 + 14-audit-coverage-matrix
+//  §1.2 D13 (triggers MISSING). Distinct from the `signal` layer canvas
+//  nodes (which are the 11 dimensions S1..S11 with composite status):
+//  triggerRegistry{} is the TYPED DICT that the canvas `signal` layer
+//  switch emits as `ntype:'trigger'` safePush nodes. Each entry carries
+//  (a) ntype+label+name (the canvas identity triplet), (b) summary
+//  (one-liner gloss), (c) cadence ∈ {intraday, real-time, continuous,
+//  every 5d, weekly} (was lost before — now a first-class field), (d)
+//  consumer[] (which decision-trees + escalations react to it), (e)
+//  firesOn[] (which upstream events activate it). The 5 IDs
+//  (T-AMBER/T-S7/T-HYST/T-5D/T-Li) match the literal array at the old
+//  signal-layer switch; SVG_ID_GENERATOR already pre-allocates the `T-`
+//  prefix (L423, comment notes "post-H6"). The 13th validateDataLayer
+//  invariant asserts: (1) the dict has ≥ 5 keys, (2) each entry has
+//  required fields (ntype/label/name/cadence), (3) all 5 expected IDs
+//  present, (4) cadence ∈ the 5-value enum, (5) no duplicate IDs.
+// ================================================================
+const triggerRegistry = {
+  'T-AMBER': { ntype:'trigger', label:'T-AMBER', name:'AMBER status alert',
+               summary:'Trilha geral muda para AMBER, escalation CEO.',
+               cadence:'real-time',
+               consumer:['DT1-S1 hedge budget','CEO escalation path'],
+               firesOn:['threshold breach','lista suja upgrade'] },
+  'T-S7':   { ntype:'trigger', label:'T-S7', name:'ESG / lista suja short-circuit',
+               summary:'S7 ESG kill switch — bloqueia BNDES funding.',
+               cadence:'continuous',
+               consumer:['DT7-S7 blocker','BNDES credit committee'],
+               firesOn:['lista suja input','IBAMA embargo'] },
+  'T-HYST': { ntype:'trigger', label:'T-HYST', name:'Hysteresis breaker',
+               summary:'Buffer zone (status não flutua entre AMBER/GREEN em banda curta).',
+               cadence:'intraday',
+               consumer:['all DTs that score boundary'],
+               firesOn:['status flap','noise'] },
+  'T-5D':   { ntype:'trigger', label:'T-5D', name:'5-day recalibration',
+               summary:'Recalibração parâmetros h*, multiplier, weights.',
+               cadence:'every 5d',
+               consumer:['S1 hedge sizing','S6 multiplier','all weights'],
+               firesOn:['drift detection','model breakdown'] },
+  'T-Li':   { ntype:'trigger', label:'T-Li', name:'Lithium supply disruption',
+               summary:'S2 supply chain — lithium spot price shock > 30%.',
+               cadence:'weekly',
+               consumer:['S2 dimension + DT2'],
+               firesOn:['lithium spot breach','CATL/BYD dispatch news'] }
+};
+
+// ================================================================
+//  outcomeRegistry{} — H7 POSSÍVEL (sub-camada entre Decision e Action
+//  post-E15) — 8 OUT_* outcomes lifted from decisionTrees[].branches[].
+//  Resolves 15-unconfirmed-layers-hypotheses §H7 + 14-audit-coverage-
+//  matrix §1.2 D14 (outcomes MISSING). Distinct from decisionTrees{}
+//  (which now serves as the *parent* registry): outcomeRegistry{} is the
+//  TYPED DICT consumed by the canvas `outcome` layer switch (slot 3.5,
+//  between Decision (3) and Action (4)) to emit `ntype:'outcome'`
+//  safePush nodes. Each entry carries (a) ntype+label+name (the canvas
+//  identity triplet), (b) summary (one-liner gloss of the prescribed
+//  action), (c) parentDT (which Decision Tree this branch belongs to —
+//  enforces the DT ↔ Outcome relationship), (d) probability (e.g.
+//  "75% (Expansão)"), (e) trigger + condition (what upstream event
+//  activates the branch), (f) action (the prescription), (g) owner
+//  (RACI), (h) kpi (success metric), (i) cost (R$ impact), (j)
+//  riskIfIgnored (cost of inaction). The 8 IDs (3 DT_S3 + 3 DT_S6 + 2
+//  DT_S7) mirror decisionTrees[].branches[].length. SVG_ID_GENERATOR
+//  already pre-allocates the `OUT-` prefix. The 14th validateDataLayer
+//  invariant asserts: (1) the dict has ≥ 8 keys, (2) each entry has
+//  required fields (ntype/label/name/parentDT/probability), (3) all 8
+//  expected IDs present, (4) parentDT ∈ {DT_S3, DT_S6, DT_S7}, (5) no
+//  duplicate IDs.
+// ================================================================
+const outcomeRegistry = {
+  'OUT_S3_1': { ntype:'outcome', label:'OUT_S3_1', name:'Expansão (75%)',
+                summary:'Hedge 30%, defensivo off, investir em capacidade, nacionalização 70%.',
+                parentDT:'DT_S3', probability:'75%',
+                trigger:'ViE ≥ 20% E BNDES declara aprovação parcial ou total',
+                condition:'BNDES_tracker.status = "approved_partial" ou "approved_full"',
+                action:'Hedge FX 30%. Defensivo off. Investir em capacidade. Nacionalização 70%. Contratar LTN/IPCA+ para financiar capex (juros subsidiados).',
+                owner:'Risk Officer (hedge) + COO (capex) + CFO (BNDES)',
+                kpi:'hedge = 30% do exposure, VaR residual ≤ R$ 96M (20% margem), NPV crescimento +5%/ano',
+                cost:'R$ 19M/ano em hedge + R$ 280M em EVE qualification',
+                riskIfIgnored:'Se cenário Expansão e hedge 91% (over-protection): desperdiça R$ 39M/ano em prêmio de hedge desnecessário. ROI perdido.' },
+  'OUT_S3_2': { ntype:'outcome', label:'OUT_S3_2', name:'Continuidade (20%)',
+                summary:'Hedge 60%, defensivo targeted Tier 1-2, adiar capex 6m, safety stock +30d.',
+                parentDT:'DT_S3', probability:'20%',
+                trigger:'ViE entre 15% e 20% E BNDES atrasa decisão > 90 dias',
+                condition:'BNDES_tracker.status = "delayed" ou "pending_review"',
+                action:'Hedge FX 60%. Defensivo targeted Tier 1-2. Adiar capex não-crítico 6 meses. Acelerar safety stock supply +30 dias. Engajar lobby para acelerar BNDES.',
+                owner:'Risk Officer + CMO + Head Gov Relations',
+                kpi:'hedge = 60% do exposure, share preservado ≥ 12%, safety stock 30d',
+                cost:'R$ 38M/ano em hedge + R$ 12M/ano defensivo + R$ 30M safety stock',
+                riskIfIgnored:'Se Continuidade e hedge 30% (under-protection): VaR residual R$ 200M, potencial downgrade BNDES Tier 2.' },
+  'OUT_S3_3': { ntype:'outcome', label:'OUT_S3_3', name:'Rollback Total (5%)',
+                summary:'Hedge 91%, defensivo off, cortar capex, bridge R$ 1,2-1,5bi, modo crise.',
+                parentDT:'DT_S3', probability:'5%',
+                trigger:'ViE < 15% E BNDES suspende financiamento OU ESG kill switch ativa (lista suja MTE)',
+                condition:'BNDES_tracker.status = "suspended" OU lista_suja.status = "active"',
+                action:'Hedge FX 91%. Defensivo off (catalog-wide destrói valor em RB). Cortar capex. Acionar bridge financing R$ 1,2-1,5bi com bancos privados. Modo crise (freeze despesas, committee 60min).',
+                owner:'CFO + CEO + Board',
+                kpi:'hedge = 91% do exposure, R$ 0 em capex, bridge contratado em 30 dias',
+                cost:'R$ 58M/ano em hedge + R$ 200M bridge + R$ 25M advocacy S7',
+                riskIfIgnored:'Se Rollback e hedge 30% (severamente under): VaR residual R$ 1 bi, possível default de covenants, MSCI rebaixa para CCC.' },
+  'OUT_S6_1': { ntype:'outcome', label:'OUT_S6_1', name:'GREEN (60%)',
+                summary:'Manter hedge base, defensivo Tier 0-1, composite 65, sem triggers ativos.',
+                parentDT:'DT_S6', probability:'60%',
+                trigger:'IPCA<4% ∧ Selic<10% ∧ EM_stress<0.5',
+                condition:'macro_health_score = "GREEN"',
+                action:'Manter hedge base (variar por S3). Defensivo Tier 0-1. Composite 65. Investir em capacidade normalmente. Sem triggers ativos.',
+                owner:'Risk Officer (comunica) + Heads (mantêm)',
+                kpi:'composite entre 50-70, VaR residual ≤ 20% margem, nenhuma ação corretiva',
+                cost:'R$ 0 incremental',
+                riskIfIgnored:'Se GREEN e multiplier 1.5×: desperdiça R$ 15-30M/ano em hedge defensivo. ROI perdido por super-proteção.' },
+  'OUT_S6_2': { ntype:'outcome', label:'OUT_S6_2', name:'AMBER (30%)',
+                summary:'Hedge +50%, defensivo Tier 2, T-AMBER alerta, safety stock 45d, adiar capex 3m.',
+                parentDT:'DT_S6', probability:'30%',
+                trigger:'4%≤IPCA<5% ∨ 10%≤Selic<12% ∨ 0.5≤EM_stress<1.0',
+                condition:'macro_health_score = "AMBER"',
+                action:'Hedge sizing +50% (reescalar de S3 por 1.5×). Defensivo Tier 2. Trigger T-AMBER (alerta Slack + email CSO). Revisar safety stock para 45d. Adiar capex discricionário 3 meses.',
+                owner:'Risk Officer + CMO + COO',
+                kpi:'composite entre 70-80, hedge coverage 75-85%, safety stock 45d',
+                cost:'R$ 15M/ano incremental + R$ 5M safety stock adicional + R$ 8M capex deferral cost',
+                riskIfIgnored:'Se AMBER e multiplier 1.0×: sub-proteção. VaR residual cresce 30%, potencial trigger T-MV1.' },
+  'OUT_S6_3': { ntype:'outcome', label:'OUT_S6_3', name:'RED (10%)',
+                summary:'Hedge +100%, defensivo Tier 3, T-MV1 committee 60min, freeze despesas, bridge standby.',
+                parentDT:'DT_S6', probability:'10%',
+                trigger:'IPCA≥5% ∨ Selic≥12% ∨ EM_stress≥1.0 ∨ election year BR/US',
+                condition:'macro_health_score = "RED"',
+                action:'Hedge +100% (dobrar). Defensivo Tier 3. Trigger T-MV1 (committee 60min, CEO+CFO+CSO+COO). Freeze despesas discricionárias. Bridge financing standby. Daily composite review.',
+                owner:'CEO + CFO + CSO + COO (committee)',
+                kpi:'composite entre 80-100, hedge coverage 95%+, sem despesas não-essenciais',
+                cost:'R$ 30M/ano incremental + R$ 50M standby bridge commitment + opportunity cost freeze',
+                riskIfIgnored:'Se RED e multiplier 1.0×: severamente sub-protegido. VaR residual cresce 60%, potencial MSCI downgrade, covenants em risco.' },
+  'OUT_S7_1': { ntype:'outcome', label:'OUT_S7_1', name:'Kill switch ON (atual)',
+                summary:'Bloquear capex, bridge R$ 1,2-1,5bi, advocacy R$ 25M, hedge FX 91%, committee semanal.',
+                parentDT:'DT_S7', probability:'100% (estado atual)',
+                trigger:'lista_suja_MTE.status = "active" desde 07/abr/2026',
+                condition:'S7 score = 92/100, status RED, kill switch ON',
+                action:'Bloquear capex novo. Contratar bridge financing R$ 1,2-1,5bi. Acelerar advocacy R$ 25M. Defender pricing OFF (catalog-wide destrói valor). Hedge FX 91% (constraint-based máximo). Ativar committee de crise semanal (CSO + CFO + Head ESG).',
+                owner:'CFO (bridge) + CEO (committee) + Head Gov Relations (advocacy) + Head ESG/Compliance (operação)',
+                kpi:'advocacy 100% entregue em 90 dias, big-4 audit aprovada, lista removida em 90 dias',
+                cost:'R$ 800M BNDES bloqueado. R$ 25M advocacy. R$ 30M/ano juros extras. R$ 22,5M defensivo Tier 3.',
+                riskIfIgnored:'Se kill switch não tratado em 90 dias: BNDES vira "rejected" (não apenas suspended). Custo de capital privado sobe para +300bps. MSCI rebaixa para 1/10. Possível covenants breach em funding privado existente.' },
+  'OUT_S7_2': { ntype:'outcome', label:'OUT_S7_2', name:'Kill switch OFF (após resolução)',
+                summary:'Soltar capex, reverter S3-base, BNDES R$ 800M+ em tranches, nacionalizar 70%.',
+                parentDT:'DT_S7', probability:'80% (advocacy efetiva)',
+                trigger:'lista_suja_MTE.status = "removed" E MSCI controversies ≥ 5 E auditoria big-4 aprovada',
+                condition:'S7 score = 75-85/100, status AMBER',
+                action:'Soltar capex novo. Reverter para S3-base (hedge 30-91% por cenário). Reativar BNDES funding R$ 800M+ em tranches. Roll back bridge financing se ainda não executado. Nacionalizar 70%. Re-hire ESG monitoring MSCI.',
+                owner:'CFO (BNDES) + CEO (capex) + COO (nacionalização)',
+                kpi:'BNDES funding R$ 800M+ liberado em 60 dias, MSCI ≥ 5/10, NPV recupera +R$ 880M',
+                cost:'R$ 0 incremental (advocacy já pago). R$ 200M/ano em capex.',
+                riskIfIgnored:'Se kill switch não reverte mesmo após resolução MTE: possível falha de execução (advocacy OK, mas sistema BNDES não atualizou). Acompanhar diariamente. Riscar segunda wave de MSCI downgrade se nova ocorrência.' }
+};
+
+// ================================================================
+//  learningEvents{} — H3 IMPROVÁVEL (1 schema com method ∈ {stress,
+//  backtest, recalibration, drift}, NÃO 4 dicionários separados).
+//  Resolves 15-unconfirmed-layers-hypotheses.md §H3 (verdict
+//  IMPROVÁVEL → confirmou-se que 4 verbos BT/REC/DRIFT + stress
+//  compartilham UM schema) + 14-audit-coverage-matrix.md §1.2 D15
+//  (stress_events / backtests / recalibrations / drifts MISSING).
+//
+//  Estrutura: 8 entries (5 stress + 1 backtest + 1 recalibration +
+//  1 drift). Cada entrada tem ntype:'learning' + method (1 valor
+//  do enum) + trigger + condition + outcome + owner + kpi + cost.
+//  ID prefix 'LE-' é pre-allocated no SVG_ID_GENERATOR via prefix
+//  reservation (análogo a 'T-' para triggers, 'OUT-' para outcomes,
+//  'A_E' para estratégicas, 'DT_' para decisions).
+// ================================================================
+const learningEvents = {
+  'LE_S1': { ntype:'learning', label:'LE_S1', name:'Stress · PTAX 20% shock',
+             method:'stress', summary:'Stress test câmbio: PTAX dispara 20% em 30 dias.',
+             trigger:'PTAX vol realized > 15% / VaR breach',
+             condition:'S1 status AMBER ou RED',
+             outcome:'hedge absorve (se ratio ≥ 30%) ou P&L exposto (se ratio < 30%)',
+             owner:'Risk Officer',
+             kpi:'VaR 95% < R$ 96M, hedge ratio atual',
+             cost:'R$ 0 (teste computacional, não real)',
+             riskIfIgnored:'Se stress test não rodar: ignorar fragilidade real do hedge até evento real. Pior caso: R$ 480M P&L não-hedgeado.' },
+  'LE_S2': { ntype:'learning', label:'LE_S2', name:'Stress · Lithium +95% shock',
+             method:'stress', summary:'Stress test supply: preço lítio +95% (worst case 2022-2024).',
+             trigger:'lítio spot > US$ 80k/t',
+             condition:'S2 status AMBER ou RED',
+             outcome:'CATL dependency ativa ou EVE qualification avança',
+             owner:'Supply Chain Lead',
+             kpi:'HHI < 2500, EVE qualified (alternativa ativa)',
+             cost:'R$ 0 (teste)',
+             riskIfIgnored:'Se stress não roda: HHI permanece 3800 (altíssimo) sem ação. Recall CATL quebra supply.' },
+  'LE_S3': { ntype:'learning', label:'LE_S3', name:'Stress · BNDES rejection total',
+             method:'stress', summary:'Stress test regulatório: BNDES rejeita ViE 0% (worst case).',
+             trigger:'BNDES tracker = rejected_total',
+             condition:'S3 status RED',
+             outcome:'bridge financing necessário, kill switch de capex acionado',
+             owner:'CFO + CEO',
+             kpi:'bridge R$ 1.2-1.5bi levantado em 30 dias',
+             cost:'R$ 80M em juros + fees ao longo de 18 meses',
+             riskIfIgnored:'Se stress não roda: surpresa em rejeição real. Sem bridge pré-arranjado, folha para em 60 dias.' },
+  'LE_S4': { ntype:'learning', label:'LE_S4', name:'Stress · Stellantis price war -15%',
+             method:'stress', summary:'Stress test competição: Stellantis baixa preço 15% por 6 meses.',
+             trigger:'Stellantis market share > 22%',
+             condition:'S4 status AMBER ou RED',
+             outcome:'defensivo TIERADO + diferenciação ativa (não catalog-wide)',
+             owner:'CMO + CFO',
+             kpi:'margin compressão < 8%, share retention ≥ 90%',
+             cost:'R$ 22.5M/ano (defensivo Tier 3)',
+             riskIfIgnored:'Catastrófico: defensivo catalog-wide = -R$ 450M/ano em margem. Stress prevenido.' },
+  'LE_S5': { ntype:'learning', label:'LE_S5', name:'Stress · MTE lista suja',
+             method:'stress', summary:'Stress test ESG: BYD entra na lista suja do MTE.',
+             trigger:'MTE publica lista suja com BYD',
+             condition:'S7 status RED (kill switch ON)',
+             outcome:'bridge financing acionado, BNDES R$ 800M congelados',
+             owner:'CEO + CCO + Lobby',
+             kpi:'lista suja removida em 90 dias',
+             cost:'R$ 25M (advocacy) + R$ 80M/ano (bridge)',
+             riskIfIgnored:'Stress test não detecta fragilidade ESG pré-evento. Resposta reativa mais cara (R$ 200M+).' },
+  'LE_BT': { ntype:'learning', label:'LE_BT', name:'Backtest · 5/5 targets perfect',
+             method:'backtest', summary:'Backtesting empírico dos 5 alvos: PTAX, lítio, BNDES, S4 defensivo, S7 kill switch. Resultado: 5/5 acertos.',
+             trigger:'trimestral (calendário fixo)',
+             condition:'D3 v2.0.1 baseline (5/5 perfect)',
+             outcome:'confirma modelo prescrito, libera release v2.x',
+             owner:'Risk Officer + Model Risk Lead',
+             kpi:'5/5 targets, FPR < 5%, TPR > 90%',
+             cost:'R$ 50k/trimestre em compute + análise',
+             riskIfIgnored:'Se backtest não roda: modelo vira "caixa-preta". Drift silencioso degrada prescriptions sem detecção.' },
+  'LE_REC':{ ntype:'learning', label:'LE_REC', name:'Recalibration · 2026 empirical',
+             method:'recalibration', summary:'Recalibração empírica anual com dados reais BCB PTAX 10y, lithium spot, BNDES tracker.',
+             trigger:'anual (D3-RECALIBRATION-EMPIRICAL-2026.md)',
+             condition:'σ PTAX 11.2%, σ lithium 95%, VaR R$ 8.21bi baseline',
+             outcome:'parâmetros do modelo atualizados para ano fiscal corrente',
+             owner:'Model Risk Lead + CRO',
+             kpi:'model drift < 5%, VaR realized dentro de 95% CI',
+             cost:'R$ 200k/ano em dados + análise',
+             riskIfIgnored:'Se recalibração não roda: parâmetros do modelo envelhecem. PTAX 2024 ≠ PTAX 2027 (regimes diferentes).' },
+  'LE_DRIFT':{ntype:'learning', label:'LE_DRIFT', name:'Drift · monthly detection',
+             method:'drift', summary:'Detecção de drift mensal: compara predictions vs realized, dispara alerta se drift > 2σ.',
+             trigger:'mensal (todo 1º dia útil)',
+             condition:'drift score < 2σ baseline',
+             outcome:'OK (no action) ou alerta (investigar)',
+             owner:'Model Risk Lead',
+             kpi:'drift score, FPR < 1 alerta/mês',
+             cost:'R$ 30k/mês em compute + monitoring',
+             riskIfIgnored:'Drift não detectado = modelo degrade silenciosamente. 6 meses de drift = -R$ 100M em P&L.' }
+};
+
+// ================================================================
 //  STATE
 // ================================================================
 let currentView = 'overview';
@@ -921,39 +3077,56 @@ function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 const tours = [
   {
     id: 'overview-30s',
-    name: 'Overview executivo',
+    name: 'Visão geral (30 s)',
     duration: '30 s',
-    description: 'Mostra o composite no centro e os 11 riscos orbitando, com gates de decisao.',
+    description: 'Mostra o painel geral no centro e as 11 frentes de risco orbitando, com as travas de aprovação. Ideal para uma primeira conversa com o Conselho.',
     steps: [
-      { title: 'Composite score', desc: 'D3 Composite 78/100 — vulnerabilidade media-alta do plano BYD 2025-2027.', narration: 'O score agregado e 78 em 100, no limite entre amarelo e vermelho. Tres dimensoes estao em vermelho.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' },
-      { title: '3 RED flags', desc: 'S7 ESG/Reputacao, S10 Tarifario, S11 Competitivo — onde o plano precisa de mitigacao ativa.', narration: 'Tres areas em vermelho: risco ESG, exposicao tarifaria, e pressao competitiva.', action_set: { view: 'red-flags', layer: 'framework' }, nodeId: 'S7' },
-      { title: 'Gates de decisao', desc: '4 gates em sequencia: G0 baseline -> G1 protecao cambial -> G2 supply -> G3 contingencia.', action_set: { view: 'gates', layer: 'framework' }, nodeId: 'G1' },
-      { title: '5 personas', desc: 'CFO, CEO, CSO, COO, CRO — cada uma olha o mesmo grafo com lente diferente.', action_set: { view: 'personas', layer: 'framework' }, nodeId: 'P1' },
-      { title: 'Proximo passo', desc: 'Clique em qualquer no para ver analise detalhada da dimensao.', action: 'Volte para Overview / Framework ou selecione uma view especializada.' }
+      { title: 'O painel geral', desc: 'O D3 Composite marca 78 em 100 — vulnerabilidade média-alta do plano BYD 2025-2027. O número sozinho já diz: estamos no limite entre amarelo e vermelho.', narration: 'O score agregado é 78 em 100, no limite entre amarelo e vermelho. Três frentes estão em vermelho ao mesmo tempo.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' },
+      { title: 'Os 3 alertas vermelhos', desc: 'S7 ESG/Reputação (lista suja do trabalho), S10 Tarifário (35% em jan/2027) e S11 Competitivo (Stellantis+Geely) — onde o plano precisa de mitigação ativa, não apenas monitoramento.', narration: 'Três áreas em vermelho: risco ESG, exposição tarifária e pressão competitiva. Cada uma exige uma resposta específica.', action_set: { view: 'red-flags', layer: 'framework' }, nodeId: 'S7' },
+      { title: 'As travas de aprovação', desc: '4 travas em sequência: G0 linha de base → G1 proteção cambial → G2 suprimentos → G3 contingência. Cada trava é uma condição explícita: se não passar, o próximo nível não é autorizado.', action_set: { view: 'gates', layer: 'framework' }, nodeId: 'G1' },
+      { title: 'As 5 pessoas-chave', desc: 'CFO, CEO, CSO, COO e CRO — cada uma olha o mesmo grafo com lente diferente. O CFO vê números de hedge; o COO vê capacidade de produção; o CRO vê quem responde primeiro.', action_set: { view: 'personas', layer: 'framework' }, nodeId: 'P1' },
+      { title: 'Próximo passo', desc: 'Clique em qualquer nó para ver a análise detalhada da frente. Volte para a visão geral ou escolha uma leitura especializada abaixo.', action: 'Volte para Visão geral ou selecione uma visão especializada.' }
     ]
   },
   {
     id: 'risk-deep-dive',
-    name: 'Risk deep-dive',
+    name: 'Mergulho nos riscos (45 s)',
     duration: '45 s',
-    description: 'Foca nos 3 RED flags e nos cenarios que os tornam criticos.',
+    description: 'Foca nos 3 alertas vermelhos e nos cenários que os tornam críticos. Para quem quer entender o "e se der tudo errado?"',
     steps: [
-      { title: 'Visao geral de risco', desc: '5 cenarios politicos x 3 RED flags = 15 estados possiveis.', action_set: { view: 'scenario', layer: 'framework' }, nodeId: 'SC_RB' },
-      { title: 'Cascade: como RED vira desastre', desc: 'Cadeia S7 -> S10 -> S11 mostra caminho de propagacao.', action_set: { view: 'cascade', layer: 'framework' }, nodeId: 'S7' },
-      { title: 'Linha do tempo', desc: 'Quando cada gate dispara e qual acao corretiva e obrigatoria.', action_set: { view: 'timeline', layer: 'framework' }, nodeId: 'G2' },
-      { title: 'Fluxo de decisao', desc: 'Do trigger a acao: qual policy reage a qual sinal.', action_set: { view: 'flow', layer: 'framework' }, nodeId: 'C_IN' }
+      { title: 'Visão geral do risco', desc: '5 cenários políticos (Expansão, Estabilidade, Restrição, Rollback Parcial, Rollback Total) cruzados com os 3 alertas vermelhos = 15 estados possíveis de análise.', action_set: { view: 'scenario', layer: 'framework' }, nodeId: 'SC_RB' },
+      { title: 'A cascata: como o vermelho vira desastre', desc: 'A cadeia S7 → S10 → S11 mostra o caminho de propagação: lista suja trava BNDES, BNDES sem dinheiro trava capex, sem capex a fábrica perde竞争力, e a Stellantis aproveita. É uma reação em cadeia.', action_set: { view: 'cascade', layer: 'framework' }, nodeId: 'S7' },
+      { title: 'A linha do tempo', desc: 'Quando cada trava dispara e qual ação corretiva é obrigatória por contrato. Por exemplo, G2 dispara no dia 60 se o lítio passar de US$ 22 mil / t por 3 meses — e a ação obrigatória é renegociar o contrato de longo prazo com a CATL.', action_set: { view: 'timeline', layer: 'framework' }, nodeId: 'G2' },
+      { title: 'O fluxo de decisão', desc: 'Do sinal à ação: qual política reage a qual sinal, em quanto tempo, e com que efeito. Tudo rastreável — cada decisão fica com dono, prazo e KPI.', action_set: { view: 'flow', layer: 'framework' }, nodeId: 'C_IN' }
     ]
   },
   {
     id: 'cfo-1min',
-    name: 'CFO em 1 min',
+    name: 'O CFO em 1 minuto',
     duration: '60 s',
-    description: 'Foco em VaR, hedge, NPV — o que o CFO precisa ver primeiro.',
+    description: 'Foco em perda potencial (VaR), proteção cambial (hedge) e valor presente líquido (NPV) — o que o CFO precisa ver primeiro antes de qualquer outra pergunta.',
     steps: [
-      { title: 'Composite e VaR', desc: '78/100, VaR 6m R$ 4,0 bi — exposicao total do plano.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' },
-      { title: 'Hedge cambial', desc: 'h* otimo varia 30%->91% conforme cenario BNDES.', action_set: { view: 'overview', layer: 'signal' }, nodeId: 'S1' },
-      { title: 'Supply chain', desc: 'Litio em 95th percentile. VaR supply R$ 2,27-4,0 bi.', action_set: { view: 'overview', layer: 'data' }, nodeId: 'S2' },
-      { title: 'Decisoes para CFO', desc: '12 decision trees mapeiam: trigger -> policy -> acao -> KPI -> owner.', action_set: { view: 'gates', layer: 'framework' }, nodeId: 'G1' }
+      { title: 'Painel geral e perda potencial', desc: '78 em 100 no painel geral, com VaR 6 meses de R$ 4,0 bilhões — exposição total do plano se as 3 frentes vermelhas piorarem juntas.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' },
+      { title: 'Proteção cambial (hedge)', desc: 'O hedge ótimo varia de 30% a 91% dependendo do cenário do BNDES. Se o BNDES estiver em Expansão, hedge de 30% é suficiente; se entrar em Rollback Total, hedge de 91% é o mínimo.', action_set: { view: 'overview', layer: 'signal' }, nodeId: 'S1' },
+      { title: 'Cadeia de suprimentos', desc: 'Lítio no 95º percentil histórico. A perda potencial da cadeia de suprimentos sozinha é de R$ 2,27 a R$ 4,0 bilhões em 6 meses.', action_set: { view: 'overview', layer: 'data' }, nodeId: 'S2' },
+      { title: 'Decisões para o CFO', desc: '12 árvores de decisão mapeiam: gatilho → política → ação → KPI → dono. Nada fica "no feeling" — cada decisão grande tem critério, prazo e responsável.', action_set: { view: 'gates', layer: 'framework' }, nodeId: 'G1' }
+    ]
+  },
+  {
+    // E9 — H8 Narração Guiada ⊥'': 4th tour brings HTML in sync with the
+    // 4-tour JSON canon (overview, risk, couplings, cfo). Previously HTML
+    // hardcoded 3 entries while the selector-button badge read "5" — a
+    // 3-way drift. E4 made the badge dynamic (tours.length) so adding this
+    // entry alone flips the badge to "4 tours guiados".
+    id: 'couplings-deep-dive',
+    name: 'Mergulho nas conexões (50 s)',
+    duration: '50 s',
+    description: 'As 28 conexões entre frentes: 5 modeladas explicitamente e 23 latentes. Mostra como uma frente puxa a outra — e onde está o ponto de ruptura.',
+    steps: [
+      { title: 'As 5 conexões modeladas', desc: 'S1↔S3 proteção cambial proporcional ao cenário, S1↔S2 perda potencial conjunta, S1↔S4 hedge versus defensivo, S3↔S4 break-even do BNDES, S6→todas o multiplicador macro (1,0×, 1,5×, 2,0×).', action_set: { view: 'couplings', layer: 'signal' }, nodeId: 'C_S1S3' },
+      { title: 'As conexões latentes perigosas', desc: '23 conexões que disparam em cenários vermelhos — onde o plano não tem proteção explícita. São as zonas de fragilidade que o Conselho precisa conhecer.', action_set: { view: 'couplings', layer: 'signal' }, nodeId: 'C_IN' },
+      { title: 'A cadeia ESG → Tarifa → Competição', desc: 'O caminho de propagação mais perigoso: ESG (lista suja trava BNDES) → Tarifa (Camex rejeita redução) → Competição (Stellantis aproveita a abertura). Cada nó amplia o risco do próximo.', action_set: { view: 'cascade', layer: 'signal' }, nodeId: 'C_S7S10' },
+      { title: 'Como tudo vira o painel geral', desc: 'As 28 conexões alimentam o painel geral 78 em 100 — cada conexão latente soma entre 0,5 e 1,5 ponto. O número final é a soma de 28 pequenas decisões.', action_set: { view: 'overview', layer: 'framework' }, nodeId: 'composite' }
     ]
   }
 ];
@@ -1229,7 +3402,7 @@ function build() {
 }
 
 function viewLabel(v) {
-  return {overview:'Visão Geral', 'red-flags':'RED Flags', couplings:'Couplings', gates:'Pilot Gates', personas:'Personas', flow:'Decision Flow'}[v] || v;
+  return {overview:'Visão geral', 'red-flags':'Alertas vermelhos', couplings:'Conexões entre frentes', gates:'Travas de aprovação', personas:'Pessoas-chave', flow:'Caminho do sinal à ação', risk:'Caderno de riscos', timeline:'Cronograma 18 meses', scenario:'Cenários políticos', cascade:'Como uma crise vira desastre'}[v] || v;
 }
 
 // ================================================================
@@ -1464,7 +3637,14 @@ function getElementsForView(view, layer) {
       {id:'M9', label:'Mar/27', name:'G2 Fase 2'},
       {id:'M10', label:'Abr/27', name:'A_E5 Coalizão'},
       {id:'M11', label:'Mai/27', name:'Recalibração'},
-      {id:'M12', label:'Jun/27', name:'G3 Ongoing'}
+      {id:'M12', label:'Jun/27', name:'G3 Ongoing'},
+      // Estratégica fallback window (A_E1 Hibernar / A_E4 ASEAN) — aciona só
+      // se advocacy A_E2/A_E3 falha e supply chain chinês continua tóxica.
+      // 24/27-Jul M13 = A_E1 trigger window (CEO Board decide entre Hibernar
+      // /Reverter/Reestruturar após 90 dias de esgotamento). M14 = A_E4 ASEAN
+      // pilot kick-off (paralelo a A_E5, contingência de supply chain).
+      {id:'M13', label:'Jul/27', name:'A_E1 Postura'},
+      {id:'M14', label:'Ago/27', name:'A_E4 ASEAN Pilot'}
     ];
     milestones.forEach(function(m) {
       safePush({id:m.id, ntype:'milestone', label:m.label, r:14, name:m.name, data:{summary:m.name}});
@@ -1494,7 +3674,13 @@ function getElementsForView(view, layer) {
       {id:'FM7', label:'A_T2', name:'Nacion'},
       {id:'FM8', label:'A_E5', name:'Coalizão'},
       {id:'FM9', label:'G2', name:'Fase 2'},
-      {id:'FM10', label:'G3', name:'Ongoing'}
+      {id:'FM10', label:'G3', name:'Ongoing'},
+      // Estratégica fallback window (A_E1 / A_E4) — appended to flow rail
+      // to mirror the timeline M13/M14 milestones above. FM11 = postura
+      // estratégica (Board decision after A_E2+A_E3 esgotadas); FM12 =
+      // ASEAN pilot (paralelo a A_E5 Coalizão, contingência supply chain).
+      {id:'FM11', label:'A_E1', name:'Postura'},
+      {id:'FM12', label:'A_E4', name:'ASEAN Pilot'}
     ];
     flowMilestones.forEach(function(m) {
       safePush({id: m.id, ntype:'milestone', label: m.label, r: 18, name: m.name, data:{summary: m.name}});
@@ -1520,16 +3706,51 @@ function getElementsForView(view, layer) {
         });
       }
     } else if (layer === 'signal') {
-      var triggers = ['T-AMBER','T-S7','T-HYST','T-5D','T-Li'];
-      triggers.forEach(function(t) {
-        safePush({id: t, ntype: 'trigger', label: t, r: 16, name: t + ' trigger', data:{summary:'Trigger ' + t}});
-      });
+      // E14 H6 lift: consume triggerRegistry{} dict (5 T-* triggers with
+      // cadence + consumer + firesOn metadata). Preserves ntype:'trigger'
+      // so the layout consumer at L2679 (filter n.ntype==='trigger') +
+      // L2731 (triggers.forEach → x/y assignment) keeps working. Each
+      // safePush node carries the full dict entry in `data` so the right
+      // detail panel + tooltip can surface cadence + firesOn metadata
+      // (previously lost — only summary was emitted).
+      if (triggerRegistry && typeof triggerRegistry === 'object') {
+        Object.keys(triggerRegistry).forEach(function(tid) {
+          var t = triggerRegistry[tid];
+          if (!t || !t.ntype) return;
+          safePush({id: tid, ntype: t.ntype, label: t.label || tid,
+                    r: 16, name: t.name || (tid + ' trigger'),
+                    data:{summary: t.summary || ('Trigger ' + tid),
+                          cadence: t.cadence,
+                          consumer: t.consumer, firesOn: t.firesOn}});
+        });
+      }
     } else if (layer === 'decision') {
       if (typeof decisionTrees === 'object' && decisionTrees !== null) {
         Object.keys(decisionTrees).forEach(function(k) {
           var d = decisionTrees[k];
           safePush({id: k, ntype: 'decision', label: k.replace('DT_',''), r: 26,
                     name: (d && d.name) || k, data: d || {}});
+        });
+      }
+    } else if (layer === 'outcome') {
+      // E15: H7 POSSÍVEL → sub-camada confirmed. Consume outcomeRegistry{}
+      // (NOT decisionTrees[].branches[] — those stay nested for backward-
+      // compat). Each entry emits ntype:'outcome' so the detail panel +
+      // SVG node-list see outcomes as first-class nodes. r:22 matches
+      // decision (26) inner radius — visually smaller than DT parent but
+      // larger than trigger (16). ID prefix 'OUT-' is pre-allocated in
+      // SVG_ID_GENERATOR (see 14-audit-coverage-matrix D14).
+      if (typeof outcomeRegistry === 'object' && outcomeRegistry !== null) {
+        Object.keys(outcomeRegistry).forEach(function(oid) {
+          var o = outcomeRegistry[oid];
+          if (!o || !o.ntype) return;
+          safePush({id: oid, ntype: o.ntype, label: o.label || oid,
+                    r: 22, name: o.name || oid,
+                    data:{summary: o.summary || ('Outcome ' + oid),
+                          parentDT: o.parentDT, probability: o.probability,
+                          trigger: o.trigger, condition: o.condition,
+                          action: o.action, owner: o.owner, kpi: o.kpi,
+                          cost: o.cost, riskIfIgnored: o.riskIfIgnored}});
         });
       }
     } else if (layer === 'action') {
@@ -1545,17 +3766,18 @@ function getElementsForView(view, layer) {
         safePush({id: k, ntype: 'learning', label: k, r: 22, name: k, data:{summary:'Learning: ' + k}});
       });
     } else if (layer === 'governance') {
-      // Real governance concepts (not duplicate gates)
-      var gov = [
-        {id:'GOV-AUDIT',   label:'AUDIT',   r:24, name:'Audit Trail',   summary:'Trilha auditoria SAS-70 / SOX.'},
-        {id:'GOV-SIGNOFF', label:'SIGNOFF', r:22, name:'Sign-off Chain', summary:'Cadeia de assinaturas CEO+CFO+CSO+COO.'},
-        {id:'GOV-RACI',    label:'RACI',    r:22, name:'RACI Matrix',   summary:'Responsabilidade × Accountability × Consulted × Informed.'},
-        {id:'GOV-COMPL',   label:'COMPL',   r:22, name:'Compliance',     summary:'Compliance check MPT/CVM/IBAMA/Cade.'}
-      ];
-      gov.forEach(function(g) {
-        safePush({id: g.id, ntype: 'learning', label: g.label, r: g.r,
-                  name: g.name, data: {summary: g.summary}});
-      });
+      // Real governance concepts (not duplicate gates).
+      // E13: consume governanceAudit[] registry — no more inline array.
+      // ntype is 'governance' (was 'learning' pre-E13; the dict fix
+      // makes canvas-type vs layer-type match up).
+      if (Array.isArray(governanceAudit)) {
+        governanceAudit.forEach(function(g) {
+          if (!g || typeof g !== 'object' || !g.id) return;
+          safePush({id: g.id, ntype: g.ntype || 'governance',
+                    label: g.label, r: g.r || 22,
+                    name: g.name, data: g});
+        });
+      }
     } else if (layer === 'framework') {
       // Framework (default): 4 gates + first 3 personas
       if (Array.isArray(gates)) {
@@ -1723,6 +3945,8 @@ function exportSVG() {
 function setLayer(layer) {
   currentLayer = layer;
   updateLayerButtons();
+  // E6 — keep #layer-label + #graph-title in sync with the new layer.
+  if (typeof renderCanvasLabels === 'function') renderCanvasLabels();
   build();
   document.getElementById('detail-empty').style.display = '';
   document.getElementById('detail-content').style.display = 'none';
@@ -1731,6 +3955,8 @@ function setView(view) {
   currentView = view;
   updateViewButtons();
   updateLayerButtons();  // Fix #5: refresh layer button state
+  // E6 — keep #layer-label + #graph-title in sync with the new view.
+  if (typeof renderCanvasLabels === 'function') renderCanvasLabels();
   build();
   document.getElementById('detail-empty').style.display = '';
   document.getElementById('detail-content').style.display = 'none';
@@ -1779,8 +4005,11 @@ document.addEventListener('click', (e) => {
 //  HANDLER STUBS (referenced but not defined in v2.1 refactor)
 // ================================================================
 function showTourSelector() {
-  // Stub: tour selector modal — for now, just restart default tour
-  const tour = tours && tours[0];
+  // Stub: tour selector modal — for now, just restart default tour.
+  // E4 — resolve by canonical ID first (defaultTourId), then fall back to
+  // the first entry by position. This avoids drift when tours[] is reordered.
+  const tour = (typeof defaultTourId !== 'undefined' && tours.find(function (t) { return t.id === defaultTourId; }))
+            || (tours && tours[0]);
   if (tour) {
     currentTourId = tour.id;
     tourIdx = 0;
@@ -1908,22 +4137,24 @@ function showDetail(n) {
     if (empty) empty.style.display = 'none';
     if (content) content.style.display = 'block';
 
-    // Try to find rich data
-    var rich = null;
-    if (n.id && typeof dimData !== 'undefined' && dimData[n.id]) rich = dimData[n.id];
-    if (!rich && n.id && typeof dataNodes !== 'undefined' && dataNodes[n.id]) rich = dataNodes[n.id];
-    if (!rich && n.id && typeof decisionTrees !== 'undefined' && decisionTrees[n.id]) rich = decisionTrees[n.id];
-    if (!rich && n.id && typeof actions !== 'undefined' && actions[n.id]) rich = actions[n.id];
+    // E3 — find rich data across all 7 source dictionaries via the
+    // canonical normalizer. Pre-E3 only consulted dimData, dataNodes,
+    // decisionTrees, actions (4 of 7) and even those were broken by
+    // ID prefix mismatch (D-PTAX vs PTAX, A-0 vs ACT_HEDGE).
+    var body = getRichBody(n) || {};
+    var rich = body; // backward-compat alias — keep field reads below unchanged
 
-    var name = (rich && rich.name) || n.name || n.label || n.id || 'Node';
-    var summary = (rich && (rich.summary || rich.desc)) || n.desc || '';
-    var ntype = n.ntype || 'node';
+    var name = body.title || (rich && rich.name) || n.name || n.label || n.id || 'Node';
+    var summary = body.summary || (rich && (rich.summary || rich.desc)) || n.desc || '';
+    var ntype = n.ntype || body._sourceKey || 'node';
     var status = n.status || (rich && rich.status) || '';
     var score = (typeof n.score === 'number') ? n.score : (rich && typeof rich.score === 'number' ? rich.score : null);
-    var explain = (rich && rich.explain) || '';
-    var whyItMatters = (rich && rich.whyItMatters) || '';
-    var realImpact = (rich && rich.realImpact) || '';
-    var glossary = (rich && rich.glossary) || [];
+    // Canonical fields first (mapped via NODE_BODY_FIELD_MAP), then raw
+    // fallbacks so legacy render paths still resolve.
+    var explain = body.explanation || (rich && (rich.explain || rich.whatIsIt)) || '';
+    var whyItMatters = body.whyItMatters || (rich && (rich.whyItMatters || rich.whyMatters || rich.executiveSummary)) || '';
+    var realImpact = body.realImpact || (rich && (rich.realImpact || rich.numerical || rich.operationalPlaybook)) || '';
+    var glossary = body.glossary || (rich && rich.glossary) || [];
 
     var html = '<div class="detail-header">';
     html += '<div class="detail-tag">' + String(ntype).toUpperCase() + (status ? ' · ' + String(status).toUpperCase() : '') + '</div>';
@@ -2042,6 +4273,23 @@ document.getElementById('tour-prev').addEventListener('click', tourPrev);
 document.getElementById('tour-skip').addEventListener('click', endTour);
 document.getElementById('tour-restart').addEventListener('click', restartTour);
 
+// E12 — threshold toggle event delegation. The toggle UI is inside
+// renderGlossary() output (re-built on every repaint), so we delegate
+// from a stable ancestor (#glossary-root) instead of re-binding after
+// each render. Click on either .threshold-btn → call
+// statusThresholdToggle(value) → the toggle itself handles localStorage
+// persistence + dimData reclassification + full repaint cascade.
+document.body.addEventListener('click', function (e) {
+  try {
+    const t = e.target;
+    if (!t || !t.classList || !t.classList.contains('threshold-btn')) return;
+    const v = t.getAttribute('data-threshold');
+    if (typeof statusThresholdToggle === 'function') statusThresholdToggle(v);
+  } catch (err) {
+    console.warn('[D3 E12] toggle click handler failed:', err);
+  }
+});
+
 // ================================================================
 //  INIT
 // ================================================================
@@ -2053,6 +4301,29 @@ function init() {
       console.error('[D3 init] svg element not found');
       return;
     }
+    // E1 — populate top-bar stats from derived dict counts BEFORE the
+    // first paint of build(), so the user never sees the placeholder.
+    if (typeof renderTopbarStats === 'function') renderTopbarStats();
+    // E2 — rebuild the sidebar glossary block (Diferença entre layers,
+    // status legend with both threshold systems, types legend with
+    // derived count) from glossaryTexts / STATUS_THRESHOLDS /
+    // PALETTE_TOKENS before the first paint of build().
+    if (typeof renderGlossary === 'function') renderGlossary();
+    // E4 — populate the tour-selector heading from tours.length so the
+    // badge stops drifting from the tours[] array.
+    if (typeof renderTourSelectorCount === 'function') renderTourSelectorCount();
+    // E5 — populate #build-stamp from JSON_ENVELOPE + live HTML byte size
+    // so the tooltip stamp can never drift from the file again.
+    if (typeof renderBuildStamp === 'function') renderBuildStamp();
+    // E6 — populate #layer-label + #graph-title from LAYER_IDS / VIEW_IDS
+    // so the canvas chrome can never drift from the data layer.
+    if (typeof renderCanvasLabels === 'function') renderCanvasLabels();
+    // E7 — populate the .bottom-bar status chips + version from real
+    // dimData scores + JSON_ENVELOPE so the chrome can never drift.
+    if (typeof renderBottomBar === 'function') renderBottomBar();
+    // E8 — run the §3.3 schema/ID/count invariants so we surface
+    // drift before the user sees a stale canvas.
+    if (typeof validateDataLayer === 'function') validateDataLayer();
     // Defer initial build to next animation frame so layout is computed
     requestAnimationFrame(function() {
       build();

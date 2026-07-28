@@ -1,0 +1,71 @@
+{
+  "scenarios": [
+    {
+      "id": "A",
+      "nome": "Expansão GREEN",
+      "status": "GREEN",
+      "prob": 0.75,
+      "vie": 0.22,
+      "incentive_coverage": 0.9,
+      "BNDES_kill_switch": false,
+      "NPV_incentive_B": 1.5,
+      "cost_delay_B": 0,
+      "delay_months": 0,
+      "decision": "Aprovar expansão, hedge 30%",
+      "kill_trigger": null
+    },
+    {
+      "id": "B",
+      "nome": "Tensão AMBER",
+      "status": "AMBER",
+      "prob": 0.15,
+      "vie": 0.1,
+      "incentive_coverage": 0.5,
+      "BNDES_kill_switch": false,
+      "NPV_incentive_B": 0.8,
+      "cost_delay_B": 0.05,
+      "delay_months": 3,
+      "decision": "Expansão condicional, hedge 60%, preparar contingência",
+      "kill_trigger": null
+    },
+    {
+      "id": "C",
+      "nome": "Crise RED (kill switch)",
+      "status": "RED",
+      "prob": 0.08,
+      "vie": 0.05,
+      "incentive_coverage": 0.18,
+      "BNDES_kill_switch": true,
+      "NPV_incentive_B": 0.0,
+      "cost_delay_B": 0.2,
+      "delay_months": 6,
+      "decision": "Congelar capex não-essencial, hedge 90%, ativar protocolo de crise",
+      "kill_trigger": "Lista suja MTE ativa desde 07/abr/2026 — 163 trabalhadores resgatados dez/2024 — R$ 800M em financiamento bloqueado"
+    },
+    {
+      "id": "D",
+      "nome": "Rollback Total",
+      "status": "RED",
+      "prob": 0.02,
+      "vie": 0.0,
+      "incentive_coverage": 0.0,
+      "BNDES_kill_switch": true,
+      "NPV_incentive_B": 0.0,
+      "cost_delay_B": 0.5,
+      "delay_months": 12,
+      "decision": "Freeze total, invocar cláusula kill switch",
+      "kill_trigger": "Programa integralmente bloqueado — todas as tranches BNDES suspensas"
+    }
+  ],
+  "expected_ViE": 0.184,
+  "expected_incentive_coverage": 0.7644,
+  "expected_NPV_B": 1.245,
+  "kill_switch_prob": 0.1,
+  "break_even_ViE": 0.1,
+  "metadata": {
+    "analise": "Análise Prescritiva — Cenários Regulatórios BNDES",
+    "projeto": "BYD Camacari 2025-2027",
+    "data": "2026-07-26",
+    "notebook": "nb-03-regulatory-scenarios.ipynb"
+  }
+}

@@ -1,0 +1,358 @@
+{
+  "players": [
+    {
+      "id": 0,
+      "name": "BYD",
+      "base_share": 0.38
+    },
+    {
+      "id": 1,
+      "name": "Stellantis",
+      "base_share": 0.22
+    },
+    {
+      "id": 2,
+      "name": "GM",
+      "base_share": 0.18
+    },
+    {
+      "id": 3,
+      "name": "VW",
+      "base_share": 0.14
+    },
+    {
+      "id": 4,
+      "name": "Geely",
+      "base_share": 0.08
+    }
+  ],
+  "strategies": [
+    "DIFFERENTIATE",
+    "PRICE_WAR"
+  ],
+  "nash_equilibrium": {
+    "BYD": "DIFFERENTIATE",
+    "Stellantis": "PRICE_WAR",
+    "GM": "PRICE_WAR",
+    "VW": "PRICE_WAR",
+    "Geely": "DIFFERENTIATE"
+  },
+  "payoff_matrix_5x5": {
+    "DIFFERENTIATE": {
+      "DIFFERENTIATE": {
+        "DIFFERENTIATE": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        },
+        "PRICE_WAR": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        }
+      },
+      "PRICE_WAR": {
+        "DIFFERENTIATE": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        },
+        "PRICE_WAR": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": 7.296,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        }
+      }
+    },
+    "PRICE_WAR": {
+      "DIFFERENTIATE": {
+        "DIFFERENTIATE": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        },
+        "PRICE_WAR": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": 4.224,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        }
+      },
+      "PRICE_WAR": {
+        "DIFFERENTIATE": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": 3.456,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        },
+        "PRICE_WAR": {
+          "DIFFERENTIATE": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": 2.688,
+              "Geely": -0.276
+            }
+          },
+          "PRICE_WAR": {
+            "DIFFERENTIATE": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": 1.536
+            },
+            "PRICE_WAR": {
+              "BYD": -1.932,
+              "Stellantis": -1.38,
+              "GM": -1.104,
+              "VW": -0.828,
+              "Geely": -0.276
+            }
+          }
+        }
+      }
+    }
+  },
+  "aggregate_npv_at_nash_B": 5.52,
+  "aggregate_npv_all_war_B": -5.52,
+  "aggregate_npv_all_differentiate_B": 19.2,
+  "value_of_nash_vs_war_B": 11.04,
+  "market_share_base": {
+    "BYD": 0.38,
+    "Stellantis": 0.22,
+    "GM": 0.18,
+    "VW": 0.14,
+    "Geely": 0.08
+  },
+  "payoffs_all_differentiate": {
+    "BYD": 7.296,
+    "Stellantis": 4.224,
+    "GM": 3.456,
+    "VW": 2.688,
+    "Geely": 1.536
+  },
+  "payoffs_all_war": {
+    "BYD": -1.932,
+    "Stellantis": -1.38,
+    "GM": -1.104,
+    "VW": -0.828,
+    "Geely": -0.276
+  },
+  "payoffs_nash_e3": {
+    "BYD": 7.296,
+    "Stellantis": -1.38,
+    "GM": -1.104,
+    "VW": -0.828,
+    "Geely": 1.536
+  }
+}

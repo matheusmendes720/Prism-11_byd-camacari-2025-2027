@@ -1,12 +1,12 @@
-# sweep-e64.ps1 — regression sweep E25-E69 in BASELINE mode
+# sweep-e64.ps1 — regression sweep E25-E71 in BASELINE mode
 $total = 0; $pass = 0; $fail = 0; $results = @()
-for ($i = 25; $i -le 70; $i++) {
+for ($i = 25; $i -le 71; $i++) {
   $e = 'e' + $i
   $out = node docs/audits/$e-verify.js 2>&1
   $exit = $LASTEXITCODE
   $total++
   if ($exit -eq 0) { $pass++ } else { $fail++; $results += "$e FAIL`n$out" }
 }
-Write-Host "BASELINE sweep E25-E70: total=$total pass=$pass fail=$fail"
+Write-Host "BASELINE sweep E25-E71: total=$total pass=$pass fail=$fail"
 if ($fail -gt 0) { $results | ForEach-Object { Write-Host $_ } }
 exit $fail

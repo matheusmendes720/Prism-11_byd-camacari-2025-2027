@@ -1,10 +1,12 @@
 // landing-page/components/three/HeroCarScene.tsx
 'use client';
 
-import { Suspense, useRef } from 'react';
+import { Component, Suspense, useRef } from 'react';
+import type { ReactNode } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import { colors } from '@/lib/design-tokens';
 import { Particles } from './shared/Particles';
 import { KPIHtmlCard } from './shared/KPIHtmlCard';
 import { TubeLine } from './shared/TubeLine';
@@ -12,6 +14,58 @@ import type { ThreeMode } from '@/lib/three-support';
 
 interface SceneProps {
   mode: ThreeMode;
+}
+
+/**
+ * Catches GLB load failures (404, parse errors) so a missing model doesn't
+ * take down the whole Canvas. Renders a stylized placeholder instead.
+ */
+class GLBErrorBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch() {
+    /* swallow — fallback already in state */
+  }
+  render() {
+    return this.state.hasError ? this.props.fallback : this.props.children;
+  }
+}
+
+function PlaceholderCar({ mode }: SceneProps) {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = state.clock.elapsedTime * 0.05;
+    ref.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+  });
+  // Wireframe silhouette + emissive sphere — keeps the hero alive
+  // until Task 25 lands the real GLB.
+  return (
+    <group ref={ref} scale={mode === 'lite' ? 1.5 : 2}>
+      <mesh>
+        <boxGeometry args={[1.6, 0.5, 3.2]} />
+        <meshStandardMaterial
+          color={colors.matter.steel}
+          emissive={colors.energy.red}
+          emissiveIntensity={0.15}
+          wireframe
+        />
+      </mesh>
+      <mesh position={[0, 0.35, 0]}>
+        <sphereGeometry args={[0.35, 24, 24]} />
+        <meshStandardMaterial
+          color={colors.energy.yellow}
+          emissive={colors.energy.yellow}
+          emissiveIntensity={0.6}
+        />
+      </mesh>
+    </group>
+  );
 }
 
 function CarModel({ mode }: SceneProps) {
@@ -38,9 +92,11 @@ export function HeroCarScene({ mode }: SceneProps) {
       <pointLight position={[5, 3, 5]} color="#FF1A1A" intensity={1.2} />
       <pointLight position={[-5, 1, 3]} color="#FFD700" intensity={0.8} />
 
-      <Suspense fallback={null}>
-        <CarModel mode={mode} />
-      </Suspense>
+      <GLBErrorBoundary fallback={<PlaceholderCar mode={mode} />}>
+        <Suspense fallback={<PlaceholderCar mode={mode} />}>
+          <CarModel mode={mode} />
+        </Suspense>
+      </GLBErrorBoundary>
 
       <Particles count={mode === 'lite' ? 200 : 200} radius={6} mode={mode} />
 
@@ -63,5 +119,3 @@ export function HeroCarScene({ mode }: SceneProps) {
     </group>
   );
 }
-
-useGLTF.preload('/models/byd-seal.glb');

@@ -21,7 +21,7 @@ export function HeroSection() {
           <Button variant="primary" size="lg" onClick={handleCtaClick} aria-label={content.hero.ctaPrimary}>
             {content.hero.ctaPrimary}
           </Button>
-          <a href="#download" className="text-energy-yellow underline underline-offset-4 text-sm">
+          <a href="#cta" className="text-energy-yellow underline underline-offset-4 text-sm">
             {content.hero.ctaSecondary}
           </a>
         </div>

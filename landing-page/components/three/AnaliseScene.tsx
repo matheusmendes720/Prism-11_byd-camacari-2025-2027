@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { content } from '@/lib/content';
+import { colors } from '@/lib/design-tokens';
 import type { ThreeMode } from '@/lib/three-support';
 
 interface SceneProps {
@@ -72,7 +73,7 @@ export function AnaliseScene({ mode }: SceneProps) {
   return (
     <group>
       <ambientLight intensity={0.4} />
-      <pointLight position={[0, 5, 5]} color="#4D9FFF" intensity={0.4} />
+      <pointLight position={[0, 5, 5]} color={colors.matter.steel} intensity={0.4} />
 
       {notebooks.map((nb, i) => {
         const col = i % cols;

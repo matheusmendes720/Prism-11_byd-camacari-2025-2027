@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
+import { colors } from '@/lib/design-tokens';
 import type { ThreeMode } from '@/lib/three-support';
 
 interface SceneProps {
@@ -15,7 +16,7 @@ const AXES = [
   { label: 'Câmbio', value: 2.1, color: '#FF1A1A' },
   { label: 'Regulação', value: 1.8, color: '#FF8C00' },
   { label: 'Supply', value: 2.4, color: '#FFD700' },
-  { label: 'Macro', value: 1.6, color: '#4D9FFF' }
+  { label: 'Macro', value: 1.6, color: colors.matter.steel }
 ];
 
 export function DecisaoScene({ mode }: SceneProps) {

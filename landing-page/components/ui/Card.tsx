@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { gradients } from '@/lib/design-tokens';
+import { colors, gradients } from '@/lib/design-tokens';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   glow?: boolean;
@@ -11,7 +11,7 @@ export function Card({ glow = false, className, children, ...rest }: CardProps) 
       <div
         className={clsx('rounded-xl p-6 relative', className)}
         style={{
-          background: `linear-gradient(#0A0A0C, #0A0A0C) padding-box, ${gradients.energyFlow} border-box`,
+          background: `linear-gradient(${colors.bg.panel}, ${colors.bg.panel}) padding-box, ${gradients.energyFlow} border-box`,
           border: '1px solid transparent'
         }}
         {...rest}

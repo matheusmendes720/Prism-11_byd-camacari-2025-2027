@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
+import { Html, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import type { ThreeMode } from '@/lib/three-support';
 
@@ -63,15 +63,19 @@ export function ProblemaScene({ mode }: SceneProps) {
       {/* Triangular connection lines */}
       {[[-3, 0, 0], [0, 0, 0], [3, 0, 0]].map((start, i, arr) => {
         const end = arr[(i + 1) % arr.length];
-        const points = [
-          new THREE.Vector3(...(start as [number, number, number])),
-          new THREE.Vector3(...(end as [number, number, number]))
+        const points: [number, number, number][] = [
+          start as [number, number, number],
+          end as [number, number, number]
         ];
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
         return (
-          <line key={i} geometry={geometry}>
-            <lineBasicMaterial color="#8A8A9E" transparent opacity={0.4} />
-          </line>
+          <Line
+            key={i}
+            points={points}
+            color="#8A8A9E"
+            transparent
+            opacity={0.4}
+            lineWidth={1}
+          />
         );
       })}
     </group>

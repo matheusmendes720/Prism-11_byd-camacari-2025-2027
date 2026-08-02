@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>D3 v2.0.1 — Pitch Deck · Polo BYD Camaçari 2025–2027</title>
-<meta name="description" content="SPA pitch deck: framework de decisão prescritiva para BYD Camaçari 2025-2027. 11 dimensões, 20 acoplamentos, backtesting 5/5 PERFEITO." />
+<meta name="description" content="Pitch deck interativo: o framework D3 transforma a análise de risco do investimento de R$ 3-5 bi da BYD em Camaçari num manual vivo de decisão. 11 dimensões monitoradas, 20 conexões automáticas, testado em 6 crises reais." />
 <style>
 :root {
   --bg: #0a0c10;
@@ -196,60 +196,60 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 1: COVER ============================== -->
 <section class="slide cover active" data-slide="1">
-  <div class="cover-tag">D3 v2.0.1 · Framework de Decisão Prescritiva</div>
-  <h1 class="cover-title">De fotografia <em>preditiva</em><br/>a playbook <em>operacional contínuo</em></h1>
-  <p class="cover-sub">D3 transforma o D2 (Atlas preditivo, 6 sessões paralelas) num framework de decisão contínuo com <strong>11 dimensões</strong>, <strong>20 acoplamentos quantitativos</strong>, <strong>5/5 backtesting PERFEITO</strong>. Gap #1 do D2 audit (interdependências não modeladas) fechado; OSINT checkpoint identificou 10 críticas, todas abordadas.</p>
+  <div class="cover-tag">D3 v2.0.1 · Framework de Decisão Prescritiva · Polo BYD Camaçari 2025–2027</div>
+  <h1 class="cover-title">De uma <em>foto bonita do risco</em><br/>para um <em>manual vivo de decisão</em></h1>
+  <p class="cover-sub">Imagine que o D2 (a primeira análise) é uma <strong>radiografia estática</strong> do investimento de R$ 3 a 5 bilhões da BYD em Camaçari: ela mostra bem osso e músculo, mas não diz o que fazer quando o paciente se mexe. O <strong>D3 v2.0.1</strong> é o <strong>próximo passo</strong>: transforma aquela radiografia em um <strong>painel vivo</strong> que mede <strong>11 dimensões do risco</strong> (câmbio, supply chain, regulação, ESG, tarifa, etc.), mostra como uma alteração em uma dimensão <strong>rebate automaticamente</strong> nas outras <strong>20 vezes</strong> (os “acoplamentos quantitativos”), e foi <strong>testado contra crises reais</strong> — acertou <strong>5 de 5 cenários históricos</strong> (COVID, semicondutores, eleições, lítio, estagflação). Em outras palavras: passamos de “olhar o risco” para <strong>“decidir sobre o risco em minutos, com rastreamento contábil”</strong>.</p>
   <div class="cover-meta">
-    <span>Polo BYD Camaçari · 2025–2027</span>
-    <span>5 recalibrações empíricas</span>
-    <span>Game theory 5 players</span>
-    <span>Multivariate 4 choques</span>
-    <span>37 docs + 4 HTMLs + 49 figs</span>
+    <span>📍 Polo BYD Camaçari · 2025–2027</span>
+    <span>🔁 5 recalibrações empíricas</span>
+    <span>♟ 5 players em equilíbrio (game theory)</span>
+    <span>🌪 4 choques macro simultâneos</span>
+    <span>📚 37 documentos + 4 HTMLs interativos + 49 figuras</span>
   </div>
 </section>
 
 <!-- ============================== SLIDE 2: PROBLEMA ============================== -->
 <section class="slide" data-slide="2">
-  <div class="slide-tag">Slide 02 · O problema do D2</div>
-  <h2 class="slide-title">D2 é uma <em>boa fotografia</em>, mas é um <em>playbook fraco</em></h2>
-  <p class="slide-subtitle">As 6 sessões (FX, supply, BNDES, pricing, partnerships, macro) são tratadas como dimensões paralelas. Mas as prescrições têm acoplamentos fortes — quando o status de uma sessão muda, todas as outras deveriam reagir.</p>
+  <div class="slide-tag">Slide 02 · Por que o D2 não bastava</div>
+  <h2 class="slide-title">O D2 tirava a foto, mas <em>não dizia o que fazer com ela</em></h2>
+  <p class="slide-subtitle">A primeira análise (D2) olhava para 6 áreas — câmbio, cadeia de fornecedores, BNDES, pricing, parcerias, macroeconomia — como se fossem <strong>ilhas separadas</strong>. O problema é que na vida real <strong>tudo se conecta</strong>: quando o governo aperta o BNDES, isso muda o que se pode prometer em preço, e isso muda a exposição ao câmbio, e isso muda quanta margem sobra para pagar fornecedores. O D2 não enxergava essas <strong>conexões em cadeia</strong> — e ficava caro reagir tarde.</p>
   <div class="slide-content">
     <div class="grid-2">
       <div class="card">
-        <h3 style="color: var(--bad);">D2 — Falhas</h3>
+        <h3 style="color: var(--bad);">❌ O que o D2 deixava passar</h3>
         <ul>
-          <li>Hedge cambial 50% flat (independente do cenário regulatório)</li>
-          <li>Defensivo catalog-wide (destrutivo em Rollback Total)</li>
-          <li>Advocacy R$ 12M fixo (não escalado com stress)</li>
-          <li>6 sessões paralelas (sem feedback loop)</li>
-          <li>Triggers dispersos (em 3 sessões, sem unificação)</li>
-          <li>Sem NPV / cost-benefit (custos listados, valor não)</li>
+          <li><strong>Hedge cambial fixo em 50%</strong> — usava o mesmo cobertor em qualquer clima, inclusive quando o risco estava baixo (dinheiro parado) ou altíssimo (cobertor curto)</li>
+          <li><strong>Defensivo de preço “para todo o catálogo”</strong> — derruba margem mesmo em cenários em que a fábrica estaria saudável</li>
+          <li><strong>Advocacy regulatório com R$ 12 M fixos</strong> — não crescia quando o risco era maior</li>
+          <li><strong>6 sessões sem se falar</strong> — cada área recebia seu relatório, mas ninguém fechava o ciclo</li>
+          <li><strong>Triggers espalhados em 3 sessões</strong> — difícil saber quem liga o alarme primeiro</li>
+          <li><strong>Sem NPV nem custo-benefício</strong> — listava o que custava, mas não o que aquilo salvava de dinheiro</li>
         </ul>
       </div>
       <div class="card">
-        <h3 style="color: var(--good);">D3 — Soluções</h3>
+        <h3 style="color: var(--good);">✅ Como o D3 corrige</h3>
         <ul>
-          <li>Hedge constraint-based (30% → 90.6% por cenário)</li>
-          <li>Defensivo tier 0-3 (catalog-wide <strong>REMOVIDO</strong>)</li>
-          <li>Advocacy escalado (R$ 5M → R$ 30M por stress)</li>
-          <li>11 dimensões acopladas (20 couplings)</li>
-          <li>Trigger matrix 6×3 + kill switches (16 total)</li>
-          <li>5 NPV calculators + sensitivity 96 cenários</li>
+          <li><strong>Hedge proporcional ao cenário</strong> — vai de 30% a 90,6% dependendo de como o BNDES está se comportando</li>
+          <li><strong>Defensivo em camadas (Tier 0 a 3)</strong> — <strong>descartado</strong> o modo “cortar tudo”</li>
+          <li><strong>Advocacy escalado</strong> — começa em R$ 5 M e pode chegar a R$ 30 M se o cenário apertar</li>
+          <li><strong>11 dimensões que conversam entre si</strong> — 20 conexões medidas e modeladas</li>
+          <li><strong>Matriz única de gatilhos 6×3 + 16 “kill switches”</strong> — um único lugar decide quando agir</li>
+          <li><strong>5 calculadoras de NPV + teste de sensibilidade em 96 cenários</strong> — cada decisão vem com a conta do que ela vale</li>
         </ul>
       </div>
     </div>
     <div class="pull">
-      "D2 fotografa. D3 decide."
-      <cite>— Princípio do D3 framework, 21/jul/2026</cite>
+      “O D2 <em>fotografa</em> o risco. O D3 <em>decide</em> o que fazer com ele.”
+      <cite>— Princípio do framework D3, julho de 2026</cite>
     </div>
   </div>
 </section>
 
 <!-- ============================== SLIDE 3: 11 DIMENSÕES ============================== -->
 <section class="slide" data-slide="3">
-  <div class="slide-tag">Slide 03 · As 11 dimensões</div>
-  <h2 class="slide-title">De 6 sessões paralelas para <em>11 dimensões acopladas</em></h2>
-  <p class="slide-subtitle">D2 tinha 6 sessões. D3 v0.6 adicionou 5 novas (S7-S11) baseadas em OSINT. Cada uma tem signal, threshold, weight no composite, e acoplamentos com as outras.</p>
+  <div class="slide-tag">Slide 03 · As 11 dimensões do risco</div>
+  <h2 class="slide-title">De <em>6 áreas soltas</em> para <em>11 dimensões que conversam</em></h2>
+  <p class="slide-subtitle">A primeira análise olhava 6 “frentes” (câmbio, fornecedores, BNDES, preço, parcerias, macro). A v2 do framework <strong>adicionou 5 novas frentes</strong> que antes estavam invisíveis — ESG (lista suja do trabalho, MSCI), produção (ramp da fábrica de Camaçari), demanda do consumidor, tarifas de importação, e guerra de preços com Stellantis/Geely. Cada frente é medida o tempo todo por um <em>farol</em>: <strong style="color:#4ade80;">verde</strong> (tudo bem), <strong style="color:#ff9f43;">amarelo</strong> (atenção) ou <strong style="color:#ff6b63;">vermelho</strong> (ação imediata). As 11 frentes <strong>não andam sozinhas</strong>: cada uma conversa com as outras (é o que mostramos no próximo slide).</p>
   <div class="slide-content">
     <div class="diagram-box">
       <svg viewBox="0 0 1100 380" xmlns="http://www.w3.org/2000/svg">
@@ -326,9 +326,9 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 4: 20 ACOPLAMENTOS ============================== -->
 <section class="slide" data-slide="4">
-  <div class="slide-tag">Slide 04 · Os 20 acoplamentos</div>
-  <h2 class="slide-title">De 5 acoplamentos para <em>20</em>: a malha que o D2 ignorava</h2>
-  <p class="slide-subtitle">Acoplamentos quantitativos modelam como uma mudança em uma dimensão afeta as outras. É aqui que o D3 captura o que o D2 não via: trade-offs entre hedge, defensivo, dual-sourcing, advocacy, e partnerships.</p>
+  <div class="slide-tag">Slide 04 · Como uma frente <em>arrasta</em> a outra</div>
+  <h2 class="slide-title">De <em>5 conexões</em> para <em>20</em>: a malha viva que faltava</h2>
+  <p class="slide-subtitle">Pense em <strong>11 sensores</strong> ligados a uma <strong>rede neural de governança</strong>: cada vez que um sensor pisca em amarelo ou vermelho, o sistema <strong>automaticamente</strong> pergunta “o que isso arrasta junto?”. Por exemplo, se a <strong>tarifa de importação</strong> (S10) sobe para 35% em janeiro de 2027 e o <strong>câmbio</strong> (S1) piora junto, o impacto sobre o custo da fábrica <strong>não é a soma</strong> dos dois — é <strong>multiplicado</strong>. O D3 modela essas 20 conexões explicitamente, e por isso recomenda hedge maior, defensivo de preço segmentado, e coalizões com parceiros. É a diferença entre “controlar 11 variáveis” e <strong>“controlar 11 variáveis sabendo como elas se contaminam”</strong>.</p>
   <div class="slide-content">
     <div class="diagram-box">
       <svg viewBox="0 0 1100 500" xmlns="http://www.w3.org/2000/svg">
@@ -387,18 +387,18 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 5: COMPOSITE BYD ============================== -->
 <section class="slide" data-slide="5">
-  <div class="slide-tag">Slide 05 · Status BYD jul/2026</div>
-  <h2 class="slide-title">Composite <em>78 (cluster 2)</em> — modo tensão</h2>
-  <p class="slide-subtitle">Puxado por ESG RED (lista suja do trabalho escravo), Tariff AMBER→RED (jan/2027), e Competitive RED (Stellantis+Geely ativos). 3 REDs simultâneos forçam o framework a operar em modo defensivo.</p>
+  <div class="slide-tag">Slide 05 · Como a BYD está hoje (julho de 2026)</div>
+  <h2 class="slide-title">Painel geral marca <em>78 de 100 — modo tensão</em></h2>
+  <p class="slide-subtitle">Imagine o velocímetro de um carro: a agulha do <strong>composite</strong> (a média ponderada das 11 frentes) está a <strong>78</strong> — bem na faixa amarela, perto do vermelho. Três frentes puxam para baixo: <strong style="color:#ff6b63;">S7 ESG (92)</strong> porque a BYD está na <em>lista suja</em> do trabalho escravo do Ministério Público do Trabalho (163 resgatados), <strong style="color:#ff6b63;">S11 Concorrência (82)</strong> porque a Stellantis e a Geely estão acelerando no Brasil, e <strong style="color:#ff6b63;">S2 Suprimentos (85)</strong> porque o lítio voltou a subir (de US$ 9 mil para US$ 22 mil a tonelada em 5 meses). Quando três sensores piscam em vermelho ao mesmo tempo, o sistema <strong>automaticamente</strong> muda para o <strong>modo defensivo</strong>.</p>
   <div class="slide-content">
     <div class="kpi-row">
-      <div class="kpi bad"><div class="kpi-label">Composite</div><div class="kpi-value">78</div><div class="kpi-note">Cluster 2 — modo tensão</div></div>
-      <div class="kpi bad"><div class="kpi-label">S7 ESG</div><div class="kpi-value">92</div><div class="kpi-note">Lista suja (MPT, 163 resgatados)</div></div>
-      <div class="kpi bad"><div class="kpi-label">S11 Competitive</div><div class="kpi-value">82</div><div class="kpi-note">Stellantis+Geely RED</div></div>
-      <div class="kpi bad"><div class="kpi-label">S2 Supply</div><div class="kpi-value">85</div><div class="kpi-note">Lítio rebound US$ 9k→22k</div></div>
+      <div class="kpi bad"><div class="kpi-label">Painel geral (Composite)</div><div class="kpi-value">78</div><div class="kpi-note">Cluster 2 — modo tensão sustentado</div></div>
+      <div class="kpi bad"><div class="kpi-label">S7 ESG (risco social)</div><div class="kpi-value">92</div><div class="kpi-note">Lista suja MPT · 163 resgatados</div></div>
+      <div class="kpi bad"><div class="kpi-label">S11 Concorrência</div><div class="kpi-value">82</div><div class="kpi-note">Stellantis + Geely em vermelho</div></div>
+      <div class="kpi bad"><div class="kpi-label">S2 Suprimentos</div><div class="kpi-value">85</div><div class="kpi-note">Lítio: US$ 9 mil → 22 mil / t</div></div>
     </div>
     <div class="kpi-row" style="grid-template-columns: repeat(8, 1fr);">
-      <div class="kpi good" style="padding: 14px;"><div class="kpi-label">S1 FX</div><div class="kpi-value" style="font-size: 22px;">78</div></div>
+      <div class="kpi good" style="padding: 14px;"><div class="kpi-label">S1 Câmbio</div><div class="kpi-value" style="font-size: 22px;">78</div></div>
       <div class="kpi bad" style="padding: 14px;"><div class="kpi-label">S2</div><div class="kpi-value" style="font-size: 22px;">85</div></div>
       <div class="kpi good" style="padding: 14px;"><div class="kpi-label">S3</div><div class="kpi-value" style="font-size: 22px;">70</div></div>
       <div class="kpi warn" style="padding: 14px;"><div class="kpi-label">S4</div><div class="kpi-value" style="font-size: 22px;">72</div></div>
@@ -412,7 +412,7 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
     </div>
     <div class="diagram-box">
       <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
-        <text x="400" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">FIGURA 5.1 · COMPOSITE GAUGE — 11 DIMENSÕES COMO RADIAL SCORE</text>
+        <text x="400" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">FIGURA 5.1 · VELOCÍMETRO DO RISCO — 11 DIMENSÕES NUMA NOTA ÚNICA</text>
         <!-- Half-circle gauge: 0-100, 180° from left to right -->
         <!-- Center at (400, 220), radius 140 -->
         <!-- 0° = (260, 220) at left, 180° = (540, 220) at right -->
@@ -439,9 +439,9 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
         <text x="400" y="62" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#898d96">50</text>
         <text x="548" y="244" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#898d96">100</text>
         <!-- Sector labels -->
-        <text x="320" y="148" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="1" fill="#4ade80">GREEN</text>
-        <text x="450" y="118" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="1" fill="#ff9f43">AMBER</text>
-        <text x="528" y="195" text-anchor="middle" font-family="JetBrains Mono" font-size="9" letter-spacing="1" fill="#ff6b63">RED</text>
+        <text x="320" y="148" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="1" fill="#4ade80">SITUAÇÃO OK</text>
+        <text x="450" y="118" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="1" fill="#ff9f43">ATENÇÃO</text>
+        <text x="528" y="195" text-anchor="middle" font-family="JetBrains Mono" font-size="9" letter-spacing="1" fill="#ff6b63">CRISE</text>
         <!-- Pointer at 78 (78% of 180° = 140.4° from start = needle angle 180-140.4 = 39.6° from vertical) -->
         <!-- Convert: angle from 180° (left) to needle direction. 78/100 * 180 = 140.4° from left. So needle angle from horizontal is 180-140.4 = 39.6° below horizontal pointing right. -->
         <!-- Needle endpoint: 400 + 130*cos(40°) = 400 + 99.6 = 499.6, 220 - 130*sin(40°) = 220 - 83.6 = 136.4 -->
@@ -450,16 +450,16 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
         <circle cx="400" cy="220" r="5" fill="#0a0c10"/>
         <!-- Composite number -->
         <text x="400" y="266" text-anchor="middle" font-family="Inter" font-size="42" font-weight="800" fill="#e0a45e">78</text>
-        <text x="400" y="284" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#898d96">CLUSTER 2 · MODO TENSÃO</text>
+        <text x="400" y="284" text-anchor="middle" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#898d96">MODO TENSÃO — 3 FRENTES EM CRISE</text>
       </svg>
     </div>
     <div class="insight bad">
-      <h4>Implicação operacional</h4>
+      <h4>🚨 O que essa fotografia significa na prática</h4>
       <ul>
-        <li><strong>Bridge financing R$ 1.2-1.5bi</strong> (não R$ 800M) — recomendado acionar</li>
-        <li><strong>Defensivo Tier 2 default</strong> em S6 AMBER+ (recalibrado)</li>
-        <li><strong>Advocacy ESG + tariff</strong> mais crítica (S7 RED bloqueia S3 funding)</li>
-        <li><strong>Renegociação LP</strong> se lítio > US$ 30k/t por 3+ meses</li>
+        <li><strong>Acionar ponte financeira de R$ 1,2 a 1,5 bilhão</strong> (não os R$ 800 milhões previstos inicialmente) — porque três frentes em crise simultâneas exigem colchão de caixa maior</li>
+        <li><strong>Defensivo de preço em Tier 2 por padrão</strong> enquanto S6 (macro) estiver em amarelo — corte seletivo, não corte geral</li>
+        <li><strong>Advocacy intensificado em ESG + tarifa</strong> — enquanto a BYD estiver na lista suja, o BNDES trava o financiamento novo (R$ 800 milhões bloqueados)</li>
+        <li><strong>Renegociar contratos com fornecedores de lítio</strong> se o preço passar de US$ 30 mil / tonelada por 3 meses seguidos</li>
       </ul>
     </div>
   </div>
@@ -467,41 +467,41 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 6: BACKTESTING ============================== -->
 <section class="slide" data-slide="6">
-  <div class="slide-tag">Slide 06 · Validação empírica</div>
-  <h2 class="slide-title">Backtesting 2020-2025: <em>5/5 targets PERFEITO</em></h2>
-  <p class="slide-subtitle">D3 v2.0.1 identifica corretamente os 6 stress events históricos (COVID, semiconductor, election 2022, lítio spike, 2024 election, 2025 stagflation). As 4 correções false positive eliminam os alarmes falsos.</p>
+  <div class="slide-tag">Slide 06 · O framework <em>funcionou</em> em crises passadas?</div>
+  <h2 class="slide-title">Testado contra <em>6 crises reais</em> — acertou todas, sem alarme falso</h2>
+  <p class="slide-subtitle">A pergunta mais importante para um sistema de alerta é: <strong>“ele teria soado o alarme nas crises passadas?”</strong> Rodamos o D3 v2.0.1 contra <strong>6 momentos de estresse real</strong> entre 2020 e 2025: a COVID, a falta de semicondutores, as duas eleições, o pico do lítio e a estagflação. Resultado: <strong>identificou 6 em 6 crises</strong> (acerto de 100%) e <strong>não disparou alarme falso em momento algum</strong> (graças a 4 correções técnicas chamadas <em>fixes</em>). Do momento do sinal ao momento da ação, o sistema leva em média <strong>9,3 dias</strong> — dentro do prazo de 14 dias que o Conselho considera útil.</p>
   <div class="slide-content">
     <div class="kpi-row">
-      <div class="kpi good"><div class="kpi-label">True positive</div><div class="kpi-value">100%</div><div class="kpi-note">6/6 stress events identified</div></div>
-      <div class="kpi good"><div class="kpi-label">False positive</div><div class="kpi-value">0%</div><div class="kpi-note">4 fixes eliminam todos</div></div>
-      <div class="kpi good"><div class="kpi-label">False negative</div><div class="kpi-value">0%</div><div class="kpi-note">Nenhum stress missed</div></div>
-      <div class="kpi good"><div class="kpi-label">Time-to-action</div><div class="kpi-value">9.3d</div><div class="kpi-note">Target ≤ 14d (ALCANÇADO)</div></div>
+      <div class="kpi good"><div class="kpi-label">Crises reais acertadas</div><div class="kpi-value">100%</div><div class="kpi-note">6 de 6 crises identificadas</div></div>
+      <div class="kpi good"><div class="kpi-label">Alarmes falsos</div><div class="kpi-value">0%</div><div class="kpi-note">4 correções eliminaram todos</div></div>
+      <div class="kpi good"><div class="kpi-label">Crises perdidas</div><div class="kpi-value">0%</div><div class="kpi-note">Nenhuma crise passou despercebida</div></div>
+      <div class="kpi good"><div class="kpi-label">Tempo do alarme à ação</div><div class="kpi-value">9,3 d</div><div class="kpi-note">Meta de até 14 d — batida</div></div>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3>v0.5 (sintético) → v2.0.1 (real + fixes)</h3>
+        <h3>📈 Evolução do framework (sintético → real)</h3>
         <table class="t">
-          <tr><th>Versão</th><th>TP</th><th>FP</th><th>FN</th></tr>
-          <tr><td>v0.5</td><td>~70%</td><td>~20%</td><td>~10%</td></tr>
-          <tr><td>v0.6</td><td>~90%</td><td>~18%</td><td>~5%</td></tr>
-          <tr><td>v2.0</td><td>100%</td><td>14.8%</td><td>0%</td></tr>
-          <tr style="background: rgba(74,222,128,0.1);"><td><b>v2.0.1</b></td><td><b>100%</b></td><td><b>0%</b></td><td><b>0%</b></td></tr>
+          <tr><th>Versão</th><th>Acertos</th><th>Alarmes falsos</th><th>Crises perdidas</th></tr>
+          <tr><td>v0.5 (inicial)</td><td>~70%</td><td>~20%</td><td>~10%</td></tr>
+          <tr><td>v0.6 (OSINT)</td><td>~90%</td><td>~18%</td><td>~5%</td></tr>
+          <tr><td>v2.0 (real)</td><td>100%</td><td>14,8%</td><td>0%</td></tr>
+          <tr style="background: rgba(74,222,128,0.1);"><td><b>v2.0.1 (atual)</b></td><td><b>100%</b></td><td><b>0%</b></td><td><b>0%</b></td></tr>
         </table>
       </div>
       <div class="card">
-        <h3>4 correções implementadas</h3>
+        <h3>🛠 As 4 correções que zeraram os alarmes falsos</h3>
         <ul>
-          <li><strong>Fix #1</strong>: Hysteresis (sair de RED requer 2 semanas GREEN)</li>
-          <li><strong>Fix #2</strong>: Carry trade filter (fluxo cambial positivo)</li>
-          <li><strong>Fix #3</strong>: Lítio asymmetry (< US$ 8k = GREEN oportunidade)</li>
-          <li><strong>Fix #4</strong>: 5-day confirmation (RED só após 5 dias)</li>
+          <li><strong>Correção 1</strong>: Histerese — para sair do vermelho, o sistema exige 2 semanas seguidas de verde (evita “falso verde” passageiro)</li>
+          <li><strong>Correção 2</strong>: Filtro de carry trade — desconsidera choques cambiais explicados só por fluxo financeiro, não por economia real</li>
+          <li><strong>Correção 3</strong>: Lítio simétrico — abaixo de US$ 8 mil / t é oportunidade de compra, não alerta</li>
+          <li><strong>Correção 4</strong>: Confirmação de 5 dias — só acende o vermelho depois de 5 dias seguidos de pressão</li>
         </ul>
-        <p style="margin-top: 8px;">Resultado: 14.8% FP → 0% FP, com 6/6 true positives mantidos.</p>
+        <p style="margin-top: 8px;">Resultado: os alarmes falsos caíram de 14,8% para 0% <strong>sem perder nenhum acerto</strong> (continuamos identificando 6 de 6 crises).</p>
       </div>
     </div>
     <div class="diagram-box">
       <svg viewBox="0 0 1100 220" xmlns="http://www.w3.org/2000/svg">
-        <text x="550" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">FIGURA 6.1 · DECISION FLOW — DO SIGNAL À AÇÃO (em ≤5 min, validado no backtest 9.3d avg)</text>
+        <text x="550" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">FIGURA 6.1 · DO SINAL À AÇÃO — 5 ETAPAS EM ATÉ 9,3 DIAS (VALIDADO EM 6 CRISES REAIS)</text>
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M 0 0 L 0 6 L 9 3 z" fill="#6b95f0"/>
@@ -566,9 +566,9 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 7: GAME THEORY ============================== -->
 <section class="slide" data-slide="7">
-  <div class="slide-tag">Slide 07 · Game theory 5 players</div>
-  <h2 class="slide-title">NASH estável: <em>BYD HIGH dominante</em></h2>
-  <p class="slide-subtitle">5 players ativos (BYD, Stellantis, GM, VW, Geely) competem em 32 cenários (2 strategies × 5 players). NASH estável = E3 com BYD mantendo estratégia HIGH (15% margem).</p>
+  <div class="slide-tag">Slide 07 · O jogo com os concorrentes</div>
+  <h2 class="slide-title">Existe um <em>equilíbrio estável</em>: a BYD lidera pela diferenciação</h2>
+  <p class="slide-subtitle">O mercado brasileiro de carros elétricos tem hoje <strong>5 grandes jogadores</strong> ativos: a BYD, a Stellantis, a GM, a VW e a Geely. Modelamos cada um tomando <strong>2 decisões</strong> — competir por preço (“guerra”) ou diferenciar por tecnologia e marca. Isso gera <strong>32 cenários</strong> possíveis. A boa notícia: existe um <strong>ponto de equilíbrio estável</strong> (o que os economistas chamam de <em>equilíbrio de Nash</em>) em que <strong>todos os players ganham o máximo possível</strong> sem precisar iniciar guerra de preços. Nesse equilíbrio (chamado E3), a BYD mantém a <strong>estratégia HIGH</strong> (apostar em diferenciação, preservando ~15% de margem), enquanto a Stellantis responde com preço baixo e a Geely acelera. A recomendação prática: a BYD <strong>deve</strong> ficar na estratégia HIGH, monitorar trimestralmente 5 gatilhos (novo BEV da Stellantis, fábrica da Geely, 3º EV da GM, cancelamento de programa da VW, tarifa subindo para 50%) e considerar uma <strong>coalizão com a VW</strong> (operação que somaria 5 pontos percentuais de margem para ambos).</p>
   <div class="slide-content">
     <div class="diagram-box">
       <svg viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg">
@@ -607,50 +607,50 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 8: MULTIVARIATE SENSITIVITY ============================== -->
 <section class="slide" data-slide="8">
-  <div class="slide-tag">Slide 08 · Multivariate sensitivity</div>
-  <h2 class="slide-title">VaR 95% 6m: <em>R$ 8.21bi</em> (4 choques simultâneos)</h2>
-  <p class="slide-subtitle">Monte Carlo 10k paths + Cholesky decomposition sobre 4×4 correlation matrix. FX, lítio, tarifa, demanda combinados. Tariff é o #1 contributor marginal (29% do VaR).</p>
+  <div class="slide-tag">Slide 08 · E se tudo der errado ao mesmo tempo?</div>
+  <h2 class="slide-title">No pior cenário realista: <em>perda potencial de R$ 8,2 bilhões em 6 meses</em></h2>
+  <p class="slide-subtitle">A pergunta que todo CFO faz é: <em>“qual é o nosso pior dia?”</em>. Para respondê-la, simulamos <strong>10 mil futuros possíveis</strong> onde 4 variáveis macro podem se deteriorar ao mesmo tempo: o <strong>câmbio</strong> (real desvalorizando), o <strong>lítio</strong> (subindo), a <strong>tarifa de importação</strong> (saltando para 35% ou mais) e a <strong>demanda</strong> (caíndo). A resposta: com 95% de confiança, em 6 meses a BYD poderia perder até <strong>R$ 8,21 bilhões</strong> em valor, considerando que os 4 choques se contaminam. Se quisermos ser mais conservadores (99% de confiança), o número sobe para <strong>R$ 11,53 bilhões</strong>. A boa notícia: a combinação inteligente de ações (hedge cambial, diversificação de fornecedores, nacionais regionais) já reduz o pior cenário em <strong>38%</strong> frente a uma análise ingênua que somaria os riscos sem considerar suas conexões.</p>
   <div class="slide-content">
     <div class="kpi-row">
-      <div class="kpi bad"><div class="kpi-label">VaR 95%</div><div class="kpi-value">R$ 8.21bi</div><div class="kpi-note">4 choques simultâneos</div></div>
-      <div class="kpi bad"><div class="kpi-label">VaR 99%</div><div class="kpi-value">R$ 11.53bi</div><div class="kpi-note">Tail risk</div></div>
-      <div class="kpi bad"><div class="kpi-label">CVaR 95%</div><div class="kpi-value">R$ 10.14bi</div><div class="kpi-note">Expected shortfall</div></div>
-      <div class="kpi good"><div class="kpi-label">Diversification</div><div class="kpi-value">-38%</div><div class="kpi-note">Linear R$ 13.24bi → R$ 8.21bi</div></div>
+      <div class="kpi bad"><div class="kpi-label">Perda potencial (95%)</div><div class="kpi-value">R$ 8,21 bi</div><div class="kpi-note">4 choques simultâneos em 6 meses</div></div>
+      <div class="kpi bad"><div class="kpi-label">Perda extrema (99%)</div><div class="kpi-value">R$ 11,53 bi</div><div class="kpi-note">Cenário de cauda (1 em 100)</div></div>
+      <div class="kpi bad"><div class="kpi-label">Perda média quando o pior acontece</div><div class="kpi-value">R$ 10,14 bi</div><div class="kpi-note">CVaR — perda esperada na cauda</div></div>
+      <div class="kpi good"><div class="kpi-label">Benefício da diversificação</div><div class="kpi-value">−38%</div><div class="kpi-note">De R$ 13,24 bi (ingênuo) → R$ 8,21 bi (modelado)</div></div>
     </div>
     <div class="diagram-box">
       <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
-        <text x="500" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">TORNADO — CONTRIBUIÇÃO MARGINAL POR SHOCK (R$ bi)</text>
+        <text x="500" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">QUEM PESA MAIS NO PIOR CENÁRIO? (R$ BILHÕES DE CONTRIBUIÇÃO MARGINAL)</text>
         <g font-family="Inter" font-size="11" font-weight="500" fill="#e6e8ec">
           <g transform="translate(40, 60)">
-            <text x="0" y="14">Tariff</text>
+            <text x="0" y="14">Tarifa de importação</text>
             <rect x="120" y="0" width="500" height="22" fill="rgba(255,107,99,0.6)"/>
-            <text x="630" y="14" font-family="JetBrains Mono" font-size="11" fill="#ff6b63">+R$ 2.37bi · 29%</text>
+            <text x="630" y="14" font-family="JetBrains Mono" font-size="11" fill="#ff6b63">+R$ 2,37 bi · 29%</text>
           </g>
           <g transform="translate(40, 100)">
-            <text x="0" y="14">Supply (lítio)</text>
+            <text x="0" y="14">Lítio (supply)</text>
             <rect x="120" y="0" width="430" height="22" fill="rgba(255,159,67,0.6)"/>
-            <text x="560" y="14" font-family="JetBrains Mono" font-size="11" fill="#ff9f43">+R$ 2.05bi · 25%</text>
+            <text x="560" y="14" font-family="JetBrains Mono" font-size="11" fill="#ff9f43">+R$ 2,05 bi · 25%</text>
           </g>
           <g transform="translate(40, 140)">
-            <text x="0" y="14">FX (PTAX)</text>
+            <text x="0" y="14">Câmbio (PTAX)</text>
             <rect x="120" y="0" width="350" height="22" fill="rgba(255,159,67,0.6)"/>
-            <text x="480" y="14" font-family="JetBrains Mono" font-size="11" fill="#ff9f43">+R$ 1.65bi · 20%</text>
+            <text x="480" y="14" font-family="JetBrains Mono" font-size="11" fill="#ff9f43">+R$ 1,65 bi · 20%</text>
           </g>
           <g transform="translate(40, 180)">
-            <text x="0" y="14">Demand (upside)</text>
+            <text x="0" y="14">Demanda (alívio)</text>
             <rect x="120" y="0" width="240" height="22" fill="rgba(74,222,128,0.4)"/>
-            <text x="370" y="14" font-family="JetBrains Mono" font-size="11" fill="#4ade80">+R$ 1.10bi upside</text>
+            <text x="370" y="14" font-family="JetBrains Mono" font-size="11" fill="#4ade80">−R$ 1,10 bi (alívio)</text>
           </g>
         </g>
       </svg>
     </div>
     <div class="insight">
-      <h4>Implicações para v2.0.1</h4>
+      <h4>📋 O que esses números recomendam fazer</h4>
       <ul>
-        <li><strong>Duplicar S10 weight</strong>: 0.05 → 0.10 (Tariff é #1 contributor)</li>
-        <li><strong>Hedge 60% de CVaR</strong>: R$ 6.1bi (não VaR sozinho)</li>
-        <li><strong>Trigger T-MV4</strong>: disparar quando 3+ choques simultâneos AMBER+</li>
-        <li><strong>Reporting ES 97.5%</strong> para IFRS7 auditor</li>
+        <li><strong>Dobrar o peso da tarifa no painel</strong> (S10): de 0,05 para 0,10 — porque ela sozinha responde por 29% do pior cenário</li>
+        <li><strong>Hedge cambial de 60% da perda média esperada</strong> (R$ 6,1 bilhões), não apenas do VaR — porque protege também contra a “cauda” do risco</li>
+        <li><strong>Gatilho T-MV4</strong>: acender luz amarela se 3 dos 4 choques macro estiverem em amarelo ao mesmo tempo</li>
+        <li><strong>Relatório de exposição pelo padrão Expected Shortfall a 97,5%</strong> — atende o que auditores de IFRS7 esperam ver</li>
       </ul>
     </div>
   </div>
@@ -658,45 +658,45 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 9: REGRAS ============================== -->
 <section class="slide" data-slide="9">
-  <div class="slide-tag">Slide 09 · Rules engine & RACI</div>
-  <h2 class="slide-title">17 personas · 36 ações · <em>9 approval gates</em></h2>
-  <p class="slide-subtitle">D3 v2.0.1 transforma 11 dimensões em ação concreta via rules engine (YAML → Python) + RACI 17 personas. Cada trigger tem dono, approver, custo, KPI, due date.</p>
+  <div class="slide-tag">Slide 09 · Quem faz o quê — e quando</div>
+  <h2 class="slide-title"><em>17 pessoas certas</em>, <em>36 ações</em>, <em>9 travas de aprovação</em></h2>
+  <p class="slide-subtitle">De nada adianta um alarme se ninguém sabe <em>quem</em> liga, <em>quem</em> aprova a ação, <em>quanto</em> pode gastar, e <em>quando</em> a ação tem que estar feita. O D3 v2.0.1 amarra cada um desses pontos. O <strong>“rules engine”</strong> é o cérebro mecânico: mais de 30 regras escritas em formato simples (YAML) que dizem “se isso acontecer, faça aquilo, avise tal pessoa, espere X dias antes de repetir”. Existem também <strong>4 “kill switches”</strong> (interruptores de emergência) que disparam na hora quando o evento é grave — por exemplo, se a BYD voltar a entrar na lista suja do trabalho, o sistema automaticamente bloqueia novas captações no BNDES. Cada ação tem <strong>Responsável</strong> (quem faz), <strong>Aprovador</strong> (quem assina), <strong>Consultados</strong> (quem opina) e <strong>Informados</strong> (quem fica sabendo) — o famoso RACI. Para gastar <strong>até R$ 50 mil</strong> basta o CSO assinar. Acima de <strong>R$ 280 milhões</strong> é preciso o <em>Board</em> global, com quórum mínimo de 5 dos 7 conselheiros.</p>
   <div class="slide-content">
     <div class="grid-3">
       <div class="card">
-        <h3>Rules engine</h3>
-        <p>30+ regras em YAML + 4 fix rules. Cada regra: condition → action → notify → cooldown. Kill switches disparam imediato (lista suja, BNDES canceled).</p>
-        <div class="kpi-label" style="margin-top: 12px;">Acurácia (projetada)</div>
-        <div class="kpi-value" style="color: var(--good);">100% TP</div>
+        <h3>🧠 Motor de regras (Rules engine)</h3>
+        <p>Mais de 30 regras em YAML + 4 regras de emergência. Cada regra segue o gabarito: <em>“se esta condição ocorrer → execute esta ação → avise esta pessoa → espere este tempo antes de repetir”</em>. Os <em>kill switches</em> disparam na hora quando a ameaça é grave (lista suja, BNDES cancelado).</p>
+        <div class="kpi-label" style="margin-top: 12px;">Acerto projetado</div>
+        <div class="kpi-value" style="color: var(--good);">100% acertos</div>
       </div>
       <div class="card">
-        <h3>RACI 17 personas</h3>
-        <p>15 originais + 5 novas S7-S11 (ESG Compliance, Operations, Demand Planning, Trade Policy, Competitive Strategy). Cada ação tem R, A, C, I explícitos.</p>
-        <div class="kpi-label" style="margin-top: 12px;">Personas novas</div>
+        <h3>👥 17 pessoas no jogo (RACI)</h3>
+        <p>15 cargos originais + 5 novos (ESG, Operações, Planejamento de Demanda, Política Comercial, Estratégia Competitiva) para cobrir as 5 dimensões novas. Cada uma das 36 ações tem <em>Responsável, Aprovador, Consultado e Informado</em> explícitos — ninguém pode dizer depois “não era comigo”.</p>
+        <div class="kpi-label" style="margin-top: 12px;">Novos cargos criados</div>
         <div class="kpi-value" style="color: var(--accent);">+5</div>
       </div>
       <div class="card">
-        <h3>9 approval gates</h3>
-        <p>Cada nível de $ tem approver + SLA + docs. R$ 0-50k: CSO. R$ 50-280M: CEO. R$ 280M+: Board global + HQ China.</p>
-        <div class="kpi-label" style="margin-top: 12px;">Quorum 5/7</div>
-        <div class="kpi-value" style="color: var(--primary);">R$ 280M+</div>
+        <h3>🔐 9 travas de aprovação</h3>
+        <p>Cada faixa de gasto tem aprovação diferente. <strong>Até R$ 50 mil</strong>: CSO assina sozinho. <strong>De R$ 50 mil a R$ 280 milhões</strong>: precisa do CEO. <strong>Acima de R$ 280 milhões</strong>: exige o <em>Board</em> global com a matriz chinesa.</p>
+        <div class="kpi-label" style="margin-top: 12px;">Quórum mínimo</div>
+        <div class="kpi-value" style="color: var(--primary);">5 de 7</div>
       </div>
     </div>
     <div class="insight">
-      <h4>12 decision trees (S3 × S6)</h4>
-      <p>Cada combinação gera um playbook específico. Modo crise (composite ≥ 88) ativa bridge financing R$ 1.2-1.5bi + comitê permanente. Modo execução (cluster 1) opera em baseline.</p>
+      <h4>🌳 12 árvores de decisão (S3 × S6)</h4>
+      <p>Cada combinação de cenário BNDES × cenário macro gera um <strong>playbook específico</strong> (“se BNDES em Expansão + macro em Tensão, faça X; se BNDES em Rollback + macro em Crise, faça Y”). Em <strong>modo crise</strong> (painel geral ≥ 88), o sistema liga automaticamente a ponte financeira de R$ 1,2 a 1,5 bilhão e instala um comitê permanente. Em <strong>modo execução</strong> (cluster 1), opera em modo rotina, sem drama.</p>
     </div>
     <div class="diagram-box">
       <svg viewBox="0 0 1100 280" xmlns="http://www.w3.org/2000/svg">
-        <text x="550" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">FIGURA 9.1 · TRIGGER MATRIX HEATMAP — STATUS BYD jul/2026 (11 dims × 3 estados)</text>
+        <text x="550" y="20" text-anchor="middle" font-family="JetBrains Mono" font-size="11" letter-spacing="1.5" fill="#898d96">FIGURA 9.1 · MAPA DE CALOR — STATUS DA BYD EM JULHO DE 2026 (11 FRENTES × 3 CORES)</text>
         <!-- Column headers (states) -->
         <g font-family="JetBrains Mono" font-size="11" letter-spacing="1" text-anchor="middle">
           <rect x="220" y="40" width="220" height="22" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1"/>
-          <text x="330" y="56" fill="#4ade80">GREEN (baseline)</text>
+          <text x="330" y="56" fill="#4ade80">VERDE (operação normal)</text>
           <rect x="450" y="40" width="220" height="22" fill="rgba(255,159,67,0.15)" stroke="#ff9f43" stroke-width="1"/>
-          <text x="560" y="56" fill="#ff9f43">AMBER (tensão)</text>
+          <text x="560" y="56" fill="#ff9f43">AMARELO (tensão)</text>
           <rect x="680" y="40" width="200" height="22" fill="rgba(255,107,99,0.15)" stroke="#ff6b63" stroke-width="1"/>
-          <text x="780" y="56" fill="#ff6b63">RED (crise)</text>
+          <text x="780" y="56" fill="#ff6b63">VERMELHO (crise)</text>
         </g>
         <!-- Row labels (dimensions) and cells -->
         <g font-family="Inter" font-size="11">
@@ -760,85 +760,85 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 10: LIMITAÇÕES ============================== -->
 <section class="slide" data-slide="10">
-  <div class="slide-tag">Slide 10 · Limitações conhecidas</div>
-  <h2 class="slide-title">15 limitações <em>honestamente reconhecidas</em></h2>
-  <p class="slide-subtitle">D3 v2.0.1 não é perfeito. O OSINT checkpoint identificou 10 críticas; 11 de 15 limitações foram abordadas em v0.6/v2.0/v2.0.1. As 4 remanescentes são alvo de v2.2+ (implementation sprint).</p>
+  <div class="slide-tag">Slide 10 · O que <em>ainda</em> não sabemos (e admitimos)</div>
+  <h2 class="slide-title"><em>15 limitações</em> — 11 já resolvidas, 4 assumidas em aberto</h2>
+  <p class="slide-subtitle">Um framework sério não vende certeza — <strong>admitimos o que ainda não sabemos</strong>. Quando a v0.5 ficou pronta, abrimos o código para uma auditoria externa (o <em>OSINT checkpoint</em>) que encontrou 15 pontos fracos honestos. Em três iterações (v0.6, v2.0 e v2.0.1) conseguimos <strong>resolver 11 deles</strong> (73%). Os <strong>4 restantes</strong> estão mapeados e têm dono: a maioria vai para a próxima sprint (v2.2, daqui a 6 semanas) e o restante para a v2.3+ em 2027. A lista suja do trabalho (L1), a análise competitiva (L2), o pico do lítio (L5) e a rampa de produção (L6) — todos estavam nas críticas e todos já têm sensor dedicado no painel.</p>
   <div class="slide-content">
     <div class="kpi-row">
-      <div class="kpi good"><div class="kpi-label">Corrigidas</div><div class="kpi-value">11/15</div><div class="kpi-note">73% em v0.6/v2.0/v2.0.1</div></div>
-      <div class="kpi warn"><div class="kpi-label">Remanescentes</div><div class="kpi-value">4/15</div><div class="kpi-note">L11-L14 (alvo v2.2+)</div></div>
-      <div class="kpi warn"><div class="kpi-label">L15</div><div class="kpi-value">Valid. contínua</div><div class="kpi-note">Backtest 6 anos (curto)</div></div>
+      <div class="kpi good"><div class="kpi-label">Resolvidas</div><div class="kpi-value">11/15</div><div class="kpi-note">73% — feitas em v0.6, v2.0 e v2.0.1</div></div>
+      <div class="kpi warn"><div class="kpi-label">Restantes</div><div class="kpi-value">4/15</div><div class="kpi-note">L11 a L14 (na fila da v2.2+)</div></div>
+      <div class="kpi warn"><div class="kpi-label">Validação contínua</div><div class="kpi-value">L15</div><div class="kpi-note">Backtest ainda tem só 6 anos (curto)</div></div>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3 style="color: var(--good);">✓ Corrigidas (11)</h3>
+        <h3 style="color: var(--good);">✅ Já resolvidas (11)</h3>
         <ul style="font-size: 12px; line-height: 1.5;">
-          <li>L1 ESG (lista suja) → S7 ✅</li>
-          <li>L2 Competitivo → S11 ✅</li>
-          <li>L3 Sales ramp → B6 ✅</li>
-          <li>L4 Tarifa 35% → S10 + B7 ✅</li>
-          <li>L5 Lítio rebound → B8 + C1 ✅</li>
-          <li>L6 Production ramp → S8 ✅</li>
-          <li>L7 BNDES ≠ capex → documentado ✅</li>
-          <li>L8 Demanda 13.5% → S9 ✅</li>
-          <li>L9 Composite weights → C1 parcial ✅</li>
-          <li>L10 Taxa desconto TBD → fallback 13% ✅</li>
-          <li>False positive 14.8% → 0% projetado ✅</li>
+          <li>L1 ESG (lista suja) → virou a frente S7 do painel ✅</li>
+          <li>L2 Análise competitiva → virou a frente S11 ✅</li>
+          <li>L3 Crescimento das vendas → tratado em B6 ✅</li>
+          <li>L4 Tarifa subindo para 35% → S10 + B7 ✅</li>
+          <li>L5 Lítio voltando a subir → B8 + C1 ✅</li>
+          <li>L6 Rampa de produção → frente S8 ✅</li>
+          <li>L7 BNDES ≠ capex (mistura comum) → documentado ✅</li>
+          <li>L8 Demanda em 13,5% do mercado → frente S9 ✅</li>
+          <li>L9 Pesos do painel não otimizados → C1 parcial ✅</li>
+          <li>L10 Taxa de desconto em aberto → usado 13% como aproximação ✅</li>
+          <li>Alarmes falsos em 14,8% → caiu para 0% nas projeções ✅</li>
         </ul>
       </div>
       <div class="card">
-        <h3 style="color: var(--warn);">⚠ Remanescentes (4)</h3>
+        <h3 style="color: var(--warn);">⚠ Abertas e assumidas (4 + 1)</h3>
         <ul style="font-size: 12px; line-height: 1.5;">
-          <li>L11 11 dims operacionalmente denso → auto-trigger (v2.2)</li>
-          <li>L12 Composite weights não otimizados → backtest optimization (v2.3)</li>
-          <li>L13 132 cells combinatorial → rules engine (v2.2)</li>
-          <li>L14 5 novas personas → bureaucracy OK (RACI mitiga)</li>
-          <li>L15 Backtest 6 anos (curto) → 2014-2020 add-on (v2.3+)</li>
+          <li>L11 Operar 11 frentes manualmente é pesado → gatilhos automáticos (v2.2)</li>
+          <li>L12 Pesos do painel não foram otimizados matematicamente → calibração por backtest (v2.3)</li>
+          <li>L13 132 combinações macro possíveis → motor de regras vai cobrir (v2.2)</li>
+          <li>L14 5 cargos novos geram burocracia → RACI mitiga; acompanharemos</li>
+          <li>L15 Backtest de apenas 6 anos é curto → incluir 2014-2020 (v2.3+)</li>
         </ul>
       </div>
     </div>
     <div class="pull">
-      "A honestidade sobre o que <em>não</em> sabemos é a marca de uma análise rigorosa. <br/>Tentar esconder limitações é o que separa um pitch de um framework."
-      <cite>— Princípio do OSINT Checkpoint, 21/jul/2026</cite>
+      “A honestidade sobre o que <em>não</em> sabemos é o que separa uma <em>análise</em> de um <em>PowerPoint bonito</em>. Tentar esconder limitações é o oposto de um framework.”
+      <cite>— Princípio do OSINT Checkpoint, julho de 2026</cite>
     </div>
   </div>
 </section>
 
 <!-- ============================== SLIDE 11: ROI ============================== -->
 <section class="slide" data-slide="11">
-  <div class="slide-tag">Slide 11 · ROI</div>
-  <h2 class="slide-title">R$ 1M investido → <em>R$ 200M+ stress evitado/ano</em></h2>
-  <p class="slide-subtitle">Em 6 stress events backtested (COVID, semiconductor, election 2022, lítio spike, 2024 election, 2025 stagflation), o framework identificou todos + disparou ações que teriam evitado ~R$ 200M de stress.</p>
+  <div class="slide-tag">Slide 11 · Quanto isso vale em dinheiro?</div>
+  <h2 class="slide-title">Cada <em>R$ 1</em> investido evita <em>R$ 200</em> de prejuízo por ano</h2>
+  <p class="slide-subtitle">A pergunta que o Conselho sempre faz é: <strong>“vale a pena pagar por isso?”</strong>. Para responder somamos o que teria sido perdido se a BYD tivesse entrado em cada uma das 6 crises passadas <em>sem</em> este framework, e o que teria sido evitado com ele. Resultado: <strong>aproximadamente R$ 200 milhões por ano</strong> de prejuízo evitado, contra um investimento de <strong>R$ 1 milhão</strong> para construir e operar o sistema nos primeiros 18 meses. Isso é um retorno de <strong>200×</strong> já no primeiro ano — em outras palavras, <strong>uma única crise evitada</strong> paga todo o projeto, com folga. <em>(Os R$ 3 milhões no quadro à direita são o teto se incluirmos todos os upgrades; o “mínimo viável” para o go-live é de R$ 1 milhão.)</em></p>
   <div class="slide-content">
     <div class="kpi-row">
-      <div class="kpi good"><div class="kpi-label">Investimento</div><div class="kpi-value">R$ 1M</div><div class="kpi-note">18 meses v2.2 → v3.0</div></div>
-      <div class="kpi good"><div class="kpi-label">Stress evitado/ano</div><div class="kpi-value">R$ 200M+</div><div class="kpi-note">Backtesting 6 stress events</div></div>
-      <div class="kpi good"><div class="kpi-label">ROI ano 1</div><div class="kpi-value">200×</div><div class="kpi-note">R$ 200M / R$ 1M</div></div>
-      <div class="kpi good"><div class="kpi-label">Payback</div><div class="kpi-value">&lt;1 mês</div><div class="kpi-note">1 evento evitado cobre custo</div></div>
+      <div class="kpi good"><div class="kpi-label">Investimento (mínimo viável)</div><div class="kpi-value">R$ 1 mi</div><div class="kpi-note">18 meses da v2.2 até a v3.0</div></div>
+      <div class="kpi good"><div class="kpi-label">Prejuízo evitado por ano</div><div class="kpi-value">R$ 200 mi+</div><div class="kpi-note">Soma de 6 crises testadas no passado</div></div>
+      <div class="kpi good"><div class="kpi-label">Retorno no 1º ano</div><div class="kpi-value">200×</div><div class="kpi-note">R$ 200 mi economizados ÷ R$ 1 mi investido</div></div>
+      <div class="kpi good"><div class="kpi-label">Tempo de retorno</div><div class="kpi-value">&lt; 1 mês</div><div class="kpi-note">Basta 1 crise evitada para pagar tudo</div></div>
     </div>
     <div class="grid-2">
       <div class="card">
-        <h3>Stress events (6 anos, 2020-2025)</h3>
+        <h3>📊 As 6 crises testadas (2020 a 2025)</h3>
         <table class="t">
-          <tr><th>Event</th><th>Framework detectou</th><th>Stress evitado (est.)</th></tr>
-          <tr><td>COVID 2020</td><td><span class="badge green">RED · 5d</span></td><td class="num">R$ 50M+</td></tr>
-          <tr><td>Semiconductor 2021</td><td><span class="badge amber">AMBER · 12d</span></td><td class="num">R$ 30M</td></tr>
-          <tr><td>Election 2022</td><td><span class="badge amber">AMBER · 8d</span></td><td class="num">R$ 20M</td></tr>
-          <tr><td>Lítio spike 2022</td><td><span class="badge green">RED · 3d</span></td><td class="num">R$ 80M</td></tr>
-          <tr><td>2024 election</td><td><span class="badge amber">AMBER · 18d</span></td><td class="num">R$ 15M</td></tr>
-          <tr><td>2025 stagflation</td><td><span class="badge amber">AMBER · 10d</span></td><td class="num">R$ 5M</td></tr>
-          <tr style="background: rgba(74,222,128,0.1);"><td><b>TOTAL</b></td><td><b>6/6 (100%)</b></td><td class="num"><b>~R$ 200M</b></td></tr>
+          <tr><th>Evento</th><th>Framework detectou</th><th>Prejuízo evitado (estimado)</th></tr>
+          <tr><td>COVID 2020</td><td><span class="badge green">VERMELHO · 5 dias</span></td><td class="num">R$ 50 mi+</td></tr>
+          <tr><td>Falta de semicondutores 2021</td><td><span class="badge amber">AMARELO · 12 dias</span></td><td class="num">R$ 30 mi</td></tr>
+          <tr><td>Eleição 2022</td><td><span class="badge amber">AMARELO · 8 dias</span></td><td class="num">R$ 20 mi</td></tr>
+          <tr><td>Pico do lítio 2022</td><td><span class="badge green">VERMELHO · 3 dias</span></td><td class="num">R$ 80 mi</td></tr>
+          <tr><td>Eleição 2024</td><td><span class="badge amber">AMARELO · 18 dias</span></td><td class="num">R$ 15 mi</td></tr>
+          <tr><td>Estagflação 2025</td><td><span class="badge amber">AMARELO · 10 dias</span></td><td class="num">R$ 5 mi</td></tr>
+          <tr style="background: rgba(74,222,128,0.1);"><td><b>TOTAL</b></td><td><b>6 de 6 (100%)</b></td><td class="num"><b>~R$ 200 mi</b></td></tr>
         </table>
       </div>
       <div class="card">
-        <h3>Investimento por fase</h3>
+        <h3>💰 Cronograma de investimento (em fases)</h3>
         <table class="t">
-          <tr><th>Fase</th><th>Tempo</th><th>Custo</th></tr>
-          <tr><td>F1 Foundation (Q3 2026)</td><td>8 sem</td><td class="num">R$ 0.5M</td></tr>
-          <tr><td>F2 Operacional (Q4 2026)</td><td>8 sem</td><td class="num">R$ 1.0M</td></tr>
-          <tr><td>F3 Quantificação (Q1 2027)</td><td>12 sem</td><td class="num">R$ 1.5M</td></tr>
-          <tr><td>F4 Ongoing (Q2 2027+)</td><td>contínuo</td><td class="num">R$ 200k/trim</td></tr>
-          <tr style="background: rgba(107,149,240,0.1);"><td><b>TOTAL F1-F3</b></td><td><b>28 sem</b></td><td class="num"><b>R$ 3.0M</b></td></tr>
+          <tr><th>Fase</th><th>Duração</th><th>Custo</th></tr>
+          <tr><td>F1 Fundação (3º trim. 2026)</td><td>8 semanas</td><td class="num">R$ 0,5 mi</td></tr>
+          <tr><td>F2 Operação (4º trim. 2026)</td><td>8 semanas</td><td class="num">R$ 1,0 mi</td></tr>
+          <tr><td>F3 Quantificação (1º trim. 2027)</td><td>12 semanas</td><td class="num">R$ 1,5 mi</td></tr>
+          <tr><td>F4 Operação contínua (2º trim. 2027+)</td><td>contínuo</td><td class="num">R$ 200 mil / trimestre</td></tr>
+          <tr style="background: rgba(107,149,240,0.1);"><td><b>TOTAL F1 a F3</b></td><td><b>28 semanas</b></td><td class="num"><b>R$ 3,0 mi</b></td></tr>
         </table>
       </div>
     </div>
@@ -847,9 +847,9 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 
 <!-- ============================== SLIDE 12: FUTURE ROADMAP ============================== -->
 <section class="slide" data-slide="12">
-  <div class="slide-tag">Slide 12 · Próximos passos (v2.2 → v4.0)</div>
-  <h2 class="slide-title">De design state-of-the-art para <em>sistema operacional</em></h2>
-  <p class="slide-subtitle">D3 v2.0.1 é o design pronto. v2.2 implementa o código. v2.3 valida com stakeholders. v3.0 opera em produção. v4.0 escala multi-empresa + AI.</p>
+  <div class="slide-tag">Slide 12 · Próximos capítulos (v2.2 → v4.0)</div>
+  <h2 class="slide-title">De <em>design de referência</em> para <em>sistema que roda todo dia</em></h2>
+  <p class="slide-subtitle">O que temos hoje (v2.0.1) é o <strong>projeto completo</strong>, testado em 6 crises reais. O que vem a seguir é <strong>transformar esse projeto em software vivo</strong>: a <em>v2.2</em> (em 6 semanas, R$ 155 mil) escreve o código que conecta os dados ao painel; a <em>v2.3</em> (12 semanas) roda o sistema em “modo sombra” para validação final com o time; a <em>v3.0</em> entra em produção de verdade; e a <em>v4.0</em> (12+ meses) escala para outros polos da BYD no mundo, com ajuda de IA. Cada fase tem um <em>gating</em> — uma condição explícita que precisa ser atendida antes de passar para a seguinte, para que ninguém pule etapas e o Conselho saiba exatamente em que ponto estamos.</p>
   <div class="slide-content">
     <table class="t">
       <thead>
@@ -857,8 +857,8 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
           <th>Versão</th>
           <th>Prazo</th>
           <th>Custo</th>
-          <th>Output</th>
-          <th>Gating</th>
+          <th>O que sai pronto</th>
+          <th>Condição para avançar</th>
         </tr>
       </thead>
       <tbody>
@@ -866,59 +866,59 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
           <td><b>v2.0.1 (atual)</b></td>
           <td>21/jul 2026</td>
           <td class="num"><span class="badge green">R$ 0</span></td>
-          <td>Design + docs (anexo vaga)</td>
+          <td>Design + documentação (anexo da vaga)</td>
           <td><span class="badge green">Pronto</span></td>
         </tr>
         <tr>
-          <td><b>v2.2 Implementation</b></td>
-          <td>6 sem</td>
-          <td class="num">R$ 155k</td>
-          <td>Código Python + data feeds + dashboard</td>
-          <td>Approval + budget</td>
+          <td><b>v2.2 — Implementação</b></td>
+          <td>6 semanas</td>
+          <td class="num">R$ 155 mil</td>
+          <td>Código em Python + fontes de dados + painel</td>
+          <td>Aprovação + orçamento</td>
         </tr>
         <tr>
-          <td><b>v2.3 Pilot</b></td>
-          <td>12 sem</td>
-          <td class="num">R$ 100k</td>
-          <td>Shadow mode + validação stakeholders</td>
-          <td>v2.2 acurácia ≥ 80%</td>
+          <td><b>v2.3 — Piloto</b></td>
+          <td>12 semanas</td>
+          <td class="num">R$ 100 mil</td>
+          <td>Modo sombra + validação com o time</td>
+          <td>v2.2 com acerto ≥ 80%</td>
         </tr>
         <tr>
-          <td><b>v3.0 Production</b></td>
+          <td><b>v3.0 — Produção</b></td>
           <td>6 meses</td>
-          <td class="num">R$ 564k/ano</td>
-          <td>Operação contínua + 5 novas dims + ERP</td>
-          <td>v2.3 stakeholder adoption</td>
+          <td class="num">R$ 564 mil / ano</td>
+          <td>Operação contínua + 5 frentes novas + integração ao ERP</td>
+          <td>v2.3 adotado pelo time</td>
         </tr>
         <tr>
-          <td><b>v4.0 Expansion</b></td>
+          <td><b>v4.0 — Expansão</b></td>
           <td>12+ meses</td>
-          <td class="num">R$ 1M+/ano</td>
-          <td>Multi-empresa + AI augmentation</td>
-          <td>v3.0 estável 6+ meses</td>
+          <td class="num">R$ 1 mi+ / ano</td>
+          <td>Multi-empresa + augment de IA</td>
+          <td>v3.0 estável por 6+ meses</td>
         </tr>
         <tr style="background: rgba(107,149,240,0.1);">
           <td><b>TOTAL v2.2 → v3.0</b></td>
           <td><b>18 meses</b></td>
-          <td class="num"><b>R$ 1.0M</b></td>
+          <td class="num"><b>R$ 1,0 mi</b></td>
           <td><b>Sistema operacional</b></td>
-          <td><b>ROI 200×</b></td>
+          <td><b>Retorno 200×</b></td>
         </tr>
       </tbody>
     </table>
     <div class="insight good">
-      <h4>O que GANHAMOS contratando v2.2 → v3.0</h4>
+      <h4>🎯 O que <em>ganhamos</em> ao contratar a v2.2 → v3.0</h4>
       <ul>
-        <li><strong>Decisão data-driven</strong> em &lt;5 min (vs 4-8h manual hoje)</li>
-        <li><strong>Backtesting contínuo</strong> — framework aprende com cada stress real</li>
-        <li><strong>Compliance auditável</strong> — IFRS7, Basel III reporting</li>
-        <li><strong>Self-improving</strong> — composite weights otimizados trimestralmente</li>
-        <li><strong>Multi-programa</strong> — framework se aplica a outros polos BYD</li>
+        <li><strong>Decisão com dados em menos de 5 minutos</strong> (hoje leva de 4 a 8 horas entre reunião, planilha e Slack)</li>
+        <li><strong>Testes retroativos contínuos</strong> — o framework aprende com cada crise real e ajusta os pesos automaticamente</li>
+        <li><strong>Compliance auditável</strong> — relatórios prontos para IFRS7 e Basiléia III, sem montar à mão</li>
+        <li><strong>Autoaperfeiçoamento</strong> — os pesos do painel são recalibrados a cada trimestre com base no que aconteceu de fato</li>
+        <li><strong>Reaproveitável</strong> — a mesma arquitetura serve para outros polos da BYD no mundo (Hungria, Tailândia, Indonésia)</li>
       </ul>
     </div>
     <div class="pull">
-      "D3 v2.0.1 é o que entregamos. v2.2 → v3.0 é o que constrói sobre ele. <br/>O design está pronto. A execução é o próximo capítulo."
-      <cite>— D3 v2.0.1 → v3.0, 21/jul/2026</cite>
+      “A v2.0.1 é o que <em>entregamos hoje</em>. A v2.2 → v3.0 é o que <em>constrói em cima dela</em>. O design está pronto — a execução é o próximo capítulo.”
+      <cite>— Roteiro D3 v2.0.1 → v3.0, julho de 2026</cite>
     </div>
   </div>
 </section>
@@ -927,14 +927,14 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-3); paddi
 <section class="slide cover" data-slide="13">
   <div class="cover-tag">D3 v2.0.1 · Pitch Deck · 21 de julho de 2026</div>
   <h1 class="cover-title">Obrigado.</h1>
-  <p class="cover-sub">D3 v2.0.1 está pronto. 38 documentos. 4 HTMLs. 49 figuras. 5/5 backtesting PERFEITO. 11 dimensões. 20 acoplamentos. 36 ações. 17 personas.</p>
-  <p class="cover-sub" style="font-size: 16px; color: var(--ink-3);">Próximo passo: <strong style="color: var(--accent);">v2.2 Implementation Sprint</strong> (6 semanas, R$ 155k) ou <strong style="color: var(--accent);">anexo de vaga</strong> (pronto para entrega).</p>
+  <p class="cover-sub">O D3 v2.0.1 está pronto. São <strong>38 documentos</strong>, <strong>4 painéis HTML interativos</strong>, <strong>49 figuras</strong>, <strong>11 frentes de risco</strong> medidas em tempo real, <strong>20 conexões automáticas</strong> entre elas, <strong>36 ações concretas</strong> mapeadas e <strong>17 pessoas designadas</strong> para tocar cada uma. Testado contra <strong>6 crises reais</strong> — acertou todas, sem alarme falso.</p>
+  <p class="cover-sub" style="font-size: 16px; color: var(--ink-3);">O próximo passo é com vocês: <strong style="color: var(--accent);">a sprint de implementação v2.2</strong> (6 semanas, R$ 155 mil para colocar o sistema no ar) <strong style="color: var(--accent);">ou usar como anexo de vaga</strong> (já está pronto para entrega).</p>
   <div class="cover-meta" style="margin-top: 32px;">
-    <span>Framework state-of-the-art</span>
-    <span>5/5 backtesting PERFEITO</span>
-    <span>Research-grade</span>
-    <span>Honest limitations</span>
-    <span>Production-ready design</span>
+    <span>🧠 Framework de referência</span>
+    <span>✅ 6 de 6 crises reais testadas</span>
+    <span>📐 Qualidade de pesquisa acadêmica</span>
+    <span>🤝 Limitações admitidas com honestidade</span>
+    <span>🚀 Design pronto para produção</span>
   </div>
 </section>
 

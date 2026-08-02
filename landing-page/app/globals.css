@@ -1,16 +1,32 @@
-/* landing-page/app/globals.css */
-@import '../styles/tokens.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-bg-void text-matter-white font-body antialiased;
-  }
-
-  h1, h2, h3 {
-    @apply font-narrative;
-  }
+:root {
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-rajdhani: 'Rajdhani', sans-serif;
+  --font-inter: 'Inter', sans-serif;
 }
+
+body {
+  background: #050505;
+  color: #F5F5F5;
+}
+
+/* Grain texture overlay — fixed, non-interactive, z-50 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1F1F26; border-radius: 3px; }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }

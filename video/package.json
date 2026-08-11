@@ -1,0 +1,22 @@
+{
+  "name": "video",
+  "version": "1.0.0",
+  "description": "BYD pitch deck Remotion video",
+  "main": "index.js",
+  "scripts": {
+    "start": "remotion studio src/Root.tsx",
+    "build": "remotion render src/Root.tsx WalkthroughComposition out/byd-pitch.mp4",
+    "preview": "remotion preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/animated-emoji": "^4.0.507",
+    "@remotion/cli": "^4.0.507",
+    "@remotion/media": "^4.0.507",
+    "@remotion/player": "^4.0.507",
+    "@remotion/transitions": "^4.0.507",
+    "remotion": "^4.0.507"
+  }
+}

@@ -13,6 +13,16 @@ env/
 .mypy_cache/
 .ruff_cache/
 
+# NotebookLM auth + cache (unofficial SDK stores cookies here)
+.notebooklm/
+.notebooklm_*
+_nb_auth/
+nb_storage/
+analise-prescritiva/docs/notebooklm/outputs/
+analise-prescritiva/docs/notebooklm/.auth/
+analise-prescritiva/docs/notebooklm/.cache/
+analise-prescritiva/docs/notebooklm/sources/external/
+
 # Jupyter
 .ipynb_checkpoints/
 profile_default/

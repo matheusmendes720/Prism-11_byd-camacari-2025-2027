@@ -1,3 +1,14 @@
+---
+title: "D3 — Base de Estudo: Decision Framework (Camada Prescritiva)"
+ueid: ikigai:study-note:d3-d3-study-readme:matheus-mendes:2026-07-27
+entity_type: study_note
+parent_ueid: ikigai:study-track:d3-decision-framework:matheus-mendes:2026-07
+layer: capa
+slug: d3-study-readme
+audience: cientistas de dados juniores que já passaram pela base D2
+tags: [d3, capa, indice, transversal, byd-camacari]
+---
+
 # D3 — Base de Estudo: Decision Framework (Camada Prescritiva)
 
 > **Documento capa** da base de estudo progressiva em
@@ -443,3 +454,18 @@ leia `D3-0.1-matrizes-decisao-completo.md` §6 (estudo de caso) +
 > **Chef's tip final**: o D3 não substitui o D2 — ele **opera sobre** ele.
 > Se você ainda não passou pela base D2 (`d2-econometric-vulnerability/_study_notes/`),
 > comece por lá. Caso contrário, vamos em frente.
+
+---
+
+## §11. Contexto: a jornada completa (LINHAGEM)
+
+Para entender **por que** cada coupling foi modelado, em que ordem o D3
+evoluiu (Fase 0 → F7), e o roteiro narrativo completo para apresentação
+ao Conselho, leia também:
+
+**`../../LINHAGEM.md`** — 27 KB · 1.070 linhas · 27/jul/2026
+
+Contém:
+- **Parte 1**: linhagem técnica completa (F0–F7, 55+ docs, 8 fases)
+- **Parte 2**: roteiro de vídeo YouTube (3 atos · 12 capítulos · 23 min) ·
+  narration script verbatim para presenters

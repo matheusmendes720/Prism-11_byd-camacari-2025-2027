@@ -87,8 +87,10 @@ Layer 1: DATA         — D2 sessions, composite, refresh automático
 4. **S3↔S4**: Defensive break-even at ViE = 10%
 5. **S6→all**: Macro multiplier rescales all prescriptions
 
-### Composite Weights (sum = 1.00)
-S1: 0.18 | S2: 0.16 | S3: 0.18 | S4: 0.16 | S5: 0.10 | S6: 0.10 | S7: 0.05 | S8: 0.08 | S9: 0.04 | S10: 0.05 | S11: 0.05
+### Composite Weights (sum = 1.00, renormalized)
+S1: 0.157 | S2: 0.139 | S3: 0.157 | S4: 0.139 | S5: 0.087 | S6: 0.087 | S7: 0.043 | S8: 0.070 | S9: 0.035 | S10: 0.043 | S11: 0.043
+
+Note: the canonical D3 v2.0.1 dimension weights `0.18/0.16/0.18/0.16/0.10/0.10/0.05/0.08/0.04/0.05/0.05` (sum = 1.15) have been renormalized by dividing each by 1.15 to enforce `sum = 1.00` for use in weighted aggregations (Lineage C in `docs/SCORES.md`). See `docs/SCORES.md` §3 for the full derivation.
 
 ---
 
@@ -131,4 +133,12 @@ S1: 0.18 | S2: 0.16 | S3: 0.18 | S4: 0.16 | S5: 0.10 | S6: 0.10 | S7: 0.05 | S8:
 
 ## Version
 
-Current: **D3 v2.0.1** (5/5 backtesting targets perfect)
+Current: **D3 v2.0.2** (5/5 backtesting targets perfect, +14 delegation_plan nodes adicionados em KG, +4 docs narrativos novos em `analise-prescritiva/docs/`)
+
+### Update 18-ago-2026
+
+**Sessão narrativa audível:** adicionados 12 docs didáticos pt-br (00-09 + LINHAS-GERAIS + INDEX-NARRATIVO + ONE-PAGER-EXECUTIVO) + 4 audio scripts + 12 MP3s reais (94 min audio via eSpeak NG pt-br) + KG v2.0.2 (110 nós, 118 edges, +1 categoria delegation_plan) + DELEGATION-PLAN (14 frentes × 5 ondas) + SLIDE-DECK-D3 + 5 Diagrams HTML cross-linkados. Ver `outputs/progress-report-2026-08-18.md`, `CHANGELOG.md` §[0.2.0], e `analise-prescritiva/docs/INDEX-NARRATIVO.md`.
+
+**Snapshot navegável A4:** `D3-KNOWLEDGE-GRAPH-SNAPSHOT.html` (14 KB) — versão text-only print-ready do KG v2.0.2 com 11 categorias, 14 frentes delegation_plan, 4 tours guiados.
+
+**Audible + impressions:** composite atual 50,3 (RED Modo Crise), alvo ≥ 65 (AMBER) até Q4/2026. VaR 4-shock R$ 8,21 bi. CVaR95 R$ 10,14 bi. Backtesting 5/5 PERFEITO pós-recalibração 2026-08-15.

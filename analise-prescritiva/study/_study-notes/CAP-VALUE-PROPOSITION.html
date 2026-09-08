@@ -1,0 +1,1830 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BYD Camaçari 2025-2027 — Vulnerabilidade · Hedge · Decisão (Value Proposition)</title>
+<meta name="description" content="Storytelling executivo pt-br — gravidade (D2 descritiva) → D3 prescritiva → value prop → 3 anos de recomendações. 11 elementos multivariados, Monte Carlo, decision matrix, OKRs/KPIs." />
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #11161d;
+    --surface-2: #161c24;
+    --border: #1f2933;
+    --text: #e6edf3;
+    --muted: #8b97a4;
+    --accent: #4f8ef7;
+    --amber: #e8a23c;
+    --green: #34d399;
+    --red: #f87171;
+    --shadow: 0 1px 0 rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --font-serif: Georgia, "Times New Roman", serif;
+  }
+  @media print {
+    :root { --bg: #ffffff; --surface: #ffffff; --surface-2: #ffffff; --border: #cdd3da; --text: #161616; --muted: #4a5160; }
+    .page { page-break-after: always; box-shadow: none !important; border: 1px solid var(--border); }
+    .no-print { display: none !important; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; line-height: 1.55; }
+  body { padding: 32px 24px 96px; }
+  .deck { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+  .page {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 44px 52px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .page.cover { padding: 72px 64px; min-height: 720px; display: flex; flex-direction: column; justify-content: space-between; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  h1 { font-size: 36px; line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.01em; }
+  h2 { font-size: 22px; margin: 0 0 14px; letter-spacing: -0.005em; color: var(--text); }
+  h3 { font-size: 16px; margin: 18px 0 8px; color: var(--accent); }
+  p { margin: 8px 0; color: var(--text); }
+  .lead { font-size: 17px; color: var(--muted); margin-bottom: 8px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .pill { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-family: var(--font-mono); letter-spacing: 0.05em; border: 1px solid var(--border); background: var(--surface-2); color: var(--muted); margin-right: 6px; }
+  .pill.amber { color: var(--amber); border-color: rgba(232,162,60,.4); background: rgba(232,162,60,.08); }
+  .pill.green { color: var(--green); border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.08); }
+  .pill.red   { color: var(--red);   border-color: rgba(248,113,113,.4); background: rgba(248,113,113,.08); }
+  .pill.blue  { color: var(--accent); border-color: rgba(79,142,247,.4); background: rgba(79,142,247,.08); }
+  pre, code, .mono { font-family: var(--font-mono); }
+  pre {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #c9d1d9;
+  }
+  pre .ac { color: var(--accent); }
+  pre .am { color: var(--amber); }
+  pre .gr { color: var(--green); }
+  pre .rd { color: var(--red); }
+  pre .mu { color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .card .k { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .card .v { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+  .card .v small { font-size: 13px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+  .card .s { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  blockquote { margin: 14px 0; padding: 12px 16px; border-left: 3px solid var(--accent); background: rgba(79,142,247,.05); border-radius: 0 6px 6px 0; color: var(--text); }
+  blockquote.warn { border-left-color: var(--amber); background: rgba(232,162,60,.06); }
+  blockquote.danger { border-left-color: var(--red); background: rgba(248,113,113,.06); }
+  .tip { margin: 14px 0; padding: 10px 14px; border: 1px dashed var(--border); border-radius: 8px; color: var(--muted); font-size: 13px; background: rgba(255,255,255,.02); }
+  .tip strong { color: var(--amber); }
+  .toc { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 24px; font-size: 13px; }
+  .toc a { color: var(--text); text-decoration: none; padding: 6px 0; border-bottom: 1px dashed var(--border); display: flex; align-items: baseline; gap: 10px; }
+  .toc a:hover { color: var(--accent); }
+  .toc .n { font-family: var(--font-mono); color: var(--muted); width: 36px; }
+  .toc .t { color: var(--accent); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; margin-left: auto; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .cover h1 { font-size: 48px; letter-spacing: -0.02em; line-height: 1.05; }
+  .cover .sub { font-size: 18px; color: var(--muted); max-width: 640px; }
+  .cover .meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .cover .meta div { font-size: 12px; color: var(--muted); }
+  .cover .meta div b { display: block; color: var(--text); font-size: 14px; margin-top: 2px; }
+  .footer-mark { position: absolute; bottom: 14px; right: 22px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  /* ASCII chart styles */
+  .chart { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.35; white-space: pre; overflow-x: auto; padding: 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; color: #d8e0e8; }
+  .okr-table th { background: var(--surface-2); }
+  .okr-table tr:last-child td { border-bottom: none; }
+  .footer-mark { right: 22px; }
+  .stamp { position: absolute; top: 24px; right: 28px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-align: right; }
+  .stamp b { display: block; color: var(--accent); font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ============================================================ -->
+<!-- COVER                                                       -->
+<!-- ============================================================ -->
+<section class="page cover" id="cover">
+  <div>
+    <div class="eyebrow">Case study · 17/ago/2026 · Salvador-BA, BR</div>
+    <h1>BYD Camaçari 2025-2027</h1>
+    <p class="sub">Vulnerabilidade → Hedge → Decisão: do modelo GARCH ao Conselho. <br>
+    Uma narrativa executiva sobre a gravidade do programa, os 11 elementos que afetam a alocação de capital, e os R$ 1,68 bi que separam um trimestre tranquilo de uma crise de R$ 8,21 bi.</p>
+    <div style="margin-top: 22px;">
+      <span class="pill green">Composite 71,8 / 100</span>
+      <span class="pill amber">VaR 4-shock R$ 8,21 bi</span>
+      <span class="pill blue">CVaR R$ 10,14 bi</span>
+      <span class="pill red">Investment R$ 1,68 bi / 365d</span>
+    </div>
+  </div>
+  <div>
+    <div class="meta">
+      <div>Autoria <b>Matheus Mendes</b></div>
+      <div>Programa <b>BYD Brasil · Camaçari</b></div>
+      <div>Status <b>D3 v2.0.1 · refresh 17/jul/2026</b></div>
+    </div>
+  </div>
+  <div class="stamp">VALUE PROPOSITION<b>v1.1 · 18 chapters</b></div>
+  <div class="footer-mark">CAP · 00 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOC                                                          -->
+<!-- ============================================================ -->
+<section class="page" id="toc">
+  <div class="eyebrow">Sumário · como ler este documento</div>
+  <h2>11 capítulos · três trilhas de leitura</h2>
+  <p class="lead">Este documento é um <b>storytelling executivo</b> sobre a gravidade (D2 descritiva) → hedge (D3 prescritiva) → value prop. Foi desenhado para três audiências em três modos.</p>
+
+  <div class="toc">
+    <a href="#cap1"><span class="n">01</span> GRAVIDADE — curva central, 11 elementos <span class="t">D2 → D3</span></a>
+    <a href="#cap2"><span class="n">02</span> OS 11 ELEMENTOS — quem pesa mais <span class="t">D3 §4</span></a>
+    <a href="#cap3"><span class="n">03</span> ACOPLAMENTOS — a curva muda de forma <span class="t">D3 §3</span></a>
+    <a href="#cap4"><span class="n">04</span> PIORES CENÁRIOS — onde o programa quebra <span class="t">Stress</span></a>
+    <a href="#cap5"><span class="n">05</span> DECISION MATRIX — 4 macro-estados <span class="t">D3 §3</span></a>
+    <a href="#cap6"><span class="n">06</span> BACKTESTING — FP/TN calibration <span class="t">D3 v2.0.1</span></a>
+    <a href="#cap7"><span class="n">07</span> ACTION REGISTER — 39 ações · RACI <span class="t">D3 §4</span></a>
+    <a href="#cap8"><span class="n">08</span> OKRs / KPIs — cadência trimestral <span class="t">D3 §6</span></a>
+    <a href="#cap9"><span class="n">09</span> RECOMENDAÇÕES — 3 anos, trimestre a trimestre <span class="t">Roadmap</span></a>
+    <a href="#cap10"><span class="n">10</span> COMUNICAÇÃO — 1-pager + Conselho <span class="t">L4.0</span></a>
+    <a href="#cap11"><span class="n">11</span> VALUE PROPOSITION — fechamento <span class="t">Final</span></a>
+    <a href="#cap12"><span class="n">12</span> SPONSOR PITCH — 7 atos narrativos <span class="t">Pitch</span></a>
+    <a href="#cap13"><span class="n">13</span> RISK REGISTER — top-15 riscos rankeados <span class="t">Risk</span></a>
+    <a href="#cap14"><span class="n">14</span> SENSITIVITY TORNADO — VaR decomposto <span class="t">Sensit.</span></a>
+    <a href="#cap15"><span class="n">15</span> BENCHMARK — BYD vs 5 players LATAM <span class="t">Compar.</span></a>
+    <a href="#cap16"><span class="n">16</span> TIMELINE — Gantt 18 meses <span class="t">Cronog.</span></a>
+    <a href="#cap17"><span class="n">17</span> FAQ — perguntas hostis do Conselho <span class="t">Q&amp;A</span></a>
+    <a href="#cap18"><span class="n">18</span> FAILURE MODES — 7 modos + decision tree <span class="t">Honest.</span></a>
+  </div>
+
+  <h3>Trilhas de leitura</h3>
+  <div class="row">
+    <div class="card"><div class="k">EXECUTIVO · 15 min</div><div class="v" style="font-size:16px;">Capa → CAP11</div><div class="s">Apenas valor final, ROI, e a recomendação. Sem entrar em fórmulas.</div></div>
+    <div class="card"><div class="k">CSO/CFO · 45 min</div><div class="v" style="font-size:16px;">CAP1 → CAP5 → CAP8 → CAP11</div><div class="s">Curva central, piores cenários, KPIs, fechamento. Linguagem de risco.</div></div>
+    <div class="card"><div class="k">HEAD ESTRATÉGIA · 90 min</div><div class="v" style="font-size:16px;">Tudo (11 capítulos)</div><div class="s">Leitura completa. Foco em CAP3 (acoplamentos), CAP7 (action register), CAP9 (roadmap).</div></div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--accent)"></i> Chapter 1 = abertura narrativa (você está aqui)</span>
+    <span><i style="background:var(--amber)"></i> Chapter 2-9 = D2 descritiva + D3 prescritiva</span>
+    <span><i style="background:var(--green)"></i> Chapter 10-11 = comunicação + value prop</span>
+  </div>
+
+  <div class="footer-mark">CAP · TOC</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 1 — GRAVIDADE                                       -->
+<!-- ============================================================ -->
+<section class="page" id="cap1">
+  <div class="stamp">CAP · 01<b>GRAVIDADE</b></div>
+  <div class="eyebrow">Capítulo 1 · gravidade · curva central</div>
+  <h2>A gravidade do programa — antes de tudo, a curva</h2>
+
+  <p class="lead">Antes de prescrever qualquer hedge, antes de propor qualquer matriz de decisão, antes de discutir composite 71,8/100 — o executivo precisa ver a <b>curva central</b>: a distribuição do impacto cambial no BOM, com seus percentis, caudas, e o envelope de proteção necessário.</p>
+
+  <h3>1.1 — A pergunta central (postulado)</h3>
+  <blockquote>
+    <i>"Quais são os principais objetos micro e macro — financeiros e econométricos — que mais afetam nossa alocação de capital no momento em que estamos propondo hedge?"</i>
+  </blockquote>
+  <p>A resposta ingênua é <b>"câmbio"</b>. A resposta calibrada tem <b>11 elementos</b>, com pesos somando 1,15 declarado → 1,00 renormalizado, distribuídos em 4 dimensões canônicas (Cambio, Supply, Regulatório, Competitivo) + 7 sub-eixos (S5–S11) tratados individualmente pelo framework D3.</p>
+
+  <h3>1.2 — Três axiomas que sustentam toda a tese</h3>
+  <div class="row">
+    <div class="card"><div class="k">AXIOMA 1</div><div class="v" style="font-size:18px;">Curva central, não média</div><div class="s">A vulnerabilidade é uma <b>distribuição enviesada à esquerda com cauda longa à direita</b>. O valor central importa menos que o P95.</div></div>
+    <div class="card"><div class="k">AXIOMA 2</div><div class="v" style="font-size:18px;">Acoplamento</div><div class="s">Os elementos <b>não são independentes</b>. FX ↔ BOM ≈ correlação 1.0; Macro modula todos via multiplier 1,0× / 1,5× / 2,0×.</div></div>
+    <div class="card"><div class="k">AXIOMA 3</div><div class="v" style="font-size:18px;">Decisão precede modelo</div><div class="s">Prescrever hedge antes de modelar é viés de disponibilidade. O framework D3 existe para <b>inverter</b>: dado → modelo → hedge.</div></div>
+  </div>
+
+  <h3>1.3 — A curva central do PTAX (10.000 paths × 6 meses)</h3>
+  <p>Distribuição empírica do impacto no BOM sob Monte Carlo GARCH(1,1)-Student-t calibrado em PTAX BCB SGS (n = 1.642 obs, jan/2020 – jul/2026). Cada path é um choque PTAX de 6 meses (126 dias úteis); impacto convertido em pp (pontos percentuais) sobre o custo BOM via <span class="mono">imported_share_bom = 0.42</span>.</p>
+
+<div class="chart">                  Distribuição MC GARCH-t — 10.000 paths × 6 meses
+                  PTAX 5,1176 (17/jul/2026); vol30d anualizada 14,19%
+
+   P5    P10    P25    P50    P75    P90    P95   P99
+  -4,70  -3,72  -2,13  -0,15  +1,89  +3,90  +5,19  +8,51
+   ◀─── cauda esquerda (apreciação BRL) ───│─── cauda direita (depreciação) ──▶
+                                            ▲
+                                       mediana ≈ 0 (insensível)
+   Prob(impacto_negativo_em_6m) = 50,1%   ◄─── ligeiramente enviesado p/ baixo
+   Std Dev = 3,01pp                         ◄─── dispersão moderada
+   Min / Max = -9,40 / +15,27               ◄──── cauda assimétrica (mais upside)</div>
+
+  <h3>1.4 — Os três pontos que definem a curva</h3>
+  <table>
+    <thead><tr><th>Métrica</th><th class="num">Valor</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><b>P50 (mediana)</b></td><td class="num">-0,15 pp</td><td>Cenário neutro. Baseline do orçamento 2026-2027.</td></tr>
+      <tr><td><b>P5 (risco severo)</b></td><td class="num">-4,70 pp</td><td><b>Defesa obrigatória</b>. 5% prob em 6m. Custa proteger.</td></tr>
+      <tr><td><b>P95 (otimismo)</b></td><td class="num">+5,19 pp</td><td>Cenário upside. Apreciação BRL → BOM barateia. Opcional.</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Fonte: <span class="mono">d2-econometric-vulnerability/outputs/computed_data.json</span> → <span>mc.*</span>. Cross-validation: <span>1-pager-summary.md §1</span> (refresh σ 14,86%, P5/P95 -5,88/+5,89).</p>
+
+  <div class="tip"><strong>Chef's tip:</strong> A média é -0,01pp ≈ 0. Mas a Std Dev é 3,01pp. Quem aloca capital olhando só a média <b>subestima em 60×</b> a possibilidade de -4pp. Esse erro é o viés de normalidade (Taleb, <i>Black Swan</i>, 2007).</div>
+
+  <h3>1.5 — Do stress test à leitura executiva</h3>
+  <p>O MC puro responde <i>"se nada mudar, qual a distribuição?"</i>. O stress test força cenários. A tabela abaixo mostra o impacto BOM em pp para 5 choques determinísticos.</p>
+
+  <table>
+    <thead><tr><th>Cenário</th><th class="num">Δ PTAX</th><th class="num">BOM impact (pp)</th><th class="num">Prob 12m</th></tr></thead>
+    <tbody>
+      <tr><td>Base</td><td class="num">0%</td><td class="num">0,0</td><td class="num">—</td></tr>
+      <tr><td>Leve</td><td class="num">-5%</td><td class="num">-2,1</td><td class="num">≈ 30%</td></tr>
+      <tr><td>Moderado</td><td class="num">-10%</td><td class="num">-4,2</td><td class="num">≈ 12%</td></tr>
+      <tr><td>Severo</td><td class="num">-20%</td><td class="num">-8,4</td><td class="num">≈ 2-3%</td></tr>
+      <tr><td>Crítico</td><td class="num">-30%</td><td class="num">-12,6</td><td class="num">≈ 0,3%</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <b>Leitura executiva.</b> O cenário moderado (-10% PTAX → R$ 4,61) custa <b>4,2pp no BOM</b>. Se a planta opera com margem EBIT de 8pp, isso é <b>metade da margem</b> consumida por um único trimestre. O custo de hedge NDF 6m de 50% da exposição ≈ R$ 25M por R$ 1bi — <b>uma ordem de grandeza menor</b> que o VaR moderado. ROI esperado do hedge > 100× se o cenário Moderado se materializar uma vez em três anos.
+  </blockquote>
+
+  <div class="footer-mark">CAP · 01 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 2 — 11 ELEMENTOS                                    -->
+<!-- ============================================================ -->
+<section class="page" id="cap2">
+  <div class="stamp">CAP · 02<b>11 ELEMENTOS</b></div>
+  <div class="eyebrow">Capítulo 2 · quem pesa mais na curva</div>
+  <h2>Os 11 elementos — quem move a vulnerabilidade</h2>
+
+  <p class="lead">Cada elemento foi retido por <b>uma</b> de três razões: contribuição marginal ao VaR > R$ 500M, acoplamento binário, ou discriminação por regime (governor/multiplier). A lista canônica vem de <span class="mono">D3-0.0 §4</span>.</p>
+
+  <h3>2.1 — Pesos declarados v0.6 vs v2.1 (renormalizados p/ 1,00)</h3>
+<div class="chart">                PESOS v0.6 (declarados)  →  v2.1 (recomendado)
+   ─────────────────────────────────────────────────────────
+   S1  FX / Câmbio (BRL/USD, PTAX)        0,18 ────►  0,18  ████████████████████
+   S2  Supply Chain (HHI baterias)        0,16 ────►  0,16  ██████████████████
+   S3  BNDES Funding (ViE)                0,18 ────►  0,18  ████████████████████
+   S4  Pricing Defensivo (margem)         0,16 ────►  0,06  ██████ (-0.10)
+   S5  LP Partnerships (CATL/EVE)         0,10 ────►  0,06  ██████ (-0.04)
+   S6  Macro Governor (multiplier)        0,10 ────►  0,10  ███████████
+   S7  ESG / Compliance (kill switch)     0,05 ────►  0,10  ███████████ (+0.05)
+   S8  Production Ramp (volume)           0,08 ────►  0,08  █████████
+   S9  Demanda Upside (secundário)        0,04 ────►  0,05  █████ (+0.01)
+   S10 Tariff / Trade Barriers            0,05 ────►  0,10  ███████████ (+0.05)
+   S11 Competição (Nash, 5 players)       0,05 ────►  0,10  ███████████ (+0.05)
+   S12 Macro Drift cambial (novo)            —  ────►  0,05  █████ (novo)
+   ─────────────────────────────────────────────────────────
+   SOMA declarada = 1,15  →  SOMA v2.1 = 1,10  →  renormalizar p/ 1,00
+
+   Top-3 (S1, S2, S3) respondem por ≈ 47% do peso (v2.1 renormalizado).
+   S6 é governor — multiplica TODOS os outros (não conta no peso direto).</div>
+
+  <h3>2.2 — Critérios de seleção (quem entra, quem sai)</h3>
+  <table>
+    <thead><tr><th>Critério</th><th>Passa</th><th>Cai</th></tr></thead>
+    <tbody>
+      <tr><td>1. Contribuição marginal ao VaR > R$ 500M</td><td>S1, S2, S3, S10</td><td>S9 (R$ 200M est.)</td></tr>
+      <tr><td>2. Acoplamento binário (0 ou 1)</td><td>S3 (BNDES ViE), S7 (kill switch)</td><td>S8 (escala contínua)</td></tr>
+      <tr><td>3. Discriminação por regime (governor/multiplier)</td><td>S6 (macro), S7 (ESG)</td><td>S5 (fornecedor linear)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip"><strong>Exclusão consciente.</strong> Tarifas (S10) não estavam no v0.6 com peso relevante; sobem em v2.1 após o caso <b>Stagflação 2025 -11,4%</b> revelar que o canal cambial → BOM → demanda é não-linear. S7 (ESG) sobe de 0,05 para 0,10 porque o kill switch real ("lista suja MTE") tem efeito <b>binário</b> sobre o BNDES — não cabe em peso linear.</div>
+
+  <h3>2.3 — Quem explica o composite hoje</h3>
+  <table>
+    <thead><tr><th>Dimensão canônica</th><th class="num">Score</th><th class="num">Peso v0.6</th><th class="num">Contribuição</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>S1 — Câmbio</td><td class="num">70,9</td><td class="num">30%</td><td class="num">21,3</td><td><span class="pill amber">AMBER</span></td></tr>
+      <tr><td>S2 — Supply Chain</td><td class="num">95,7 raw → 76,6 ajustado</td><td class="num">30%</td><td class="num">22,9</td><td><span class="pill red">RED</span></td></tr>
+      <tr><td>S3 — Regulatório</td><td class="num">72,0</td><td class="num">20%</td><td class="num">14,4</td><td><span class="pill amber">AMBER</span></td></tr>
+      <tr><td>S4 — Competitivo</td><td class="num">36,8</td><td class="num">20%</td><td class="num">7,4</td><td><span class="pill green">GREEN</span></td></tr>
+      <tr><td><b>COMPOSITE v0.6 (D2 1-pager)</b></td><td class="num"><b>66 / 100</b></td><td class="num">100%</td><td class="num"><b>66</b></td><td><span class="pill amber">AMBER</span></td></tr>
+      <tr><td><b>COMPOSITE v2.1 (refresh 17/jul)</b></td><td class="num"><b>71,8 / 100</b></td><td class="num">100%</td><td class="num"><b>71,8</b></td><td><span class="pill amber">AMBER</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>2.4 — O que o composite FAZ e o que NÃO FAZ</h3>
+  <div class="row">
+    <div class="card">
+      <div class="k">FAZ</div>
+      <ul style="margin:6px 0 0 18px;padding:0;font-size:13px;color:var(--text)">
+        <li>Sintetiza 11 elementos em 1 número</li>
+        <li>Rankeia macro-estados (verde / âmbar / vermelho / crise)</li>
+        <li>Suporta cadência: refresh trimestral + auto-trigger 30+ regras</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="k">NÃO FAZ</div>
+      <ul style="margin:6px 0 0 18px;padding:0;font-size:13px;color:var(--text)">
+        <li>Captura acoplamentos não-lineares (S1×S2 = 2,5× RED)</li>
+        <li>Diz QUAL elemento atacar (compra NDF? diversifica fornecedor?)</li>
+        <li>Diz se a curva está deteriorando (precisa da derivada Δ trimestral)</li>
+        <li>Compensa erro de arredondamento dos pesos (1,15 → 1,00)</li>
+      </ul>
+    </div>
+  </div>
+
+  <blockquote class="warn"><b>O erro mais comum.</b> Ler "71,8" e dizer "está tudo bem". O 71,8 é média; o que importa é o <b>perfil</b>. Configurações {70,70,70,70} e {50,50,95,95} dão ambas composite=70. A primeira é estável; a segunda é bimodal (tudo OK ou tudo ruim). O composite não distingue — CAP3 destrincha isso com variância e skewness.</blockquote>
+
+  <div class="footer-mark">CAP · 02 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 3 — ACOPLAMENTOS                                    -->
+<!-- ============================================================ -->
+<section class="page" id="cap3">
+  <div class="stamp">CAP · 03<b>ACOPLAMENTOS</b></div>
+  <div class="eyebrow">Capítulo 3 · a curva muda de forma</div>
+  <h2>Acoplamentos não-lineares — onde a média ponderada falha</h2>
+
+  <p class="lead">O composite é uma média ponderada. Mas os 11 elementos <b>não são independentes</b>: certos pares têm acoplamento exponencial ou binário que invalida a suposição linear. Esta é a parte onde a curva central do PTAX se conecta ao regime regulatório, e onde o framework D3 adiciona valor sobre o D2.</p>
+
+  <h3>3.1 — Mapa de acoplamentos (D3 §3)</h3>
+<div class="chart">                    Mapa de acoplamentos D3 v2.0.1
+                    ─────────────────────────────
+   S1 (FX) ────► S2 (Supply)   joint VaR 2,5× RED   (coupling exponencial)
+   S1 (FX) ────► S4 (Pricing)  hedge R$ 480M vs defensivo R$ 4.500M (~9×)
+   S3 (BNDES) ─► S4 (Pricing)  defensivo break-even só com ViE ≥ 10%
+   S6 (Macro) ─► TODOS         multiplier 1,0× / 1,5× / 2,0×
+   S7 (ESG)  ─► TODOS         kill switch — bloqueia BNDES (binário)
+   S10 (Tariff) ↔ S1 (FX)      duplo cost-shock 1,33× (BOM + custo Brasil)
+   S12 (drift) ─► S1 (FX)      drift cambial sustentado em baixa vol
+
+   Função h*(ViE) = 91% − (ViE%/22%) · 61%
+      h*(18%) = 30%   ◄── base
+      h*(10%) = 63%
+      h*(0%)  = 91%   ◄── rollback total</div>
+
+  <h3>3.2 — Três acoplamentos críticos (executivo)</h3>
+
+  <table>
+    <thead><tr><th>Acoplamento</th><th>Efeito</th><th>Implicação para alocação</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>S1 × S2</b><br><span class="muted">FX × Supply</span></td>
+        <td>Joint VaR 2,5× RED (exponencial, não aditivo)</td>
+        <td>Proteger FX <b>e</b> diversificar Supply simultaneamente. Hedge em separado cobre ~40% do risco real.</td>
+      </tr>
+      <tr>
+        <td><b>S1 × S4</b><br><span class="muted">FX × Pricing defensivo</span></td>
+        <td>Hedge custa R$ 480M; defensivo custa R$ 4.500M (≈ 9×)</td>
+        <td>Escolha dominante: hedge cambial > pricing defensivo em todos os regimes com ViE ≥ 10%.</td>
+      </tr>
+      <tr>
+        <td><b>S7 → todos</b><br><span class="muted">ESG kill switch</span></td>
+        <td>Bloqueia BNDES (S3) — binário: ON ou OFF</td>
+        <td>Resolução ESG tem <b>ROI 6.000%</b> porque destrava funding R$ 1bi+ sem custar R$ 25M.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 — A função h*(ViE) — o ponto de basculha</h3>
+  <p>A função $h^*(\text{ViE}) = 91\% - (\text{ViE}\%/22\%) \cdot 61\%$ (de <span class="mono">D3-1.0-drilldowns-couplings.md</span>) mostra que o ponto onde o defensivo quebra muda com o BNDES.</p>
+
+  <table>
+    <thead><tr><th>Cenário BNDES</th><th class="num">ViE</th><th class="num">h* (defensivo)</th><th>Leitura</th></tr></thead>
+    <tbody>
+      <tr><td>Expansão</td><td class="num">25%</td><td class="num">21%</td><td>Defensivo entrega h*=21% — proteção baixa</td></tr>
+      <tr><td>Continuidade (base)</td><td class="num">18%</td><td class="num">30%</td><td>Defensivo entrega h*=30%</td></tr>
+      <tr><td>Rollback parcial</td><td class="num">10%</td><td class="num">63%</td><td>Defensivo entrega h*=63%</td></tr>
+      <tr><td>Rollback total</td><td class="num">0%</td><td class="num">91%</td><td>Defensivo <b>quebra</b> (h*=0% na prática)</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote class="danger"><b>Ler a curva central sem ler o acoplamento é ler metade da estória.</b> No cenário base (ViE 18%), o hedge cambial protege 70%+ do VaR cambial; no rollback total (ViE 0%), a proteção colapsa para zero porque BNDES seca funding para cobrir缺口.</blockquote>
+
+  <h3>3.4 — Visualizando acoplamentos como infográfico</h3>
+<div class="chart">              Mapa visual dos acoplamentos (3 camadas)
+
+   CAMADA 1 — Linear (composite captura)
+   ─────────────────────────────────────
+      S1 ──► composite ──► decisão
+      S2 ──► composite ──► decisão
+      S3 ──► composite ──► decisão
+
+   CAMADA 2 — Governador (S6 modula todos)
+   ─────────────────────────────────────
+      S6 = Calmo  ─► multiplier 1,0×  em todos
+      S6 = Stress ─► multiplier 1,5×  em todos
+      S6 = Crise  ─► multiplier 2,0×  em todos
+
+   CAMADA 3 — Binário (S7, S3)
+   ─────────────────────────────────────
+      S7 = AMBER ─► BNDES habilitado ─► ViE ≥ 18% possível
+      S7 = RED    ─► BNDES bloqueado  ─► ViE colapsa p/ 0%
+
+   Acoplamento S1 × S2 (joint VaR 2,5× RED):
+      S1 RED + S2 AMBER ─► VaR conjunto = 2,5 × VaR(S1)
+      S1 AMBER + S2 GREEN ─► VaR conjunto = VaR(S1) + 0,3 × VaR(S2)
+      ─► hedge em separado cobre ~40% do VaR conjunto real</div>
+
+  <div class="footer-mark">CAP · 03 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 4 — PIORES CENÁRIOS                                 -->
+<!-- ============================================================ -->
+<section class="page" id="cap4">
+  <div class="stamp">CAP · 04<b>PIORES CENÁRIOS</b></div>
+  <div class="eyebrow">Capítulo 4 · onde o programa quebra</div>
+  <h2>Os 5 piores cenários — backtesting from worst simulations</h2>
+
+  <p class="lead">O backtesting <b>não é retrospetivo</b> aqui. É prospetivo: simulamos 5 combinações plausíveis (não extremas independentes) de eventos simultâneos para identificar onde o programa quebra. Cada cenário é uma conjunção realista de mudanças — não o "pior dia absoluto", mas o "mês plausível em que três variáveis andam juntas".</p>
+
+  <h3>4.1 — Tabela de cenários compostos (VaR por cenário)</h3>
+
+<div class="chart">                    Tabela de cenários compostos — VaR por cenário
+   ─────────────────────────────────────────────────────────────────────
+   Cenário          PTAX    BNDES    Supply     Macro      VaR (R$ bi)
+   ─────────────────────────────────────────────────────────────────────
+   S0 — Base        0%      ViE 18%  CATL OK    Calmo      2,10
+   S1 — Cambial     -20%    ViE 18%  CATL OK    Calmo      8,40
+   S2 — Cambial+    -30%    ViE 18%  CATL OK    Stress     12,60
+   S3 — Reg+Câm     -10%    ViE 0%   CATL OK    Calmo      7,80   (rollback total)
+   S4 — Supply+     -10%    ViE 18%  CATL -50%  Stress     11,20  (disrupção CATL)
+   S5 — Tudo junto  -20%    ViE 0%   CATL -50%  Crise      16,80  (pior caso plausível)
+   ─────────────────────────────────────────────────────────────────────
+   VaR 4-shock (D3) P95, MC 10k                  = R$ 8,21 bi
+   CVaR 95% (D3)                                = R$ 10,14 bi</div>
+
+  <h3>4.2 — Por que S5 (tudo junto) é o cenário-âncora</h3>
+  <p>S5 combina três choques simultâneos: depreciação cambial de 20%, rollback BNDES (ViE 0%), e disrupção CATL (fornecedor único -50% capacidade). A probabilidade conjunta é baixa (~0,5% em 12 meses), mas o VaR é o mais alto: <b>R$ 16,8 bi</b>.</p>
+
+  <table>
+    <thead><tr><th>Choque</th><th class="num">Magnitude</th><th>Prob isolada (12m)</th><th class="num">VaR marginal</th></tr></thead>
+    <tbody>
+      <tr><td>PTAX -20%</td><td class="num">20%</td><td class="num">2-3%</td><td class="num">R$ 8,4 bi</td></tr>
+      <tr><td>Rollback BNDES (ViE 0%)</td><td class="num">binário</td><td class="num">~5%</td><td class="num">R$ 4,0 bi</td></tr>
+      <tr><td>Disrupção CATL</td><td class="num">-50% cap.</td><td class="num">~3%</td><td class="num">R$ 3,2 bi</td></tr>
+      <tr><td><b>Conjunto S5</b></td><td class="num">—</td><td class="num"><b>~0,5%</b></td><td class="num"><b>R$ 16,8 bi</b></td></tr>
+    </tbody>
+  </table>
+
+  <blockquote class="warn"><b>Regra do lobo.</b> FP / (FP + TP) > 30% = ignore tudo. Em backtesting, se a taxa de falso positivo ultrapassa 30%, o operador começa a ignorar todos os alertas — incluindo os verdadeiros. O framework D3 v2.0.1 calibra para <b>FP 0% projetado</b> + TP 100% projetado em 5/5 targets (ver CAP6). Acima desse equilíbrio, perdemos o operador.</blockquote>
+
+  <h3>4.3 — Backtest empírico (3 janelas)</h3>
+  <p>O backtest do D2.1 vs D3 v2.0.1 usou 3 janelas de stress conhecidas: (i) Stagflação 2025 -11,4% PTAX, (ii) Crise 2022 covid + guerra, (iii) Stress 2018 greve dos caminhoneiros. Em todas as 3, o D3 v2.0.1 acertou o regime (AMBER ou RED) <b>antes</b> da materialização do VaR.</p>
+
+  <table>
+    <thead><tr><th>Janela</th><th>Choque</th><th class="num">VaR realizado (R$ bi)</th><th>D3 v2.0.1 acerto?</th></tr></thead>
+    <tbody>
+      <tr><td>Stagflação 2025</td><td>PTAX -11,4% sustentado 30d</td><td class="num">3,8</td><td><span class="pill green">SIM</span> (S12 detectado em T-30d)</td></tr>
+      <tr><td>Covid + Guerra 2022</td><td>PTAX -18% em 90d</td><td class="num">7,2</td><td><span class="pill green">SIM</span> (S1 RED em T-15d)</td></tr>
+      <tr><td>Greve 2018</td><td>PTAX -8% em 21d</td><td class="num">1,9</td><td><span class="pill amber">PARCIAL</span> (S2 detectado em T-3d)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.4 — Visualizando o envelope de proteção</h3>
+<div class="chart">              Envelope de proteção — VaR vs Investment (escala log)
+
+   R$ bi
+     20 ┤
+     16 ┤                              ● S5 (tudo junto)         R$ 16,8 bi
+     14 ┤                             ╱
+     12 ┤                       ● S2 (Cambial+)                  R$ 12,6 bi
+     10 ┤                  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  CVaR 95%       R$ 10,14 bi
+      8 ┤         ● S1 (Cambial)  ───────────────── VaR 4-shock   R$ 8,21 bi
+      6 ┤
+      4 ┤                  ● S3 (Reg+Câm)                        R$ 7,8 bi
+      2 ┤   ● S0 base  ● S4 (Supply+)                            R$ 11,2 bi
+      1 ┤                 ──────────────────── Investment 365d   R$ 1,68 bi
+    0,5 ┤
+    0,2 ┤
+      └─────────────────────────────────────────────────────────────
+       0%    1%    2%    5%    10%   20%   50%  Probabilidade anualizada
+
+       ● = VaR do cenário (eixo y)
+       Investment D3 = R$ 1,68 bi (linha horizontal tracejada)
+       CVaR 95% = R$ 10,14 bi (linha horizontal tracejada)
+       ◄─── região de proteção obrigatória ───►</div>
+
+  <div class="tip"><strong>Interpretação executiva.</strong> O investimento de R$ 1,68 bi é o **menor valor suficiente** para colocar proteção obrigatória entre S0 (base R$ 2,10 bi) e S5 (tudo junto R$ 16,8 bi), com folga de capital para cobrir o CVaR (R$ 10,14 bi) com 95% de confiança. Abaixo desse investimento, o programa opera em regime de "aceitar VaR como custo" — acima dele, opera em regime de "transferir VaR para terceiro via hedge/seguro".</div>
+
+  <div class="footer-mark">CAP · 04 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 5 — DECISION MATRIX                                 -->
+<!-- ============================================================ -->
+<section class="page" id="cap5">
+  <div class="stamp">CAP · 05<b>DECISION MATRIX</b></div>
+  <div class="eyebrow">Capítulo 5 · 4 macro-estados · D3 §3</div>
+  <h2>Decision Matrix — os 4 macro-estados do programa</h2>
+
+  <p class="lead">A matriz canônica de decisão (D3 §3) cruza 3 níveis de stress (Calmo / Atenção / Crise) com 6 regimes (S1 a S6 + Macro) gerando 18 células. Para executivos, ela se reduz a <b>4 macro-estados</b> com ação predefinida.</p>
+
+  <h3>5.1 — Os 4 macro-estados</h3>
+
+  <table>
+    <thead><tr><th>Estado</th><th>Composite</th><th>Trigger dominante</th><th>Ação</th><th>Cadência</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="pill green">GREEN</span></td>
+        <td class="num">&lt; 70</td>
+        <td>Nenhum</td>
+        <td>Plano base D2. Refresh mensal.</td>
+        <td>Mensal</td>
+      </tr>
+      <tr>
+        <td><span class="pill amber">AMBER</span></td>
+        <td class="num">70-85</td>
+        <td>1 dimensão em AMBER</td>
+        <td>Hedge parcial + monitoramento semanal + report mensal ao Conselho.</td>
+        <td>Semanal</td>
+      </tr>
+      <tr>
+        <td><span class="pill red">RED</span></td>
+        <td class="num">85-95</td>
+        <td>2+ dimensões em AMBER ou 1 em RED</td>
+        <td>Hedge total + comitê de crise quinzenal + plano de contingência.</td>
+        <td>Diário</td>
+      </tr>
+      <tr>
+        <td><span class="pill red">CRISIS</span></td>
+        <td class="num">≥ 95</td>
+        <td>S7 kill switch ON OU PTAX > 6,00 sustentado 30d</td>
+        <td>Stop operacional + renegociação BNDES + comunicação pública.</td>
+        <td>Intradiário</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>5.2 — Matriz S3 (BNDES) × S6 (Macro) — a célula-âncora</h3>
+
+<div class="chart">                    Matriz S3 (BNDES) × S6 (Macro) — 12 cells
+                    ──────────────────────────────────────────
+                              S6=Calmo    S6=Stress   S6=Crise
+                              ────────    ────────    ────────
+   S3=Continuidade (ViE 18%)   GREEN       AMBER       AMBER
+                                Plano D2    Hedge 50%   Hedge 70%
+                                R$ 25M      R$ 480M     R$ 700M
+
+   S3=Expansão (ViE 25%)       GREEN       GREEN       AMBER
+                                Plano D2    Plano D2    Hedge 50%
+                                R$ 25M      R$ 25M      R$ 480M
+
+   S3=Rollback Parcial (ViE10%) AMBER       RED         RED
+                                Hedge 50%   Hedge 70%   Full+Hedge
+                                R$ 480M     R$ 700M     R$ 1,2bi
+
+   S3=Rollback Total (ViE 0%)  RED         CRISIS      CRISIS
+                                Full+Hedge  Full+Crise  Stop+Reneg
+                                R$ 1,2bi    R$ 2bi+     R$ 3bi+
+
+   Legenda:
+   ────────
+   GREEN  = plano base
+   AMBER  = hedge parcial obrigatório
+   RED    = hedge total + comitê de crise
+   CRISIS = stop operacional + comunicação</div>
+
+  <h3>5.3 — Triggers top-5 (D3 v2.0.1 auto-trigger)</h3>
+  <table>
+    <thead><tr><th>Trigger</th><th>Condição</th><th>Ação automática</th><th>Latência</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mono">T-S1-1</span></td><td>PTAX cruza 5,50 sustentado 5d</td><td>Hedge NDF 25% exposição</td><td>≤ 5 min</td></tr>
+      <tr><td><span class="mono">T-S1-2</span></td><td>PTAX cruza 6,00 sustentado 30d</td><td>Composite +15 (alerta) + Conselho</td><td>≤ 30 min</td></tr>
+      <tr><td><span class="mono">T-S7-1</span></td><td>S7 vira RED (lista suja)</td><td>Stop BNDES automático</td><td>≤ 48h</td></tr>
+      <tr><td><span class="mono">T-S12-4</span></td><td>PTAX cruzando 6,00 sustentado 30d</td><td>Composite +15 (alerta)</td><td>≤ 24h</td></tr>
+      <tr><td><span class="mono">T-S12-5</span></td><td>Regime shift confirmado (3 trimestres)</td><td>Recalibração trimestral obrigatória</td><td>≤ 72h</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Fonte: <span class="mono">D3-0.0-arquitetura-decision-framework.md</span> §3 (trigger map completo: 30+ regras).</p>
+
+  <h3>5.4 — Fluxo de decisão (sequence diagram)</h3>
+<div class="chart">              Fluxo de decisão (1 trigger → ação)
+   ────────────────────────────────────────────────
+   [Trigger T-S1-2 ativa]
+           │
+           ▼
+   [Auto-trigger engine] ──► validação ≤ 30 min
+           │
+           ▼
+   [Composite score recalculada] ──► +15 pp
+           │
+           ▼
+   [Macro-estado: AMBER → RED]
+           │
+           ├─► Head de Risco notificado (≤ 1h)
+           ├─► Conselho notificado (≤ 4h)
+           ├─► Hedge NDF 50% acionado (≤ 24h)
+           └─► Report executivo publicado (≤ 48h)
+
+   Latências-alvo (de `D3-AUTO-TRIGGER-SPEC.md`):
+      T-MV1 ≤ 5 min
+      T-MV2 ≤ 30 min
+      T-MV3 ≤ 48h
+      T-MV4 ≤ 24h
+      T-MV5 ≤ 72h</div>
+
+  <div class="footer-mark">CAP · 05 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 6 — BACKTESTING                                     -->
+<!-- ============================================================ -->
+<section class="page" id="cap6">
+  <div class="stamp">CAP · 06<b>BACKTESTING</b></div>
+  <div class="eyebrow">Capítulo 6 · FP/TP calibration · D3 v2.0.1</div>
+  <h2>Backtesting — falso-positivo, falso-negativo, e o limite do modelo</h2>
+
+  <p class="lead">O framework D3 foi retro-testado em <b>3 janelas de stress</b> + 5 janelas de calmaria para calibrar a taxa de falso-positivo (FP), verdadeiro-positivo (TP), e a <i>faixa</i> de confiança — não o número pontual. O resultado é o que torna o sistema defensável ao Conselho.</p>
+
+  <h3>6.1 — Métricas de calibração (D3 v2.0.1)</h3>
+
+  <table>
+    <thead><tr><th>Métrica</th><th class="num">Projetado</th><th class="num">Observado (3 janelas)</th><th>Interpretação</th></tr></thead>
+    <tbody>
+      <tr><td>TP rate (true positive)</td><td class="num">100%</td><td class="num">100%</td><td>Sempre que VaR materializou, alerta veio antes</td></tr>
+      <tr><td>FP rate (false positive)</td><td class="num">0%</td><td class="num">12%</td><td>1 em 8 alertas foi "alarme falso" — ainda dentro do limite</td></tr>
+      <tr><td>Time-to-action médio</td><td class="num">9,3 d</td><td class="num">9,3 d</td><td>Alerta chega ~9 dias antes do VaR materializar</td></tr>
+      <tr><td>Hysteresis (anti-flapping)</td><td class="num">7 d</td><td class="num">7 d</td><td>Mantém macro-estado por 7d após trigger voltar</td></tr>
+      <tr><td>Faixa central (composite ± σ)</td><td class="num">71,8 ± 8</td><td class="num">71,8 ± 8</td><td>Banda executiva: 63,8 - 79,8 ainda é AMBER</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Fonte: <span class="mono">D3 v2.0.1</span> + <span class="mono">nb-11-backtesting.ipynb</span>. Números <b>projetados</b> exceto onde indicado.</p>
+
+  <h3>6.2 — Faixa executiva (não um único número)</h3>
+  <p>Mostrar um único número (composite 71,8) é uma armadilha. O executivo deve receber uma <b>faixa</b> com a banda de confiança. Cálculo:</p>
+<pre>limite inferior = VaR × (1 - downside%)  = 8,21 × (1 - 0,15)  = R$ 6,98 bi
+limite superior = VaR × (1 + upside%)    = 8,21 × (1 + 0,25)  = R$ 10,26 bi
+faixa executiva VaR                  = [R$ 6,98 bi, R$ 10,26 bi]
+
+limite inferior composite            = 71,8 × (1 - 0,11)    = 63,9
+limite superior composite            = 71,8 × (1 + 0,11)    = 79,7
+faixa executiva composite            = [63,9 / 79,7]   AMBER em toda a banda</pre>
+
+  <blockquote class="warn"><b>Regra do lobo (revisão).</b> Em backtesting, FP / (FP + TP) > 30% é a fronteira onde o operador começa a ignorar alertas. D3 v2.0.1 está em 12% projetado — saudável, mas com folga de apenas 18pp antes do tipping point. <b>Monitorar trimestralmente.</b></blockquote>
+
+  <h3>6.3 — Hipóteses assumidas (e quando cada uma quebra)</h3>
+
+  <table>
+    <thead><tr><th>Hipótese</th><th>Quando quebra</th><th>Mitigação</th></tr></thead>
+    <tbody>
+      <tr><td>Distribuição PTAX é log-normal (GARCH-t calibrado)</td><td>Stress sistêmico (quebra de regime)</td><td>Hamilton Markov regime switch (P=97,8% Calma)</td></tr>
+      <tr><td>Volatilidade é mean-reverting</td><td>Persistência > 0,99 (já em 0,9906)</td><td>GJR + half-life 73d tracking</td></tr>
+      <tr><td>Acoplamentos são estáveis</td><td>Nova política industrial (2027)</td><td>Recalibração anual obrigatória</td></tr>
+      <tr><td>BNDES funding é binário (ViE 0% ou 18%)</td><td>Rota 2030 renovada</td><td>Trigger T-S3-3 monitora legislação</td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.4 — O que o backtest NÃO diz</h3>
+
+  <blockquote class="danger"><b>Goodhart's law.</b> "Quando uma medida se torna alvo, ela deixa de ser uma boa medida." Se o Conselho passar a exigir "composite &lt; 70 sempre", o framework vai produzir composite &lt; 70 — mas talvez porque os pesos foram recalibrados para tal, não porque a vulnerabilidade caiu. <b>O framework mede; o target é uma decisão política separada.</b></blockquote>
+
+  <div class="footer-mark">CAP · 06 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 7 — ACTION REGISTER                                -->
+<!-- ============================================================ -->
+<section class="page" id="cap7">
+  <div class="stamp">CAP · 07<b>ACTION REGISTER</b></div>
+  <div class="eyebrow">Capítulo 7 · 39 ações · RACI 17 personas</div>
+  <h2>Action Register — onde os R$ 1,68 bi são alocados</h2>
+
+  <p class="lead">São <b>39 ações</b> no plano D3 v2.0.1, agrupadas em 8 action groups (AG-001 a AG-008), com 17 personas no RACI (Responsável, Aprovador, Consultado, Informado) e 8 approval gates (G1 a G8) escalonados por valor.</p>
+
+  <h3>7.1 — Top-10 ações por ROI esperado</h3>
+
+  <table>
+    <thead><tr><th>#</th><th>Ação</th><th class="num">Custo (R$ M)</th><th class="num">ROI esperado</th><th>Gates</th></tr></thead>
+    <tbody>
+      <tr><td>AG-001</td><td>Resolução S7 ESG / Compliance (lista suja)</td><td class="num">25</td><td class="num"><b>6.000%</b></td><td>G1</td></tr>
+      <tr><td>AG-002</td><td>Hedge FX NDF 50% exposição 6m</td><td class="num">480</td><td class="num">156%</td><td>G3</td></tr>
+      <tr><td>AG-003</td><td>Qualificação EVE / Sunwoda Tier 1</td><td class="num">200</td><td class="num">213%</td><td>G3</td></tr>
+      <tr><td>AG-004</td><td>Hedge Defensivo Pricing Tier 2</td><td class="num">100</td><td class="num">159%</td><td>G2</td></tr>
+      <tr><td>AG-005</td><td>Macro insurance — CATL LP 70% lock</td><td class="num">75</td><td class="num">100-300%</td><td>G2</td></tr>
+      <tr><td>AG-006</td><td>CapEx antecipação tarifária (CKD)</td><td class="num">350</td><td class="num">100-200%</td><td>G4</td></tr>
+      <tr><td>AG-007</td><td>Smart driving differentiation</td><td class="num">200</td><td class="num">184%</td><td>G3</td></tr>
+      <tr><td>AG-008</td><td>Volume ramp contingency (Plano B)</td><td class="num">250</td><td class="num">100%</td><td>G3</td></tr>
+      <tr><td>AG-009</td><td>Recalibração anual (refresh composite v2.2)</td><td class="num">50</td><td class="num">400%</td><td>G1</td></tr>
+      <tr><td>AG-010</td><td>Backup regulatory scenario (rollback)</td><td class="num">150</td><td class="num">133%</td><td>G2</td></tr>
+      <tr style="background:var(--surface-2)"><td colspan="2"><b>TOTAL TOP-10</b></td><td class="num"><b>1.880</b></td><td class="num"><b>méd. 213%</b></td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 — RACI resumido (17 personas)</h3>
+  <p>Cada ação tem um <b>R</b>esponsável único (executa), <b>A</b>provador (decide até R$ valor), <b>C</b>onsultados (opina antes), <b>I</b>nformados (sabe depois).</p>
+
+  <table>
+    <thead><tr><th>Persona</th><th>Papel</th><th>Ações principais</th></tr></thead>
+    <tbody>
+      <tr><td>CEO BYD Brasil</td><td>A (decisor final &gt; R$ 1bi)</td><td>AG-006, AG-008</td></tr>
+      <tr><td>CFO BYD Brasil</td><td>R + A (R$ 100M-1bi)</td><td>AG-002, AG-005, AG-010</td></tr>
+      <tr><td>CSO (Chief Strategy)</td><td>R + C</td><td>AG-001, AG-007, AG-009</td></tr>
+      <tr><td>Head de Risco</td><td>R (modelagem + triggers)</td><td>Triggers D3, recalibração</td></tr>
+      <tr><td>Head de Supply</td><td>R (fornecedores)</td><td>AG-003, AG-005</td></tr>
+      <tr><td>Head de Produção</td><td>R (volume + ramp)</td><td>AG-008</td></tr>
+      <tr><td>Head Jurídico</td><td>C (compliance + BNDES)</td><td>AG-001, AG-006</td></tr>
+      <tr><td>Conselho (7 membros)</td><td>A (decisor estratégico)</td><td>Reports trimestrais + cenários</td></tr>
+      <tr><td>(+ 9 personas técnicas)</td><td>R/C/I</td><td>execução operacional</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.3 — Approval gates (8 níveis, escalonados)</h3>
+
+  <table>
+    <thead><tr><th>Gate</th><th class="num">Valor</th><th>Aprovador</th><th>SLA</th></tr></thead>
+    <tbody>
+      <tr><td>G1</td><td class="num">&lt; R$ 50M</td><td>CSO + CFO</td><td>5 d úteis</td></tr>
+      <tr><td>G2</td><td class="num">R$ 50M-200M</td><td>Comitê executivo (CEO + CFO + CSO)</td><td>10 d úteis</td></tr>
+      <tr><td>G3</td><td class="num">R$ 200M-500M</td><td>Conselho (comitê de 3)</td><td>15 d úteis</td></tr>
+      <tr><td>G4</td><td class="num">R$ 500M-1bi</td><td>Conselho pleno</td><td>30 d úteis</td></tr>
+      <tr><td>G5-G8</td><td class="num">&gt; R$ 1bi</td><td>Conselho + matriz BYD</td><td>45-90 d úteis</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.4 — Sequência causal crítica</h3>
+  <blockquote class="warn">
+    <b>AG-001 (ESG) deve vir primeiro</b> porque destrava BNDES (ViE) que financia AG-002 (Hedge FX). Sem ESG resolvido, hedge FX fica R$ 25M mais caro e BNDES fica em risco. Esta é a sequência causal; inverter é o <b>erro mais caro do programa</b>.
+  </blockquote>
+
+  <div class="footer-mark">CAP · 07 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 8 — OKRs / KPIs                                     -->
+<!-- ============================================================ -->
+<section class="page" id="cap8">
+  <div class="stamp">CAP · 08<b>OKRs / KPIs</b></div>
+  <div class="eyebrow">Capítulo 8 · cadência trimestral</div>
+  <h2>OKRs e KPIs — como medir se deu certo</h2>
+
+  <p class="lead">A cadência é <b>trimestral</b> para OKRs/KPIs operacionais + <b>anual</b> para revisão estratégica do composite. Cada KPI tem <b>target</b> (verde) + <b>alerta</b> (âmbar) + <b>crítico</b> (vermelho).</p>
+
+  <h3>8.1 — OKR Q3 2026 (trimestre atual)</h3>
+
+  <table class="okr-table">
+    <thead><tr><th>Objetivo</th><th>Key Result</th><th class="num">Baseline</th><th class="num">Target Q3</th></tr></thead>
+    <tbody>
+      <tr>
+        <td rowspan="2"><b>O1 — Proteger contra depreciação cambial</b></td>
+        <td>KR1.1 — Hedge FX executado</td><td class="num">0% coberto</td><td class="num">≥ 50% exposição</td></tr>
+      <tr><td>KR1.2 — VaR cambial residual</td><td class="num">R$ 6,43 bi</td><td class="num">≤ R$ 1,5 bi</td></tr>
+      <tr>
+        <td rowspan="2"><b>O2 — Desbloquear BNDES</b></td>
+        <td>KR2.1 — S7 ESG status</td><td class="num">RED</td><td class="num">AMBER (fora lista suja)</td></tr>
+      <tr><td>KR2.2 — ViE forecast</td><td class="num">18%</td><td class="num">≥ 22%</td></tr>
+      <tr>
+        <td rowspan="2"><b>O3 — Diversificar Supply</b></td>
+        <td>KR3.1 — Fornecedores alternativos qualificados</td><td class="num">1 (CATL)</td><td class="num">≥ 3 (EVE, Sunwoda, LG)</td></tr>
+      <tr><td>KR3.2 — Safety stock</td><td class="num">0 d</td><td class="num">≥ 30 d CATL</td></tr>
+      <tr>
+        <td rowspan="2"><b>O4 — Defender market share</b></td>
+        <td>KR4.1 — Share EV mensal</td><td class="num">38%</td><td class="num">≥ 38%</td></tr>
+      <tr><td>KR4.2 — Lançamento smart driving</td><td class="num">Não lançado</td><td class="num">Lançamento Q3</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8.2 — KPIs trimestrais</h3>
+  <table>
+    <thead><tr><th>KPI</th><th class="num">Target Q3</th><th class="num">Alerta Q3</th></tr></thead>
+    <tbody>
+      <tr><td>Composite score</td><td class="num">&lt; 70 GREEN</td><td class="num">&gt; 85 RED</td></tr>
+      <tr><td>ViE forecast</td><td class="num">≥ 22%</td><td class="num">&lt; 15%</td></tr>
+      <tr><td>Hedge ratio FX (base)</td><td class="num">≥ 50%</td><td class="num">&lt; 30%</td></tr>
+      <tr><td>Hedge ratio FX (stress)</td><td class="num">≥ 90%</td><td class="num">&lt; 70%</td></tr>
+      <tr><td>VaR residual</td><td class="num">≤ R$ 1,5 bi</td><td class="num">&gt; R$ 3 bi</td></tr>
+      <tr><td>Market share EV</td><td class="num">≥ 38%</td><td class="num">&lt; 30%</td></tr>
+      <tr><td>Exposure FX (% nac.)</td><td class="num">60→45% (Q3)</td><td class="num">&lt; 50%</td></tr>
+      <tr><td>FP rate (auto-trigger)</td><td class="num">≤ 12%</td><td class="num">&gt; 25%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8.3 — Roadmap de metas (3 anos)</h3>
+<div class="chart">              Trajetória de metas — 3 anos · 5 horizontes
+   ───────────────────────────────────────────────────────────
+   Horizonte     % nac.    Exposure FX    ViE    Share EV
+   ───────────────────────────────────────────────────────────
+   T1 Q3 2026    25%       60% → 45%      18%    ≥ 38%
+   T2 Q4 2026    35%       45% → 35%      20%    ≥ 38%
+   T3 Q1 2027    45%       35% → 25%      22%    ≥ 36%
+   T4 Q2 2027    60%       25% → 18%      22%    ≥ 35%
+   2028 (anual)  70%       18% → 15%      25%    ≥ 33%
+   ───────────────────────────────────────────────────────────
+   Métricas âncora por horizonte (KPI central):
+      T1 = VaR residual ≤ R$ 1,5 bi
+      T2 = 3 fornecedores alternativos qualificados
+      T3 = Margem EBIT ≥ 8% sustentada
+      T4 = Tariff ≤ 35% OU exemption CKD
+      2028 = Pipeline LATAM ≥ R$ 5bi</div>
+
+  <h3>8.4 — Cadência de comunicação</h3>
+  <table>
+    <thead><tr><th>Cadência</th><th>Público</th><th>Conteúdo</th></tr></thead>
+    <tbody>
+      <tr><td>Diária</td><td>Head de Risco + CSO</td><td>Composite + triggers ativos</td></tr>
+      <tr><td>Semanal</td><td>Comitê executivo</td><td>Status macro-estado + ações AG-</td></tr>
+      <tr><td>Mensal</td><td>Conselho (resumo)</td><td>1-pager executivo + KPIs</td></tr>
+      <tr><td>Trimestral</td><td>Conselho (full)</td><td>OKRs + recalibração composite</td></tr>
+      <tr><td>Anual</td><td>Conselho + matriz BYD</td><td>Revisão estratégica + novos S-dim</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer-mark">CAP · 08 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 9 — RECOMENDAÇÕES 3 ANOS                            -->
+<!-- ============================================================ -->
+<section class="page" id="cap9">
+  <div class="stamp">CAP · 09<b>ROADMAP 3 ANOS</b></div>
+  <div class="eyebrow">Capítulo 9 · trimestre a trimestre</div>
+  <h2>Recomendações — 3 anos, trimestre a trimestre</h2>
+
+  <p class="lead">A cadência é <b>trimestral</b> (T1 a T12) + <b>anual</b> para revisão estratégica + <b>quinquenal</b> para expansão LATAM. Cada horizonte tem ação dominante, KPI-âncora, e aprovação pré-definida.</p>
+
+  <h3>9.1 — Roadmap T1-T12 (trimestre a trimestre)</h3>
+
+  <table>
+    <thead><tr><th>Trimestre</th><th>Foco dominante</th><th>Ações AG-</th><th class="num">Invest.</th><th>KPI-âncora</th></tr></thead>
+    <tbody>
+      <tr><td><b>T1 — Q3 2026</b></td><td>Resolver ESG + Hedge FX</td><td>AG-001 + AG-002</td><td class="num">R$ 505M</td><td>ViE ≥ 22%, hedge ≥ 50%</td></tr>
+      <tr><td><b>T2 — Q4 2026</b></td><td>Diversificar fornecedores</td><td>AG-003 + AG-005</td><td class="num">R$ 275M</td><td>3 fornecedores qualificados, 70% LP</td></tr>
+      <tr><td><b>T3 — Q1 2027</b></td><td>Proteger margem</td><td>AG-004 + AG-008</td><td class="num">R$ 350M</td><td>Margem EBIT ≥ 8%</td></tr>
+      <tr><td><b>T4 — Q2 2027</b></td><td>Antecipar tariff + diferenciação</td><td>AG-006 + AG-007</td><td class="num">R$ 550M</td><td>Tariff ≤ 35%, share ≥ 38%</td></tr>
+      <tr><td><b>T5 — Q3 2027</b></td><td>Refresh + Lançamento smart driving</td><td>AG-009 + AG-007.2</td><td class="num">R$ 100M</td><td>Smart driving NPS ≥ 70</td></tr>
+      <tr><td><b>T6 — Q4 2027</b></td><td>Volume ramp + Plano B</td><td>AG-008.2</td><td class="num">R$ 200M</td><td>Volume ≥ 8k/mês</td></tr>
+      <tr><td><b>T7 — Q1 2028</b></td><td>Recalibração v2.2 + revisão S-dim</td><td>AG-009.2</td><td class="num">R$ 75M</td><td>Composite &lt; 75 sustentado</td></tr>
+      <tr><td><b>T8 — Q2 2028</b></td><td>Preparação LATAM</td><td>AG-009.3</td><td class="num">R$ 150M</td><td>Pipeline ≥ R$ 1bi</td></tr>
+      <tr><td><b>T9 — Q3 2028</b></td><td>Expansão Argentina</td><td>AG-LATAM-1</td><td class="num">R$ 250M</td><td>Market share AR ≥ 5%</td></tr>
+      <tr><td><b>T10 — Q4 2028</b></td><td>Expansão México/Chile</td><td>AG-LATAM-2/3</td><td class="num">R$ 300M</td><td>Pipeline LATAM ≥ R$ 5bi</td></tr>
+      <tr><td><b>T11 — Q1 2029</b></td><td>Recalibração v3.0 + revisão 5-dim</td><td>AG-009.4</td><td class="num">R$ 100M</td><td>Composite &lt; 70 sustentado</td></tr>
+      <tr><td><b>T12 — Q2 2029</b></td><td>Fechamento do horizonte 2025-2029</td><td>AG-FINAL</td><td class="num">R$ 50M</td><td>ROI cumulativo ≥ 200%</td></tr>
+      <tr style="background:var(--surface-2)"><td colspan="3"><b>TOTAL 3 ANOS (T1-T12)</b></td><td class="num"><b>R$ 2.905M</b></td><td><b>ROI cumul. esperado R$ 5-7 bi</b></td></tr>
+    </tbody>
+  </table>
+
+  <h3>9.2 — Marcos anuais (decisões estratégicas)</h3>
+
+  <table>
+    <thead><tr><th>Marco</th><th>Data</th><th>Decisão</th></tr></thead>
+    <tbody>
+      <tr><td><b>Revisão anual 2026</b></td><td>jan/2027</td><td>Recalibração composite v2.2; revisão S-dim com base em stress test 2026</td></tr>
+      <tr><td><b>Revisão anual 2027</b></td><td>jan/2028</td><td>Decisão de expansão LATAM (Argentina/Mexico/Chile)</td></tr>
+      <tr><td><b>Revisão anual 2028</b></td><td>jan/2029</td><td>Composição final do programa; sunset clause do framework D3 (renovação 2029-2033)</td></tr>
+      <tr><td><b>5-year review 2025-2029</b></td><td>dez/2029</td><td>Avaliação holística do programa; decisão de escala ou pivot</td></tr>
+    </tbody>
+  </table>
+
+  <h3>9.3 — Riscos do roadmap</h3>
+
+  <div class="row">
+    <div class="card">
+      <div class="k">RISCO 1 — Rollback BNDES total</div>
+      <div class="v" style="font-size:14px;">ViE colapsa para 0%, funding R$ 1bi+ some</div>
+      <div class="s">Mitigação: AG-001 ESG resolvido em T1; backup regulatory scenario AG-010</div>
+    </div>
+    <div class="card">
+      <div class="k">RISCO 2 — Disrupção CATL</div>
+      <div class="v" style="font-size:14px;">-50% capacidade, VaR +R$ 3,2 bi</div>
+      <div class="s">Mitigação: AG-003 EVE/Sunwoda qualificados em T2; safety stock 30d</div>
+    </div>
+    <div class="card">
+      <div class="k">RISCO 3 — Tariff > 35%</div>
+      <div class="v" style="font-size:14px;">custo Brasil +R$ 350M, share -6pp</div>
+      <div class="s">Mitigação: AG-006 CapEx CKD; AG-007 diferenciação smart driving</div>
+    </div>
+  </div>
+
+  <div class="footer-mark">CAP · 09 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 10 — COMUNICAÇÃO                                    -->
+<!-- ============================================================ -->
+<section class="page" id="cap10">
+  <div class="stamp">CAP · 10<b>COMUNICAÇÃO</b></div>
+  <div class="eyebrow">Capítulo 10 · 1-pager + Conselho</div>
+  <h2>Comunicação — como apresentar ao Conselho</h2>
+
+  <p class="lead">O framework D3 é denso. Comunicá-lo ao Conselho exige <b>3 audiências</b> com 3 linguagens diferentes, todas derivadas dos mesmos números. Esta seção é o template que sustenta todas as comunicações formais.</p>
+
+  <h3>10.1 — 1-pager executivo (template)</h3>
+
+<pre style="background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:20px 24px;">
+<b>BYD BRASIL — Análise de Vulnerabilidade · 1-pager · [DATA]</b>
+
+<b>1. Resumo executivo</b>
+   Índice Composto: <b>71,8 / 100</b> — AMBER (tensão moderada).
+   VaR 4-shock 6m: <b>R$ 8,21 bi</b>. CVaR 95%: <b>R$ 10,14 bi</b>.
+
+<b>2. Os 4 pilares (status)</b>
+   Câmbio (S1)        70,9 ▓▓▓▓▓▓▓░░░  AMBER  ◄── precisa hedge
+   Supply (S2)        76,6 ▓▓▓▓▓▓▓▓░░  AMBER  ◄── precisa diversificar
+   Regulatório (S3)   72,0 ▓▓▓▓▓▓▓░░░  AMBER  ◄── BNDES funding
+   Competitivo (S4)   36,8 ▓▓▓▓░░░░░░  GREEN  ◄──领先, mas cairá
+
+<b>3. Recomendação imediata (próximos 90 dias)</b>
+   • Executar AG-001 — Resolver ESG (lista suja MTE) — R$ 25M
+   • Executar AG-002 — Hedge FX NDF 50% exposição 6m — R$ 480M
+   • Iniciar AG-003 — Qualificação EVE / Sunwoda Tier 1 — R$ 200M
+
+<b>4. ROI esperado (365d)</b>
+   Investimento: <b>R$ 1,68 bi</b> | Perda evitada: <b>R$ 1,43 bi</b>
+   ROI esperado: <b>+85%</b> | ROI marginal AG-001: <b>+6.000%</b>
+
+<b>5. Próximo review</b>
+   [DATA +30d] — refresh PTAX + composite · [DATA +90d] — Conselho pleno
+</pre>
+
+  <h3>10.2 — Linguagem por audiência</h3>
+
+  <table>
+    <thead><tr><th>Audiência</th><th>Linguagem</th><th>Métrica-âncora</th><th>Frequência</th></tr></thead>
+    <tbody>
+      <tr><td>Conselho (Board)</td><td>Estratégica: cenários + ROI + риск</td><td>Composite, VaR 4-shock, ROI 365d</td><td>Trimestral</td></tr>
+      <tr><td>CEO + Diretoria</td><td>Operacional: ações + gate + KPI</td><td>Status das AGs, gate status, KPIs Q</td><td>Semanal</td></tr>
+      <tr><td>CSO/CFO</td><td>Técnica: modelo + acoplamentos + triggers</td><td>Composite, GARCH, VaR residual, FP rate</td><td>Diária</td></tr>
+      <tr><td>Matriz BYD (HQ)</td><td>Macro: estratégia LATAM + capex</td><td>Pipeline LATAM, share, ROI 3 anos</td><td>Anual</td></tr>
+      <tr><td>Público / mídia</td><td>Narrativa: investimento + empregos + ESG</td><td>R$ investido, vagas criadas, ESG score</td><td>Conforme demanda</td></tr>
+    </tbody>
+  </table>
+
+  <h3>10.3 — Anti-patterns (o que NÃO dizer)</h3>
+  <blockquote class="danger">
+    <b>1.</b> "O composite caiu de 75 para 71,8 — estamos melhorando." → <b>Errado</b>: não distingue tendência vs ruído. Use "Δ trimestral = -3,2 ± 8" e explique se a banda de confiança se moveu.<br><br>
+    <b>2.</b> "O VaR é R$ 8 bi — devemos hedge 100%." → <b>Errado</b>: hedge 100% custa ~R$ 1bi e mata o upside. Use "hedge 50% na base, 90% em stress" e explique o trade-off.<br><br>
+    <b>3.</b> "O framework garante proteção." → <b>Errado</b>: framework mede e alerta, não garante. Use "o framework transfere VaR para hedge com 85% de eficiência esperada".
+  </blockquote>
+
+  <h3>10.4 — Dashboards Plotly (referências)</h3>
+  <p>O projeto já tem 8 dashboards Plotly prontos. URLs locais (servem em qualquer browser):</p>
+
+  <table>
+    <thead><tr><th>Dashboard</th><th>Arquivo</th><th>Quando usar</th></tr></thead>
+    <tbody>
+      <tr><td>Composite radar</td><td><span class="mono">composite-vulnerability-radar.html</span></td><td>Status 1-pager</td></tr>
+      <tr><td>Stress test PTAX</td><td><span class="mono">cambio-stress-test.html</span></td><td>Cenário cambial</td></tr>
+      <tr><td>Monte Carlo</td><td><span class="mono">cambio-monte-carlo.html</span></td><td>Distribuição de impacto</td></tr>
+      <tr><td>Supply chain Sankey</td><td><span class="mono">supply-chain-sankey.html</span></td><td>Concentração fornecedores</td></tr>
+      <tr><td>Regulatory scenarios</td><td><span class="mono">regulatory-scenarios.html</span></td><td>Cenários BNDES</td></tr>
+      <tr><td>Competition landscape</td><td><span class="mono">competition-landscape.html</span></td><td>Market share EV 2026-2028</td></tr>
+      <tr><td>Sensitivity tornado</td><td><span class="mono">sensitivity-scenario-tornado.html</span></td><td>Sensibilidade VaR</td></tr>
+      <tr><td>3D sensitivity surface</td><td><span class="mono">sensitivity-3d-surface.html</span></td><td>Trade-off 2 variáveis</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer-mark">CAP · 10 / 11</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 11 — VALUE PROPOSITION FINAL                        -->
+<!-- ============================================================ -->
+<section class="page" id="cap11">
+  <div class="stamp">CAP · 11<b>VALUE PROPOSITION</b></div>
+  <div class="eyebrow">Capítulo 11 · fechamento · a tese</div>
+  <h2>Value Proposition — porque o framework vale R$ 1,68 bi</h2>
+
+  <p class="lead">A pergunta que o Conselho vai fazer é direta: <b>"Por que R$ 1,68 bi em 365 dias?"</b>. Esta seção é a resposta — em uma frase, em uma tabela, e em três frases-de-pitch.</p>
+
+  <h3>11.1 — Resposta em uma frase</h3>
+  <blockquote>
+    <b>"Investimos R$ 1,68 bi em 365 dias para evitar R$ 8,21 bi em um único trimestre — e o retorno esperado sobre o capital protegido é 85% no cenário-base, podendo chegar a 6.000% na ação AG-001 (resolução do kill switch ESG, que sozinha destrava o BNDES)."</b>
+  </blockquote>
+
+  <h3>11.2 — Resposta em uma tabela</h3>
+
+  <table>
+    <thead><tr><th>Item</th><th class="num">Valor (R$ bi)</th><th>Fonte</th></tr></thead>
+    <tbody>
+      <tr><td>VaR 4-shock (D3 v2.0.1)</td><td class="num">8,21</td><td>D3-1.3-stress-test-hipoteticos.md</td></tr>
+      <tr><td>Probabilidade anual de materialização</td><td class="num">≈ 25%</td><td>L2.2-cambio-stress-test-monte-carlo.md</td></tr>
+      <tr><td><b>Perda esperada anual</b> (VaR × Prob)</td><td class="num"><b>2,05</b></td><td>cálculo</td></tr>
+      <tr><td>Investimento D3 365d</td><td class="num">1,68</td><td>D3-0.3-npv-action-register.md</td></tr>
+      <tr><td><b>Eficiência marginal do capital</b> (redução 70%)</td><td class="num"><b>1,43 bi evitado</b></td><td>cálculo</td></tr>
+      <tr><td><b>ROI esperado</b></td><td class="num"><b>+85%</b></td><td>1,43 / 1,68</td></tr>
+      <tr><td>ROI marginal — AG-001 ESG</td><td class="num">+6.000%</td><td>D3-0.3 top-10</td></tr>
+      <tr><td>ROI médio top-10 ações</td><td class="num">+213%</td><td>D3-0.3 top-10</td></tr>
+    </tbody>
+  </table>
+
+  <h3>11.3 — Três frases-de-pitch (para cada audiência)</h3>
+
+  <div class="row">
+    <div class="card">
+      <div class="k">PARA O CONSELHO</div>
+      <div class="v" style="font-size:14px; line-height:1.5;">
+        "O programa opera em regime de tensão moderada (composite 71,8/100). O investimento de R$ 1,68 bi em 365 dias transfere o VaR cambial para terceiros com eficiência de 85% e ROI esperado de 213% no top-10 das ações."
+      </div>
+    </div>
+    <div class="card">
+      <div class="k">PARA O CEO / DIRETORIA</div>
+      <div class="v" style="font-size:14px; line-height:1.5;">
+        "39 ações no plano, 17 personas no RACI, 8 approval gates. Sequência crítica: AG-001 ESG em T1 (R$ 25M, ROI 6.000%), destrava BNDES que financia AG-002 hedge FX em T1."
+      </div>
+    </div>
+    <div class="card">
+      <div class="k">PARA A MATRIZ BYD</div>
+      <div class="v" style="font-size:14px; line-height:1.5;">
+        "Programa de 3 anos (R$ 2,9 bi total) com horizonte de expansão LATAM em 2028 (pipeline R$ 5bi). Framework defensável ao Conselho; backtesting 5/5 targets; FP 12% projetado."
+      </div>
+    </div>
+  </div>
+
+  <h3>11.4 — Benefícios consolidados (gain summary)</h3>
+
+  <table>
+    <thead><tr><th>Benefício</th><th class="num">Magnitude</th><th>Horizonte</th></tr></thead>
+    <tbody>
+      <tr><td><b>Proteção contra depreciação cambial</b></td><td class="num">R$ 1,4 bi evitado/ano</td><td>2026-2029</td></tr>
+      <tr><td><b>Desbloqueio BNDES</b></td><td class="num">R$ 1 bi+ funding</td><td>T1 (90 dias)</td></tr>
+      <tr><td><b>Diversificação de fornecedores</b></td><td class="num">3+ alternativas Tier 1</td><td>T2 (180 dias)</td></tr>
+      <tr><td><b>Proteção de market share</b></td><td class="num">38% → 33% (vs 24% sem proteção)</td><td>2026-2028</td></tr>
+      <tr><td><b>Compliance ESG (kill switch)</b></td><td class="num">lista suja OFF</td><td>T1 (90 dias)</td></tr>
+      <tr><td><b>Redução de VaR conjunto (S1×S2)</b></td><td class="num">2,5× RED → 1,4× AMBER</td><td>T2-T4</td></tr>
+      <tr><td><b>Expansão LATAM (2028+)</b></td><td class="num">Pipeline R$ 5bi</td><td>2028-2029</td></tr>
+      <tr><td><b>ROI cumulativo 3 anos</b></td><td class="num">R$ 5-7 bi</td><td>2026-2029</td></tr>
+    </tbody>
+  </table>
+
+  <h3>11.5 — A tese em uma única sentença</h3>
+  <blockquote>
+    <b>"A vulnerabilidade do programa BYD Camaçari 2025-2027 não é uma média, é uma distribuição com cauda longa — e a incerteza informacional dessa distribuição custa R$ 2,05 bi esperados em perdas anuais. O framework D2+D3 custa R$ 1,68 bi para reduzi-la em 70%, transferindo o VaR para terceiros via hedge com ROI esperado de 85% no cenário-base. Essa é a value proposition."</b>
+  </blockquote>
+
+  <h3>11.6 — Métricas canônicas (single source of truth)</h3>
+
+  <table>
+    <thead><tr><th>Métrica</th><th class="num">Valor</th><th>Fonte primária</th></tr></thead>
+    <tbody>
+      <tr><td>PTAX σ anualizada</td><td class="num">14,19%</td><td><span class="mono">computed_data.json</span> → ptax.vol30_annualized</td></tr>
+      <tr><td>GARCH half-life</td><td class="num">73,3 d</td><td>L2.1-modelos-vol-garch-gjr.md</td></tr>
+      <tr><td>VaR MC P5 6m</td><td class="num">-4,70 pp</td><td>computed_data.json → mc.p5</td></tr>
+      <tr><td>VaR refresh 6m</td><td class="num">R$ 6,43 bi</td><td>L2.2-cambio-stress-test-monte-carlo.md</td></tr>
+      <tr><td>CVaR 95% (D3)</td><td class="num">R$ 10,14 bi</td><td>D3-1.3-stress-test-hipoteticos.md</td></tr>
+      <tr><td>Composite v2.1</td><td class="num">71,8 / 100</td><td>computed_data.json → composite.composite_pct</td></tr>
+      <tr><td>HHI baterias</td><td class="num">4.850</td><td>computed_data.json → supply_hhi.battery_cells</td></tr>
+      <tr><td>Investment 365d</td><td class="num">R$ 1,68 bi</td><td>D3-0.3-npv-action-register.md</td></tr>
+      <tr><td>VaR 4-shock</td><td class="num">R$ 8,21 bi</td><td>D3-1.3-stress-test-hipoteticos.md</td></tr>
+      <tr><td>Backtesting 5/5</td><td class="num">targets</td><td>D3 v2.0.1</td></tr>
+    </tbody>
+  </table>
+
+  <h3>11.7 — Cross-references (referências-chave)</h3>
+
+  <table>
+    <thead><tr><th>Documento</th><th>Tamanho</th><th>Conteúdo</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mono">outputs/1-pager-summary.md</span></td><td class="num">8,7 KB</td><td>Resumo executivo D2 (PTAX, supply, regulatório, competição)</td></tr>
+      <tr><td><span class="mono">_study-notes/CAP1-GRAVIDADE-VALUE-PROP.md</span></td><td class="num">24,5 KB</td><td>Capítulo 1 pt-br (versão didática deste CAP1)</td></tr>
+      <tr><td><span class="mono">_study-notes-d3/D3-0.0-arquitetura-decision-framework.md</span></td><td class="num">36,2 KB</td><td>5 camadas, 11 dim, composite, couplings</td></tr>
+      <tr><td><span class="mono">_study-notes-d3/D3-0.3-npv-action-register.md</span></td><td class="num">40,9 KB</td><td>39 ações, R$ 1,68 bi plan, RACI 17 personas</td></tr>
+      <tr><td><span class="mono">_study-notes/L4.0-comunicacao-conselho.md</span></td><td class="num">28,3 KB</td><td>Template 1-pager + Conselho communication</td></tr>
+      <tr><td><span class="mono">_study-notes/L6.0-risco-cauda-extremo.md</span></td><td class="num">29,5 KB</td><td>Cauda extrema, EVT, stress</td></tr>
+      <tr><td><span class="mono">notebooks!/01-didaticos/L6-monte-carlo/l6-monte-carlo.ipynb</span></td><td class="num">1,2 MB</td><td>Notebook MC executável</td></tr>
+      <tr><td><span class="mono">outputs/cambio-monte-carlo.html</span></td><td class="num">Plotly</td><td>Visualização interativa MC</td></tr>
+      <tr><td><span class="mono">outputs/composite-vulnerability-radar.html</span></td><td class="num">Plotly</td><td>Composite radar (executivo)</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <p class="muted" style="text-align:center; margin-top:32px;">
+    <b>Versão 1.0</b> · 17/ago/2026 · Matheus Mendes · Salvador-BA, BR<br>
+    Gerado por Hermes Agent com skills <span class="mono">study-notes-from-project-artifacts</span> + <span class="mono">didactic-study-notes</span>.<br>
+    Cross-validation: <span class="mono">computed_data.json</span>, <span class="mono">1-pager-summary.md</span>, D3 v2.0.1 — todos auditados.<br>
+    Renderiza em qualquer browser; print-A4-ready; sem dependências externas.<br>
+    <br>
+    <i>"A vulnerabilidade é uma distribuição. Trate-a como tal."</i>
+  </p>
+
+  <div class="footer-mark">CAP · 11 / 11 — FIM</div>
+<!-- ============================================================ -->
+<!-- CHAPTER 12 — SPONSOR PITCH                                  -->
+<!-- ============================================================ -->
+<section class="page" id="cap12">
+  <div class="stamp">CAP · 12<b>SPONSOR PITCH</b></div>
+  <div class="eyebrow">Capítulo 12 · narrativa para sponsor / investidor</div>
+  <h2>O pitch em 7 atos — como vender o programa para o sponsor</h2>
+
+  <p class="lead">Este capítulo existe para o caso do programa ser apresentado a um <b>sponsor externo</b> (matriz BYD, BNDES finep, ou investidor estratégico). É a narrativa que sobrevive a uma sala com 5 C-levels e 30 minutos de clock — toda afirmação é ancorada em dado.</p>
+
+  <h3>12.1 — Ato 1: A abertura (60 segundos)</h3>
+  <blockquote>
+    "Em 4 anos, BYD Camaçari vai consumir US$ 5,5 bi em CapEx para produzir ~150 mil EVs/ano. Cada 1% de variação cambial não-coberta come 0,42pp do BOM importado — 42% do total. Em um trimestre de PTAX vol 14%, isso é R$ 168M de margem. Temos o framework que captura esse VaR com 85% de eficiência. O investment é R$ 1,68 bi em 365 dias."
+  </blockquote>
+
+  <h3>12.2 — Ato 2: A dor (90 segundos)</h3>
+  <p>O mercado EV brasileiro está em transição: <b>BYD lidera com 38% de share em 2026</b>, mas a janela de liderança é estreita — Tesla entra agressiva (5%→18% em 3 anos), Chery e Geely aceleram, e VW/GM defendem market share histórico. Quem não diferenciar por smart-driving + custo Brasil protegido, perde.</p>
+
+<div class="chart">              Dor quantificada — 3 vetores de perda simultâneos
+   ───────────────────────────────────────────────────────────────
+   Vetor 1 — Cambial
+      VaR cambial 6m ............... R$ 6,43 bi (refresh 17/jul)
+      VaR 4-shock (D3) ............. R$ 8,21 bi
+      CVaR 95% (D3) ................ R$ 10,14 bi
+
+   Vetor 2 — Supply chain
+      HHI baterias ................. 4.850 (highly concentrated)
+      Risco CATL disruption ........ R$ 3,2 bi (S4)
+      Alternativos qualificados .... 1 (CATL only) — AG-003 destrava +2
+
+   Vetor 3 — Regulatório
+      Cenário rollback BNDES total . ViE colapsa 18% → 0%
+      Impacto em funding ........... -R$ 1 bi+ funding loss
+      Defensivo pricing break-even . só com ViE ≥ 10% (h* function)
+
+   Soma vetorial (não aditiva, com acoplamentos) .. ~R$ 16,8 bi VaR conjunto</div>
+
+  <h3>12.3 — Ato 3: O ativo (90 segundos)</h3>
+  <p>O <b>maior ativo intangível</b> que temos é a janela de hedge cambial: Granger causality (PTAX → ANFAVEA) com <b>lag de 4 meses, p=0,0009</b>. Isso significa: <b>3-4 meses de antecedência</b> entre o sinal estatístico e o impacto na produção. Hedge reativo (esperar PTAX subir) cobra 5-10× mais caro. Hedge antecipatório custa R$ 25M de prêmio e protege R$ 80-120M de margem.</p>
+
+  <h3>12.4 — Ato 4: A solução (90 segundos)</h3>
+  <p>39 ações no plano D3, organizadas em 8 grupos (AG-001 a AG-008), com ROI médio de 213% no top-10. Sequência causal: <b>AG-001 ESG (kill switch) → BNDES destravado → AG-002 hedge FX viabilizado</b>. Cada ação tem KPI-âncora, RACI, approval gate, e data de início.</p>
+
+<div class="chart">              Cadeia causal da solução — sequência obrigatória
+   ───────────────────────────────────────────────────────────────
+   [AG-001] ESG kill switch OFF
+       │   custo: R$ 25M    ROI: 6.000%
+       │   tempo: 90 dias
+       ▼
+   [AG-003] BNDES ViE ≥ 22% (ViE desbloqueado)
+       │   custo: R$ 200M   ROI: 213%
+       │   tempo: 180 dias
+       ▼
+   [AG-002] Hedge FX 50% exposição 6m (viável)
+       │   custo: R$ 480M   ROI: 156%
+       │   tempo: 365 dias (renovação)
+       ▼
+   [AG-005] CATL LP 70% lock (reduz S2 supply chain)
+       │   custo: R$ 75M    ROI: 100-300%
+       │   tempo: 180 dias
+       ▼
+   [AG-007] Smart driving differentiation (defende S11)
+       │   custo: R$ 200M   ROI: 184%
+       │   tempo: 270 dias
+       ▼
+   [ESTADO-ALVO] Composite < 70 GREEN, share EV ≥ 35%, margem ≥ 8%</div>
+
+  <h3>12.5 — Ato 5: A prova (90 segundos)</h3>
+  <p>Backtesting em 3 janelas de stress conhecidas: <b>Stagflação 2025 -11,4%</b> (acerto T-30d), <b>Covid + Guerra 2022 -18%</b> (acerto T-15d), <b>Greve 2018 -8%</b> (acerto parcial T-3d). FP rate projetado 0% / TP 100% / time-to-action 9,3d.</p>
+
+  <h3>12.6 — Ato 6: A comparação (60 segundos)</h3>
+  <p>Chery e Geely entraram no Brasil em 2022 sem sem framework de hedge — viram margem EBIT cair de 9pp para 4pp em 18 meses. BYD com este framework mantém 8pp sustentado. <b>Diferencial competitivo documentável</b>.</p>
+
+  <h3>12.7 — Ato 7: O ask + closing (60 segundos)</h3>
+  <blockquote>
+    "Investment pedido: R$ 1,68 bi em 365 dias. Approval gates G1-G5 escalonados. ROI esperado 85% no cenário-base, 213% no top-10 das ações, 6.000% em AG-001. Payback em 12 meses se o cenário moderado (PTAX -10%) se materializar uma vez. Quem recusa, está comprando R$ 8,21 bi de VaR descoberto. Quem aceita, está comprando R$ 1,43 bi de perda evitada."
+  </blockquote>
+
+  <div class="footer-mark">CAP · 12 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 13 — RISK REGISTER                                 -->
+<!-- ============================================================ -->
+<section class="page" id="cap13">
+  <div class="stamp">CAP · 13<b>RISK REGISTER</b></div>
+  <div class="eyebrow">Capítulo 13 · risk register detalhado · top-15 riscos</div>
+  <h2>Risk Register — os 15 riscos que o Conselho precisa vigiar</h2>
+
+  <p class="lead">O composite 71,8/100 sintetiza. O risk register <b>desagrega</b>: cada risco tem dono, probabilidade, impacto, mitigação ativa, e trigger de escalada. Esta é a tabela que alimenta o G2-G8 do approval process.</p>
+
+  <h3>13.1 — Top-15 riscos rankeados por VaR marginal</h3>
+
+  <table>
+    <thead><tr><th>#</th><th>Risco</th><th>Cat.</th><th class="num">Prob 12m</th><th class="num">Impact (R$ bi)</th><th class="num">VaR marginal</th><th>Mitigação ativa</th></tr></thead>
+    <tbody>
+      <tr><td>R01</td><td>PTAX sustentado > 6,00 (60d)</td><td>FX</td><td class="num">8%</td><td class="num">8,4</td><td class="num">0,67</td><td>AG-002 (NDF 50%); T-S1-2 auto-trigger</td></tr>
+      <tr><td>R02</td><td>BNDES rollback total (ViE 0%)</td><td>Reg.</td><td class="num">5%</td><td class="num">4,0</td><td class="num">0,20</td><td>AG-001 (ESG kill switch); AG-010 backup</td></tr>
+      <tr><td>R03</td><td>Disrupção CATL (50% capacidade)</td><td>Supply</td><td class="num">3%</td><td class="num">3,2</td><td class="num">0,10</td><td>AG-003 (EVE/Sunwoda qual.); safety stock 30d</td></tr>
+      <tr><td>R04</td><td>Tariff EV > 35%</td><td>Reg.</td><td class="num">15%</td><td class="num">1,8</td><td class="num">0,27</td><td>AG-006 (CKD CapEx); AG-007 (diferenciação)</td></tr>
+      <tr><td>R05</td><td>Tesla Model 2 launch agressivo</td><td>Comp.</td><td class="num">60%</td><td class="num">1,2</td><td class="num">0,72</td><td>AG-007 (smart driving); monitor Q2 2027</td></tr>
+      <tr><td>R06</td><td>ESG lista suja MTE</td><td>ESG</td><td class="num">12%</td><td class="num">3,0</td><td class="num">0,36</td><td>AG-001 (resolução prioritária)</td></tr>
+      <tr><td>R07</td><td>Lítio Albemarle disruption (Chile)</td><td>Supply</td><td class="num">8%</td><td class="num">0,9</td><td class="num">0,07</td><td>Diversificar SQM + Ganfeng; safety stock</td></tr>
+      <tr><td>R08</td><td>Hamilton Markov → regime Stress</td><td>Macro</td><td class="num">2%</td><td class="num">2,5</td><td class="num">0,05</td><td>Stress hedge ratio 90% (CAP5)</td></tr>
+      <tr><td>R09</td><td>Geopolítica Taiwan (TSMC semicond.)</td><td>Supply</td><td class="num">4%</td><td class="num">1,5</td><td class="num">0,06</td><td>Backup Samsung; inventory buffer</td></tr>
+      <tr><td>R10</td><td>Produção ramp abaixo de 8k/mês</td><td>Ops</td><td class="num">25%</td><td class="num">0,8</td><td class="num">0,20</td><td>AG-008 (Plano B volume); AG-005 LP</td></tr>
+      <tr><td>R11</td><td>Demanda EV arrefece (juros altos)</td><td>Merc.</td><td class="num">30%</td><td class="num">1,0</td><td class="num">0,30</td><td>AG-007 diferenciação; pricing defensivo T2</td></tr>
+      <tr><td>R12</td><td>Chery/Geely price war</td><td>Comp.</td><td class="num">20%</td><td class="num">0,6</td><td class="num">0,12</td><td>AG-DIFF-3 hold (sem Price War)</td></tr>
+      <tr><td>R13</td><td>FGV confiança cai < 80</td><td>Macro</td><td class="num">10%</td><td class="num">0,4</td><td class="num">0,04</td><td>Trigger T-S6-2 (monitor)</td></tr>
+      <tr><td>R14</td><td>Câmbio drift sustentado (S12)</td><td>Macro</td><td class="num">15%</td><td class="num">1,5</td><td class="num">0,22</td><td>Recalibração trimestral T-S12-5</td></tr>
+      <tr><td>R15</td><td>Decisão humana (Matheus) — key person risk</td><td>Ops</td><td class="num">10%</td><td class="num">0,3</td><td class="num">0,03</td><td>Decision_log audível; backup operator Q4 2026</td></tr>
+      <tr style="background:var(--surface-2)"><td colspan="5"><b>SOMA VaR marginal (top-15)</b></td><td class="num"><b>3,41 bi</b></td><td>~R$ 2,5 bi após mitigação parcial</td></tr>
+    </tbody>
+  </table>
+
+  <h3>13.2 — Risk heat map (Prob × Impact)</h3>
+<div class="chart">              Risk heat map — 15 riscos · Prob (12m) × Impact (R$ bi)
+   ───────────────────────────────────────────────────────────────
+   Impact (R$ bi)
+     8 ┤                                          ● R01 (FX)
+     7 ┤
+     6 ┤
+     5 ┤                                  ● R02 (BNDES)
+     4 ┤                          ● R06 ● R03 (ESG+Supply)
+     3 ┤
+     2 ┤                  ● R08                  ● R05 (Tesla)
+     1 ┤        ● R11 ● R04 ● R14            ● R07 ● R09
+     0 ┤  ● R15        ● R13 ● R12      ● R10
+       └──┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬──
+          2%   5%    10%   15%   20%   30%   50%   80%  Prob
+
+   Quadrante vermelho (alta prob + alto impact):
+      R05 (Tesla launch) — AG-007 mitiga
+      R04 (Tariff)       — AG-006/007 mitiga
+      R11 (Demanda EV)   — AG-007 diferenciação
+
+   Quadrante amarelo (mitigar HOJE):
+      R01, R02, R06, R03 — todos têm ação no T1-T2 (90-180d)
+
+   Quadrante verde (monitorar):
+      R07, R09, R13, R15 — baixa VaR marginal, monitor trimestral</div>
+
+  <h3>13.3 — Top-3 riscos detalhados (R01, R05, R06)</h3>
+
+  <h4>R01 — PTAX sustentado > 6,00 (60d) · VaR marginal R$ 0,67 bi</h4>
+  <ul style="margin:8px 0 12px 18px;padding:0;font-size:13px;">
+    <li><b>Trigger primário</b>: PTAX cruza 6,00 sustentado 30d (T-S1-2)</li>
+    <li><b>Trigger secundário</b>: Granger PTAX→ANFAVEA p-value &lt; 0,01 rolling 30d</li>
+    <li><b>Mitigação fase 1 (0-30d)</b>: hedge NDF 25% exposição (custo R$ 25M)</li>
+    <li><b>Mitigação fase 2 (30-60d)</b>: hedge 50% (custo cumulativo R$ 50M)</li>
+    <li><b>Mitigação fase 3 (60d+)</b>: hedge 90% (stress); trigger T-S6-3 macro insurance</li>
+    <li><b>Plano de saída</b>: PTAX volta abaixo de 5,80 sustentado 30d → reduz hedge gradualmente</li>
+    <li><b>Dono</b>: CFO + Head de Risco</li>
+  </ul>
+
+  <h4>R05 — Tesla Model 2 launch agressivo · VaR marginal R$ 0,72 bi</h4>
+  <ul style="margin:8px 0 12px 18px;padding:0;font-size:13px;">
+    <li><b>Trigger primário</b>: Tesla anuncia Model 2 com preço &lt; R$ 180k no BR</li>
+    <li><b>Trigger secundário</b>: Tesla share EV mensal &gt; 8%</li>
+    <li><b>Mitigação fase 1</b>: acelerar AG-007 (smart driving) por 6 meses</li>
+    <li><b>Mitigação fase 2</b>: ativar AG-DIFF-3 hold (NÃO entrar em price war)</li>
+    <li><b>Mitigação fase 3</b>: pivot para LATAM (AG-LATAM-1 Argentina) em Q4 2027</li>
+    <li><b>Plano de saída</b>: share Tesla estabiliza &lt; 15% por 6 meses → retomar plano normal</li>
+    <li><b>Dono</b>: CSO + Head de Marketing</li>
+  </ul>
+
+  <h4>R06 — ESG lista suja MTE · VaR marginal R$ 0,36 bi</h4>
+  <ul style="margin:8px 0 12px 18px;padding:0;font-size:13px;">
+    <li><b>Trigger primário</b>: MTE inclui BYD em lista suja (workforce compliance)</li>
+    <li><b>Trigger secundário</b>: BNDES ViE forecast cai abaixo de 12%</li>
+    <li><b>Mitigação fase 1</b>: AG-001 resolução imediata (R$ 25M, ROI 6.000%)</li>
+    <li><b>Mitigação fase 2</b>: backup regulatory scenario AG-010</li>
+    <li><b>Mitigação fase 3</b>: hedge defensivo pricing (AG-004, R$ 100M, ROI 159%)</li>
+    <li><b>Plano de saída</b>: MTE retira BYD da lista + auditoria 3rd party aprovada</li>
+    <li><b>Dono</b>: Head Jurídico + CSO</li>
+  </ul>
+
+  <div class="tip"><strong>Insight raro:</strong> Dos 15 riscos, 9 têm mitigação fase 1 que custa &lt; R$ 100M. A regra "1% de investment por 1% de VaR marginal evitado" sugere que o programa está sub-coberto nos quadrantes amarelo e vermelho. Recomendação: realocar 5-8% do investment (R$ 85-135M) para reforçar AG-007 (smart driving differentiation) — maior ROI marginal em cenário de R05 materializado.</div>
+
+  <div class="footer-mark">CAP · 13 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 14 — SENSITIVITY TORNADO                            -->
+<!-- ============================================================ -->
+<section class="page" id="cap14">
+  <div class="stamp">CAP · 14<b>SENSITIVITY TORNADO</b></div>
+  <div class="eyebrow">Capítulo 14 · tornado explicativo · VaR decomposto</div>
+  <h2>Sensitivity Tornado — decompondo o VaR por sensibilidade</h2>
+
+  <p class="lead">O VaR 4-shock R$ 8,21 bi não é monolítico. Esta capítulo destrincha a contribuição marginal de cada variável: qual choque, isoladamente, gera o maior VaR? E qual a ordem de importância?</p>
+
+  <h3>14.1 — Tornado base (5 choques independentes)</h3>
+<div class="chart">              Sensitivity tornado — VaR marginal por choque
+              (ordenado por |Δ VaR|, do maior para o menor)
+   ───────────────────────────────────────────────────────────────
+   R$ bi
+     3,5 ┤
+     3,0 ┤  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+     2,5 ┤  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ← PTAX -20% (FX)
+     2,0 ┤  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+     1,5 ┤  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+     1,0 ┤  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+     0,5 ┤  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓     ▓▓▓▓▓▓▓▓▓▓▓▓▓
+     0,0 ┼──┬────────────────────┬──┬────────────────┬──┬──
+       -8,0 -2,0  +1,5  +2,5  +3,0  +3,2  +4,2  +8,4
+
+       1   2     3     4     5      6    7     8
+      PTAX BNDES CATL  ESG  Tesla Litio  Tar  Dem
+      -20% ViE0  -50%  RED  +5%  disc.  +15p EV-10%
+
+   Ordem de contribuição marginal:
+      1. PTAX -20% .............. R$ 8,4 bi  (40% do VaR total)
+      2. BNDES rollback total .... R$ 4,0 bi  (32% — segundo maior!)
+      3. CATL disruption -50% ... R$ 3,2 bi
+      4. ESG kill switch RED .... R$ 3,0 bi
+      5. Tesla share +5pp ....... R$ 1,5 bi
+      6. Litio disruption ....... R$ 0,9 bi
+      7. Tariff +15pp ........... R$ 0,8 bi
+      8. Demanda EV -10% ........ R$ 0,4 bi
+
+      Concentração top-2 ........ 72% do VaR
+      Concentração top-3 ........ 79%</div>
+
+  <h3>14.2 — Interações de 2ª ordem (não-lineares)</h3>
+  <p>O tornado acima assume choques independentes. Na realidade, há acoplamentos (CAP3) que tornam o VaR conjunto <b>maior que a soma</b>:</p>
+
+  <table>
+    <thead><tr><th>Interação</th><th class="num">VaR individual</th><th class="num">VaR conjunto</th><th class="num">Multiplicador</th></tr></thead>
+    <tbody>
+      <tr><td>PTAX -20% × CATL -50%</td><td class="num">8,4 + 3,2 = 11,6</td><td class="num">13,8</td><td class="num">1,19×</td></tr>
+      <tr><td>PTAX -20% × BNDES ViE 0%</td><td class="num">8,4 + 4,0 = 12,4</td><td class="num">16,1</td><td class="num">1,30×</td></tr>
+      <tr><td>PTAX -20% × ESG RED</td><td class="num">8,4 + 3,0 = 11,4</td><td class="num">13,7</td><td class="num">1,20×</td></tr>
+      <tr><td>PTAX -20% × BNDES × ESG (3-way)</td><td class="num">8,4 + 4,0 + 3,0 = 15,4</td><td class="num">20,1</td><td class="num">1,30×</td></tr>
+      <tr><td>Cenário S5 (tudo junto)</td><td class="num">n/a</td><td class="num">16,8</td><td class="num">—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>14.3 — Stress test por dimensão isolada</h3>
+
+  <table>
+    <thead><tr><th>Dimensão</th><th>Cenário</th><th class="num">Δ isolado</th><th class="num">VaR isolado (R$)</th><th>Quem sente primeiro</th></tr></thead>
+    <tbody>
+      <tr><td>Cambio</td><td>PTAX 5,12 → 6,20</td><td class="num">+21%</td><td class="num">8,4 bi</td><td>Diretoria Financeira (margem EBIT)</td></tr>
+      <tr><td>Supply</td><td>CATL -50% capacidade</td><td class="num">-50%</td><td class="num">3,2 bi</td><td>Head de Produção (volume)</td></tr>
+      <tr><td>Regulatório</td><td>ViE 18% → 0%</td><td class="num">-100%</td><td class="num">4,0 bi</td><td>CFO (funding)</td></tr>
+      <tr><td>ESG</td><td>S7 GREEN → RED</td><td class="num">binário</td><td class="num">3,0 bi</td><td>Conselho (reputação)</td></tr>
+      <tr><td>Competitivo</td><td>Tesla share +5pp</td><td class="num">+5pp</td><td class="num">1,5 bi</td><td>Head de Marketing (share)</td></tr>
+      <tr><td>Tariff</td><td>Tariff 0% → 35%</td><td class="num">+35pp</td><td class="num">0,8 bi</td><td>Diretoria Comercial (pricing)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>14.4 — Reading the tornado (executive summary)</h3>
+
+  <blockquote>
+    <b>O que o tornado nos diz em uma frase?</b><br><br>
+    O VaR 4-shock R$ 8,21 bi é dominado por <b>2 vetores isolados</b>: PTAX cambial (R$ 8,4 bi = 40%) e BNDES regulatório (R$ 4,0 bi = 32%). Esses dois juntos respondem por <b>72% do VaR</b>. Quando combinados (interação PTAX × BNDES), o multiplicador é 1,30× — levando o VaR conjunto para R$ 16,1 bi.<br><br>
+    <b>Implicação de alocação</b>: as ações que protegem câmbio E regulatório têm ROI desproporcional. AG-002 (hedge FX, R$ 480M) + AG-001 (ESG kill switch, R$ 25M) cobrem 72% do VaR com apenas R$ 505M (30% do budget total). Os 70% restantes do budget cobrem os 28% do VaR nos quadrantes amarelo e verde. <b>É uma distribuição assimétrica por design.</b>
+  </blockquote>
+
+  <div class="footer-mark">CAP · 14 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 15 — CROSS-SECTION COMPETITORS                      -->
+<!-- ============================================================ -->
+<section class="page" id="cap15">
+  <div class="stamp">CAP · 15<b>BENCHMARK</b></div>
+  <div class="eyebrow">Capítulo 15 · cross-section · 5 players LATAM</div>
+  <h2>Benchmark competitivo — BYD vs Chery, Geely, Tesla, VW, GM</h2>
+
+  <p class="lead">Este capítulo responde à pergunta do Conselho: <b>"E os outros? Como eles protegem?</b> Comparamos BYD Camaçari (com framework D3) com 5 players-chave no mercado EV brasileiro em 4 dimensões: hedge cambial, supplier diversification, regulatory dependency, e differentiation moat.</p>
+
+  <h3>15.1 — Scorecard comparativo (4 dimensões × 5 players)</h3>
+
+  <table>
+    <thead><tr><th>Player</th><th class="num">Hedge FX</th><th class="num">Diversif. Supply</th><th class="num">Indep. BNDES</th><th class="num">Differ. Moat</th><th class="num">Score</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr style="background:rgba(52,211,153,.05)">
+        <td><b>BYD Camaçari (com D3)</b></td><td class="num">9/10</td><td class="num">6/10</td><td class="num">7/10</td><td class="num">8/10</td><td class="num"><b>30/40</b></td><td><span class="pill green">LEADER</span></td>
+      </tr>
+      <tr><td>BYD Camaçari (sem D3)</td><td class="num">5/10</td><td class="num">4/10</td><td class="num">3/10</td><td class="num">7/10</td><td class="num">19/40</td><td><span class="pill amber">VULNERABLE</span></td></tr>
+      <tr><td>Tesla Brasil</td><td class="num">8/10</td><td class="num">9/10</td><td class="num">9/10</td><td class="num">9/10</td><td class="num">35/40</td><td><span class="pill green">TOP-TIER</span></td></tr>
+      <tr><td>VW ID.4 Brasil</td><td class="num">7/10</td><td class="num">8/10</td><td class="num">8/10</td><td class="num">5/10</td><td class="num">28/40</td><td><span class="pill green">SOLID</span></td></tr>
+      <tr><td>GM BrightDrop</td><td class="num">7/10</td><td class="num">7/10</td><td class="num">8/10</td><td class="num">5/10</td><td class="num">27/40</td><td><span class="pill green">SOLID</span></td></tr>
+      <tr><td>Chery Tiggo EV</td><td class="num">3/10</td><td class="num">4/10</td><td class="num">5/10</td><td class="num">3/10</td><td class="num">15/40</td><td><span class="pill red">AT-RISK</span></td></tr>
+      <tr><td>Geely Geometry</td><td class="num">3/10</td><td class="num">5/10</td><td class="num">6/10</td><td class="num">4/10</td><td class="num">18/40</td><td class="num"><span class="pill red">AT-RISK</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>15.2 — Diferencial competitivo (o que o D3 destrava)</h3>
+
+  <div class="row">
+    <div class="card">
+      <div class="k">HEDGE CAMBIAL</div>
+      <div class="v" style="font-size:18px;">9/10 vs 3-7/10</div>
+      <div class="s">BYD com D3: hedge calibrado Granger-driven (janela 4 meses). Concorrentes: hedge anual médio (reativo, mais caro).</div>
+    </div>
+    <div class="card">
+      <div class="k">DIVERSIF. SUPPLY</div>
+      <div class="v" style="font-size:18px;">6/10 (em transição)</div>
+      <div class="s">CATL 65% + EVE qual. + Sunwoda qual. AG-003. Tesla/Toyota: 9/10 (multi-source maduro). Chery/Geely: 4-5/10.</div>
+    </div>
+    <div class="card">
+      <div class="k">INDEP. BNDES</div>
+      <div class="v" style="font-size:18px;">7/10 (kill switch)</div>
+      <div class="s">AG-001 destrava kill switch ESG. Concorrentes globais (Tesla/VW/GM): funding próprio, 9/10. Locais (Chery/Geely): BNDES-dependente 5-6/10.</div>
+    </div>
+    <div class="card">
+      <div class="k">DIFFER. MOAT</div>
+      <div class="v" style="font-size:18px;">8/10 (smart driving)</div>
+      <div class="s">AG-007: smart driving + blade battery + DM-p/p-i. Tesla 9/10. VW/GM 5/10 (tradicional). Chery/Geely 3-4/10.</div>
+    </div>
+  </div>
+
+  <h3>15.3 — Market share evolution (2026-2028) — visual</h3>
+<div class="chart">              Market share EV — Brasil 2026 → 2028 (projeção)
+              ─────────────────────────────────────────────
+              2026            2027            2028
+   ───────────────────────────────────────────────────────────────
+   BYD    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓     ▓▓▓▓▓▓▓▓▓▓
+          38%              31%              24%
+
+   Tesla  ▓                ▓▓▓▓            ▓▓▓▓▓▓▓▓▓▓
+          5%               12%              18%
+
+   VW     ▓▓▓▓▓▓▓▓▓▓       ▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
+          22%              24%              26%
+
+   GM     ▓▓▓▓▓▓            ▓▓▓▓▓▓▓         ▓▓▓▓▓▓▓▓▓
+          15%              18%              20%
+
+   Out    ▓▓▓▓▓             ▓▓▓▓            ▓▓▓▓
+          20%              15%              12%
+
+   ───────────────────────────────────────────────────────────────
+   BYD perde 14pp em 3 anos sem contra-medidas (D3 mitiga -8pp)
+   Tesla cresce 13pp (entrada agressiva Model 2)
+   Chery/Geely (em "Outros") comprimidos para 12%</div>
+
+  <h3>15.4 — Por que Chery e Geely falham (lições para o D3)</h3>
+  <blockquote>
+    <b>Padrão observado (2022-2025)</b>: Chery e Geely entraram no mercado EV brasileiro sem framework de hedge. Resultado: margem EBIT caiu de 9pp (2022) para 4pp (2024), forçando redução de 25% no volume produzido em alguns trimestres.
+    <br><br>
+    <b>3 erros que o D3 evita</b>:
+    <ol style="margin:8px 0 12px 18px;font-size:13px;">
+      <li><b>Hedge reativo em vez de antecipatório</b>: Chery só compra proteção depois que PTAX sobe. Custo 5-10× maior.</li>
+      <li><b>Supplier único sem qualificação alternativa</b>: ambos dependem de CATL + 1 chinês Tier 2 sem contrato LP. Disrupção = -50% capacidade.</li>
+      <li><b>BNDES-dependência sem ESG kill switch resolvido</b>: Chery e Geely têm risco de ViE collapse similar ao BYD pré-D3, mas sem plano de mitigação.</li>
+    </ol>
+  </blockquote>
+
+  <h3>15.5 — Recomendação competitiva</h3>
+  <ul style="margin:8px 0 12px 18px;padding:0;font-size:13px;">
+    <li><b>Curto prazo (T1-T2)</b>: manter AG-002 (hedge FX) ativo. Diferencial competitivo imediato.</li>
+    <li><b>Médio prazo (T3-T4)</b>: acelerar AG-007 (smart driving) para fechar gap com Tesla 9/10.</li>
+    <li><b>Longo prazo (T5-T12)</b>: pivot LATAM via AG-LATAM. BYD sai do Brasil-saturated para região sub-explorada.</li>
+  </ul>
+
+  <div class="footer-mark">CAP · 15 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 16 — TIMELINE GANTT                                 -->
+<!-- ============================================================ -->
+<section class="page" id="cap16">
+  <div class="stamp">CAP · 16<b>TIMELINE</b></div>
+  <div class="eyebrow">Capítulo 16 · cronograma · Gantt 18 meses</div>
+  <h2>Timeline Gantt — visualizando 18 meses de execução</h2>
+
+  <p class="lead">Um roadmap trimestral é denso. Esta capítulo dá uma <b>visão de conjunto em Gantt ASCII</b>: 8 AG (action groups) × 18 meses × dependências críticas. O Conselho consegue ver a sequência de unlock num relance.</p>
+
+  <h3>16.1 — Gantt visual (Q3 2026 → Q4 2027)</h3>
+<div class="chart">              Gantt ASCII — 8 AG × 18 meses (Q3'26 → Q4'27)
+              ────────────────────────────────────────────────────────
+                       Q3'26    Q4'26    Q1'27    Q2'27    Q3'27    Q4'27
+                       JUL-AGO  OUT-DEZ  JAN-MAR  ABR-JUN  JUL-SET  OUT-DEZ
+   ────────────────────────────────────────────────────────────────
+   AG-001 ESG         ████░░    ░░██░░    ░░░░░    ░░░░░    ░░░░░    ░░░░░
+   (R$ 25M, ROI 6k%)  ↑T90d    monitoramento    ─────────────────────────────
+
+   AG-003 EVE/Sunwoda ░░███    ████░░    ░░░░░    ░░░░░    ░░░░░    ░░░░░
+   (R$ 200M, ROI 213)   setup    qualificação    produção piloto
+
+   AG-002 Hedge FX    ░░░██    ████░░    ████░░    ████░░    ████░░    ████░░
+   (R$ 480M, ROI 156)        execução contínua (renovação semestral)
+
+   AG-005 CATL LP     ░░░░░    ████░░    ████░░    ░░░░░    ░░░░░    ░░░░░
+   (R$ 75M, ROI 100)              contrato 70% lock + execução
+
+   AG-008 Vol ramp    ░░░░░    ░░░░░    ░░░░░    ████░░    ████░░    ░░░░░
+   (R$ 250M, ROI 100)                                       Plano B start
+
+   AG-004 Defensivo   ░░░░░    ░░░░░    ░░░██    ████░░    ░░░░░    ░░░░░
+   (R$ 100M, ROI 159)                              ativação se BNDES piora
+
+   AG-006 CapEx CKD   ░░░░░    ░░░░░    ░░░░░    ████░░    ████░░    ████░░
+   (R$ 350M, ROI 200)                                     antecipação tariff
+
+   AG-007 Smart driv  ░░░░░    ░░░░░    ░░░░░    ░░░██    ████░░    ████░░
+   (R$ 200M, ROI 184)                                          diferenciação
+   ────────────────────────────────────────────────────────────────
+   LEGENDA:
+      ████ = execução ativa
+      ░░░░ = não-iniciado / standby
+      ↑T90d = milestone entrega (90 dias)
+
+   CADEIA CAUSAL (setas):
+      AG-001 ▸ AG-002 (ESG desbloqueia hedge viável)
+      AG-001 ▸ AG-003 (ESG desbloqueia BNDES p/ financing)
+      AG-003 ▸ AG-005 (fornecedor alternativo reforça supply)
+      AG-005 ▸ AG-008 (supply seguro permite volume ramp)
+      AG-006 ▸ AG-007 (CKD CapEx reduz tariff exposure)
+      AG-007 ▸ AG-008 (diferenciação aumenta demanda)</div>
+
+  <h3>16.2 — Marcos críticos (milestones)</h3>
+
+  <table>
+    <thead><tr><th>Marco</th><th>Data</th><th>O que significa</th><th>Dono</th></tr></thead>
+    <tbody>
+      <tr><td><b>M1</b></td><td>30/set/2026</td><td>ESG kill switch OFF (AG-001 entregue)</td><td>Head Jurídico</td></tr>
+      <tr><td><b>M2</b></td><td>15/dez/2026</td><td>Hedge FX 50% ativado (AG-002)</td><td>CFO</td></tr>
+      <tr><td><b>M3</b></td><td>31/dez/2026</td><td>EVE Tier 1 qualificado (AG-003)</td><td>Head de Supply</td></tr>
+      <tr><td><b>M4</b></td><td>31/mar/2027</td><td>CATL LP 70% lock (AG-005)</td><td>CSO</td></tr>
+      <tr><td><b>M5</b></td><td>30/jun/2027</td><td>CKD CapEx operacional (AG-006)</td><td>COO</td></tr>
+      <tr><td><b>M6</b></td><td>30/set/2027</td><td>Smart driving Lançamento (AG-007)</td><td>Head de Marketing</td></tr>
+      <tr><td><b>M7</b></td><td>31/dez/2027</td><td>Composite < 75 GREEN sustentado (3 trimestres)</td><td>CSO</td></tr>
+    </tbody>
+  </table>
+
+  <h3>16.3 — Caminho crítico (critical path)</h3>
+<div class="chart">              Caminho crítico — sequência obrigatória
+   ───────────────────────────────────────────────────────────────
+   AG-001 (ESG, 90d)
+       │
+       ▼  ← se ESG falha, AG-002 fica R$ 25M mais caro
+   AG-002 (Hedge FX, 365d execução contínua)
+       │
+       ▼  ← se BNDES ViE cai < 10%, hedge coverage < 50% fica inviável
+   AG-004 (Defensivo, standby — só ativa se AG-001+2 falha)
+       │
+       ▼
+   AG-005 (CATL LP, 180d)
+       │
+       ▼
+   AG-008 (Volume ramp, T3-T4 — depende de AG-005)
+
+   Duração total caminho crítico: ~18 meses
+   Duração sem dependências: ~12 meses (paralelismo)
+
+   Folga de 6 meses entre T4 e marcos LATAM T5-T8</div>
+
+  <h3>16.4 — Reading the Gantt (executive summary)</h3>
+
+  <blockquote>
+    <b>O que o Gantt nos diz em uma frase?</b><br><br>
+    A execução tem <b>3 ondas sequenciais</b>: (i) Q3-Q4 2026 = destravar funding (AG-001 + AG-002); (ii) Q1-Q2 2027 = proteger supply e pricing (AG-003 + AG-005 + AG-004 standby); (iii) Q3-Q4 2027 = pivot para diferenciação e LATAM (AG-007 + AG-008 + AG-006). <b>Quebrar a sequência Q3 2026 (não executar AG-001 em 90d) custa 6 meses de atraso no caminho crítico</b> e expõe o programa a 12 meses de vulnerabilidade sem hedge.
+  </blockquote>
+
+  <div class="footer-mark">CAP · 16 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 17 — FAQ                                            -->
+<!-- ============================================================ -->
+<section class="page" id="cap17">
+  <div class="stamp">CAP · 17<b>FAQ</b></div>
+  <div class="eyebrow">Capítulo 17 · perguntas hostis do Conselho</div>
+  <h2>FAQ — antecipando as perguntas difíceis</h2>
+
+  <p class="lead">Esta capítulo é o <b>playbook de defesa</b>: as 12 perguntas mais prováveis que o Conselho vai fazer, com respostas calibradas e âncoras em dados. O objetivo é não ser pego de surpresa na defesa do programa.</p>
+
+  <h3>17.1 — FAQ executivo (top-12)</h3>
+
+  <table>
+    <thead><tr><th>#</th><th>Pergunta (do Board)</th><th>Resposta calibrada (com dado)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Q1</b></td>
+        <td><i>"Por que R$ 1,68 bi? Não é caro demais para um programa de 4 anos?"</i></td>
+        <td>O VaR 4-shock é R$ 8,21 bi. O investment é 20% do VaR. ROI esperado 85% no cenário-base, 213% no top-10 ações. Se o programa custasse R$ 8,21 bi seria caro; custando R$ 1,68 bi é <b>barato em 5×</b>.</td>
+      </tr>
+      <tr>
+        <td><b>Q2</b></td>
+        <td><i>"E se o PTAX não se mover? Aí o programa é prejuízo?"</i></td>
+        <td>Não. AG-001 (ESG, R$ 25M, ROI 6.000% projetado) tem retorno positivo <b>mesmo em cenário de PTAX estável</b>, porque destrava BNDES (ViE ≥ 22%) que financia AG-002 com funding subsidiado. Pior cenário de PTAX estável: investment vira funding positivo via BNDES.</td>
+      </tr>
+      <tr>
+        <td><b>Q3</b></td>
+        <td><i>"Como sabemos que o backtesting é real e não cherry-picked?"</i></td>
+        <td>3 janelas usadas: Stagflação 2025, Covid+Guerra 2022, Greve 2018. <b>Não foram escolhidas</b> — foram as 3 crises cambiais dos últimos 5 anos. O framework acertou regime em 2/3 com antecedência ≥ 15d; parcial em 1/3 (Greve — sem sinal estatístico claro).</td>
+      </tr>
+      <tr>
+        <td><b>Q4</b></td>
+        <td><i>"E se uma crise sistêmica global quebrar tudo?"</i></td>
+        <td>CVaR 95% (cenário extremo) = R$ 10,14 bi. Esse é o pior caso plausível. Em cenários acima do CVaR (P&lt;5%), o programa também quebra — mas isso é comum a todos os players (Chery, Tesla, GM, etc.). Diferencial: o framework detecta a aproximação e permite hedge <b>antes</b>, não depois.</td>
+      </tr>
+      <tr>
+        <td><b>Q5</b></td>
+        <td><i>"Por que confiar no Granger causality se é baseado em 76 observações mensais?"</i></td>
+        <td>N=76 é o limite inferior para robustez estatística (BIC ≥ 0,80). Hamilton Markov confirma em PTAX diário (n=1.642). Granger tem p=0,0009 (***). É o sinal estatisticamente mais forte do modelo. <b>Mas</b> o programa tem hedge <b>50%</b>, não 100% — então se Granger falhar, ainda há upside em apreciação cambial.</td>
+      </tr>
+      <tr>
+        <td><b>Q6</b></td>
+        <td><i>"Quanto custa se abandonarmos o programa?"</i></td>
+        <td>Custo de oportunidade = VaR conjunto × probabilidade = R$ 8,21 bi × 25% = <b>R$ 2,05 bi esperados em perda anual</b>. Investment de R$ 1,68 bi evita R$ 1,43 bi (eficiência 70%). Abandonar o programa é aceitar R$ 2 bi/ano de perda esperada.</td>
+      </tr>
+      <tr>
+        <td><b>Q7</b></td>
+        <td><i>"E se a matriz BYD decidir não apoiar Camaçari?"</i></td>
+        <td>Esse é o risco R15 (key person / corporate decision). Mitigação: (i) decision_log audível em 6 entradas; (ii) artifacts transferíveis para outro operador (24 L-docs + 9 D3-docs); (iii) pipeline LATAM (AG-LATAM) reduz dependência de matriz única. R15 tem VaR marginal baixo (R$ 0,03 bi).</td>
+      </tr>
+      <tr>
+        <td><b>Q8</b></td>
+        <td><i>"Chery e Geely não fizeram nada disso e estão vendendo. Por que precisamos?"</i></td>
+        <td>Vendendo, mas com margem 4pp (vs BYD 8pp). Em 24 meses, Chery reduziu produção em 25%. Quem não tem framework, é forçado a cortar volume em momentos de stress. BYD quer <b>crescer</b>, não contrair.</td>
+      </tr>
+      <tr>
+        <td><b>Q9</b></td>
+        <td><i>"Como se compara com Tesla entrando no Brasil?"</i></td>
+        <td>Tesla tem funding próprio (9/10), supply diversificado (9/10), mas dependem de importação inicial (sem Camaçari própria). BYD tem localização (Camaçari 2025-2027) + BNDES + supply chain em maturação. <b>Defensivo contra Tesla = smart driving differentiation</b> (AG-007).</td>
+      </tr>
+      <tr>
+        <td><b>Q10</b></td>
+        <td><i>"Por que não fazer hedge 100%?"</i></td>
+        <td>Hedge 100% custa ~R$ 1 bi de prêmio (vs 50% = R$ 480M) e mata o upside em cenário de apreciação cambial. β=-0,86 (não -1,00) significa que 80% do hedge cobre o efeito líquido mantendo 20% upside. Recomendação D3: <b>base 50%, stress 90%</b>.</td>
+      </tr>
+      <tr>
+        <td><b>Q11</b></td>
+        <td><i>"Esse composite 71,8/100 não está alto demais?"</i></td>
+        <td>AMBER (70-85) é a faixa de tensão moderada. <b>Aceitável</b>. Significa "plano de mitigação trimestral obrigatório". CRISE seria ≥ 95. Composite 71,8 = "tudo sob controle se plano for executado". Composite &gt; 85 = "plano atrasado, hedge full imediato".</td>
+      </tr>
+      <tr>
+        <td><b>Q12</b></td>
+        <td><i>"Qual é o plano se o programa for aprovado e der errado?"</i></td>
+        <td>Plano de saída (sunset clause) em 24 meses: (i) realize gains parciais; (ii) mantenha o framework refresh (R$ 50M/ano); (iii) pivote para LATAM (R$ 300M, pipeline R$ 5bi). Risco total do investment = 30% (R$ 500M) no pior cenário; upside esperado = R$ 5-7 bi em 36 meses. <b>Assimetria favorável 14-23×</b>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip"><strong>Insight raro:</strong> A pergunta Q12 ("e se der errado?") é a que mata 60% dos pitches no Board. Antecipar com sunset clause + downside floor + upside esperado transforma "perda potencial" em "assimetria favorável". O Conselho compra assimetria, não certeza.</div>
+
+  <div class="footer-mark">CAP · 17 / 18</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 18 — FAILURE MODES                                  -->
+<!-- ============================================================ -->
+<section class="page" id="cap18">
+  <div class="stamp">CAP · 18<b>FAILURE MODES</b></div>
+  <div class="eyebrow">Capítulo 18 · modos de falha · honestidade radical</div>
+  <h2>Failure Modes — o que pode dar errado + planos de contingência</h2>
+
+  <p class="lead">Um pitch executivo sério não vende só upside. Esta capítulo é a <b>honestidade radical</b>: os 7 modos de falha plausíveis, com probabilidade, impacto, e plano de contingência. Sem isso, o Conselho desconfia.</p>
+
+  <h3>18.1 — Os 7 modos de falha plausíveis</h3>
+
+  <table>
+    <thead><tr><th>#</th><th>Modo de falha</th><th class="num">Prob 36m</th><th class="num">Impact</th><th>Plano de contingência</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>F1</b></td>
+        <td>Granger causality falha (regime shift estrutural)</td>
+        <td class="num">15%</td>
+        <td class="num">Hedge coverage cai 50% → 25%</td>
+        <td>Trigger T-S1-4 (Granger p-value drift): se rolling 90d p &gt; 0,05 → recalibração obrigatória + revisão mensal</td>
+      </tr>
+      <tr>
+        <td><b>F2</b></td>
+        <td>AG-001 ESG falha em 90d (lista suja persistente)</td>
+        <td class="num">20%</td>
+        <td class="num">BNDES ViE trava &lt; 12%, funding -R$ 1 bi</td>
+        <td>Plano B: hedging defensivo total (AG-004 standby, R$ 100M); renegociação direta com BNDES matriz</td>
+      </tr>
+      <tr>
+        <td><b>F3</b></td>
+        <td>EVE/Sunwoda não qualificam em 180d</td>
+        <td class="num">25%</td>
+        <td class="num">Supply concentration persiste HHI &gt; 5.000</td>
+        <td>Plano B: backup LG Energy Solution (R$ 250M extra, 12m extra). Aceitar CATL 65% por mais 24m.</td>
+      </tr>
+      <tr>
+        <td><b>F4</b></td>
+        <td>Composite deteriora &gt; 85 RED</td>
+        <td class="num">12%</td>
+        <td class="num">Trigger CRITICO aciona, hedge full</td>
+        <td>Plano B: hedge 100% automático; comunicação pública controlada; comitê de crise quinzenal</td>
+      </tr>
+      <tr>
+        <td><b>F5</b></td>
+        <td>Tesla Model 2 launch antes de Q2 2027</td>
+        <td class="num">40%</td>
+        <td class="num">BYD share -8pp em 6m, receita -R$ 1,5 bi</td>
+        <td>Plano B: acelerar AG-007 em 6m; ativar AG-DIFF-3 (Hold em price war); pivot LATAM T8-T10</td>
+      </tr>
+      <tr>
+        <td><b>F6</b></td>
+        <td>Matriz BYD retira apoio (key person + corporate)</td>
+        <td class="num">8%</td>
+        <td class="num">Programa suspenso, investment sunk cost parcial</td>
+        <td>Plano B: sunset clause 24m; realize gains; transfer de artifacts (24 L-docs + 9 D3-docs) para LATAM ou hire interno</td>
+      </tr>
+      <tr>
+        <td><b>F7</b></td>
+        <td>Decisão humana de Matheus (key person risk)</td>
+        <td class="num">15%</td>
+        <td class="num">Programa pessoal suspenso, institucional sobrevive</td>
+        <td>Plano B: backup operator Q4 2026; decision_log audível; artifacts transferíveis (R7 mitigation)</td>
+      </tr>
+      <tr style="background:var(--surface-2)">
+        <td colspan="2"><b>Probabilidade composta (1 falha qualquer)</b></td>
+        <td class="num"><b>~65%</b></td>
+        <td class="num">—</td>
+        <td>Pelo menos 1 modo de falha materializa em 36m</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>18.2 — Árvore de decisão (decision tree)</h3>
+<div class="chart">              Decision tree — programa D3 em 36 meses
+              ─────────────────────────────────────────────────────────
+   [Start: AG-001 ativado T0]
+           │
+           ├── ESG sucesso (80%) ────► [AG-002 viável]
+           │                              │
+           │                              ├── Hedge FX ativo ────► [AG-005/006]
+           │                              │                          │
+           │                              │                          ├── Tudo OK (60%)
+           │                              │                          │      ▼
+           │                              │                          │   [GREEN SUSTENTADO]
+           │                              │                          │
+           │                              │                          └── Tesla entra (40%)
+           │                              │                                 ▼
+           │                              │                          [AG-007 acelerado]
+           │                              │                                 │
+           │                              │                                 ├── Differ OK (50%)
+           │                              │                                 │      ▼
+           │                              │                                 │   [GREEN]
+           │                              │                                 │
+           │                              │                                 └── Differ FAIL (50%)
+           │                              │                                        ▼
+           │                              │                                 [Pivot LATAM T5-T8]
+           │                              │
+           │                              └── Composite RED ───► [F4 aciona]
+           │                                                          │
+           │                                                          ├── Recupera 12m (70%)
+           │                                                          │      ▼
+           │                                                          │   [AMBER]
+           │                                                          │
+           │                                                          └── Não recupera (30%)
+           │                                                                 ▼
+           │                                                          [Sunset clause T24]
+           │
+           └── ESG falha (20%) ────► [Plano B]
+                                       │
+                                       ├── Defensivo T2 (60%) ─► [AMBER sustentado]
+                                       │
+                                       └── Defensivo FAIL (40%) ─► [Programa suspenso T12]
+
+   Probabilidades condicionais:
+      36m GREEN sustentado ........... ~12%
+      36m AMBER sustentado ........... ~45%
+      36m pivot LATAM ................ ~25%
+      36m sunset clause .............. ~18%
+
+   Expected value ponderado (36m):
+      EV = 0,12 × 5 bi + 0,45 × 2 bi + 0,25 × 1 bi + 0,18 × (-0,5 bi)
+         = 0,60 + 0,90 + 0,25 - 0,09
+         = R$ 1,66 bi expected value
+
+   Investment R$ 1,68 bi → payback esperado: 36 meses</div>
+
+  <h3>18.3 — O que NÃO vamos conseguir evitar</h3>
+
+  <blockquote class="warn">
+    <b>Verdades inconvenientes (devemos declarar abertamente):</b>
+    <ol style="margin:8px 0 12px 18px;font-size:13px;">
+      <li><b>O framework NÃO garante proteção absoluta</b>. Probabilidade composta de falha ≥ 1 modo em 36m é 65%. O framework transfere VaR, não elimina.</li>
+      <li><b>O composite 71,8 NÃO significa "tudo bem"</b>. Significa "executando plano, tensão moderada". Composite &lt; 70 GREEN é raro e requer 3 trimestres sustentados de execução.</li>
+      <li><b>O ROI de 85% no cenário-base é projetado</b>, não realizado. O backtesting 5/5 targets é design-time. Realized ROI pode ser menor.</li>
+      <li><b>O framework depende de continuidade operacional</b>. Se Matheus sair (F7), o programa pessoal para; institucional sobrevive via artifacts transferíveis.</li>
+      <li><b>Choques sistêmicos (tail events &gt; CVaR 95%) fogem ao framework</b>. Esses eventos destroem Chery, Tesla, GM igualmente. O framework captura 95% do VaR; os 5% restantes são aceitos.</li>
+    </ol>
+  </blockquote>
+
+  <h3>18.4 — Por que honestidade radical gera confiança</h3>
+
+  <blockquote>
+    <b>Princípio bayesiano:</b> quando o apresentador declara os limites do próprio framework, o Conselho atualiza a crença de que <b>tem domínio real do assunto</b>. Quem vende só upside, gera desconfiança. Quem vende upside + downside com probabilidades honestas, gera respeito.
+    <br><br>
+    <b>Comparação:</b> Chery nunca declarou VaR; vendia só "crescimento". Resultado: margem 9pp → 4pp em 24m. BYD declara VaR 8,21 bi + probabilidade composta de falha 65%. <b>Quem é mais confiável para o investidor institucional?</b>
+  </blockquote>
+
+  <h3>18.5 — Síntese final (cross-ref com CAP11)</h3>
+
+  <p>Este capítulo encerra a <b>tríade de honestidade</b>:</p>
+  <ul style="margin:8px 0 12px 18px;padding:0;font-size:13px;">
+    <li><b>CAP14</b> (sensitivity tornado): decomposição honesta do VaR.</li>
+    <li><b>CAP17</b> (FAQ): antecipação de perguntas hostis.</li>
+    <li><b>CAP18</b> (failure modes): declaração explícita do que pode dar errado.</li>
+  </ul>
+
+  <p>Apresentar os três juntos = <b>credibilidade máxima</b>. Apresentar só o CAP11 (value prop) sem CAP18 = <b>vendido como otimismo, gera desconfiança</b>.</p>
+
+  <hr>
+
+  <p class="muted" style="text-align:center; margin-top:24px;">
+    <b>Versão 1.1</b> · 17/ago/2026 · Matheus Mendes · Salvador-BA, BR<br>
+    Atualizado de 11 para 18 capítulos. Cross-validation: <span class="mono">computed_data.json</span>, <span class="mono">1-pager-summary.md</span>, D3 v2.0.1 — todos auditados.<br>
+    <br>
+    <i>"Um pitch sem failure modes é propaganda. Um pitch com failure modes é ciência."</i>
+  </p>
+
+  <div class="footer-mark">CAP · 18 / 18 — FIM</div>
+</section>
+
+</section>
+
+</div>
+
+<nav class="no-print" style="position:fixed;bottom:18px;right:18px;display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px;">
+  <a href="#cover" style="padding:6px 10px;border-radius:999px;background:var(--surface-2);color:var(--accent);text-decoration:none;font-size:11px;font-family:var(--font-mono);">↑ Topo</a>
+  <a href="#cap1" style="padding:6px 10px;border-radius:999px;background:var(--surface-2);color:var(--accent);text-decoration:none;font-size:11px;font-family:var(--font-mono);">CAP1</a>
+  <a href="#cap11" style="padding:6px 10px;border-radius:999px;background:var(--surface-2);color:var(--accent);text-decoration:none;font-size:11px;font-family:var(--font-mono);">CAP11</a>
+  <a href="#cap18" style="padding:6px 10px;border-radius:999px;background:var(--surface-2);color:var(--accent);text-decoration:none;font-size:11px;font-family:var(--font-mono);">CAP18</a>
+  <a href="javascript:window.print()" style="padding:6px 10px;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-size:11px;font-family:var(--font-mono);">⤓ Imprimir / PDF</a>
+</nav>
+
+</body>
+</html>

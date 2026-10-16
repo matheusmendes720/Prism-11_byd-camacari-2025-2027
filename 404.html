@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Página não encontrada | BYD Camaçari Case Study</title>
+<meta name="theme-color" content="#0a0a0c">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-card: #13131a;
+    --border: #2a2a35;
+    --border-hover: #3a3a45;
+    --text: #e8e8ed;
+    --text-dim: #9a9aa8;
+    --text-strong: #ffffff;
+    --accent-red: #ff1a1a;
+    --accent-yellow: #ffd700;
+    --accent-blue: #4d9fff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent-blue); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: var(--accent-yellow); }
+
+  .container {
+    max-width: 560px;
+    text-align: center;
+    padding: 40px 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .code {
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-yellow) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+  }
+
+  h1 {
+    color: var(--text-strong);
+    font-size: 22px;
+    margin-bottom: 8px;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  p code {
+    font-family: "SF Mono", Monaco, monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--accent-yellow);
+    font-size: 12px;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .btn {
+    display: block;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--accent-red);
+    color: var(--text-strong);
+    box-shadow: 0 4px 16px rgba(255,26,26,0.25);
+  }
+
+  .btn-primary:hover {
+    color: var(--text-strong);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(255,26,26,0.35);
+  }
+
+  .btn-secondary {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-secondary:hover {
+    color: var(--text-strong);
+    background: var(--border);
+    border-color: var(--border-hover);
+  }
+
+  .quick {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    text-align: left;
+  }
+
+  .quick-title {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .quick-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .quick-list li a {
+    display: block;
+    padding: 8px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 12px;
+    color: var(--text);
+    transition: border-color 0.15s, color 0.15s;
+    word-break: break-all;
+  }
+
+  .quick-list li a:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+  }
+
+  @media (max-width: 480px) {
+    .code { font-size: 72px; }
+    .container { padding: 32px 20px; }
+    .quick-list { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="code">404</div>
+  <h1>Página não encontrada</h1>
+  <p>O caminho <code id="path">/</code> não existe neste repositório. Os short-URLs disponíveis estão abaixo — volte para a home ou tente um dos artefatos principais.</p>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="./">Voltar para a página inicial</a>
+    <a class="btn btn-secondary" href="./HUB.html">Abrir o HUB de documentação</a>
+  </div>
+
+  <div class="quick">
+    <div class="quick-title">Short-URLs ativos</div>
+    <ul class="quick-list">
+      <li><a href="./D3.html">/D3.html</a></li>
+      <li><a href="./D3G.html">/D3G.html</a></li>
+      <li><a href="./HUB.html">/HUB.html</a></li>
+      <li><a href="./byd-pitch-deck-v4.html">/byd-pitch-deck-v4.html</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  // Mostra o path que o usuário tentou acessar (do referer se possível, senão location)
+  (function() {
+    var el = document.getElementById('path');
+    var ref = document.referrer;
+    if (ref) {
+      try { el.textContent = new URL(ref).pathname; } catch (e) { el.textContent = ref; }
+    } else {
+      el.textContent = window.location.pathname;
+    }
+  })();
+</script>
+
+</body>
+</html>

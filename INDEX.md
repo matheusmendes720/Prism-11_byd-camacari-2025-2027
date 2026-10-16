@@ -1,8 +1,18 @@
 # 📋 INDEX — Toda a Documentação do Case Study
 
-> **Índice de navegação unificado** para todos os 41 docs do case study BYD Camaçari 2025-2027
-> **Data**: 27/jul/2026
+> **Índice de navegação unificado** para todos os 41+ docs do case study BYD Camaçari 2025-2027
+> **Data**: 25/ago/2026
 > **Audiência**: qualquer pessoa chegando ao projeto
+
+---
+
+## 🗂️ NOVO: HUB principal (índice cruzado por tema)
+
+> **🌟 Entrada recomendada:** **[HUB.md](./HUB.md)** (49 KB) ou **[HUB.html](./HUB.html)** (72 KB, navegável em browser com busca rápida).
+>
+> O HUB é o ponto de entrada mais completo: **13 temas × 60+ docs relacionados**, organizado por duração de leitura, número canônico, versão, e delegação. Cada tema tem links diretos para o relatório (`.md`), notebook (`.ipynb`), outputs (`.html/.png/.json`), e audio (`.mp3`).
+>
+> Companhias: `HUB.md` (markdown) + `HUB.html` (browser) + `analise-prescritiva/notebooks!/LINHAGEM.md` (linhagem técnica por fase) + `analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES.md` (síntese de conclusões por versão) + `outputs/SNAPSHOT-OPERACIONAL.md` (1 página A4 Conselho).
 
 ---
 

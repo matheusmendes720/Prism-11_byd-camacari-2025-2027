@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUB — Índice Cruzado BYD Camaçari 2025-2027</title>
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-card: #13131a;
+    --bg-card-hover: #1a1a23;
+    --border: #2a2a35;
+    --border-hover: #3a3a45;
+    --text: #e8e8ed;
+    --text-dim: #9a9aa8;
+    --text-strong: #ffffff;
+    --accent-red: #ff1a1a;
+    --accent-yellow: #ffd700;
+    --accent-green: #00d68f;
+    --accent-blue: #4d9fff;
+    --accent-purple: #b66dff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 24px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+
+  h1 {
+    color: var(--text-strong);
+    font-size: 32px;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .status-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .status-bar code {
+    color: var(--accent-yellow);
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 13px;
+  }
+
+  /* Search */
+  .search-box {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 16px 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  #search {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-strong);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  #search:focus {
+    border-color: var(--accent-blue);
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 48px;
+  }
+
+  h2 {
+    color: var(--text-strong);
+    font-size: 24px;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+    border-left: 4px solid var(--accent-red);
+    padding-left: 12px;
+  }
+
+  h3 {
+    color: var(--text-strong);
+    font-size: 18px;
+    margin: 24px 0 12px 0;
+  }
+
+  h4 {
+    color: var(--accent-yellow);
+    font-size: 14px;
+    margin: 16px 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  p {
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  p strong {
+    color: var(--text);
+  }
+
+  /* Theme cards */
+  .theme {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .theme:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+
+  .theme-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    cursor: pointer;
+  }
+
+  .theme-title {
+    font-size: 18px;
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+
+  .theme-meta {
+    font-size: 11px;
+    color: var(--text-dim);
+    padding: 2px 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .theme-body {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .theme-body p {
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .theme-body p strong {
+    color: var(--text);
+  }
+
+  .docs-table {
+    width: 100%;
+    margin-top: 12px;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .docs-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .docs-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .docs-table td {
+    padding: 6px 8px;
+    vertical-align: top;
+  }
+
+  .docs-table td:first-child {
+    color: var(--text-dim);
+    width: 100px;
+    white-space: nowrap;
+  }
+
+  .docs-table a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    word-break: break-all;
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 12px;
+  }
+
+  .docs-table a:hover {
+    color: var(--accent-yellow);
+    text-decoration: underline;
+  }
+
+  /* Tabs / filters */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
+  }
+
+  .filter-btn.active {
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: var(--text-strong);
+  }
+
+  /* Tables (numeric / comparison) */
+  table.numeric {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+
+  table.numeric th,
+  table.numeric td {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  table.numeric th {
+    background: var(--bg-card);
+    color: var(--accent-yellow);
+    font-weight: 600;
+  }
+
+  table.numeric td {
+    color: var(--text);
+  }
+
+  table.numeric code {
+    color: var(--accent-yellow);
+    font-family: "SF Mono", Monaco, monospace;
+  }
+
+  /* Status badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .badge-red {
+    background: rgba(255, 26, 26, 0.15);
+    color: var(--accent-red);
+    border: 1px solid rgba(255, 26, 26, 0.3);
+  }
+
+  .badge-yellow {
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--accent-yellow);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+  }
+
+  .badge-green {
+    background: rgba(0, 214, 143, 0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(0, 214, 143, 0.3);
+  }
+
+  .badge-blue {
+    background: rgba(77, 159, 255, 0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(77, 159, 255, 0.3);
+  }
+
+  /* Hidden */
+  .hidden {
+    display: none;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    margin-top: 48px;
+    color: var(--text-dim);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* Inline code */
+  code {
+    background: var(--bg-card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 12px;
+    color: var(--accent-yellow);
+  }
+
+  pre {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  pre code {
+    background: transparent;
+    padding: 0;
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  /* Audio list */
+  .audio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .audio-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .audio-card a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-family: "SF Mono", Monaco, monospace;
+    font-size: 12px;
+  }
+
+  .audio-card .duration {
+    color: var(--accent-yellow);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 24px;
+    margin-bottom: 32px;
+  }
+
+  .toc h3 {
+    margin-top: 0;
+    color: var(--accent-yellow);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .toc ol {
+    list-style: none;
+    padding: 0;
+  }
+
+  .toc li {
+    padding: 4px 0;
+  }
+
+  .toc a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .toc a:hover {
+    color: var(--accent-yellow);
+  }
+
+  /* Highlight (search match) */
+  .highlight {
+    background: rgba(255, 215, 0, 0.2);
+    color: var(--text-strong);
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🗂️ HUB — Índice Cruzado</h1>
+  <div class="subtitle">Case study BYD Camaçari 2025-2027 · D2 v1 → D2 v2.1 → D3 v2.0.2 · ~250+ docs indexados</div>
+
+  <div class="status-bar">
+    <span><code>composite 50,3</code> <span class="badge badge-red">RED</span></span>
+    <span><code>VaR 4-shock R$ 8,21 bi</code></span>
+    <span><code>CVaR 95% R$ 10,14 bi</code></span>
+    <span><code>Backtesting 5/5</code> <span class="badge badge-green">PERFEITO</span></span>
+    <span><code>Próximo milestone</code> composite ≥65 até Q4/2026</span>
+  </div>
+</header>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="🔍 Buscar tema, doc, métrica (ex.: 'PTAX', 'lista suja', 'AG-001', 'RB')..." autocomplete="off">
+</div>
+
+<nav class="toc">
+  <h3>Índice de seções (clique para navegar)</h3>
+  <ol>
+    <li><a href="#como-usar">§0. Como usar este HUB</a></li>
+    <li><a href="#temas">§1. Mapa de 13 temas (60+ docs)</a></li>
+    <li><a href="#duracao">§2. Documentos por duração de leitura</a></li>
+    <li><a href="#numeros">§4. Números canônicos (com fontes)</a></li>
+    <li><a href="#linhagem">§5. Linhagem: 8 versões × 14 meses</a></li>
+    <li><a href="#atual">§6. O que mudou em ago/2026</a></li>
+    <li><a href="#delegacao">§7. 14 frentes delegação</a></li>
+    <li><a href="#audio">§8. 12 MP3s reproduzíveis</a></li>
+    <li><a href="#trilhas">§9. 3 trilhas de entrada</a></li>
+    <li><a href="#roadmap">§10. Próximas evoluções</a></li>
+  </ol>
+</nav>
+
+<section id="como-usar">
+  <h2>§0. Como usar este HUB</h2>
+  <p><strong>1.</strong> Quer entender o produto? → <a href="#temas">§1 (Mapa de temas + Audiências)</a>.</p>
+  <p><strong>2.</strong> Quer ler um relatório curto? → <a href="#duracao">§2 (Documentos por duração)</a>.</p>
+  <p><strong>3.</strong> Quer explorar um tema? → <a href="#temas">§3 (Índice cruzado: 13 temas × 60+ docs)</a>.</p>
+  <p><strong>4.</strong> Quer validar uma métrica? → <a href="#numeros">§4 (Números canônicos com fontes)</a>.</p>
+  <p><strong>5.</strong> Quer a linhagem completa? → <a href="#linhagem">§5 (Cadeia D2 v1 → D3 v2.0.2 + 8 fases)</a>.</p>
+  <p><strong>6.</strong> Quer entender o estado atual? → <a href="#atual">§6 (O que mudou em ago/2026)</a>.</p>
+  <p><strong>7.</strong> Use o campo de busca acima para encontrar rapidamente qualquer doc, métrica, ou tema.</p>
+  <p>Para abrir qualquer documento direto, <strong>Ctrl+Click no link</strong>. Todos os caminhos são absolutos.</p>
+</section>
+
+<section id="temas">
+  <h2>§1. Mapa de 13 temas (60+ docs relacionados)</h2>
+  <p>Cada tema abaixo lista: <strong>O que é</strong> + <strong>Por que importa</strong> + <strong>Documentos relacionados</strong> (relatórios <code>.md</code>, notebooks <code>.ipynb</code>, outputs <code>.html/.png/.json</code>, audio <code>.mp3</code>, dados <code>.csv/.json</code>).</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Todos (13)</button>
+    <button class="filter-btn" data-filter="risco">Risco (4)</button>
+    <button class="filter-btn" data-filter="analise">Análise (3)</button>
+    <button class="filter-btn" data-filter="decisao">Decisão (3)</button>
+    <button class="filter-btn" data-filter="operacional">Operacional (2)</button>
+    <button class="filter-btn" data-filter="comunicacao">Comunicação (1)</button>
+  </div>
+
+  <div class="theme" data-tag="risco">
+    <div class="theme-header">
+      <div class="theme-title">1 · Câmbio (PTAX vol, hedge, stress FX)</div>
+      <span class="theme-meta">6 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> análise da variabilidade da taxa de câmbio USD/BRL (PTAX venda) e seu impacto na planta BYD Camaçari. Cobre σ anualizada, GARCH(1,1)-t, VaR/CVaR, e 3 cenários de stress.</p>
+      <p><strong>Por que importa:</strong> ~42% do BOM é importado. Cada R$ 0,10 de depreciação custa ~R$ 280M EBIT anual. σ 14,86% (10y BCB) = VaR 6m R$ 2,10 bi empírico, R$ 6,43 bi MC refresh, R$ 8,21 bi 4-shock tornado.</p>
+      <table class="docs-table">
+        <tr><td>📊 Relatório</td><td><a href="d2-econometric-vulnerability/byd-econometric-vulnerability.ipynb">d2-econometric-vulnerability/byd-econometric-vulnerability.ipynb</a></td></tr>
+        <tr><td>📓 Notebook espelho</td><td><a href="d2-econometric-vulnerability/byd-econometric-vulnerability.py">d2-econometric-vulnerability/byd-econometric-vulnerability.py</a></td></tr>
+        <tr><td>📊 HTML MC 10k paths</td><td><a href="d2-econometric-vulnerability/outputs/cambio-monte-carlo.html">outputs/cambio-monte-carlo.html</a> (105 KB)</td></tr>
+        <tr><td>📊 HTML stress test</td><td><a href="d2-econometric-vulnerability/outputs/cambio-stress-test.html">outputs/cambio-stress-test.html</a> (8.6 KB)</td></tr>
+        <tr><td>📓 Notebook NB-01</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-01-ptax-garch/nb-01-ptax-garch.ipynb">notebooks!/02-canonicos/nb-01-ptax-garch.ipynb</a></td></tr>
+        <tr><td>📚 Estudo L1.0</td><td><a href="d2-econometric-vulnerability/_study_notes/L1.0-eda-pTAX-passo-a-passo.md">_study_notes/L1.0-eda-pTAX-passo-a-passo.md</a> (36 KB)</td></tr>
+        <tr><td>📚 Estudo L2.1</td><td><a href="d2-econometric-vulnerability/_study_notes/L2.1-modelos-vol-garch-gjr.md">_study_notes/L2.1-modelos-vol-garch-gjr.md</a> (31 KB)</td></tr>
+        <tr><td>📚 Estudo L2.2</td><td><a href="d2-econometric-vulnerability/_study_notes/L2.2-cambio-stress-test-monte-carlo.md">_study_notes/L2.2-cambio-stress-test-monte-carlo.md</a> (32 KB)</td></tr>
+        <tr><td>📚 Recalibração BCB real</td><td><a href="analise-prescritiva/reports/decision-framework/3_recalibration/D3-RECALIBRATION-S1-S3-REAL-BCB.md">D3-RECALIBRATION-S1-S3-REAL-BCB.md</a> (2.509 obs)</td></tr>
+        <tr><td>📚 Coupling S1↔S3</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S1-S3.md">D3-INTERDEPENDENCY-S1-S3.md</a> (15 KB)</td></tr>
+        <tr><td>🎧 Audio 02</td><td><a href="analise-prescritiva/case-studies/docs/audio/02-dados-logica-audio-script.md">audio/02-dados-logica-audio-script.md</a> (10 min)</td></tr>
+        <tr><td>🔢 Dados brutos</td><td><a href="analise-prescritiva/reports/decision-framework/_models/_bcb_ptax_raw.json">_models/_bcb_ptax_raw.json</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="risco">
+    <div class="theme-header">
+      <div class="theme-title">2 · Supply Chain (HHI, lítio, concentração)</div>
+      <span class="theme-meta">5 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> análise de concentração de fornecedores (HHI Herfindahl-Hirschman Index) nas 6 categorias de componentes. Bateria (LFP) tem HHI 4.850 (CATL 95,7%), powertrain 3.400, semicondutores 2.925.</p>
+      <p><strong>Por que importa:</strong> single-source risk em LFP. Semicondutores VaR R$ 1,2 bi para 6m outage. Lítio σ 95% anualizada = VaR R$ 4,00 bi (real 12m).</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-02</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-02-supply-chain-hhi/nb-02-supply-chain-hhi.ipynb">nb-02-supply-chain-hhi.ipynb</a></td></tr>
+        <tr><td>📊 HTML Sankey</td><td><a href="d2-econometric-vulnerability/outputs/supply-chain-sankey.html">outputs/supply-chain-sankey.html</a></td></tr>
+        <tr><td>📚 Recalibração lítio</td><td><a href="analise-prescritiva/reports/decision-framework/3_recalibration/D3-RECALIBRATION-S2-LITHIUM-2026.md">D3-RECALIBRATION-S2-LITHIUM-2026.md</a></td></tr>
+        <tr><td>📚 Recalibração supply real</td><td><a href="analise-prescritiva/reports/decision-framework/3_recalibration/D3-RECALIBRATION-S1-S2-REAL.md">D3-RECALIBRATION-S1-S2-REAL.md</a></td></tr>
+        <tr><td>📚 Coupling S1↔S2</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S1-S2.md">D3-INTERDEPENDENCY-S1-S2.md</a> (10 KB)</td></tr>
+        <tr><td>📚 Estudo L1.1</td><td><a href="d2-econometric-vulnerability/_study_notes/L1.1-eda-supply-chain-trade-balance.md">_study_notes/L1.1-eda-supply-chain-trade-balance.md</a> (40 KB)</td></tr>
+        <tr><td>📓 Notebook L7</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L7-multivariate-analysis/l7-multivariate-analysis.ipynb">L7-multivariate-analysis.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="risco analise">
+    <div class="theme-header">
+      <div class="theme-title">3 · Regulatório / BNDES</div>
+      <span class="theme-meta">6 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> 4 cenários políticos (Expansão ViE 18% prob 75%, Continuidade 22% prob 60%, Rollback Parcial 30% prob 25%, Rollback Total 35% prob 10%).</p>
+      <p><strong>Por que importa:</strong> incentivos cobrem ~18% do preço. Rollback Total custa 18pp. Lista suja MTE desde 07/abr/2026 ativa kill switch S7 (BNDES bloqueado).</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-03</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-03-regulatory-scenarios/nb-03-regulatory-scenarios.ipynb">nb-03-regulatory-scenarios.ipynb</a></td></tr>
+        <tr><td>📊 HTML cenários</td><td><a href="d2-econometric-vulnerability/outputs/regulatory-scenarios.html">outputs/regulatory-scenarios.html</a></td></tr>
+        <tr><td>📚 Coupling S1↔S3</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S1-S3.md">D3-INTERDEPENDENCY-S1-S3.md</a></td></tr>
+        <tr><td>📚 Coupling S3↔S4</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S3-S4.md">D3-INTERDEPENDENCY-S3-S4.md</a> (break-even ViE=10%)</td></tr>
+        <tr><td>📚 Coupling S10 Tariff</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S10-TARIFF.md">D3-INTERDEPENDENCY-S10-TARIFF.md</a> (23 KB)</td></tr>
+        <tr><td>📚 Memo Conselho</td><td><a href="analise-prescritiva/case-studies/docs/CONSELHO-MEMO-2026-08-15.md">CONSELHO-MEMO-2026-08-15.md</a></td></tr>
+        <tr><td>📓 Notebook L8</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L8-optimization/l8-optimization.ipynb">L8-optimization.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="analise">
+    <div class="theme-header">
+      <div class="theme-title">4 · Composite (índice 0-100 + drift cross-version)</div>
+      <span class="theme-meta">8 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> indicador agregado que sintetiza 11 dimensões S1-S11 em score 0-100. Pesos canônicos 0,18/0,16/0,18/0,16/0,10/0,10/0,05/0,08/0,04/0,05/0,05 (sum=1,15, renormalizado 1,00). Thresholds: ≥80 GREEN, ≥65 AMBER, &lt;65 RED.</p>
+      <p><strong>Por que importa:</strong> composite é o termômetro executivo. Drift: D2 v1 (n/a) → D2 v2 (71,8) → D3 v0.6 (71,8) → D3 v2.0.1/v2.0.2 (50,3 RED).</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-05</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-05-composite-index-radar/nb-05-composite-index-radar.ipynb">nb-05-composite-index-radar.ipynb</a></td></tr>
+        <tr><td>📊 HTML radar</td><td><a href="d2-econometric-vulnerability/outputs/composite-vulnerability-radar.html">outputs/composite-vulnerability-radar.html</a></td></tr>
+        <tr><td>📊 Dashboard final PNG</td><td><a href="d2-econometric-vulnerability/outputs/cap6_dashboard_final.png">outputs/cap6_dashboard_final.png</a> (343 KB)</td></tr>
+        <tr><td>📚 SCORES (3 linhagens)</td><td><a href="analise-prescritiva/case-studies/docs/SCORES.md">docs/SCORES.md</a> (7 KB)</td></tr>
+        <tr><td>📚 Composite weights</td><td><a href="analise-prescritiva/reports/decision-framework/CLAUDE.md">decision-framework/CLAUDE.md</a> (§Composite Weights)</td></tr>
+        <tr><td>📚 Drift cross-version</td><td><a href="analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES.md">EVOLUÇÃO-VERSÕES.md</a> §4</td></tr>
+        <tr><td>📚 Snapshot operacional</td><td><a href="outputs/SNAPSHOT-OPERACIONAL.md">outputs/SNAPSHOT-OPERACIONAL.md</a></td></tr>
+        <tr><td>📓 Notebook L10</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L10-decision-framework/l10-decision-framework.ipynb">L10-decision-framework.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="analise">
+    <div class="theme-header">
+      <div class="theme-title">5 · Game Theory (5 players × 2 strategies)</div>
+      <span class="theme-meta">4 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> BYD, Stellantis, GM, VW, Geely. Cada player: Differentiate ou Price War. 32 combinações. Payoff = market share × margem × NPV.</p>
+      <p><strong>Por que importa:</strong> NASH E3 estável (BYD HIGH, Stel LOW, GM LOW, VW LOW, Geely HIGH). Guerra de preços = soma −R$ 8,6 bi NPV agregado. BYD NÃO deve responder Stellantis com desconto.</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-04</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-04-competition-game-theory/nb-04-competition-game-theory.ipynb">nb-04-competition-game-theory.ipynb</a></td></tr>
+        <tr><td>📓 Notebook NB-09</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-09-game-theory/nb-09-game-theory.ipynb">nb-09-game-theory.ipynb</a></td></tr>
+        <tr><td>📊 HTML Nash eq</td><td><a href="analise-prescritiva/outputs/nb09_nash_equilibrium.html">outputs/nb09_nash_equilibrium.html</a></td></tr>
+        <tr><td>📚 Coupling S11</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S11-COMPETITION.md">D3-INTERDEPENDENCY-S11-COMPETITION.md</a> (26 KB)</td></tr>
+        <tr><td>📚 Game Theory MD</td><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-GAME-THEORY.md">D3-GAME-THEORY.md</a></td></tr>
+        <tr><td>📚 Sensitivity MD</td><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-MULTIVARIATE-SENSITIVITY.md">D3-MULTIVARIATE-SENSITIVITY.md</a></td></tr>
+        <tr><td>📊 HTML competition</td><td><a href="d2-econometric-vulnerability/outputs/competition-landscape.html">outputs/competition-landscape.html</a></td></tr>
+        <tr><td>📓 Notebook L9</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L9-game-theory/l9-game-theory.ipynb">L9-game-theory.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="risco analise">
+    <div class="theme-header">
+      <div class="theme-title">6 · Monte Carlo Multivariado (VaR 4-shock tornado)</div>
+      <span class="theme-meta">6 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> simulação 10.000 paths com 4 choques correlacionados (PTAX + lítio + tariff + demanda EV). Cholesky 4×4 preserva correlações empíricas.</p>
+      <p><strong>Por que importa:</strong> VaR 4-shock = R$ 8,21 bi. CVaR 95% = R$ 10,14 bi. Tornado: Tariff 29% &gt; Supply 25% &gt; FX 20% &gt; Demand 15%. Tariff é o maior contributor.</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-06</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-06-monte-carlo-multivariado/nb-06-monte-carlo-multivariado.ipynb">nb-06-monte-carlo-multivariado.ipynb</a></td></tr>
+        <tr><td>📓 Notebook MC alt</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-08-monte-carlo-multivariate/nb-08-monte-carlo-multivariate.ipynb">nb-08-monte-carlo-multivariate.ipynb</a></td></tr>
+        <tr><td>📊 HTML MC distrib</td><td><a href="analise-prescritiva/outputs/nb06_impact_distribution.html">outputs/nb06_impact_distribution.html</a></td></tr>
+        <tr><td>📊 HTML tornado</td><td><a href="analise-prescritiva/outputs/nb06_tornado_chart.html">outputs/nb06_tornado_chart.html</a></td></tr>
+        <tr><td>📚 Sensitivity MD</td><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-MULTIVARIATE-SENSITIVITY.md">D3-MULTIVARIATE-SENSITIVITY.md</a></td></tr>
+        <tr><td>📚 Quantitative Model</td><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-QUANTITATIVE-MODEL.md">D3-QUANTITATIVE-MODEL.md</a></td></tr>
+        <tr><td>📓 Notebook L6</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L6-monte-carlo/l6-monte-carlo.ipynb">L6-monte-carlo.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="analise">
+    <div class="theme-header">
+      <div class="theme-title">7 · Backtesting + False Positives (5/5 PERFEITO)</div>
+      <span class="theme-meta">4 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> validação histórica em 5-6 stress events reais 2020-2025 (COVID, Semicondutor 2021, Election 2022, Lítio spike 2022, Election 2024, Stagflação 2025).</p>
+      <p><strong>Por que importa:</strong> v2.0.1 atingiu 5/5 PERFEITO (TP 100%, FN 0%, FP 0%, accuracy 88,9%, time-to-action 9,3d) após 4 fixes (hysteresis, carry-trade, lítio asymmetry, 5-day).</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-08</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-08-backtesting-false-positives/nb-08-backtesting-false-positives.ipynb">nb-08-backtesting-false-positives.ipynb</a></td></tr>
+        <tr><td>📓 Notebook NB-11</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-11-backtesting/nb-11-backtesting.ipynb">nb-11-backtesting.ipynb</a></td></tr>
+        <tr><td>📚 Backtesting Validation</td><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-BACKTESTING-VALIDATION.md">D3-BACKTESTING-VALIDATION.md</a></td></tr>
+        <tr><td>📚 False Positive Fixes</td><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-FALSE-POSITIVE-FIXES.md">D3-FALSE-POSITIVE-FIXES.md</a></td></tr>
+        <tr><td>📓 Notebook L2</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L2-hypothesis-testing/l2-hypothesis-testing.ipynb">L2-hypothesis-testing.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="analise">
+    <div class="theme-header">
+      <div class="theme-title">8 · Couplings / Interdependências (5+15=20 totais)</div>
+      <span class="theme-meta">12 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> 5 couplings primários: S1↔S3 (h* por ViE), S1↔S2 (joint VaR), S1↔S4 (ratio 9×), S3↔S4 (break-even 10%), S6→all (multiplier). + 15 secundários.</p>
+      <p><strong>Por que importa:</strong> Gap #1 do D2-AUDIT que motivou D2 → D3. Sem couplings, as 6 sessões eram silos. Com couplings, o framework virou prescritivo.</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-07</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-07-interdependency-couplings/nb-07-interdependency-couplings.ipynb">nb-07-interdependency-couplings.ipynb</a></td></tr>
+        <tr><td>📚 Dependency Graph</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-DEPENDENCY-GRAPH.md">D3-DEPENDENCY-GRAPH.md</a> (13 KB, grafo 6×6)</td></tr>
+        <tr><td>📚 Coupling S1↔S2</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S1-S2.md">D3-INTERDEPENDENCY-S1-S2.md</a></td></tr>
+        <tr><td>📚 Coupling S1↔S3</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S1-S3.md">D3-INTERDEPENDENCY-S1-S3.md</a></td></tr>
+        <tr><td>📚 Coupling S1↔S4</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S1-S4.md">D3-INTERDEPENDENCY-S1-S4.md</a></td></tr>
+        <tr><td>📚 Coupling S3↔S4</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S3-S4.md">D3-INTERDEPENDENCY-S3-S4.md</a></td></tr>
+        <tr><td>📚 Coupling S5</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S5-COUPLED.md">D3-INTERDEPENDENCY-S5-COUPLED.md</a></td></tr>
+        <tr><td>📚 Coupling S6</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S6-TRIGGERS.md">D3-INTERDEPENDENCY-S6-TRIGGERS.md</a></td></tr>
+        <tr><td>📚 Coupling S7 ESG</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S7-ESG.md">D3-INTERDEPENDENCY-S7-ESG.md</a> (23 KB)</td></tr>
+        <tr><td>📚 Coupling S8 Ramp</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S8-RAMP.md">D3-INTERDEPENDENCY-S8-RAMP.md</a> (24 KB)</td></tr>
+        <tr><td>📚 Coupling S9</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S9-DEMAND.md">D3-INTERDEPENDENCY-S9-DEMAND.md</a></td></tr>
+        <tr><td>📚 Coupling S10 Tariff</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S10-TARIFF.md">D3-INTERDEPENDENCY-S10-TARIFF.md</a></td></tr>
+        <tr><td>📚 Coupling S11 Competition</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S11-COMPETITION.md">D3-INTERDEPENDENCY-S11-COMPETITION.md</a> (26 KB)</td></tr>
+        <tr><td>📓 Notebook L7</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L7-multivariate-analysis/l7-multivariate-analysis.ipynb">L7-multivariate-analysis.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="decisao">
+    <div class="theme-header">
+      <div class="theme-title">9 · Decision Trees (12 árvores S3×S6 + overlays)</div>
+      <span class="theme-meta">4 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> 12 árvores condicionais mapeando 6 cenários BNDES × 2 cenários macro = 12 cells, cada uma com "se X → cell Y → ação Z → owner W → gate G → SLA".</p>
+      <p><strong>Por que importa:</strong> é o "playbook" que o COO consulta. Substitui o Gap #2 do D2-AUDIT ("sem branching condicional").</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-10</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-10-decision-trees/nb-10-decision-trees.ipynb">nb-10-decision-trees.ipynb</a></td></tr>
+        <tr><td>📊 HTML Trees</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-DECISION-TREES.html">D3-DECISION-TREES.html</a> (115 KB)</td></tr>
+        <tr><td>📚 Decision Matrix MD</td><td><a href="analise-prescritiva/case-studies/docs/08-decision-matrix-case-sensitive.md">docs/08-decision-matrix-case-sensitive.md</a> (319 linhas)</td></tr>
+        <tr><td>📓 Notebook L8</td><td><a href="analise-prescritiva/notebooks!/01-didaticos/L8-optimization/l8-optimization.ipynb">L8-optimization.ipynb</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="operacional decisao">
+    <div class="theme-header">
+      <div class="theme-title">10 · Trigger Matrix (15+30 triggers, 9 approval gates)</div>
+      <span class="theme-meta">5 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> matriz 6×3 (cenários S3 × regimes S6) com 15 triggers originais + 30 novos (v2.1) = 45 totais. 9 approval gates (R$ 30M → R$ 280M) + 7 kill gates.</p>
+      <p><strong>Por que importa:</strong> triggers são o "sistema nervoso" — detectam automaticamente quando o cenário muda. Substituem o Gap #5 do D2-AUDIT.</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-13</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-13-trigger-matrix/nb-13-trigger-matrix.ipynb">nb-13-trigger-matrix.ipynb</a></td></tr>
+        <tr><td>📚 Trigger Matrix MD</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-TRIGGER-MATRIX.md">D3-TRIGGER-MATRIX.md</a> (17 KB)</td></tr>
+        <tr><td>📚 Auto-Trigger Spec</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-AUTO-TRIGGER-SPEC.md">D3-AUTO-TRIGGER-SPEC.md</a> (22 KB)</td></tr>
+        <tr><td>📚 Trigger Matrix D3</td><td><a href="analise-prescritiva/case-studies/docs/TRIGGER_MATRIX.md">docs/TRIGGER_MATRIX.md</a></td></tr>
+        <tr><td>📚 Piloto Plan</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-PILOTO-PLAN.md">D3-PILOTO-PLAN.md</a> (16 KB)</td></tr>
+        <tr><td>📊 HTML Trigger Matrix</td><td><a href="analise-prescritiva/outputs/trigger-matrix.html">outputs/trigger-matrix.html</a></td></tr>
+        <tr><td>📚 Estudo L3.1</td><td><a href="d2-econometric-vulnerability/_study_notes/L3.1-trigger-matrix-auto-trigger.md">_study_notes/L3.1-trigger-matrix-auto-trigger.md</a> (51 KB)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="operacional decisao">
+    <div class="theme-header">
+      <div class="theme-title">11 · Action Plan + RACI (25 ações × 17 personas × 9 gates)</div>
+      <span class="theme-meta">6 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> 25 prescrições executáveis (5 estratégicas, 10 táticas, 10 operacionais). RACI com 17 personas, 9 approval gates, 7 kill gates.</p>
+      <p><strong>Por que importa:</strong> Substitui o Gap #6 do D2-AUDIT. 3 ações críticas 90d: AG-001 lista suja (R$ 25M), AG-002 nacionalização (R$ 280M), AG-003 hedge FX (R$ 30M). ROI 200×, payback &lt;1 mês.</p>
+      <table class="docs-table">
+        <tr><td>📓 Notebook NB-14</td><td><a href="analise-prescritiva/notebooks!/02-canonicos/nb-14-npv-layer/nb-14-npv-layer.ipynb">nb-14-npv-layer.ipynb</a></td></tr>
+        <tr><td>📚 Action Plan</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-ACTION-PLAN.md">D3-ACTION-PLAN.md</a> (33 KB)</td></tr>
+        <tr><td>📚 RACI</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-RACI.md">D3-RACI.md</a> (28 KB)</td></tr>
+        <tr><td>📚 Risk Register</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-RISK-REGISTER.md">D3-RISK-REGISTER.md</a> (57 KB)</td></tr>
+        <tr><td>📚 Live Validation</td><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-LIVE-VALIDATION.md">D3-LIVE-VALIDATION.md</a></td></tr>
+        <tr><td>📚 NPV Prescriptions</td><td><a href="analise-prescritiva/case-studies/docs/NPV_PRESCRIPTIONS.md">docs/NPV_PRESCRIPTIONS.md</a></td></tr>
+        <tr><td>📚 Estudo L3.2</td><td><a href="d2-econometric-vulnerability/_study_notes/L3.2-raci-action-register.md">_study_notes/L3.2-raci-action-register.md</a> (52 KB)</td></tr>
+        <tr><td>📚 Estudo L3.0</td><td><a href="d2-econometric-vulnerability/_study_notes/L3.0-matrizes-decisao.md">_study_notes/L3.0-matrizes-decisao.md</a> (41 KB)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="risco operacional">
+    <div class="theme-header">
+      <div class="theme-title">12 · ESG / Reputação / Lista Suja (kill switch)</div>
+      <span class="theme-meta">5 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> S7 kill switch ativo desde 07/abr/2026 (BYD fornecedor LFP descontinuado por lista suja do MTE — 163 trabalhadores resgatados dez/2024). R$ 800M funding BNDES bloqueados.</p>
+      <p><strong>Por que importa:</strong> ESG é o "kill switch" — pode pausar tudo. AG-001 (resolver lista suja) é a porta de entrada. S7 fixo em 95 enquanto ESG RED.</p>
+      <table class="docs-table">
+        <tr><td>📚 Coupling S7 ESG</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S7-ESG.md">D3-INTERDEPENDENCY-S7-ESG.md</a> (23 KB)</td></tr>
+        <tr><td>📚 Coupling S5</td><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S5-COUPLED.md">D3-INTERDEPENDENCY-S5-COUPLED.md</a></td></tr>
+        <tr><td>📚 Conselho Memo</td><td><a href="analise-prescritiva/case-studies/docs/CONSELHO-MEMO-2026-08-15.md">CONSELHO-MEMO-2026-08-15.md</a></td></tr>
+        <tr><td>📚 Decision Matrix §3</td><td><a href="analise-prescritiva/case-studies/docs/08-decision-matrix-case-sensitive.md">08-decision-matrix-case-sensitive.md</a> §3</td></tr>
+        <tr><td>📚 Alertas Personas §4</td><td><a href="analise-prescritiva/case-studies/docs/09-alertas-personas-stakeholders.md">09-alertas-personas-stakeholders.md</a> §4</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theme" data-tag="comunicacao">
+    <div class="theme-header">
+      <div class="theme-title">13 · Knowledge Graph + Narrativa Audível (110 nós, 12 MP3s)</div>
+      <span class="theme-meta">12 docs relacionados</span>
+    </div>
+    <div class="theme-body">
+      <p><strong>O que é:</strong> D3-KNOWLEDGE-GRAPH.json v2.0.2 com 110 nós, 118 edges, 11 categorias. 12 docs narrativos didáticos pt-br + 12 audio scripts + 12 MP3s reais (~99 min via eSpeak NG). Diagramas HTML (5 cross-linkados).</p>
+      <p><strong>Por que importa:</strong> KG é a "fotografia instantânea" do framework. Áudios são reproduzíveis offline (sem API key). Diagramas HTML imprimíveis em A4.</p>
+      <table class="docs-table">
+        <tr><td>🔷 KG JSON</td><td><a href="analise-prescritiva/reports/decision-framework/6_pitch/D3-KNOWLEDGE-GRAPH.json">D3-KNOWLEDGE-GRAPH.json</a> v2.0.2</td></tr>
+        <tr><td>🔷 KG Snapshot HTML</td><td><a href="analise-prescritiva/reports/decision-framework/6_pitch/D3-KNOWLEDGE-GRAPH-SNAPSHOT.html">D3-KNOWLEDGE-GRAPH-SNAPSHOT.html</a> (14 KB A4)</td></tr>
+        <tr><td>🔷 Understand Anything</td><td><a href="analise-prescritiva/reports/decision-framework/6_pitch/D3-UNDERSTAND-ANYTHING.html.bak-20260818-0940">D3-UNDERSTAND-ANYTHING.html.bak-20260818-0940</a> (141 KB)</td></tr>
+        <tr><td>📚 Índice Narrativo</td><td><a href="analise-prescritiva/case-studies/docs/INDEX-NARRATIVO.md">INDEX-NARRATIVO.md</a> (3 trilhas)</td></tr>
+        <tr><td>📚 Doc 00</td><td><a href="analise-prescritiva/case-studies/docs/00-sintese-executiva.md">00-sintese-executiva.md</a></td></tr>
+        <tr><td>📚 Doc 01</td><td><a href="analise-prescritiva/case-studies/docs/01-cadeia-valor-byd.md">01-cadeia-valor-byd.md</a></td></tr>
+        <tr><td>📚 Doc 02</td><td><a href="analise-prescritiva/case-studies/docs/02-dados-logica-produto.md">02-dados-logica-produto.md</a></td></tr>
+        <tr><td>📚 Doc 03</td><td><a href="analise-prescritiva/case-studies/docs/03-matematica-didatica.md">03-matematica-didatica.md</a></td></tr>
+        <tr><td>📚 Doc 04</td><td><a href="analise-prescritiva/case-studies/docs/04-progressao-temporal.md">04-progressao-temporal.md</a></td></tr>
+        <tr><td>📚 Doc 05</td><td><a href="analise-prescritiva/case-studies/docs/05-backtesting-justificativa.md">05-backtesting-justificativa.md</a></td></tr>
+        <tr><td>📚 Doc 06</td><td><a href="analise-prescritiva/case-studies/docs/06-decisoes-personas-mapa.md">06-decisoes-personas-mapa.md</a></td></tr>
+        <tr><td>📚 Doc 07</td><td><a href="analise-prescritiva/case-studies/docs/07-cadeia-fabrica-byb.md">07-cadeia-fabrica-byb.md</a> (379 linhas)</td></tr>
+        <tr><td>📚 Doc 08</td><td><a href="analise-prescritiva/case-studies/docs/08-decision-matrix-case-sensitive.md">08-decision-matrix-case-sensitive.md</a> (319 linhas)</td></tr>
+        <tr><td>📚 Doc 09</td><td><a href="analise-prescritiva/case-studies/docs/09-alertas-personas-stakeholders.md">09-alertas-personas-stakeholders.md</a> (391 linhas)</td></tr>
+        <tr><td>📚 Doc 10</td><td><a href="analise-prescritiva/case-studies/docs/10-story-notes-s1-a-s11.md">10-story-notes-s1-a-s11.md</a> (615 linhas)</td></tr>
+        <tr><td>📚 Linhas Gerais</td><td><a href="analise-prescritiva/case-studies/docs/LINHAS-GERAIS-COMUNICACAO-PERSUASIVA.md">LINHAS-GERAIS-COMUNICACAO-PERSUASIVA.md</a> (427 linhas)</td></tr>
+        <tr><td>🎧 Audio scripts</td><td><a href="analise-prescritiva/case-studies/docs/audio/">audio/*.md</a> (12 scripts)</td></tr>
+        <tr><td>🎵 MP3s reais</td><td><a href="analise-prescritiva/case-studies/docs/audio/mp3/">audio/mp3/*.mp3</a> (~99 min, ~45 MB)</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="duracao">
+  <h2>§2. Documentos por duração de leitura</h2>
+
+  <h3>⚡ Expresso (&lt;10 min)</h3>
+  <table class="numeric">
+    <thead><tr><th>Doc</th><th>Função</th></tr></thead>
+    <tbody>
+      <tr><td><a href="outputs/SNAPSHOT-OPERACIONAL.md">outputs/SNAPSHOT-OPERACIONAL.md</a></td><td>Raid briefing Conselho, 1 página A4</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/00-sintese-executiva.md">docs/00-sintese-executiva.md</a></td><td>Fotografia do produto em 1 página</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/EXPLAINER-NAO-TECNICO.md">docs/EXPLAINER-NAO-TECNICO.md</a></td><td>Tudo sem matemática</td></tr>
+      <tr><td><a href="d2-econometric-vulnerability/outputs/1-pager-summary.md">outputs/1-pager-summary.md</a></td><td>1-pager D2 consolidado</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/ONE-PAGER-EXECUTIVO.md">docs/ONE-PAGER-EXECUTIVO.md</a></td><td>One-pager imprimível A4</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/CONSELHO-MEMO-2026-08-15.md">docs/CONSELHO-MEMO-2026-08-15.md</a></td><td>Memo Conselho</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/SCORES.md">docs/SCORES.md</a></td><td>3 linhagens de score</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/TRIGGER_MATRIX.md">docs/TRIGGER_MATRIX.md</a></td><td>Trigger matrix</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a></td><td>Metodologia</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/GLOSSARY.md">docs/GLOSSARY.md</a></td><td>Glossário de termos</td></tr>
+    </tbody>
+  </table>
+
+  <h3>🍵 Curto (10-30 min)</h3>
+  <table class="numeric">
+    <thead><tr><th>Doc</th><th>Função</th></tr></thead>
+    <tbody>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/01-cadeia-valor-byd.md">docs/01-cadeia-valor-byd.md</a></td><td>Da fábrica à decisão em 5 camadas</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/04-progressao-temporal.md">docs/04-progressao-temporal.md</a></td><td>Linha do tempo do framework</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/06-decisoes-personas-mapa.md">docs/06-decisoes-personas-mapa.md</a></td><td>Decisões e personas</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/PITCH-NARRATIVE.md">docs/PITCH-NARRATIVE.md</a></td><td>Pitch completo 6 blocos</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/VOICE-OVER-GUIDE.md">docs/VOICE-OVER-GUIDE.md</a></td><td>Guia de transformação</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/NPV_PRESCRIPTIONS.md">docs/NPV_PRESCRIPTIONS.md</a></td><td>NPV das prescrições</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/1_framework/DECISION-FRAMEWORK.md">DECISION-FRAMEWORK.md</a></td><td>Arquitetura 5 camadas + RACI</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/1_framework/D2-AUDIT.md">D2-AUDIT.md</a></td><td>10 gaps D2 → D3</td></tr>
+      <tr><td><a href="INDEX.md">INDEX.md</a> (raiz)</td><td>Índice agregado 41 docs</td></tr>
+      <tr><td><a href="WRAP-UP-ESTUDO-D2-D3.md">WRAP-UP-ESTUDO-D2-D3.md</a></td><td>Wrap-up D2+D3</td></tr>
+    </tbody>
+  </table>
+
+  <h3>📚 Médio (30-90 min)</h3>
+  <table class="numeric">
+    <thead><tr><th>Doc</th><th>Função</th></tr></thead>
+    <tbody>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/INDEX-NARRATIVO.md">docs/INDEX-NARRATIVO.md</a></td><td>Mapa de leitura audível completo</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/LINHAS-GERAIS-COMUNICACAO-PERSUASIVA.md">docs/LINHAS-GERAIS-COMUNICACAO-PERSUASIVA.md</a></td><td>Sistema de tom 4 atos</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/02-dados-logica-produto.md">docs/02-dados-logica-produto.md</a></td><td>Mapa 11 dimensões</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/03-matematica-didatica.md">docs/03-matematica-didatica.md</a></td><td>Matemática didática</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/05-backtesting-justificativa.md">docs/05-backtesting-justificativa.md</a></td><td>Justificativa backtesting</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/1_framework/D3-PRESCRIPTIVE-SPEC.md">D3-PRESCRIPTIVE-SPEC.md</a></td><td>Spec formal D3 (OpenSpec-style)</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/3_recalibration/D3-RECALIBRATION-EMPIRICAL-2026.md">D3-RECALIBRATION-EMPIRICAL-2026.md</a></td><td>Recalibração empírica</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/3_recalibration/D3-RECALIBRATION-S1-S3-REAL-BCB.md">D3-RECALIBRATION-S1-S3-REAL-BCB.md</a></td><td>BCB PTAX real 10y</td></tr>
+      <tr><td><a href="analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES.md">EVOLUÇÃO-VERSÕES.md</a></td><td>Síntese cross-version</td></tr>
+    </tbody>
+  </table>
+
+  <h3>🎓 Longo (90+ min) — estudo aprofundado</h3>
+  <table class="numeric">
+    <thead><tr><th>Doc</th><th>Função</th></tr></thead>
+    <tbody>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/07-cadeia-fabrica-byb.md">docs/07-cadeia-fabrica-byb.md</a></td><td>Cadeia física 7 estágios × 5 camadas × 11 dimensões</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/08-decision-matrix-case-sensitive.md">docs/08-decision-matrix-case-sensitive.md</a></td><td>12 cenários nomeados</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/09-alertas-personas-stakeholders.md">docs/09-alertas-personas-stakeholders.md</a></td><td>Sistema nervoso 12 personas</td></tr>
+      <tr><td><a href="analise-prescritiva/case-studies/docs/10-story-notes-s1-a-s11.md">docs/10-story-notes-s1-a-s11.md</a></td><td>S1-S11 como micro-histórias</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S7-ESG.md">D3-INTERDEPENDENCY-S7-ESG.md</a></td><td>Lista suja, BNDES kill switch</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S8-RAMP.md">D3-INTERDEPENDENCY-S8-RAMP.md</a></td><td>SKD→CKD, nacionalização</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S10-TARIFF.md">D3-INTERDEPENDENCY-S10-TARIFF.md</a></td><td>Duplo cost-shock</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/2_couplings/D3-INTERDEPENDENCY-S11-COMPETITION.md">D3-INTERDEPENDENCY-S11-COMPETITION.md</a></td><td>5 players, NASH E3</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-GAME-THEORY.md">D3-GAME-THEORY.md</a></td><td>5×2 estratégias, NASH E3</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/4_quantitative/D3-MULTIVARIATE-SENSITIVITY.md">D3-MULTIVARIATE-SENSITIVITY.md</a></td><td>MC 10k paths, 4 choques</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-RISK-REGISTER.md">D3-RISK-REGISTER.md</a></td><td>Registro de riscos completo</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-ACTION-PLAN.md">D3-ACTION-PLAN.md</a></td><td>Plano de ação operacional</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-RACI.md">D3-RACI.md</a></td><td>RACI por sessão, 9 approval gates</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-AUTO-TRIGGER-SPEC.md">D3-AUTO-TRIGGER-SPEC.md</a></td><td>S6→S1/S2/S3/S4 (5 feeds, 30 regras)</td></tr>
+      <tr><td><a href="analise-prescritiva/reports/decision-framework/5_operational/D3-NPV-LAYER-SPEC.md">D3-NPV-LAYER-SPEC.md</a></td><td>NPV live, sensitivity 96 cenários</td></tr>
+      <tr><td><a href="d2-econometric-vulnerability/_study_notes/L1.1-eda-supply-chain-trade-balance.md">_study_notes/L1.1-eda-supply-chain-trade-balance.md</a></td><td>EDA supply chain completa (40 KB)</td></tr>
+      <tr><td><a href="d2-econometric-vulnerability/_study_notes/L3.1-trigger-matrix-auto-trigger.md">_study_notes/L3.1-trigger-matrix-auto-trigger.md</a></td><td>Trigger matrix auto-trigger (51 KB)</td></tr>
+      <tr><td><a href="d2-econometric-vulnerability/_study_notes/L3.2-raci-action-register.md">_study_notes/L3.2-raci-action-register.md</a></td><td>RACI action register (52 KB)</td></tr>
+      <tr><td><a href="d2-econometric-vulnerability/_study_notes/L5.0-calibracao-regime-switching.md">_study_notes/L5.0-calibracao-regime-switching.md</a></td><td>Calibração regime-switching (45 KB)</td></tr>
+      <tr><td><a href="analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES-FASE-3-PRESCRITIVA.md">EVOLUÇÃO-VERSÕES-FASE-3-PRESCRITIVA.md</a></td><td>D3 v0.5 → v2.0.2 detalhado (~480 linhas)</td></tr>
+      <tr><td><a href="analise-prescritiva/notebooks!/LINHAGEM.md">LINHAGEM.md</a></td><td>Linhagem técnica por fase + vídeo YouTube (1069 linhas)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="numeros">
+  <h2>§4. Números canônicos (com fontes)</h2>
+
+  <div class="status-bar">
+    <span>⚠️ <strong>Inconsistências esperadas entre fontes</strong> — algumas métricas têm múltiplos valores canônicos (períodos/amostras diferentes). Ver <a href="analise-prescritiva/case-studies/docs/SCORES.md">SCORES.md §3</a> e <a href="outputs/SNAPSHOT-OPERACIONAL.md">SNAPSHOT §8</a>.</span>
+  </div>
+
+  <h3>Métricas PTAX (σ anualizada, 3 amostras)</h3>
+  <table class="numeric">
+    <thead><tr><th>Valor</th><th>Amostra</th><th>Fonte</th></tr></thead>
+    <tbody>
+      <tr><td><code>14,19%</code></td><td>D2 v1 (1.642 obs, 2015-2022)</td><td>byd-econometric-vulnerability.ipynb</td></tr>
+      <tr><td><code>14,41%</code></td><td>D2 v2 refresh (2.778 obs, 2015-2026)</td><td>byd-econometric-vulnerability.py refresh</td></tr>
+      <tr><td><code>14,86%</code></td><td>BCB SGS série 10813 empírica (10y, 2.509 obs)</td><td><a href="analise-prescritiva/reports/decision-framework/3_recalibration/D3-RECALIBRATION-S1-S3-REAL-BCB.md">D3-RECALIBRATION-S1-S3-REAL-BCB.md</a></td></tr>
+    </tbody>
+  </table>
+
+  <h3>VaR/CVaR 95% 6m (R$ bi)</h3>
+  <table class="numeric">
+    <thead><tr><th>Métrica</th><th>Empírico</th><th>MC refresh</th><th>MC 4-shock</th><th>EVT GPD</th></tr></thead>
+    <tbody>
+      <tr><td>VaR 95%</td><td>R$ 2,10 bi</td><td>R$ 6,43 bi</td><td><strong>R$ 8,21 bi</strong></td><td>2,815%</td></tr>
+      <tr><td>CVaR 95%</td><td>R$ 1,44 bi</td><td>R$ 8,04 bi</td><td><strong>R$ 10,14 bi</strong></td><td>3,411%</td></tr>
+      <tr><td>VaR 99%</td><td>—</td><td>—</td><td>—</td><td>3,773%</td></tr>
+      <tr><td>ES 99%</td><td>—</td><td>—</td><td>—</td><td>4,371%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>GARCH(1,1)-t (parâmetros estimados)</h3>
+  <table class="numeric">
+    <thead><tr><th>Parâmetro</th><th>Valor</th><th>Interpretação</th></tr></thead>
+    <tbody>
+      <tr><td>α (ARCH)</td><td><code>0,0488</code></td><td>Reação a choque de ontem (5% do impacto)</td></tr>
+      <tr><td>β (GARCH)</td><td><code>0,9418</code></td><td>Persistência autorregressiva</td></tr>
+      <tr><td>α + β</td><td><code>0,9906</code></td><td>Quase unit-root (vol muito persistente)</td></tr>
+      <tr><td>ν (Student-t df)</td><td><code>6,99</code></td><td>Caudas pesadas (Normal: ν=∞)</td></tr>
+      <tr><td>Half-life</td><td><code>73,3 dias</code></td><td>~3,5 meses para choque decair pela metade</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Composite (3 linhagens oficiais)</h3>
+  <table class="numeric">
+    <thead><tr><th>Linhagem</th><th>Composite</th><th>Status</th><th>Lida por</th></tr></thead>
+    <tbody>
+      <tr><td>Stakeholder 4 dims (atual)</td><td><code>50,3</code></td><td><span class="badge badge-red">RED</span></td><td>Conselho, CEO</td></tr>
+      <tr><td>Técnico 11 dims</td><td>78</td><td><span class="badge badge-yellow">AMBER</span></td><td>Risk Officer, CRO</td></tr>
+      <tr><td>Stakeholder 4 dims (jul/2026)</td><td>71,8</td><td><span class="badge badge-yellow">AMBER</span></td><td>D2-AUDIT (antes recalibração 15/ago)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>D3 v2.0.2 (research-grade)</h3>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li><strong>11 dimensões</strong> (S1-S11) + S12 proposta (drift cambial)</li>
+    <li><strong>5 couplings originais</strong> + 15 secundários = <strong>20 couplings quantitativos</strong></li>
+    <li><strong>17 personas</strong> no RACI + 5 frentes delegação ativas</li>
+    <li><strong>30+ triggers</strong> + 15 novos (v2.1) = <strong>45 triggers totais</strong></li>
+    <li><strong>25 ações</strong> no action register (5+10+10)</li>
+    <li><strong>9 approval gates</strong> (R$ 30M → R$ 280M) + 7 kill gates</li>
+    <li><strong>Investment 365d</strong>: R$ 1,68 bi</li>
+    <li><strong>E[NPV 3y]</strong>: R$ 3,24 bi</li>
+    <li><strong>Backtesting</strong>: 5/5 PERFEITO (TP 100%, FP 0%, time-to-action 9,3d)</li>
+  </ul>
+
+  <h3>HHI (concentração de fornecedores)</h3>
+  <table class="numeric">
+    <thead><tr><th>Categoria</th><th>HHI raw</th><th>Classificação</th><th>Top supplier</th></tr></thead>
+    <tbody>
+      <tr><td>Bateria (LFP)</td><td><code>4.850</code></td><td>Altamente concentrada</td><td>CATL 95,7%</td></tr>
+      <tr><td>Powertrain</td><td><code>3.400</code></td><td>Concentrada</td><td>Bosch ~60%</td></tr>
+      <tr><td>Semicond.</td><td><code>2.925</code></td><td>Moderada-alta</td><td>STMicroelectronics ~45%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Stress events (backtesting 5/5 PERFEITO)</h3>
+  <table class="numeric">
+    <thead><tr><th>Evento</th><th>Período</th><th>Vol anualizada</th><th>Cum Change</th></tr></thead>
+    <tbody>
+      <tr><td>COVID-19</td><td>2020-03 a 2020-12</td><td>21,8%</td><td>+15,6%</td></tr>
+      <tr><td>Semicondutor</td><td>2021-Q1</td><td>17,0%</td><td>(estimado)</td></tr>
+      <tr><td>Election 2022</td><td>2022-08 a 2022-11</td><td>18,0%</td><td>+2,6%</td></tr>
+      <tr><td>Lítio spike</td><td>2022-Q2</td><td>19,5%</td><td>(estimado)</td></tr>
+      <tr><td>Election 2024</td><td>2024-08 a 2024-11</td><td>12,6%</td><td>+6,8%</td></tr>
+      <tr><td>Stagflação 2025</td><td>2025-01 a 2025-12</td><td><code>10,3%</code></td><td><code>-11,4%</code></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="linhagem">
+  <h2>§5. Linhagem completa: 8 versões × 14 meses</h2>
+
+  <h3>Fase 1 — Descritiva (D2 v1, jul/2025)</h3>
+  <p><strong>Pergunta:</strong> "Quais são as distribuições e concentrações das variáveis?"</p>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li>N=1.642 obs PTAX, σ 14,19%, VaR empírico R$ 2,10 bi</li>
+    <li>HHI 6 categorias (Bateria 4.850, Powertrain 3.400, Semic. 2.925)</li>
+    <li>CATL single-source 95,7%</li>
+    <li>4 cenários regulatórios (NPV esperado R$ 12,09 bi)</li>
+    <li>Composite-conceito definido (cálculo virá em v0.6)</li>
+  </ul>
+  <p><strong>Limitação chave:</strong> EDA pura, sem modelagem preditiva. Composite não calculado ainda.</p>
+
+  <h3>Fase 2 — Preditiva (D2 v2 → v2.1 + NB-01..08, 19/jul/2026)</h3>
+  <p><strong>Pergunta:</strong> "Qual o risco quantitativo (VaR, MC, couplings)?"</p>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li>D2 v2 (19/jul/2026): refresh N=2.778, VaR MC R$ 6,43 bi, GARCH(1,1)-t</li>
+    <li>8 notebooks canônicos NB-01..08</li>
+    <li>Composite 71,8 AMBER (versão stakeholder 4 dims)</li>
+    <li>VaR MC R$ 6,43 bi; CVaR R$ 8,04 bi</li>
+    <li>D2-AUDIT identifica 10 gaps estruturais</li>
+  </ul>
+  <p><strong>Limitação chave:</strong> 10 gaps estruturais (interdependências, branching condicional, NPV, counterfactual, triggers dispersos, sem ownership, etc.).</p>
+
+  <h3>Fase 3 — Prescritiva (D3 v0.5 → v2.0.2, mai/2026 → 18/ago/2026)</h3>
+  <p><strong>Pergunta:</strong> "Qual ação executar, quando, por quem, com qual gate?"</p>
+  <table class="numeric">
+    <thead><tr><th>Versão</th><th>Data</th><th>Marco</th><th>Composite</th></tr></thead>
+    <tbody>
+      <tr><td>D3 v0.5</td><td>mai/2026</td><td>gap closure D2-AUDIT, +5 dimensões S7-S11</td><td>~50%</td></tr>
+      <tr><td>D3 v0.6</td><td>jun/2026</td><td>framework 11D, pesos sum=1,15, Caminhos A/B/C</td><td>71,8 GREEN</td></tr>
+      <tr><td>D3 v2.0</td><td>21/jul/2026</td><td>5 recalibrações empíricas, 4/5 backtesting, FP 14,8%</td><td>50,3 RED</td></tr>
+      <tr><td>D3 v2.0.1</td><td>15/ago/2026</td><td>4 fixes (hysteresis, carry-trade, lítio, 5-day), 5/5 PERFEITO</td><td>50,3 RED</td></tr>
+      <tr><td>D3 v2.0.2</td><td>18/ago/2026</td><td>KG v2.0.2, 12 MP3s, 14 frentes delegação</td><td>50,3 RED</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="atual">
+  <h2>§6. O que mudou em ago/2026 (snapshot da evolução recente)</h2>
+
+  <h3>Snapshot numérico atual (22/ago/2026)</h3>
+  <table class="numeric">
+    <thead><tr><th>Métrica</th><th>Valor</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Composite stakeholder 4-dim</td><td><code>50,3 / 100</code></td><td><span class="badge badge-red">RED Modo Crise</span></td></tr>
+      <tr><td>Composite técnico 11-dim</td><td>78 / 100</td><td><span class="badge badge-yellow">AMBER</span></td></tr>
+      <tr><td>VaR 95% 6m (4-shock tornado)</td><td><code>R$ 8,21 bi</code></td><td>—</td></tr>
+      <tr><td>CVaR 95% 6m</td><td><code>R$ 10,14 bi</code></td><td>—</td></tr>
+      <tr><td>Backtesting 5/5</td><td><code>PERFEITO</code></td><td><span class="badge badge-green">5/5</span></td></tr>
+      <tr><td>Cadeiras vagas</td><td>4 (CFO, CRO, CSO, Head ESG)</td><td><span class="badge badge-red">137 dias vagas</span></td></tr>
+      <tr><td>Outreach executado</td><td>0/18</td><td><span class="badge badge-red">Bloqueado por vagas</span></td></tr>
+      <tr><td>Investment 365d</td><td>R$ 1,68 bi</td><td>—</td></tr>
+      <tr><td>E[NPV 3y]</td><td>R$ 3,24 bi</td><td>—</td></tr>
+      <tr><td>ROI projetado</td><td>200×, payback &lt;1 mês</td><td>—</td></tr>
+      <tr><td>Próximo milestone</td><td>Composite ≥65 AMBER até Q4/2026</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="delegacao">
+  <h2>§7. 14 frentes delegação (DELEGATION-PLAN)</h2>
+  <table class="numeric">
+    <thead><tr><th>#</th><th>Frente</th><th>Owner</th><th>Onda</th><th>KPI</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Hedge FX 95%</td><td>Risk+CFO</td><td>1</td><td>hedge ≥90%</td></tr>
+      <tr><td>2</td><td>Nacionalização 70%</td><td>COO</td><td>3</td><td>FX exposure 90%→15%</td></tr>
+      <tr><td>3</td><td>Resolver lista suja S7</td><td>CFO</td><td>1</td><td>S7 AMBER 30d</td></tr>
+      <tr><td>4</td><td>Recrutar CFO</td><td>CEO+Headhunter</td><td>1</td><td>cadeira preenchida</td></tr>
+      <tr><td>5</td><td>Recrutar CRO</td><td>CEO+Headhunter</td><td>1</td><td>cadeira preenchida</td></tr>
+      <tr><td>6</td><td>Recrutar CSO</td><td>CEO+Headhunter</td><td>2</td><td>cadeira preenchida</td></tr>
+      <tr><td>7</td><td>Recrutar Head ESG</td><td>CEO+Headhunter</td><td>2</td><td>cadeira preenchida</td></tr>
+      <tr><td>8</td><td>LFP verticalization</td><td>CTO</td><td>4</td><td>S2 supply risk -50%</td></tr>
+      <tr><td>9</td><td>Technology differentiation</td><td>CMO</td><td>3</td><td>S4+S11 protection</td></tr>
+      <tr><td>10</td><td>Rules engine Python (FastAPI)</td><td>Engineering</td><td>2</td><td>4 weeks piloto</td></tr>
+      <tr><td>11</td><td>Real-time data integration</td><td>Engineering</td><td>3</td><td>30 regras staging</td></tr>
+      <tr><td>12</td><td>Knowledge Graph v3.0</td><td>Knowledge Engineer</td><td>4</td><td>embedding search</td></tr>
+      <tr><td>13</td><td>Backtesting contínuo Q3/Q4</td><td>CRO</td><td>2/4</td><td>5/5+ mantido</td></tr>
+      <tr><td>14</td><td>Composite monitoring live</td><td>Coord. Risco</td><td>2</td><td>composite semanal</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Total</strong>: 14 frentes × 5 ondas de 14 dias = cronograma 70 dias (22/ago → 30/nov/2026).</p>
+</section>
+
+<section id="audio">
+  <h2>§8. Áudio real (12 MP3s reproduzíveis)</h2>
+  <p>Todos os MP3s foram gerados offline via eSpeak NG pt-br + ffmpeg libmp3lame 64k. Reproduzível sem API key.</p>
+
+  <div class="audio-grid">
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/00-sintese-executiva-audio-script.md">00-sintese-executiva</a>
+      <span class="duration">4 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/01-cadeia-valor-audio-script.md">01-cadeia-valor</a>
+      <span class="duration">6 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/02-dados-logica-audio-script.md">02-dados-logica</a>
+      <span class="duration">10 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/03-matematica-audio-script.md">03-matematica</a>
+      <span class="duration">11 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/04-progressao-audio-script.md">04-progressao</a>
+      <span class="duration">10 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/05-backtesting-audio-script.md">05-backtesting</a>
+      <span class="duration">14 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/06-decisoes-audio-script.md">06-decisoes</a>
+      <span class="duration">12 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/07-cadeia-fabrica-audio-script.md">07-cadeia-fabrica</a>
+      <span class="duration">14 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/08-decision-matrix-audio-script.md">08-decision-matrix</a>
+      <span class="duration">13 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/09-alertas-personas-audio-script.md">09-alertas-personas</a>
+      <span class="duration">12 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/guia-comunicacao-audio-script.md">guia-comunicacao</a>
+      <span class="duration">12 min</span>
+    </div>
+    <div class="audio-card">
+      <a href="analise-prescritiva/case-studies/docs/audio/00-sintese-REESCRITA-v2.md">00-sintese-REESCRITA-v2</a>
+      <span class="duration">5 min</span>
+    </div>
+  </div>
+
+  <p><strong>Total</strong>: ~118 minutos (~45 MB).</p>
+  <p><strong>Playlists por trilha</strong>:</p>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li><strong>Trilha Conselho (1h):</strong> 00-sintese + 06-decisoes + guia-comunicacao</li>
+    <li><strong>Trilha COO (1h20):</strong> 01-cadeia + 07-fabrica + 08-decision-matrix + 09-alertas</li>
+    <li><strong>Trilha CFO (50 min):</strong> 02-dados + 03-matematica + 08-decision-matrix</li>
+    <li><strong>Trilha New joiner (3h30):</strong> todos os 12 áudio em ordem 00→09 + guia-comunicacao</li>
+  </ul>
+</section>
+
+<section id="trilhas">
+  <h2>§9. Como começar (3 trilhas)</h2>
+
+  <h3>👑 Trilha A — Executivo / Headhunter / Imprensa (15 min)</h3>
+  <ol style="color: var(--text-dim); margin-left: 24px;">
+    <li><a href="outputs/SNAPSHOT-OPERACIONAL.md"><strong>outputs/SNAPSHOT-OPERACIONAL.md</strong></a> (5 min) — raid briefing Conselho</li>
+    <li><a href="analise-prescritiva/case-studies/docs/00-sintese-executiva.md"><strong>docs/00-sintese-executiva.md</strong></a> (5 min) — fotografia 1 página</li>
+    <li><a href="analise-prescritiva/case-studies/docs/EXPLAINER-NAO-TECNICO.md"><strong>docs/EXPLAINER-NAO-TECNICO.md</strong></a> (5 min) — sem matemática</li>
+  </ol>
+
+  <h3>📊 Trilha B — Técnico / Risk Officer / Analista (4 h)</h3>
+  <ol style="color: var(--text-dim); margin-left: 24px;">
+    <li><a href="HUB.md"><strong>HUB.md</strong></a> (este, 20 min) — mapa cruzado</li>
+    <li><a href="analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES.md"><strong>EVOLUÇÃO-VERSÕES.md</strong></a> (45 min) — síntese cross-version</li>
+    <li><a href="analise-prescritiva/notebooks!/LINHAGEM.md"><strong>LINHAGEM.md</strong></a> (60 min) — linhagem técnica</li>
+    <li><a href="analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES-FASE-3-PRESCRITIVA.md"><strong>EVOLUÇÃO-VERSÕES-FASE-3-PRESCRITIVA.md</strong></a> (60 min) — D3 v0.5 → v2.0.2</li>
+    <li><a href="analise-prescritiva/reports/decision-framework/7_outputs/D3-MAIN.html"><strong>D3-MAIN.html</strong></a> (60 min) — relatório principal consolidado</li>
+  </ol>
+
+  <h3>🎓 Trilha C — Auditor / COO / Engenheiro (8 h)</h3>
+  <ol style="color: var(--text-dim); margin-left: 24px;">
+    <li>Trilha A + B (4 h)</li>
+    <li><a href="d2-econometric-vulnerability/byd-econometric-vulnerability.ipynb"><strong>byd-econometric-vulnerability.ipynb</strong></a> (90 min) — notebook D2 espelho</li>
+    <li><a href="analise-prescritiva/notebooks!/02-canonicos/nb-01-ptax-garch/nb-01-ptax-garch.ipynb"><strong>NB-01 → NB-15</strong></a> (90 min) — 15 notebooks canônicos</li>
+    <li><a href="d2-econometric-vulnerability/_study_notes/L1.0-eda-pTAX-passo-a-passo.md"><strong>L1.0 → L6.2</strong></a> (90 min) — 29 docs didáticos D2</li>
+  </ol>
+</section>
+
+<section id="roadmap">
+  <h2>§10. Próximas evoluções (roadmap)</h2>
+
+  <h3>Curto prazo (90 dias — até 30/nov/2026)</h3>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li>✅ Composite sair de RED (50,3) para AMBER (≥65)</li>
+    <li>✅ Resolver lista suja MTE (AG-001)</li>
+    <li>✅ Hedge FX 95% contratado (AG-003)</li>
+    <li>✅ 1 stress test mensal (NB-06 seed=42)</li>
+    <li>✅ Recrutar CFO + CRO + CSO + Head ESG</li>
+    <li>✅ Wave 1+2 outreach (8/18 vagas)</li>
+  </ul>
+
+  <h3>Médio prazo (Q1-Q4 2027)</h3>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li><strong>Q1 2027</strong>: composite ≥75 (implementar AG-DIFF-2 technology differentiation)</li>
+    <li><strong>Q3 2027</strong>: composite ≥80 GREEN (aceleração nacionalização 70%)</li>
+    <li><strong>Q4 2027</strong>: composite ≥85 (AG-DIFF-1 LFP verticalization)</li>
+    <li>Fechar Gap 3.4 (counterfactual) em v3.0 Q2 2027</li>
+    <li>Fechar Gap 3.7 (game theory full S11 NASH 5-player) Q3 2027</li>
+    <li>Fechar Gap 3.9 (S6 macro prescriptive trigger automático) Q4 2027</li>
+  </ul>
+
+  <h3>Longo prazo (2028+)</h3>
+  <ul style="color: var(--text-dim); margin-left: 24px;">
+    <li>Rules engine Python FastAPI produção</li>
+    <li>Real-time data integration (BCB + Bacen + MTE + Fastmarkets + ANFAVEA + CCEE)</li>
+    <li>Knowledge Graph v3.0 com embedding search</li>
+    <li>Dashboard React conectado aos modelos D3</li>
+  </ul>
+</section>
+
+<footer>
+  <p><strong>HUB v1.0</strong> · 25/ago/2026 · BYD Camaçari 2025-2027 case study</p>
+  <p>~250+ docs indexados · 13 temas × 60+ docs relacionados · 12 MP3s · 8 versões · 3 fases metodológicas</p>
+  <p>Companhia: <a href="HUB.md" style="color: var(--accent-blue);">HUB.md</a> · <a href="INDEX.md" style="color: var(--accent-blue);">INDEX.md</a> · <a href="analise-prescritiva/notebooks!/LINHAGEM.md" style="color: var(--accent-blue);">LINHAGEM.md</a> · <a href="analise-prescritiva/notebooks!/EVOLUÇÃO-VERSÕES.md" style="color: var(--accent-blue);">EVOLUÇÃO-VERSÕES.md</a> · <a href="outputs/SNAPSHOT-OPERACIONAL.md" style="color: var(--accent-blue);">SNAPSHOT-OPERACIONAL.md</a></p>
+</footer>
+
+<script>
+  // Search functionality
+  const searchInput = document.getElementById('search');
+  const allContent = document.body.innerHTML;
+  const themes = document.querySelectorAll('.theme');
+  const sections = document.querySelectorAll('section');
+
+  function unhighlightAll() {
+    const highlights = document.querySelectorAll('.highlight');
+    highlights.forEach(el => {
+      const parent = el.parentNode;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+      parent.normalize();
+    });
+  }
+
+  function highlightText(query) {
+    if (!query) return;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    const textNodes = [];
+    let node;
+    while (node = walker.nextNode()) {
+      if (node.parentElement.tagName !== 'SCRIPT' && node.parentElement.tagName !== 'STYLE') {
+        textNodes.push(node);
+      }
+    }
+    textNodes.forEach(textNode => {
+      if (regex.test(textNode.textContent)) {
+        const span = document.createElement('span');
+        span.innerHTML = textNode.textContent.replace(regex, '<span class="highlight">$1</span>');
+        textNode.parentNode.replaceChild(span, textNode);
+      }
+    });
+  }
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    if (!query) {
+      themes.forEach(t => t.classList.remove('hidden'));
+      sections.forEach(s => s.classList.remove('hidden'));
+      unhighlightAll();
+      return;
+    }
+
+    // Filter themes
+    themes.forEach(theme => {
+      const text = theme.textContent.toLowerCase();
+      theme.classList.toggle('hidden', !text.includes(query));
+    });
+
+    // Filter sections
+    sections.forEach(section => {
+      const text = section.textContent.toLowerCase();
+      section.classList.toggle('hidden', !text.includes(query));
+    });
+
+    unhighlightAll();
+    highlightText(query);
+  });
+
+  // Filter buttons
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      themes.forEach(theme => {
+        if (filter === 'all') {
+          theme.classList.remove('hidden');
+        } else {
+          const tags = (theme.dataset.tag || '').split(' ');
+          theme.classList.toggle('hidden', !tags.includes(filter));
+        }
+      });
+    });
+  });
+
+  // Smooth scroll for TOC links
+  document.querySelectorAll('.toc a, h2 a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

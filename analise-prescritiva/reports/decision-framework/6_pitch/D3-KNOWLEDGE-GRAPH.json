@@ -1,287 +1,1762 @@
 {
   "meta": {
     "name": "D3 Framework Knowledge Graph",
-    "version": "v2.0.1",
-    "date": "2026-07-25",
+    "version": "2.0.2",
+    "date": "2026-08-18",
     "principle": "Graphs that teach > graphs that impress",
     "stats": {
-      "nodes": 95,
-      "edges": 142,
-      "sessions": 6,
+      "nodes": 110,
+      "edges": 118,
+      "sessions": 7,
       "dimensions": 11,
-      "couplings": 20,
+      "couplings": 16,
       "actions": 25,
-      "personas": 17
-    }
+      "personas": 17,
+      "gates": 9,
+      "risks": 5,
+      "metrics": 6,
+      "delegation_frentes": 14,
+      "tours": 4
+    },
+    "last_updated": "2026-08-18 09:40",
+    "total_nodes": 110,
+    "total_edges": 118,
+    "delegation_plan_added": 14
   },
   "categories": {
-    "session": { "color": "#f5c542", "label": "Sessão D2", "icon": "◐" },
-    "dimension": { "color": "#6b95f0", "label": "Dimensão", "icon": "◆" },
-    "coupling": { "color": "#5fb878", "label": "Acoplamento", "icon": "⇌" },
-    "action_strategic": { "color": "#e0a45e", "label": "Ação Estratégica", "icon": "★" },
-    "action_tactical": { "color": "#d4805a", "label": "Ação Tática", "icon": "●" },
-    "action_operational": { "color": "#b86060", "label": "Ação Operacional", "icon": "○" },
-    "persona": { "color": "#b87fd0", "label": "Persona RACI", "icon": "♟" },
-    "gate": { "color": "#e0e070", "label": "Approval Gate", "icon": "⛙" },
-    "risk": { "color": "#ff5e5e", "label": "Risco / Kill Switch", "icon": "☠" },
-    "metric": { "color": "#80d4d4", "label": "Métrica", "icon": "∑" }
+    "session": {
+      "color": "#f5c542",
+      "label": "Sessão D2",
+      "icon": "◐"
+    },
+    "dimension": {
+      "color": "#6b95f0",
+      "label": "Dimensão",
+      "icon": "◆"
+    },
+    "coupling": {
+      "color": "#5fb878",
+      "label": "Acoplamento",
+      "icon": "⇌"
+    },
+    "action_strategic": {
+      "color": "#e0a45e",
+      "label": "Ação Estratégica",
+      "icon": "★"
+    },
+    "action_tactical": {
+      "color": "#d4805a",
+      "label": "Ação Tática",
+      "icon": "●"
+    },
+    "action_operational": {
+      "color": "#b86060",
+      "label": "Ação Operacional",
+      "icon": "○"
+    },
+    "persona": {
+      "color": "#b87fd0",
+      "label": "Persona RACI",
+      "icon": "♟"
+    },
+    "gate": {
+      "color": "#e0e070",
+      "label": "Approval Gate",
+      "icon": "⛙"
+    },
+    "risk": {
+      "color": "#ff5e5e",
+      "label": "Risco / Kill Switch",
+      "icon": "☠"
+    },
+    "metric": {
+      "color": "#80d4d4",
+      "label": "Métrica",
+      "icon": "∑"
+    },
+    "delegation_plan": {
+      "color": "#4f8ef7",
+      "label": "Frente Delegation",
+      "icon": "⏱"
+    }
   },
   "personas": {
-    "conselho": { "level": "board", "label": "Conselho de Administração", "detail": "summary" },
-    "ceo": { "level": "executive", "label": "CEO", "detail": "summary" },
-    "cfo": { "level": "executive", "label": "CFO", "detail": "full" },
-    "cso": { "level": "executive", "label": "CSO", "detail": "full" },
-    "coo": { "level": "executive", "label": "COO", "detail": "full" },
-    "risk_officer": { "level": "operational", "label": "Risk Officer", "detail": "deep" },
-    "headhunter": { "level": "external", "label": "Headhunter / Recrutador", "detail": "summary" },
-    "linkedin": { "level": "external", "label": "LinkedIn Prospect", "detail": "summary" }
+    "conselho": {
+      "level": "board",
+      "label": "Conselho de Administração",
+      "detail": "summary"
+    },
+    "ceo": {
+      "level": "executive",
+      "label": "CEO",
+      "detail": "summary"
+    },
+    "cfo": {
+      "level": "executive",
+      "label": "CFO",
+      "detail": "full"
+    },
+    "cso": {
+      "level": "executive",
+      "label": "CSO",
+      "detail": "full"
+    },
+    "coo": {
+      "level": "executive",
+      "label": "COO",
+      "detail": "full"
+    },
+    "risk_officer": {
+      "level": "operational",
+      "label": "Risk Officer",
+      "detail": "deep"
+    },
+    "headhunter": {
+      "level": "external",
+      "label": "Headhunter / Recrutador",
+      "detail": "summary"
+    },
+    "linkedin": {
+      "level": "external",
+      "label": "LinkedIn Prospect",
+      "detail": "summary"
+    }
   },
   "nodes": [
-    {"id": "S_D2", "cat": "session", "label": "D2 Atlas (a fotografia original)", "size": 38, "desc": "A análise anterior ao D3. Era uma boa fotografia preditiva do programa: 6 sessões paralelas (câmbio, fornecedores, BNDES, preço, parcerias, macro), 65 KB de relatório, 18 figuras e o composite em 71,8. Mas não modelava como uma sessão afetava a outra — sem acoplamentos, sem árvores de decisão, sem NPV, sem dono por ação. Boa como retrato, fraca como manual."},
-    {"id": "S_CAMBIO", "cat": "session", "label": "Câmbio (S1)", "size": 30, "desc": "A frente que mede a variação do dólar (PTAX) e calcula quanto a BYD precisa se proteger. Usamos dados do Banco Central (série 10813 do SGS). A oscilação anual média do dólar em 10 anos foi de 14,86% — mas nos últimos 12 meses está mais calmo, em 11,20%. Duas métricas geradas: o VaR cambial (quanto podemos perder em 95% dos cenários) e o tamanho ótimo do hedge."},
-    {"id": "S_SUPPLY", "cat": "session", "label": "Cadeia de fornecedores (S2)", "size": 30, "desc": "A frente que cuida do lítio, dos principais fornecedores (CATL, EVE) e do nível de nacionalização (SKD, CKD, Nacional). Em 10 anos, a perda potencial dessa cadeia era de R$ 2,27 bilhões. Hoje, com o lítio voltando a subir, a projeção em 12 meses pulou para R$ 4 bilhões. É o maior risco isolado do programa."},
-    {"id": "S_REG", "cat": "session", "label": "Regulatório (S3)", "size": 30, "desc": "A frente que acompanha o BNDES, o ViE (Valor de Importação Estimado), a lista suja do Ministério do Trabalho, o FNDIT, o IPI e as tarifas de importação para BEV (elétrico puro), PHEV (híbrido plug-in), HEV (híbrido) e SKD/CKD. É a frente que pode travar tudo — por exemplo, a lista suja bloqueia R$ 800 milhões de financiamento automaticamente."},
-    {"id": "S_COMP", "cat": "session", "label": "Competitivo (S11)", "size": 30, "desc": "A frente que monitora a Stellantis (R$ 30 bilhões de investimento), a GM (R$ 7 bilhões), a VW (R$ 16 bilhões), a Geely (que está crescendo rápido) e a Leapmotor. A análise usa teoria dos jogos para encontrar o equilíbrio estável (chamado de NASH E3) entre os 5 grandes jogadores."},
-    {"id": "S_MACRO", "cat": "session", "label": "Cenário macro (S6)", "size": 26, "desc": "A frente que reescala todas as outras: inflação (IPCA), juros básicos (Selic), câmbio (BRL/USD), estresse de mercados emergentes, carry trade e volatilidade global (VIX). Quando o cenário macro piora, todas as outras frentes precisam de mais proteção — por isso o framework aplica um multiplicador de 1,0×, 1,5× ou 2,0× conforme a situação."},
-    {"id": "S_COMP_71_8", "cat": "session", "label": "Painel geral em 71,8", "size": 32, "desc": "O número-mestre do D2: a média ponderada das 4 dimensões principais (Câmbio 30%, Regulatório 30%, Supply 20%, Macro 20%). Em 71,8 estamos no modo tensão, cluster 2 — recomenda postura defensiva, não expansão. Para o D3, o composite foi expandido para incluir 11 dimensões e 5 ações estratégicas, dando uma leitura mais completa."},
-    {"id": "D_S1", "cat": "dimension", "label": "S1 — Câmbio (dólar)", "size": 22, "score": 78, "status": "AMBER", "desc": "Volatilidade do dólar em 11,2% nos últimos 12 meses. A proteção cambial (hedge) ótima varia de 30% a 91% dependendo do cenário do BNDES. Hoje estamos em alerta amarelo — precisa de monitoramento ativo."},
-    {"id": "D_S2", "cat": "dimension", "label": "S2 — Fornecedores (lítio)", "size": 22, "score": 85, "status": "RED", "desc": "Lítio voltou a subir forte: de US$ 9 mil para US$ 22 mil a tonelada em 5 meses. Esperado déficit global de 1,5 a 80 mil toneladas de LCE em 2026. A frente está em vermelho e exige ação imediata."},
-    {"id": "D_S3", "cat": "dimension", "label": "S3 — BNDES (financiamento)", "size": 22, "score": 70, "status": "GREEN*", "desc": "Cenário base é Expansão (75% de probabilidade), com ViE em 22%. Mas a frente está marcada com asterisco porque a lista suja (S7) funciona como 'kill switch' e bloqueia o financiamento até ser resolvida."},
-    {"id": "D_S4", "cat": "dimension", "label": "S4 — Política de preços", "size": 22, "score": 72, "status": "AMBER", "desc": "Sistema de desconto em camadas (Tier 0 a 3) — só descontos cirúrgicos em modelos e cidades específicas. O modo antigo de cortar preço em todo o catálogo foi removido por destruir valor. Hoje, em alerta amarelo, o defensivo está em Tier 2."},
-    {"id": "D_S5", "cat": "dimension", "label": "S5 — Parcerias estratégicas", "size": 22, "score": 85, "status": "GREEN", "desc": "A frente mais forte hoje. A CATL entrega 93% no prazo, a EVE está sendo qualificada como segundo fornecedor de bateria, e está em estudo uma coalizão estratégica com a VW (a chamada 'Coalizão D') para dividir plataforma de carro elétrico."},
-    {"id": "D_S6", "cat": "dimension", "label": "S6 — Cenário macro", "size": 22, "score": 70, "status": "AMBER", "desc": "Inflação oficial em 4,5%, juros básicos em 10,5%, estresse moderado em mercados emergentes. O multiplicador macro está em 1,0× (modo espera) — se piorar, salta para 1,5× ou 2,0× e todas as outras frentes precisam de mais proteção."},
-    {"id": "D_S7", "cat": "dimension", "label": "S7 — ESG (reputação)", "size": 26, "score": 92, "status": "RED", "desc": "A BYD entrou na lista suja do trabalho escravo do Ministério do Trabalho em 7 de abril de 2026, com 163 trabalhadores resgatados. Isso funciona como 'kill switch' do BNDES: enquanto a lista estiver ativa, todo financiamento novo fica travado. É a frente mais urgente de todas."},
-    {"id": "D_S8", "cat": "dimension", "label": "S8 — Rampa de produção", "size": 22, "score": 77, "status": "AMBER", "desc": "O plano de produção sai de peças importadas prontas (SKD 45%) para peças desmontadas (CKD) e finalmente para fabricação local (Nacional 70%). Cada fase reduz a exposição ao dólar — de 90% no início para 15% quando totalmente nacional. Hoje estamos em alerta amarelo porque a transição precisa acelerar por causa da tarifa de 35% em 2027."},
-    {"id": "D_S9", "cat": "dimension", "label": "S9 — Demanda do mercado", "size": 22, "score": 72, "status": "GREEN", "desc": "A participação de carros elétricos no total de vendas no Brasil está em 13,5% e cresceu 153% em 2025. A BYD tem 12,8% das vendas no varejo. A demanda está forte — o risco está em perdê-la para concorrentes, não em não tê-la."},
-    {"id": "D_S10", "cat": "dimension", "label": "S10 — Tarifa de importação", "size": 22, "score": 78, "status": "AMBER→RED jan/2027", "desc": "A tarifa de importação sobre carros elétricos vai subir de 25% para 35% em janeiro de 2027. A Camex (Câmara de Comércio Exterior) já rejeitou o pedido da BYD de manter em 25%. Combinado com o dólar alto, forma o que chamamos de 'compound shock multiplicativo' — o maior contribuinte para o pior cenário de perda potencial."},
-    {"id": "D_S11", "cat": "dimension", "label": "S11 — Pressão dos concorrentes", "size": 22, "score": 82, "status": "RED", "desc": "5 grandes marcas estão acelerando no Brasil: Stellantis (R$ 30 bilhões de investimento), Geely (crescimento rápido com o EX2). A análise de equilíbrio de jogos mostra que o ponto estável é cada um se diferenciar (não entrar em guerra de preços) — mas a pressão está alta, daí o vermelho."},
-    {"id": "C_S1S3", "cat": "coupling", "label": "Conexão Câmbio ↔ BNDES", "size": 24, "desc": "A proteção cambial ótima depende do cenário do BNDES: 30% em Expansão, 60% em Rollback Parcial, 91% em Rollback Total. Não é um valor fixo de 50% — é proporcional ao risco. Por isso o D2 errava: tratava como se fosse a mesma coisa em qualquer cenário."},
-    {"id": "C_S1S2", "cat": "coupling", "label": "Conexão Câmbio ↔ Fornecedores", "size": 24, "desc": "Câmbio e fornecedores andam juntos. Testamos 12 combinações: quando a frente de fornecedores está em vermelho, a perda potencial dessa cadeia é 2,5 vezes maior que a cambial sozinha. O lício cotado em dólar amplifica qualquer movimento de câmbio."},
-    {"id": "C_S1S4", "cat": "coupling", "label": "Conexão Câmbio ↔ Preço", "size": 24, "desc": "Hedge cambial versus desconto de preço: por cada R$ 1 gasto em hedge, você protege 9,4 vezes mais valor do que gastando o mesmo R$ 1 em desconto de preço. Por isso o framework descartou o desconto amplo no catálogo (tinha retorno de -67%)."},
-    {"id": "C_S3S4", "cat": "coupling", "label": "Conexão BNDES ↔ Preço", "size": 22, "desc": "O desconto de preço só se sustenta quando o BNDES aprova o financiamento e o Valor de Importação Estimado (ViE) fica acima de 10%. Se o BNDES entrar em Rollback Total, o desconto amplo no catálogo se torna inviável — destrói valor sem proteger a operação."},
-    {"id": "C_S5S1", "cat": "coupling", "label": "Conexão Parcerias ↔ Câmbio", "size": 22, "desc": "Parcerias estratégicas reduzem a exposição ao dólar. A CATL, por exemplo, travou 70% do preço de lítio em contratos de longo prazo — funciona como proteção cambial indireta para o principal insumo."},
-    {"id": "C_S5S2", "cat": "coupling", "label": "Conexão Parcerias ↔ Fornecedores", "size": 22, "desc": "A entrega da CATL está em 93% (alerta amarelo) e a EVE está sendo qualificada como segundo fornecedor. A diversificação de parceiros reduz o risco da cadeia de suprimentos inteira."},
-    {"id": "C_S5S3", "cat": "coupling", "label": "Conexão Parcerias ↔ BNDES", "size": 22, "desc": "Parcerias com o programa BNDES Mover e a proposta de coalizão com a VW abrem portas a financiamentos melhores e ampliam o mercado total. Cada parceria tem efeito multiplicador."},
-    {"id": "C_S5S4", "cat": "coupling", "label": "Conexão Parcerias ↔ Preço", "size": 22, "desc": "Joint ventures (empresas conjuntas) com outras marcas mudam a estratégia de preço: permitem acessar novos segmentos sem precisar fazer desconto agressivo."},
-    {"id": "C_S6ALL", "cat": "coupling", "label": "Conexão Macro → todas", "size": 26, "desc": "O cenário macro reescala todas as outras prescrições por meio de um multiplicador: 1,0× (bom), 1,5× (atenção), 2,0× (ruim). O painel geral Composite sobe para 65, 78 ou 88 conforme o macro. É o termostato do sistema."},
-    {"id": "C_S7S3", "cat": "coupling", "label": "Conexão ESG ↔ BNDES", "size": 24, "desc": "ESG é o interruptor geral do BNDES. Enquanto a frente S7 (ESG e reputação) estiver em vermelho por causa da lista suja, R$ 800 milhões de financiamento ficam bloqueados. Resolver a lista suja não é uma tarefa a mais — é pré-condição."},
-    {"id": "C_S7S9", "cat": "coupling", "label": "Conexão ESG ↔ Demanda", "size": 22, "desc": "A frente ESG e a demanda do mercado vivem em tensão: a má reputação ESG afasta parte dos consumidores, mas a alta demanda por carros elétricos acaba absorvendo parte desse impacto negativo."},
-    {"id": "C_S8S1", "cat": "coupling", "label": "Conexão Rampa ↔ Câmbio", "size": 24, "desc": "Acelerar a nacionalização reduz a exposição ao dólar de 90% para 40% (ou 15% no limite do plano). Cada 5% de nacionalização a mais tira 7 pontos percentuais de exposição cambial. O investimento vale a pena quando a frente cambial está sob pressão."},
-    {"id": "C_S9S3", "cat": "coupling", "label": "Conexão Demanda ↔ BNDES", "size": 22, "desc": "Se as vendas continuarem crescendo, a probabilidade de Rollback Parcial do BNDES fica abaixo de 5%. A demanda forte é a melhor proteção contra cortes de financiamento público."},
-    {"id": "C_S10S1", "cat": "coupling", "label": "Conexão Tarifa ↔ Câmbio", "size": 24, "desc": "Tarifa mais dólar formam o 'compound shock multiplicativo': juntos, somam R$ 4,5 a 6 bilhões em 6 meses. Cada um sozinho já é ruim; juntos, se multiplicam em vez de apenas somar. É o maior contribuinte para o pior cenário de perda potencial."},
-    {"id": "C_S10S4", "cat": "coupling", "label": "Conexão Tarifa ↔ Preço", "size": 24, "desc": "Se a tarifa subir e a BYD tentar repassar o aumento com desconto agressivo, a margem despenca de 22% para 8 a 12%. O sistema de tiers precisa ser recalibrado para acomodar a nova tarifa."},
-    {"id": "C_S11S4", "cat": "coupling", "label": "Conexão Concorrência ↔ Preço", "size": 24, "desc": "A pressão dos concorrentes aciona automaticamente o sistema de desconto em camadas (Tier 2 a 3). O equilíbrio estável de Nash mostra que, se todos se diferenciam em vez de guerrear por preço, a margem de todos se preserva."},
-    {"id": "A_E1", "cat": "action_strategic", "label": "E1: Aprovar pacote de mitigação", "size": 20, "owner": "Conselho", "deadline": "3º trim. 2026", "cost": "R$ 3 milhões", "cost-story": "Investimento total do framework. ROI esperado de 200× em 1 ano."},
-    {"id": "A_E2", "cat": "action_strategic", "label": "E2: Acionar ponte financeira de R$ 1,2 a 1,5 bi", "size": 20, "owner": "Board global", "deadline": "3º trim. 2026", "cost": "R$ 1,2 a 1,5 bilhão", "cost-story": "Empréstimo-ponte para cobrir o caixa enquanto a lista suja não é resolvida (e o BNDES fica travado)."},
-    {"id": "A_E3", "cat": "action_strategic", "label": "E3: Tirar a BYD da lista suja", "size": 22, "owner": "CEO", "deadline": "30/set/2026", "cost": "R$ 25 milhões", "cost-story": "Ação mais urgente: 90 dias de advocacy com MPT + auditoria big-4 + plano de remediação. Libera R$ 800 mi do BNDES."},
-    {"id": "A_E4", "cat": "action_strategic", "label": "E4: Acionar gatilho dos 4 choques simultâneos", "size": 20, "owner": "Board", "deadline": "3º trim. 2026", "cost": "R$ 0", "cost-story": "Decisão binária: se câmbio + lítio + tarifa + demanda piorarem juntos, dispara modo crise com comitê permanente."},
-    {"id": "A_E5", "cat": "action_strategic", "label": "E5: Fechar Coalizão D com a VW", "size": 20, "owner": "Board", "deadline": "4º trim. 2026", "cost": "R$ 50 milhões", "cost-story": "Aliança estratégica para dividir plataforma de carro elétrico. Reduz capex 30% e abre 25% do mercado VW."},
-    {"id": "A_T1", "cat": "action_tactical", "label": "T1: Hedge cambial 95% com 4 bancos", "size": 20, "owner": "Risk + CFO", "deadline": "31/out/2026", "cost": "R$ 30 milhões", "cost-story": "Proteger 95% da exposição ao dólar. 4 contrapartes diferentes, máximo 30% em cada uma."},
-    {"id": "A_T2", "cat": "action_tactical", "label": "T2: Acelerar nacionalização para 70%", "size": 20, "owner": "COO", "deadline": "31/out/2027", "cost": "R$ 280 milhões", "cost-story": "Produzir mais peças no Brasil. Reduz exposição ao dólar em R$ 650 milhões."},
-    {"id": "A_T3", "cat": "action_tactical", "label": "T3: Sistema de desconto em camadas (Tier 0 a 3)", "size": 20, "owner": "CMO", "deadline": "contínuo", "cost": "R$ 22,5 milhões / ano", "cost-story": "Desconto cirúrgico em modelos e cidades. Sem corte amplo no catálogo."},
-    {"id": "A_T4", "cat": "action_tactical", "label": "T4: Motor de regras (30 regras em formato simples)", "size": 20, "owner": "CSO + Risk", "deadline": "3º trim. 2026", "cost": "R$ 50 mil", "cost-story": "Sistema que dispara alertas automaticamente quando uma variável muda de faixa."},
-    {"id": "A_T5", "cat": "action_tactical", "label": "T5: RACI com 17 pessoas e 9 travas de aprovação", "size": 20, "owner": "CSO + CFO", "deadline": "3º trim. 2026", "cost": "R$ 0", "cost-story": "Matriz que diz quem faz, quem aprova, quem é consultado e quem é informado em cada ação."},
-    {"id": "A_T6", "cat": "action_tactical", "label": "T6: Travar 70% do lítio com a CATL (parceria de longo prazo)", "size": 20, "owner": "Head Procurement", "deadline": "3º trim. 2026", "cost": "R$ 35 milhões", "cost-story": "Contrato de longo prazo com volume garantido em troca de preço travado."},
-    {"id": "A_T7", "cat": "action_tactical", "label": "T7: Manter o equilíbrio de Nash (não entrar em guerra de preços)", "size": 20, "owner": "Head Strategy", "deadline": "contínuo", "cost": "R$ 1 milhão / trimestre", "cost-story": "Investir em diferenciação (rede, garantia, ecossistema) em vez de corte de preço."},
-    {"id": "A_T8", "cat": "action_tactical", "label": "T8: Testes retroativos contínuos", "size": 20, "owner": "CSO", "deadline": "4º trim. 2026", "cost": "R$ 5 milhões / ano", "cost-story": "Rodar o framework contra crises passadas e cenários novos para calibrar os pesos."},
-    {"id": "A_T9", "cat": "action_tactical", "label": "T9: Painel ao vivo (dashboard)", "size": 20, "owner": "CSO + Engenharia", "deadline": "4º trim. 2026", "cost": "R$ 200 mil", "cost-story": "Tela que mostra, em tempo real, o status das 11 frentes, o painel geral e os alertas ativos."},
-    {"id": "A_T10", "cat": "action_tactical", "label": "T10: Monitorar MSCI e RepRisk", "size": 20, "owner": "Head ESG", "deadline": "3º trim. 2026", "cost": "R$ 2 milhões / ano", "cost-story": "Acompanhar as notas das agências de risco ESG que investidores institucionais olham."},
-    {"id": "A_O1", "cat": "action_operational", "label": "O1: Monitorar PTAX 4 vezes por dia", "size": 18, "owner": "Risk Officer", "deadline": "contínuo", "cost": "R$ 0", "cost-story": "Leitura automática da cotação do dólar. É o sinal mais básico que alimenta o resto."},
-    {"id": "A_O2", "cat": "action_operational", "label": "O2: Acompanhar preço do lítio e VaR de fornecedores", "size": 18, "owner": "Head Procurement", "deadline": "mensal", "cost": "R$ 0", "cost-story": "Relatório mensal com a exposição potencial da cadeia de suprimentos."},
-    {"id": "A_O3", "cat": "action_operational", "label": "O3: Monitorar lista suja do MTE", "size": 18, "owner": "Head ESG", "deadline": "contínuo", "cost": "R$ 0", "cost-story": "Verificação diária se a BYD continua (ou não) na lista do trabalho escravo."},
-    {"id": "A_O4", "cat": "action_operational", "label": "O4: KPI de entrega CATL/EVE", "size": 18, "owner": "Head Procurement", "deadline": "semanal", "cost": "R$ 0", "cost-story": "Indicador semanal da pontualidade dos fornecedores de bateria."},
-    {"id": "A_O5", "cat": "action_operational", "label": "O5: Painel geral ao longo do dia", "size": 18, "owner": "Risk + CSO", "deadline": "contínuo", "cost": "R$ 0", "cost-story": "Cálculo automático do score geral ponderado, atualizado 4 vezes por dia."},
-    {"id": "A_O6", "cat": "action_operational", "label": "O6: Relatório diário do painel geral", "size": 18, "owner": "CSO", "deadline": "diário", "cost": "R$ 0", "cost-story": "E-mail diário com a fotografia atual do risco, para a liderança."},
-    {"id": "A_O7", "cat": "action_operational", "label": "O7: Gatilhos amarelo/vermelho automáticos", "size": 18, "owner": "Motor de regras", "deadline": "tempo real", "cost": "R$ 0", "cost-story": "Quando uma frente muda de cor, dispara alerta automático para os donos."},
-    {"id": "A_O8", "cat": "action_operational", "label": "O8: Interruptores de emergência (kill switches)", "size": 18, "owner": "Motor de regras", "deadline": "tempo real", "cost": "R$ 0", "cost-story": "Travas automáticas para ações graves (ex: lista suja, BNDES cancelado)."},
-    {"id": "A_O9", "cat": "action_operational", "label": "O9: Trilha de auditoria (registro imutável por 7 anos)", "size": 18, "owner": "Risk Officer", "deadline": "contínuo", "cost": "R$ 5 mil / mês", "cost-story": "Registro à prova de adulteração de todas as decisões — para auditores e para o Conselho."},
-    {"id": "A_O10", "cat": "action_operational", "label": "O10: Atualização trimestral das regras", "size": 18, "owner": "CSO", "deadline": "trimestral", "cost": "R$ 0", "cost-story": "Revisão das regras do motor a cada 3 meses, com base no que aconteceu de fato."},
-    {"id": "P_CONSELHO", "cat": "persona", "label": "Conselho de Administração", "size": 18, "desc": "Aprova o pacote de mitigação, a ponte financeira, a resolução da lista suja, os gatilhos de crise e a coalizão com a VW. Vê o programa do ponto de vista estratégico e responde pelo capital dos acionistas."},
-    {"id": "P_CEO", "cat": "persona", "label": "CEO (diretor-presidente)", "size": 18, "desc": "Patrocina as 5 ações estratégicas (E1 a E5) e é o responsável pessoal pela resolução da lista suja (E3). Tem entre 4 e 5 ações críticas no programa."},
-    {"id": "P_CFO", "cat": "persona", "label": "CFO (diretor financeiro)", "size": 18, "desc": "Aprovador do hedge cambial (T1) e da ponte financeira (E2). Co-patrocinador da ação da lista suja (E3) — porque ela destrava o financiamento do BNDES."},
-    {"id": "P_CSO", "cat": "persona", "label": "CSO (estratégia)", "size": 18, "desc": "Dono das ações táticas T4 a T10 e operacionais O5 a O10. Responsável pelo painel geral e por manter a matriz RACI de 17 pessoas atualizada."},
-    {"id": "P_COO", "cat": "persona", "label": "COO (operações)", "size": 18, "desc": "Aprovador do plano de nacionalização (T2) e patrocinador da frente de rampa de produção. Vê o projeto do ponto de vista de chão de fábrica."},
-    {"id": "P_CMO", "cat": "persona", "label": "CMO (marketing)", "size": 18, "desc": "Dono do sistema de desconto em camadas (T3). Define a estratégia de preço do dia a dia, em coordenação com o CSO."},
-    {"id": "P_RISK", "cat": "persona", "label": "Risk Officer (gerente de risco)", "size": 18, "desc": "Dono do hedge cambial (T1), do monitoramento diário do dólar (O1) e da trilha de auditoria (O5 e O9). Tem entre 4 e 5 ações críticas no programa."},
-    {"id": "P_HEAD_PROC", "cat": "persona", "label": "Head de Procurement (compras)", "size": 18, "desc": "Dono do contrato de longo prazo com a CATL (T6), do monitoramento de lítio (O2) e do KPI de entrega dos fornecedores (O4)."},
-    {"id": "P_HEAD_ESG", "cat": "persona", "label": "Head de ESG e Compliance", "size": 18, "desc": "Dono do monitoramento MSCI e RepRisk (T10) e da verificação diária da lista suja (O3). É a pessoa que fala com investidores e com a mídia sobre ESG."},
-    {"id": "P_HEAD_STR", "cat": "persona", "label": "Head de Estratégia", "size": 18, "desc": "Dono da estratégia de equilíbrio de Nash (T7) — acompanha a movimentação dos concorrentes e decide se a BYD deve ou não reagir."},
-    {"id": "P_HEAD_SUPPLY", "cat": "persona", "label": "Head de Supply Chain", "size": 18, "desc": "Co-dono do plano de nacionalização (T2). Trabalha em conjunto com o COO na execução da rampa de produção."},
-    {"id": "P_HEAD_GOV", "cat": "persona", "label": "Head de Gov Relations", "size": 18, "desc": "Co-dono da ação de resolução da lista suja (E3). É a pessoa que conversa com o Ministério Público do Trabalho e com o BNDES."},
-    {"id": "P_TREASURY", "cat": "persona", "label": "Head de Tesouraria", "size": 18, "desc": "Co-dono da execução do hedge cambial (T1) — opera diretamente com os bancos para fazer as operações de proteção."},
-    {"id": "P_GOV", "cat": "persona", "label": "Monitor (CSO)", "size": 18, "desc": "Acompanha o painel geral ao longo do dia e dispara os gatilhos automáticos quando uma frente muda de cor."},
-    {"id": "P_BOARD", "cat": "persona", "label": "Board Global (Conselho Global BYD)", "size": 18, "desc": "Aprova as 5 ações estratégicas (E1 a E5) e libera gastos acima de R$ 280 milhões. Quórum mínimo: 5 dos 7 conselheiros globais + HQ China."},
-    {"id": "P_ENG", "cat": "persona", "label": "Engenharia de Dados", "size": 18, "desc": "Dono do painel ao vivo (T9). Constrói o motor de regras, o painel e os fluxos de dados entre as fontes oficiais e o framework."},
-    {"id": "P_ANALYST", "cat": "persona", "label": "Analista de Risco", "size": 18, "desc": "Apoia o Risk Officer no dia a dia. Monitora os sinais, prepara relatórios e dispara os alertas manuais quando o motor automático não cobre."},
-    {"id": "G_G1", "cat": "gate", "label": "G1 — BNDES ViE de pelo menos 18 meses", "size": 16, "desc": "Para liberar a ponte financeira, o BNDES precisa ter ViE (Valor de Importação Estimado) com horizonte de pelo menos 18 meses."},
-    {"id": "G_G2", "cat": "gate", "label": "G2 — Taxa de desconto ajustada ao risco em 13%", "size": 16, "desc": "Taxa usada para descontar fluxos de caixa futuros. Padrão de mercado: 13% nominal ao ano. Se outra taxa for usada, justificar por escrito."},
-    {"id": "G_G3", "cat": "gate", "label": "G3 — Painel geral em modo amarelo", "size": 16, "desc": "Para acionar ações táticas (T1 a T10), o painel geral precisa estar em pelo menos 65 (modo tensão). Em modo normal, não há pressa."},
-    {"id": "G_G4", "cat": "gate", "label": "G4 — Hedge cambial proporcional ao cenário do BNDES", "size": 16, "desc": "A fração de hedge muda: 30% em Expansão, 60% em Rollback Parcial, 91% em Rollback Total. Não é um valor fixo."},
-    {"id": "G_G5", "cat": "gate", "label": "G5 — S7 (ESG) em alerta amarelo", "size": 16, "desc": "Para liberar capex novo, a frente ESG precisa estar fora do vermelho (lista suja resolvida). É o interruptor geral."},
-    {"id": "G_G6", "cat": "gate", "label": "G6 — Defensivo de preço com retorno positivo", "size": 16, "desc": "Só autorizar desconto cirúrgico (Tier 0 a 3). Desconto amplo no catálogo foi descartado por queimar margem."},
-    {"id": "G_G7", "cat": "gate", "label": "G7 — Liberação parcial de R$ 1,5 bi do BNDES", "size": 16, "desc": "Liberação condicional ao G5 (S7 resolvido). Se a lista suja persistir, o valor fica travado."},
-    {"id": "G_G8", "cat": "gate", "label": "G8 — BYD fora da lista suja", "size": 16, "desc": "Pré-condição para destravar o capex. A saída da lista suja precisa ser oficial, com 30 dias consecutivos sem novas ocorrências."},
-    {"id": "G_G9", "cat": "gate", "label": "G9 — Equilíbrio de Nash estável entre os 5 concorrentes", "size": 16, "desc": "Os 5 grandes jogadores do mercado (BYD, Stellantis, GM, VW, Geely) precisam estar em modo diferenciação (não guerra de preços)."},
-    {"id": "R_LISTA_SUJA", "cat": "risk", "label": "Risco S7: lista suja do trabalho", "size": 26, "desc": "A BYD está na lista suja do trabalho escravo do Ministério do Trabalho desde 7 de abril de 2026. Isso bloqueia automaticamente o financiamento do BNDES — R$ 800 milhões ou mais ficam travados. É o risco mais urgente."},
-    {"id": "R_TARIFF", "cat": "risk", "label": "Risco S10: tarifa de 35% em 2027", "size": 22, "desc": "A tarifa de importação de carros elétricos vai subir para 35% em janeiro de 2027. A Camex (Câmara de Comércio Exterior) já rejeitou o pedido da BYD de manter em 25%. Se nada for feito, o valor presente líquido do programa cai R$ 7,5 bilhões."},
-    {"id": "R_GUERRA", "cat": "risk", "label": "Risco S11: guerra de preços", "size": 22, "desc": "A Stellantis está investindo R$ 30 bilhões no Brasil e a Geely está crescendo rápido. Se a BYD reagir com desconto, a concorrência responde, e todos perdem margem. Em equilíbrio de Nash estável, o NPV agregado cai R$ 8,6 bilhões se houver guerra."},
-    {"id": "R_OVERCAP", "cat": "risk", "label": "Risco S8: sobrecapacidade do setor", "size": 22, "desc": "Em 2027, a capacidade total de produção de carros elétricos no Brasil será de 630 mil unidades por ano — mas a demanda será de apenas 200 mil. Isso significa 68% das fábricas paradas e a margem indo a zero. É um risco estrutural, não conjuntural."},
-    {"id": "R_LITIO", "cat": "risk", "label": "Risco S2: lítio voltando a subir", "size": 22, "desc": "O preço do lítio saltou de US$ 9 mil para US$ 22 mil a tonelada em apenas 5 meses. A mina Jianxiawo fechou. O déficit global esperado para 2026 é grande. Para quem não tem proteção contratual, é um risco material."},
-    {"id": "M_VaR821", "cat": "metric", "label": "Perda potencial (VaR 95%) = R$ 8,21 bi", "size": 22, "desc": "Em 95% dos cenários simulados, a pior perda em 6 meses é de R$ 8,21 bilhões. O número vem de 10 mil simulações com 4 choques macro simultâneos (câmbio, lítio, tarifa, demanda). É estatística, não chute."},
-    {"id": "M_CVaR1014", "cat": "metric", "label": "Perda média na cauda (CVaR) = R$ 10,14 bi", "size": 20, "desc": "Quando a perda potencial é violada (os 5% piores cenários), a perda média é de R$ 10,14 bilhões — 24% acima do valor do VaR. É a métrica que mostra o tamanho real do desastre, não apenas o limite."},
-    {"id": "M_Composite718", "cat": "metric", "label": "Painel geral = 71,8 (modo tensão)", "size": 24, "desc": "O número-mestre do D2. Modo tensão, cluster 2. Pesos 30/30/20/20 (Câmbio, Regulatório, Supply, Macro). Para o D3, o cálculo foi expandido para 11 dimensões."},
-    {"id": "M_TP100", "cat": "metric", "label": "Testes retroativos: 5 de 5 crises acertadas", "size": 22, "desc": "O framework identificou corretamente 100% das crises testadas (COVID, semicondutores, eleições, lítio, estagflação), sem nenhum alarme falso (graças a 4 correções técnicas). Tempo médio do alarme à ação: 9,3 dias."},
-    {"id": "M_ROI200", "cat": "metric", "label": "Retorno de 200 vezes", "size": 20, "desc": "Cada R$ 1 investido no framework evita R$ 200 de prejuízo por ano. Payback em menos de 1 mês — basta uma crise evitada para pagar todo o investimento."},
-    {"id": "M_NPV85", "cat": "metric", "label": "Valor presente líquido (cenário base) = R$ 8,5 bi", "size": 20, "desc": "O valor de longo prazo do programa no cenário base, considerando hedge de 95% do dólar, nacionalização de 70% e diferenciação em vez de guerra de preços."}
+    {
+      "id": "S_D2",
+      "cat": "session",
+      "label": "D2 Atlas (a fotografia original)",
+      "size": 38,
+      "desc": "A análise anterior ao D3. Era uma boa fotografia preditiva do programa: 6 sessões paralelas (câmbio, fornecedores, BNDES, preço, parcerias, macro), 65 KB de relatório, 18 figuras e o composite em 71,8. Mas não modelava como uma sessão afetava a outra — sem acoplamentos, sem árvores de decisão, sem NPV, sem dono por ação. Boa como retrato, fraca como manual."
+    },
+    {
+      "id": "S_CAMBIO",
+      "cat": "session",
+      "label": "Câmbio (S1)",
+      "size": 30,
+      "desc": "A frente que mede a variação do dólar (PTAX) e calcula quanto a BYD precisa se proteger. Usamos dados do Banco Central (série 10813 do SGS). A oscilação anual média do dólar em 10 anos foi de 14,86% — mas nos últimos 12 meses está mais calmo, em 11,20%. Duas métricas geradas: o VaR cambial (quanto podemos perder em 95% dos cenários) e o tamanho ótimo do hedge."
+    },
+    {
+      "id": "S_SUPPLY",
+      "cat": "session",
+      "label": "Cadeia de fornecedores (S2)",
+      "size": 30,
+      "desc": "A frente que cuida do lítio, dos principais fornecedores (CATL, EVE) e do nível de nacionalização (SKD, CKD, Nacional). Em 10 anos, a perda potencial dessa cadeia era de R$ 2,27 bilhões. Hoje, com o lítio voltando a subir, a projeção em 12 meses pulou para R$ 4 bilhões. É o maior risco isolado do programa."
+    },
+    {
+      "id": "S_REG",
+      "cat": "session",
+      "label": "Regulatório (S3)",
+      "size": 30,
+      "desc": "A frente que acompanha o BNDES, o ViE (Valor de Importação Estimado), a lista suja do Ministério do Trabalho, o FNDIT, o IPI e as tarifas de importação para BEV (elétrico puro), PHEV (híbrido plug-in), HEV (híbrido) e SKD/CKD. É a frente que pode travar tudo — por exemplo, a lista suja bloqueia R$ 800 milhões de financiamento automaticamente."
+    },
+    {
+      "id": "S_COMP",
+      "cat": "session",
+      "label": "Competitivo (S11)",
+      "size": 30,
+      "desc": "A frente que monitora a Stellantis (R$ 30 bilhões de investimento), a GM (R$ 7 bilhões), a VW (R$ 16 bilhões), a Geely (que está crescendo rápido) e a Leapmotor. A análise usa teoria dos jogos para encontrar o equilíbrio estável (chamado de NASH E3) entre os 5 grandes jogadores."
+    },
+    {
+      "id": "S_MACRO",
+      "cat": "session",
+      "label": "Cenário macro (S6)",
+      "size": 26,
+      "desc": "A frente que reescala todas as outras: inflação (IPCA), juros básicos (Selic), câmbio (BRL/USD), estresse de mercados emergentes, carry trade e volatilidade global (VIX). Quando o cenário macro piora, todas as outras frentes precisam de mais proteção — por isso o framework aplica um multiplicador de 1,0×, 1,5× ou 2,0× conforme a situação."
+    },
+    {
+      "id": "S_COMP_71_8",
+      "cat": "session",
+      "label": "Painel geral em 71,8",
+      "size": 32,
+      "desc": "O número-mestre do D2: a média ponderada das 4 dimensões principais (Câmbio 30%, Regulatório 30%, Supply 20%, Macro 20%). Em 71,8 estamos no modo tensão, cluster 2 — recomenda postura defensiva, não expansão. Para o D3, o composite foi expandido para incluir 11 dimensões e 5 ações estratégicas, dando uma leitura mais completa."
+    },
+    {
+      "id": "D_S1",
+      "cat": "dimension",
+      "label": "S1 — Câmbio (dólar)",
+      "size": 22,
+      "score": 78,
+      "status": "AMBER",
+      "desc": "Volatilidade do dólar em 11,2% nos últimos 12 meses. A proteção cambial (hedge) ótima varia de 30% a 91% dependendo do cenário do BNDES. Hoje estamos em alerta amarelo — precisa de monitoramento ativo."
+    },
+    {
+      "id": "D_S2",
+      "cat": "dimension",
+      "label": "S2 — Fornecedores (lítio)",
+      "size": 22,
+      "score": 85,
+      "status": "RED",
+      "desc": "Lítio voltou a subir forte: de US$ 9 mil para US$ 22 mil a tonelada em 5 meses. Esperado déficit global de 1,5 a 80 mil toneladas de LCE em 2026. A frente está em vermelho e exige ação imediata."
+    },
+    {
+      "id": "D_S3",
+      "cat": "dimension",
+      "label": "S3 — BNDES (financiamento)",
+      "size": 22,
+      "score": 70,
+      "status": "GREEN*",
+      "desc": "Cenário base é Expansão (75% de probabilidade), com ViE em 22%. Mas a frente está marcada com asterisco porque a lista suja (S7) funciona como 'kill switch' e bloqueia o financiamento até ser resolvida."
+    },
+    {
+      "id": "D_S4",
+      "cat": "dimension",
+      "label": "S4 — Política de preços",
+      "size": 22,
+      "score": 72,
+      "status": "AMBER",
+      "desc": "Sistema de desconto em camadas (Tier 0 a 3) — só descontos cirúrgicos em modelos e cidades específicas. O modo antigo de cortar preço em todo o catálogo foi removido por destruir valor. Hoje, em alerta amarelo, o defensivo está em Tier 2."
+    },
+    {
+      "id": "D_S5",
+      "cat": "dimension",
+      "label": "S5 — Parcerias estratégicas",
+      "size": 22,
+      "score": 85,
+      "status": "GREEN",
+      "desc": "A frente mais forte hoje. A CATL entrega 93% no prazo, a EVE está sendo qualificada como segundo fornecedor de bateria, e está em estudo uma coalizão estratégica com a VW (a chamada 'Coalizão D') para dividir plataforma de carro elétrico."
+    },
+    {
+      "id": "D_S6",
+      "cat": "dimension",
+      "label": "S6 — Cenário macro",
+      "size": 22,
+      "score": 70,
+      "status": "AMBER",
+      "desc": "Inflação oficial em 4,5%, juros básicos em 10,5%, estresse moderado em mercados emergentes. O multiplicador macro está em 1,0× (modo espera) — se piorar, salta para 1,5× ou 2,0× e todas as outras frentes precisam de mais proteção."
+    },
+    {
+      "id": "D_S7",
+      "cat": "dimension",
+      "label": "S7 — ESG (reputação)",
+      "size": 26,
+      "score": 92,
+      "status": "RED",
+      "desc": "A BYD entrou na lista suja do trabalho escravo do Ministério do Trabalho em 7 de abril de 2026, com 163 trabalhadores resgatados. Isso funciona como 'kill switch' do BNDES: enquanto a lista estiver ativa, todo financiamento novo fica travado. É a frente mais urgente de todas."
+    },
+    {
+      "id": "D_S8",
+      "cat": "dimension",
+      "label": "S8 — Rampa de produção",
+      "size": 22,
+      "score": 77,
+      "status": "AMBER",
+      "desc": "O plano de produção sai de peças importadas prontas (SKD 45%) para peças desmontadas (CKD) e finalmente para fabricação local (Nacional 70%). Cada fase reduz a exposição ao dólar — de 90% no início para 15% quando totalmente nacional. Hoje estamos em alerta amarelo porque a transição precisa acelerar por causa da tarifa de 35% em 2027."
+    },
+    {
+      "id": "D_S9",
+      "cat": "dimension",
+      "label": "S9 — Demanda do mercado",
+      "size": 22,
+      "score": 72,
+      "status": "GREEN",
+      "desc": "A participação de carros elétricos no total de vendas no Brasil está em 13,5% e cresceu 153% em 2025. A BYD tem 12,8% das vendas no varejo. A demanda está forte — o risco está em perdê-la para concorrentes, não em não tê-la."
+    },
+    {
+      "id": "D_S10",
+      "cat": "dimension",
+      "label": "S10 — Tarifa de importação",
+      "size": 22,
+      "score": 78,
+      "status": "AMBER→RED jan/2027",
+      "desc": "A tarifa de importação sobre carros elétricos vai subir de 25% para 35% em janeiro de 2027. A Camex (Câmara de Comércio Exterior) já rejeitou o pedido da BYD de manter em 25%. Combinado com o dólar alto, forma o que chamamos de 'compound shock multiplicativo' — o maior contribuinte para o pior cenário de perda potencial."
+    },
+    {
+      "id": "D_S11",
+      "cat": "dimension",
+      "label": "S11 — Pressão dos concorrentes",
+      "size": 22,
+      "score": 82,
+      "status": "RED",
+      "desc": "5 grandes marcas estão acelerando no Brasil: Stellantis (R$ 30 bilhões de investimento), Geely (crescimento rápido com o EX2). A análise de equilíbrio de jogos mostra que o ponto estável é cada um se diferenciar (não entrar em guerra de preços) — mas a pressão está alta, daí o vermelho."
+    },
+    {
+      "id": "C_S1S3",
+      "cat": "coupling",
+      "label": "Conexão Câmbio ↔ BNDES",
+      "size": 24,
+      "desc": "A proteção cambial ótima depende do cenário do BNDES: 30% em Expansão, 60% em Rollback Parcial, 91% em Rollback Total. Não é um valor fixo de 50% — é proporcional ao risco. Por isso o D2 errava: tratava como se fosse a mesma coisa em qualquer cenário."
+    },
+    {
+      "id": "C_S1S2",
+      "cat": "coupling",
+      "label": "Conexão Câmbio ↔ Fornecedores",
+      "size": 24,
+      "desc": "Câmbio e fornecedores andam juntos. Testamos 12 combinações: quando a frente de fornecedores está em vermelho, a perda potencial dessa cadeia é 2,5 vezes maior que a cambial sozinha. O lício cotado em dólar amplifica qualquer movimento de câmbio."
+    },
+    {
+      "id": "C_S1S4",
+      "cat": "coupling",
+      "label": "Conexão Câmbio ↔ Preço",
+      "size": 24,
+      "desc": "Hedge cambial versus desconto de preço: por cada R$ 1 gasto em hedge, você protege 9,4 vezes mais valor do que gastando o mesmo R$ 1 em desconto de preço. Por isso o framework descartou o desconto amplo no catálogo (tinha retorno de -67%)."
+    },
+    {
+      "id": "C_S3S4",
+      "cat": "coupling",
+      "label": "Conexão BNDES ↔ Preço",
+      "size": 22,
+      "desc": "O desconto de preço só se sustenta quando o BNDES aprova o financiamento e o Valor de Importação Estimado (ViE) fica acima de 10%. Se o BNDES entrar em Rollback Total, o desconto amplo no catálogo se torna inviável — destrói valor sem proteger a operação."
+    },
+    {
+      "id": "C_S5S1",
+      "cat": "coupling",
+      "label": "Conexão Parcerias ↔ Câmbio",
+      "size": 22,
+      "desc": "Parcerias estratégicas reduzem a exposição ao dólar. A CATL, por exemplo, travou 70% do preço de lítio em contratos de longo prazo — funciona como proteção cambial indireta para o principal insumo."
+    },
+    {
+      "id": "C_S5S2",
+      "cat": "coupling",
+      "label": "Conexão Parcerias ↔ Fornecedores",
+      "size": 22,
+      "desc": "A entrega da CATL está em 93% (alerta amarelo) e a EVE está sendo qualificada como segundo fornecedor. A diversificação de parceiros reduz o risco da cadeia de suprimentos inteira."
+    },
+    {
+      "id": "C_S5S3",
+      "cat": "coupling",
+      "label": "Conexão Parcerias ↔ BNDES",
+      "size": 22,
+      "desc": "Parcerias com o programa BNDES Mover e a proposta de coalizão com a VW abrem portas a financiamentos melhores e ampliam o mercado total. Cada parceria tem efeito multiplicador."
+    },
+    {
+      "id": "C_S5S4",
+      "cat": "coupling",
+      "label": "Conexão Parcerias ↔ Preço",
+      "size": 22,
+      "desc": "Joint ventures (empresas conjuntas) com outras marcas mudam a estratégia de preço: permitem acessar novos segmentos sem precisar fazer desconto agressivo."
+    },
+    {
+      "id": "C_S6ALL",
+      "cat": "coupling",
+      "label": "Conexão Macro → todas",
+      "size": 26,
+      "desc": "O cenário macro reescala todas as outras prescrições por meio de um multiplicador: 1,0× (bom), 1,5× (atenção), 2,0× (ruim). O painel geral Composite sobe para 65, 78 ou 88 conforme o macro. É o termostato do sistema."
+    },
+    {
+      "id": "C_S7S3",
+      "cat": "coupling",
+      "label": "Conexão ESG ↔ BNDES",
+      "size": 24,
+      "desc": "ESG é o interruptor geral do BNDES. Enquanto a frente S7 (ESG e reputação) estiver em vermelho por causa da lista suja, R$ 800 milhões de financiamento ficam bloqueados. Resolver a lista suja não é uma tarefa a mais — é pré-condição."
+    },
+    {
+      "id": "C_S7S9",
+      "cat": "coupling",
+      "label": "Conexão ESG ↔ Demanda",
+      "size": 22,
+      "desc": "A frente ESG e a demanda do mercado vivem em tensão: a má reputação ESG afasta parte dos consumidores, mas a alta demanda por carros elétricos acaba absorvendo parte desse impacto negativo."
+    },
+    {
+      "id": "C_S8S1",
+      "cat": "coupling",
+      "label": "Conexão Rampa ↔ Câmbio",
+      "size": 24,
+      "desc": "Acelerar a nacionalização reduz a exposição ao dólar de 90% para 40% (ou 15% no limite do plano). Cada 5% de nacionalização a mais tira 7 pontos percentuais de exposição cambial. O investimento vale a pena quando a frente cambial está sob pressão."
+    },
+    {
+      "id": "C_S9S3",
+      "cat": "coupling",
+      "label": "Conexão Demanda ↔ BNDES",
+      "size": 22,
+      "desc": "Se as vendas continuarem crescendo, a probabilidade de Rollback Parcial do BNDES fica abaixo de 5%. A demanda forte é a melhor proteção contra cortes de financiamento público."
+    },
+    {
+      "id": "C_S10S1",
+      "cat": "coupling",
+      "label": "Conexão Tarifa ↔ Câmbio",
+      "size": 24,
+      "desc": "Tarifa mais dólar formam o 'compound shock multiplicativo': juntos, somam R$ 4,5 a 6 bilhões em 6 meses. Cada um sozinho já é ruim; juntos, se multiplicam em vez de apenas somar. É o maior contribuinte para o pior cenário de perda potencial."
+    },
+    {
+      "id": "C_S10S4",
+      "cat": "coupling",
+      "label": "Conexão Tarifa ↔ Preço",
+      "size": 24,
+      "desc": "Se a tarifa subir e a BYD tentar repassar o aumento com desconto agressivo, a margem despenca de 22% para 8 a 12%. O sistema de tiers precisa ser recalibrado para acomodar a nova tarifa."
+    },
+    {
+      "id": "C_S11S4",
+      "cat": "coupling",
+      "label": "Conexão Concorrência ↔ Preço",
+      "size": 24,
+      "desc": "A pressão dos concorrentes aciona automaticamente o sistema de desconto em camadas (Tier 2 a 3). O equilíbrio estável de Nash mostra que, se todos se diferenciam em vez de guerrear por preço, a margem de todos se preserva."
+    },
+    {
+      "id": "A_E1",
+      "cat": "action_strategic",
+      "label": "E1: Aprovar pacote de mitigação",
+      "size": 20,
+      "owner": "Conselho",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 3 milhões",
+      "cost-story": "Investimento total do framework. ROI esperado de 200× em 1 ano."
+    },
+    {
+      "id": "A_E2",
+      "cat": "action_strategic",
+      "label": "E2: Acionar ponte financeira de R$ 1,2 a 1,5 bi",
+      "size": 20,
+      "owner": "Board global",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 1,2 a 1,5 bilhão",
+      "cost-story": "Empréstimo-ponte para cobrir o caixa enquanto a lista suja não é resolvida (e o BNDES fica travado)."
+    },
+    {
+      "id": "A_E3",
+      "cat": "action_strategic",
+      "label": "E3: Tirar a BYD da lista suja",
+      "size": 22,
+      "owner": "CEO",
+      "deadline": "30/set/2026",
+      "cost": "R$ 25 milhões",
+      "cost-story": "Ação mais urgente: 90 dias de advocacy com MPT + auditoria big-4 + plano de remediação. Libera R$ 800 mi do BNDES."
+    },
+    {
+      "id": "A_E4",
+      "cat": "action_strategic",
+      "label": "E4: Acionar gatilho dos 4 choques simultâneos",
+      "size": 20,
+      "owner": "Board",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 0",
+      "cost-story": "Decisão binária: se câmbio + lítio + tarifa + demanda piorarem juntos, dispara modo crise com comitê permanente."
+    },
+    {
+      "id": "A_E5",
+      "cat": "action_strategic",
+      "label": "E5: Fechar Coalizão D com a VW",
+      "size": 20,
+      "owner": "Board",
+      "deadline": "4º trim. 2026",
+      "cost": "R$ 50 milhões",
+      "cost-story": "Aliança estratégica para dividir plataforma de carro elétrico. Reduz capex 30% e abre 25% do mercado VW."
+    },
+    {
+      "id": "A_T1",
+      "cat": "action_tactical",
+      "label": "T1: Hedge cambial 95% com 4 bancos",
+      "size": 20,
+      "owner": "Risk + CFO",
+      "deadline": "31/out/2026",
+      "cost": "R$ 30 milhões",
+      "cost-story": "Proteger 95% da exposição ao dólar. 4 contrapartes diferentes, máximo 30% em cada uma."
+    },
+    {
+      "id": "A_T2",
+      "cat": "action_tactical",
+      "label": "T2: Acelerar nacionalização para 70%",
+      "size": 20,
+      "owner": "COO",
+      "deadline": "31/out/2027",
+      "cost": "R$ 280 milhões",
+      "cost-story": "Produzir mais peças no Brasil. Reduz exposição ao dólar em R$ 650 milhões."
+    },
+    {
+      "id": "A_T3",
+      "cat": "action_tactical",
+      "label": "T3: Sistema de desconto em camadas (Tier 0 a 3)",
+      "size": 20,
+      "owner": "CMO",
+      "deadline": "contínuo",
+      "cost": "R$ 22,5 milhões / ano",
+      "cost-story": "Desconto cirúrgico em modelos e cidades. Sem corte amplo no catálogo."
+    },
+    {
+      "id": "A_T4",
+      "cat": "action_tactical",
+      "label": "T4: Motor de regras (30 regras em formato simples)",
+      "size": 20,
+      "owner": "CSO + Risk",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 50 mil",
+      "cost-story": "Sistema que dispara alertas automaticamente quando uma variável muda de faixa."
+    },
+    {
+      "id": "A_T5",
+      "cat": "action_tactical",
+      "label": "T5: RACI com 17 pessoas e 9 travas de aprovação",
+      "size": 20,
+      "owner": "CSO + CFO",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 0",
+      "cost-story": "Matriz que diz quem faz, quem aprova, quem é consultado e quem é informado em cada ação."
+    },
+    {
+      "id": "A_T6",
+      "cat": "action_tactical",
+      "label": "T6: Travar 70% do lítio com a CATL (parceria de longo prazo)",
+      "size": 20,
+      "owner": "Head Procurement",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 35 milhões",
+      "cost-story": "Contrato de longo prazo com volume garantido em troca de preço travado."
+    },
+    {
+      "id": "A_T7",
+      "cat": "action_tactical",
+      "label": "T7: Manter o equilíbrio de Nash (não entrar em guerra de preços)",
+      "size": 20,
+      "owner": "Head Strategy",
+      "deadline": "contínuo",
+      "cost": "R$ 1 milhão / trimestre",
+      "cost-story": "Investir em diferenciação (rede, garantia, ecossistema) em vez de corte de preço."
+    },
+    {
+      "id": "A_T8",
+      "cat": "action_tactical",
+      "label": "T8: Testes retroativos contínuos",
+      "size": 20,
+      "owner": "CSO",
+      "deadline": "4º trim. 2026",
+      "cost": "R$ 5 milhões / ano",
+      "cost-story": "Rodar o framework contra crises passadas e cenários novos para calibrar os pesos."
+    },
+    {
+      "id": "A_T9",
+      "cat": "action_tactical",
+      "label": "T9: Painel ao vivo (dashboard)",
+      "size": 20,
+      "owner": "CSO + Engenharia",
+      "deadline": "4º trim. 2026",
+      "cost": "R$ 200 mil",
+      "cost-story": "Tela que mostra, em tempo real, o status das 11 frentes, o painel geral e os alertas ativos."
+    },
+    {
+      "id": "A_T10",
+      "cat": "action_tactical",
+      "label": "T10: Monitorar MSCI e RepRisk",
+      "size": 20,
+      "owner": "Head ESG",
+      "deadline": "3º trim. 2026",
+      "cost": "R$ 2 milhões / ano",
+      "cost-story": "Acompanhar as notas das agências de risco ESG que investidores institucionais olham."
+    },
+    {
+      "id": "A_O1",
+      "cat": "action_operational",
+      "label": "O1: Monitorar PTAX 4 vezes por dia",
+      "size": 18,
+      "owner": "Risk Officer",
+      "deadline": "contínuo",
+      "cost": "R$ 0",
+      "cost-story": "Leitura automática da cotação do dólar. É o sinal mais básico que alimenta o resto."
+    },
+    {
+      "id": "A_O2",
+      "cat": "action_operational",
+      "label": "O2: Acompanhar preço do lítio e VaR de fornecedores",
+      "size": 18,
+      "owner": "Head Procurement",
+      "deadline": "mensal",
+      "cost": "R$ 0",
+      "cost-story": "Relatório mensal com a exposição potencial da cadeia de suprimentos."
+    },
+    {
+      "id": "A_O3",
+      "cat": "action_operational",
+      "label": "O3: Monitorar lista suja do MTE",
+      "size": 18,
+      "owner": "Head ESG",
+      "deadline": "contínuo",
+      "cost": "R$ 0",
+      "cost-story": "Verificação diária se a BYD continua (ou não) na lista do trabalho escravo."
+    },
+    {
+      "id": "A_O4",
+      "cat": "action_operational",
+      "label": "O4: KPI de entrega CATL/EVE",
+      "size": 18,
+      "owner": "Head Procurement",
+      "deadline": "semanal",
+      "cost": "R$ 0",
+      "cost-story": "Indicador semanal da pontualidade dos fornecedores de bateria."
+    },
+    {
+      "id": "A_O5",
+      "cat": "action_operational",
+      "label": "O5: Painel geral ao longo do dia",
+      "size": 18,
+      "owner": "Risk + CSO",
+      "deadline": "contínuo",
+      "cost": "R$ 0",
+      "cost-story": "Cálculo automático do score geral ponderado, atualizado 4 vezes por dia."
+    },
+    {
+      "id": "A_O6",
+      "cat": "action_operational",
+      "label": "O6: Relatório diário do painel geral",
+      "size": 18,
+      "owner": "CSO",
+      "deadline": "diário",
+      "cost": "R$ 0",
+      "cost-story": "E-mail diário com a fotografia atual do risco, para a liderança."
+    },
+    {
+      "id": "A_O7",
+      "cat": "action_operational",
+      "label": "O7: Gatilhos amarelo/vermelho automáticos",
+      "size": 18,
+      "owner": "Motor de regras",
+      "deadline": "tempo real",
+      "cost": "R$ 0",
+      "cost-story": "Quando uma frente muda de cor, dispara alerta automático para os donos."
+    },
+    {
+      "id": "A_O8",
+      "cat": "action_operational",
+      "label": "O8: Interruptores de emergência (kill switches)",
+      "size": 18,
+      "owner": "Motor de regras",
+      "deadline": "tempo real",
+      "cost": "R$ 0",
+      "cost-story": "Travas automáticas para ações graves (ex: lista suja, BNDES cancelado)."
+    },
+    {
+      "id": "A_O9",
+      "cat": "action_operational",
+      "label": "O9: Trilha de auditoria (registro imutável por 7 anos)",
+      "size": 18,
+      "owner": "Risk Officer",
+      "deadline": "contínuo",
+      "cost": "R$ 5 mil / mês",
+      "cost-story": "Registro à prova de adulteração de todas as decisões — para auditores e para o Conselho."
+    },
+    {
+      "id": "A_O10",
+      "cat": "action_operational",
+      "label": "O10: Atualização trimestral das regras",
+      "size": 18,
+      "owner": "CSO",
+      "deadline": "trimestral",
+      "cost": "R$ 0",
+      "cost-story": "Revisão das regras do motor a cada 3 meses, com base no que aconteceu de fato."
+    },
+    {
+      "id": "P_CONSELHO",
+      "cat": "persona",
+      "label": "Conselho de Administração",
+      "size": 18,
+      "desc": "Aprova o pacote de mitigação, a ponte financeira, a resolução da lista suja, os gatilhos de crise e a coalizão com a VW. Vê o programa do ponto de vista estratégico e responde pelo capital dos acionistas."
+    },
+    {
+      "id": "P_CEO",
+      "cat": "persona",
+      "label": "CEO (diretor-presidente)",
+      "size": 18,
+      "desc": "Patrocina as 5 ações estratégicas (E1 a E5) e é o responsável pessoal pela resolução da lista suja (E3). Tem entre 4 e 5 ações críticas no programa."
+    },
+    {
+      "id": "P_CFO",
+      "cat": "persona",
+      "label": "CFO (diretor financeiro)",
+      "size": 18,
+      "desc": "Aprovador do hedge cambial (T1) e da ponte financeira (E2). Co-patrocinador da ação da lista suja (E3) — porque ela destrava o financiamento do BNDES."
+    },
+    {
+      "id": "P_CSO",
+      "cat": "persona",
+      "label": "CSO (estratégia)",
+      "size": 18,
+      "desc": "Dono das ações táticas T4 a T10 e operacionais O5 a O10. Responsável pelo painel geral e por manter a matriz RACI de 17 pessoas atualizada."
+    },
+    {
+      "id": "P_COO",
+      "cat": "persona",
+      "label": "COO (operações)",
+      "size": 18,
+      "desc": "Aprovador do plano de nacionalização (T2) e patrocinador da frente de rampa de produção. Vê o projeto do ponto de vista de chão de fábrica."
+    },
+    {
+      "id": "P_CMO",
+      "cat": "persona",
+      "label": "CMO (marketing)",
+      "size": 18,
+      "desc": "Dono do sistema de desconto em camadas (T3). Define a estratégia de preço do dia a dia, em coordenação com o CSO."
+    },
+    {
+      "id": "P_RISK",
+      "cat": "persona",
+      "label": "Risk Officer (gerente de risco)",
+      "size": 18,
+      "desc": "Dono do hedge cambial (T1), do monitoramento diário do dólar (O1) e da trilha de auditoria (O5 e O9). Tem entre 4 e 5 ações críticas no programa."
+    },
+    {
+      "id": "P_HEAD_PROC",
+      "cat": "persona",
+      "label": "Head de Procurement (compras)",
+      "size": 18,
+      "desc": "Dono do contrato de longo prazo com a CATL (T6), do monitoramento de lítio (O2) e do KPI de entrega dos fornecedores (O4)."
+    },
+    {
+      "id": "P_HEAD_ESG",
+      "cat": "persona",
+      "label": "Head de ESG e Compliance",
+      "size": 18,
+      "desc": "Dono do monitoramento MSCI e RepRisk (T10) e da verificação diária da lista suja (O3). É a pessoa que fala com investidores e com a mídia sobre ESG."
+    },
+    {
+      "id": "P_HEAD_STR",
+      "cat": "persona",
+      "label": "Head de Estratégia",
+      "size": 18,
+      "desc": "Dono da estratégia de equilíbrio de Nash (T7) — acompanha a movimentação dos concorrentes e decide se a BYD deve ou não reagir."
+    },
+    {
+      "id": "P_HEAD_SUPPLY",
+      "cat": "persona",
+      "label": "Head de Supply Chain",
+      "size": 18,
+      "desc": "Co-dono do plano de nacionalização (T2). Trabalha em conjunto com o COO na execução da rampa de produção."
+    },
+    {
+      "id": "P_HEAD_GOV",
+      "cat": "persona",
+      "label": "Head de Gov Relations",
+      "size": 18,
+      "desc": "Co-dono da ação de resolução da lista suja (E3). É a pessoa que conversa com o Ministério Público do Trabalho e com o BNDES."
+    },
+    {
+      "id": "P_TREASURY",
+      "cat": "persona",
+      "label": "Head de Tesouraria",
+      "size": 18,
+      "desc": "Co-dono da execução do hedge cambial (T1) — opera diretamente com os bancos para fazer as operações de proteção."
+    },
+    {
+      "id": "P_GOV",
+      "cat": "persona",
+      "label": "Monitor (CSO)",
+      "size": 18,
+      "desc": "Acompanha o painel geral ao longo do dia e dispara os gatilhos automáticos quando uma frente muda de cor."
+    },
+    {
+      "id": "P_BOARD",
+      "cat": "persona",
+      "label": "Board Global (Conselho Global BYD)",
+      "size": 18,
+      "desc": "Aprova as 5 ações estratégicas (E1 a E5) e libera gastos acima de R$ 280 milhões. Quórum mínimo: 5 dos 7 conselheiros globais + HQ China."
+    },
+    {
+      "id": "P_ENG",
+      "cat": "persona",
+      "label": "Engenharia de Dados",
+      "size": 18,
+      "desc": "Dono do painel ao vivo (T9). Constrói o motor de regras, o painel e os fluxos de dados entre as fontes oficiais e o framework."
+    },
+    {
+      "id": "P_ANALYST",
+      "cat": "persona",
+      "label": "Analista de Risco",
+      "size": 18,
+      "desc": "Apoia o Risk Officer no dia a dia. Monitora os sinais, prepara relatórios e dispara os alertas manuais quando o motor automático não cobre."
+    },
+    {
+      "id": "G_G1",
+      "cat": "gate",
+      "label": "G1 — BNDES ViE de pelo menos 18 meses",
+      "size": 16,
+      "desc": "Para liberar a ponte financeira, o BNDES precisa ter ViE (Valor de Importação Estimado) com horizonte de pelo menos 18 meses."
+    },
+    {
+      "id": "G_G2",
+      "cat": "gate",
+      "label": "G2 — Taxa de desconto ajustada ao risco em 13%",
+      "size": 16,
+      "desc": "Taxa usada para descontar fluxos de caixa futuros. Padrão de mercado: 13% nominal ao ano. Se outra taxa for usada, justificar por escrito."
+    },
+    {
+      "id": "G_G3",
+      "cat": "gate",
+      "label": "G3 — Painel geral em modo amarelo",
+      "size": 16,
+      "desc": "Para acionar ações táticas (T1 a T10), o painel geral precisa estar em pelo menos 65 (modo tensão). Em modo normal, não há pressa."
+    },
+    {
+      "id": "G_G4",
+      "cat": "gate",
+      "label": "G4 — Hedge cambial proporcional ao cenário do BNDES",
+      "size": 16,
+      "desc": "A fração de hedge muda: 30% em Expansão, 60% em Rollback Parcial, 91% em Rollback Total. Não é um valor fixo."
+    },
+    {
+      "id": "G_G5",
+      "cat": "gate",
+      "label": "G5 — S7 (ESG) em alerta amarelo",
+      "size": 16,
+      "desc": "Para liberar capex novo, a frente ESG precisa estar fora do vermelho (lista suja resolvida). É o interruptor geral."
+    },
+    {
+      "id": "G_G6",
+      "cat": "gate",
+      "label": "G6 — Defensivo de preço com retorno positivo",
+      "size": 16,
+      "desc": "Só autorizar desconto cirúrgico (Tier 0 a 3). Desconto amplo no catálogo foi descartado por queimar margem."
+    },
+    {
+      "id": "G_G7",
+      "cat": "gate",
+      "label": "G7 — Liberação parcial de R$ 1,5 bi do BNDES",
+      "size": 16,
+      "desc": "Liberação condicional ao G5 (S7 resolvido). Se a lista suja persistir, o valor fica travado."
+    },
+    {
+      "id": "G_G8",
+      "cat": "gate",
+      "label": "G8 — BYD fora da lista suja",
+      "size": 16,
+      "desc": "Pré-condição para destravar o capex. A saída da lista suja precisa ser oficial, com 30 dias consecutivos sem novas ocorrências."
+    },
+    {
+      "id": "G_G9",
+      "cat": "gate",
+      "label": "G9 — Equilíbrio de Nash estável entre os 5 concorrentes",
+      "size": 16,
+      "desc": "Os 5 grandes jogadores do mercado (BYD, Stellantis, GM, VW, Geely) precisam estar em modo diferenciação (não guerra de preços)."
+    },
+    {
+      "id": "R_LISTA_SUJA",
+      "cat": "risk",
+      "label": "Risco S7: lista suja do trabalho",
+      "size": 26,
+      "desc": "A BYD está na lista suja do trabalho escravo do Ministério do Trabalho desde 7 de abril de 2026. Isso bloqueia automaticamente o financiamento do BNDES — R$ 800 milhões ou mais ficam travados. É o risco mais urgente."
+    },
+    {
+      "id": "R_TARIFF",
+      "cat": "risk",
+      "label": "Risco S10: tarifa de 35% em 2027",
+      "size": 22,
+      "desc": "A tarifa de importação de carros elétricos vai subir para 35% em janeiro de 2027. A Camex (Câmara de Comércio Exterior) já rejeitou o pedido da BYD de manter em 25%. Se nada for feito, o valor presente líquido do programa cai R$ 7,5 bilhões."
+    },
+    {
+      "id": "R_GUERRA",
+      "cat": "risk",
+      "label": "Risco S11: guerra de preços",
+      "size": 22,
+      "desc": "A Stellantis está investindo R$ 30 bilhões no Brasil e a Geely está crescendo rápido. Se a BYD reagir com desconto, a concorrência responde, e todos perdem margem. Em equilíbrio de Nash estável, o NPV agregado cai R$ 8,6 bilhões se houver guerra."
+    },
+    {
+      "id": "R_OVERCAP",
+      "cat": "risk",
+      "label": "Risco S8: sobrecapacidade do setor",
+      "size": 22,
+      "desc": "Em 2027, a capacidade total de produção de carros elétricos no Brasil será de 630 mil unidades por ano — mas a demanda será de apenas 200 mil. Isso significa 68% das fábricas paradas e a margem indo a zero. É um risco estrutural, não conjuntural."
+    },
+    {
+      "id": "R_LITIO",
+      "cat": "risk",
+      "label": "Risco S2: lítio voltando a subir",
+      "size": 22,
+      "desc": "O preço do lítio saltou de US$ 9 mil para US$ 22 mil a tonelada em apenas 5 meses. A mina Jianxiawo fechou. O déficit global esperado para 2026 é grande. Para quem não tem proteção contratual, é um risco material."
+    },
+    {
+      "id": "M_VaR821",
+      "cat": "metric",
+      "label": "Perda potencial (VaR 95%) = R$ 8,21 bi",
+      "size": 22,
+      "desc": "Em 95% dos cenários simulados, a pior perda em 6 meses é de R$ 8,21 bilhões. O número vem de 10 mil simulações com 4 choques macro simultâneos (câmbio, lítio, tarifa, demanda). É estatística, não chute."
+    },
+    {
+      "id": "M_CVaR1014",
+      "cat": "metric",
+      "label": "Perda média na cauda (CVaR) = R$ 10,14 bi",
+      "size": 20,
+      "desc": "Quando a perda potencial é violada (os 5% piores cenários), a perda média é de R$ 10,14 bilhões — 24% acima do valor do VaR. É a métrica que mostra o tamanho real do desastre, não apenas o limite."
+    },
+    {
+      "id": "M_Composite718",
+      "cat": "metric",
+      "label": "Painel geral = 71,8 (modo tensão)",
+      "size": 24,
+      "desc": "O número-mestre do D2. Modo tensão, cluster 2. Pesos 30/30/20/20 (Câmbio, Regulatório, Supply, Macro). Para o D3, o cálculo foi expandido para 11 dimensões."
+    },
+    {
+      "id": "M_TP100",
+      "cat": "metric",
+      "label": "Testes retroativos: 5 de 5 crises acertadas",
+      "size": 22,
+      "desc": "O framework identificou corretamente 100% das crises testadas (COVID, semicondutores, eleições, lítio, estagflação), sem nenhum alarme falso (graças a 4 correções técnicas). Tempo médio do alarme à ação: 9,3 dias."
+    },
+    {
+      "id": "M_ROI200",
+      "cat": "metric",
+      "label": "Retorno de 200 vezes",
+      "size": 20,
+      "desc": "Cada R$ 1 investido no framework evita R$ 200 de prejuízo por ano. Payback em menos de 1 mês — basta uma crise evitada para pagar todo o investimento."
+    },
+    {
+      "id": "M_NPV85",
+      "cat": "metric",
+      "label": "Valor presente líquido (cenário base) = R$ 8,5 bi",
+      "size": 20,
+      "desc": "O valor de longo prazo do programa no cenário base, considerando hedge de 95% do dólar, nacionalização de 70% e diferenciação em vez de guerra de preços."
+    },
+    {
+      "id": "D3_F1",
+      "cat": "delegation_plan",
+      "label": "F1: Recrutar 4 cadeiras vagas",
+      "size": 22,
+      "desc": "F1 do DELEGATION-PLAN. Recrutar CFO, CRO, CSO, Head ESG. 137 dias em inércia. Custo oportunidade ~R$ 200-400M NPV/mês. SLA: 30 dias. Hoje tudo escala CEO."
+    },
+    {
+      "id": "D3_F2",
+      "cat": "delegation_plan",
+      "label": "F2: Aprovar 3 CTAs no Conselho",
+      "size": 22,
+      "desc": "F2 do DELEGATION-PLAN. 22-ago-2026 reunião Conselho: aprovar hedge R$ 50M (T-MV1) + pricing defensivo −5% (T-MV3) + S7 ESG status check. SLA: 5 min durante reunião."
+    },
+    {
+      "id": "D3_F3",
+      "cat": "delegation_plan",
+      "label": "F3: Outreach Wave 1-4 (18 vagas)",
+      "size": 22,
+      "desc": "F3 do DELEGATION-PLAN. Enviar 18 outreach (Wave 1 com 6 msgs até 22-ago). NPV R$ 1,5M/45min se 1 converte. Custo: 45 min de execução."
+    },
+    {
+      "id": "D3_F4",
+      "cat": "delegation_plan",
+      "label": "F4: Stress test mensal NB-06",
+      "size": 22,
+      "desc": "F4 do DELEGATION-PLAN. 1º stress test NB-06 (seed 42, 10k paths) em 30-ago-2026. Recalibração contínua. Composite ground-truth."
+    },
+    {
+      "id": "D3_F5",
+      "cat": "delegation_plan",
+      "label": "F5: Nacionalização SKD→CKD",
+      "size": 22,
+      "desc": "F5 do DELEGATION-PLAN. Curva-S SKD puro → CKD 80% em 24m. HHI 0,355 → 0,250. 2 fornecedores ASEAN pré-qualificados. R$ 200M upside."
+    },
+    {
+      "id": "D3_F6",
+      "cat": "delegation_plan",
+      "label": "F6: Hedge cambial AG-002",
+      "size": 22,
+      "desc": "F6 do DELEGATION-PLAN. Após aprovação F2, contratar NDF 6m R$ 480M (hedge 30%). Proteção R$ 168M EBIT. Custo R$ 12M prêmio. ROI 14×."
+    },
+    {
+      "id": "D3_F7",
+      "cat": "delegation_plan",
+      "label": "F7: Pricing defensivo −5%",
+      "size": 22,
+      "desc": "F7 do DELEGATION-PLAN. Implementar elasticidade −5% + cláusula PTAX-indexada em 90 dias. NPV R$ 4.500/unit saved."
+    },
+    {
+      "id": "D3_F8",
+      "cat": "delegation_plan",
+      "label": "F8: Recalibração mensal NB-05",
+      "size": 22,
+      "desc": "F8 do DELEGATION-PLAN. Recalibração NB-05 dia 1 de cada mês. Composite auditável. Drift detection < 5pp."
+    },
+    {
+      "id": "D3_F9",
+      "cat": "delegation_plan",
+      "label": "F9: Backtesting trimestral",
+      "size": 22,
+      "desc": "F9 do DELEGATION-PLAN. Backtesting Q3 (30-set), Q4 (30-dez), Q1 (mar/27). Manter 5/5+ PERFEITO pós-correção."
+    },
+    {
+      "id": "D3_F10",
+      "cat": "delegation_plan",
+      "label": "F10: Treinamento interno",
+      "size": 22,
+      "desc": "F10 do DELEGATION-PLAN. Sessões de treinamento 5 dias PMO + 1 FAQ cliente-final. Onboarding redução 30-50% tempo."
+    },
+    {
+      "id": "D3_F11",
+      "cat": "delegation_plan",
+      "label": "F11: Knowledge graph update",
+      "size": 22,
+      "desc": "F11 do DELEGATION-PLAN. Regenerar D3-UNDERSTAND-ANYTHING.html mensal após F8. Persona-adaptive continua funcionando."
+    },
+    {
+      "id": "D3_F12",
+      "cat": "delegation_plan",
+      "label": "F12: Reuniões Conselho cadência",
+      "size": 22,
+      "desc": "F12 do DELEGATION-PLAN. 4 reuniões Conselho: 22-ago, 30-set, 30-nov, 30-dez. Decisões formalizadas. Stakeholder confiança."
+    },
+    {
+      "id": "D3_F13",
+      "cat": "delegation_plan",
+      "label": "F13: KPIs mensais",
+      "size": 22,
+      "desc": "F13 do DELEGATION-PLAN. 8 KPIs primários mensais. SLA alertas G3 ≥ 90%, composite drift < 5pp. PMO audit trail."
+    },
+    {
+      "id": "D3_F14",
+      "cat": "delegation_plan",
+      "label": "F14: Ships externos (3 ships)",
+      "size": 22,
+      "desc": "F14 do DELEGATION-PLAN. One-Pager PDF (já pronto) + Vídeo 5min (15-nov) + Podcast NotebookLM 20min (30-nov). Alcance LinkedIn + credibility externa."
+    }
   ],
   "edges": [
-    {"from": "S_D2", "to": "S_CAMBIO", "type": "session"},
-    {"from": "S_D2", "to": "S_SUPPLY", "type": "session"},
-    {"from": "S_D2", "to": "S_REG", "type": "session"},
-    {"from": "S_D2", "to": "S_COMP", "type": "session"},
-    {"from": "S_D2", "to": "S_MACRO", "type": "session"},
-    {"from": "S_D2", "to": "S_COMP_71_8", "type": "session"},
-    {"from": "S_CAMBIO", "to": "D_S1", "type": "contains"},
-    {"from": "S_SUPPLY", "to": "D_S2", "type": "contains"},
-    {"from": "S_REG", "to": "D_S3", "type": "contains"},
-    {"from": "S_REG", "to": "D_S7", "type": "contains"},
-    {"from": "S_REG", "to": "D_S10", "type": "contains"},
-    {"from": "S_REG", "to": "D_S8", "type": "contains"},
-    {"from": "S_COMP", "to": "D_S11", "type": "contains"},
-    {"from": "S_MACRO", "to": "D_S6", "type": "contains"},
-    {"from": "S_COMP_71_8", "to": "D_S1", "type": "composes"},
-    {"from": "S_COMP_71_8", "to": "D_S2", "type": "composes"},
-    {"from": "S_COMP_71_8", "to": "D_S3", "type": "composes"},
-    {"from": "S_COMP_71_8", "to": "D_S6", "type": "composes"},
-    {"from": "D_S1", "to": "D_S2", "type": "via", "via": "C_S1S2", "label": "12 combos FX×Supply"},
-    {"from": "D_S1", "to": "D_S3", "type": "via", "via": "C_S1S3", "label": "h* 30%→91%"},
-    {"from": "D_S1", "to": "D_S4", "type": "via", "via": "C_S1S4", "label": "ratio 9,4×"},
-    {"from": "D_S3", "to": "D_S4", "type": "via", "via": "C_S3S4", "label": "ViE=10%"},
-    {"from": "D_S5", "to": "D_S1", "type": "via", "via": "C_S5S1", "label": "LP CATL"},
-    {"from": "D_S5", "to": "D_S2", "type": "via", "via": "C_S5S2", "label": "EVE qualif"},
-    {"from": "D_S5", "to": "D_S3", "type": "via", "via": "C_S5S3", "label": "Coalizão D"},
-    {"from": "D_S5", "to": "D_S4", "type": "via", "via": "C_S5S4", "label": "JV pricing"},
-    {"from": "D_S6", "to": "D_S1", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
-    {"from": "D_S6", "to": "D_S2", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
-    {"from": "D_S6", "to": "D_S3", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
-    {"from": "D_S6", "to": "D_S4", "type": "via", "via": "C_S6ALL", "label": "×1.0/1.5/2.0"},
-    {"from": "D_S7", "to": "D_S3", "type": "via", "via": "C_S7S3", "label": "kill switch"},
-    {"from": "D_S7", "to": "D_S9", "type": "via", "via": "C_S7S9", "label": "absorve"},
-    {"from": "D_S8", "to": "D_S1", "type": "via", "via": "C_S8S1", "label": "FX 90%→15%"},
-    {"from": "D_S9", "to": "D_S3", "type": "via", "via": "C_S9S3", "label": "RB < 5%"},
-    {"from": "D_S10", "to": "D_S1", "type": "via", "via": "C_S10S1", "label": "compound"},
-    {"from": "D_S10", "to": "D_S4", "type": "via", "via": "C_S10S4", "label": "margin↓"},
-    {"from": "D_S11", "to": "D_S4", "type": "via", "via": "C_S11S4", "label": "Tier 2-3"},
-    {"from": "D_S7", "to": "R_LISTA_SUJA", "type": "risk"},
-    {"from": "D_S10", "to": "R_TARIFF", "type": "risk"},
-    {"from": "D_S11", "to": "R_GUERRA", "type": "risk"},
-    {"from": "D_S8", "to": "R_OVERCAP", "type": "risk"},
-    {"from": "D_S2", "to": "R_LITIO", "type": "risk"},
-    {"from": "R_LISTA_SUJA", "to": "A_E3", "type": "blocks", "label": "bloqueia"},
-    {"from": "A_E3", "to": "G_G8", "type": "unlocks"},
-    {"from": "G_G8", "to": "G_G7", "type": "unlocks"},
-    {"from": "G_G7", "to": "A_T2", "type": "enables"},
-    {"from": "C_S1S3", "to": "A_T1", "type": "informs"},
-    {"from": "C_S1S2", "to": "A_T1", "type": "informs"},
-    {"from": "C_S1S4", "to": "A_T3", "type": "informs"},
-    {"from": "C_S3S4", "to": "A_T3", "type": "informs"},
-    {"from": "C_S5S1", "to": "A_T6", "type": "informs"},
-    {"from": "C_S5S2", "to": "A_T6", "type": "informs"},
-    {"from": "C_S5S3", "to": "A_E5", "type": "informs"},
-    {"from": "C_S6ALL", "to": "A_T4", "type": "informs"},
-    {"from": "C_S7S3", "to": "A_E3", "type": "informs"},
-    {"from": "C_S8S1", "to": "A_T2", "type": "informs"},
-    {"from": "C_S10S1", "to": "A_T1", "type": "informs"},
-    {"from": "C_S11S4", "to": "A_T3", "type": "informs"},
-    {"from": "A_T1", "to": "G_G4", "type": "satisfies"},
-    {"from": "A_T3", "to": "G_G6", "type": "satisfies"},
-    {"from": "A_E3", "to": "G_G5", "type": "satisfies"},
-    {"from": "A_T1", "to": "M_VaR821", "type": "mitigates", "label": "-R$ 1,67bi"},
-    {"from": "A_T2", "to": "M_VaR821", "type": "mitigates", "label": "-R$ 0,65bi"},
-    {"from": "A_T3", "to": "M_VaR821", "type": "mitigates", "label": "-R$ 0,50bi"},
-    {"from": "A_E3", "to": "M_VaR821", "type": "mitigates", "label": "libera R$ 0,8bi"},
-    {"from": "M_VaR821", "to": "M_CVaR1014", "type": "input"},
-    {"from": "M_Composite718", "to": "M_VaR821", "type": "feeds"},
-    {"from": "M_TP100", "to": "M_ROI200", "type": "supports"},
-    {"from": "M_ROI200", "to": "M_NPV85", "type": "supports"},
-    {"from": "A_E1", "to": "P_CONSELHO", "type": "owned-by"},
-    {"from": "A_E2", "to": "P_BOARD", "type": "owned-by"},
-    {"from": "A_E3", "to": "P_CEO", "type": "owned-by"},
-    {"from": "A_E4", "to": "P_BOARD", "type": "owned-by"},
-    {"from": "A_E5", "to": "P_BOARD", "type": "owned-by"},
-    {"from": "A_T1", "to": "P_RISK", "type": "owned-by"},
-    {"from": "A_T1", "to": "P_CFO", "type": "owned-by"},
-    {"from": "A_T2", "to": "P_COO", "type": "owned-by"},
-    {"from": "A_T3", "to": "P_CMO", "type": "owned-by"},
-    {"from": "A_T4", "to": "P_CSO", "type": "owned-by"},
-    {"from": "A_T5", "to": "P_CSO", "type": "owned-by"},
-    {"from": "A_T6", "to": "P_HEAD_PROC", "type": "owned-by"},
-    {"from": "A_T7", "to": "P_HEAD_STR", "type": "owned-by"},
-    {"from": "A_T8", "to": "P_CSO", "type": "owned-by"},
-    {"from": "A_T9", "to": "P_CSO", "type": "owned-by"},
-    {"from": "A_T9", "to": "P_ENG", "type": "owned-by"},
-    {"from": "A_T10", "to": "P_HEAD_ESG", "type": "owned-by"},
-    {"from": "A_O1", "to": "P_RISK", "type": "owned-by"},
-    {"from": "A_O2", "to": "P_HEAD_PROC", "type": "owned-by"},
-    {"from": "A_O3", "to": "P_HEAD_ESG", "type": "owned-by"},
-    {"from": "A_O4", "to": "P_HEAD_PROC", "type": "owned-by"},
-    {"from": "A_O5", "to": "P_RISK", "type": "owned-by"},
-    {"from": "A_O5", "to": "P_CSO", "type": "owned-by"},
-    {"from": "A_O6", "to": "P_CSO", "type": "owned-by"},
-    {"from": "A_O7", "to": "P_GOV", "type": "owned-by"},
-    {"from": "A_O8", "to": "P_GOV", "type": "owned-by"},
-    {"from": "A_O9", "to": "P_RISK", "type": "owned-by"},
-    {"from": "A_O10", "to": "P_CSO", "type": "owned-by"}
+    {
+      "from": "S_D2",
+      "to": "S_CAMBIO",
+      "type": "session"
+    },
+    {
+      "from": "S_D2",
+      "to": "S_SUPPLY",
+      "type": "session"
+    },
+    {
+      "from": "S_D2",
+      "to": "S_REG",
+      "type": "session"
+    },
+    {
+      "from": "S_D2",
+      "to": "S_COMP",
+      "type": "session"
+    },
+    {
+      "from": "S_D2",
+      "to": "S_MACRO",
+      "type": "session"
+    },
+    {
+      "from": "S_D2",
+      "to": "S_COMP_71_8",
+      "type": "session"
+    },
+    {
+      "from": "S_CAMBIO",
+      "to": "D_S1",
+      "type": "contains"
+    },
+    {
+      "from": "S_SUPPLY",
+      "to": "D_S2",
+      "type": "contains"
+    },
+    {
+      "from": "S_REG",
+      "to": "D_S3",
+      "type": "contains"
+    },
+    {
+      "from": "S_REG",
+      "to": "D_S7",
+      "type": "contains"
+    },
+    {
+      "from": "S_REG",
+      "to": "D_S10",
+      "type": "contains"
+    },
+    {
+      "from": "S_REG",
+      "to": "D_S8",
+      "type": "contains"
+    },
+    {
+      "from": "S_COMP",
+      "to": "D_S11",
+      "type": "contains"
+    },
+    {
+      "from": "S_MACRO",
+      "to": "D_S6",
+      "type": "contains"
+    },
+    {
+      "from": "S_COMP_71_8",
+      "to": "D_S1",
+      "type": "composes"
+    },
+    {
+      "from": "S_COMP_71_8",
+      "to": "D_S2",
+      "type": "composes"
+    },
+    {
+      "from": "S_COMP_71_8",
+      "to": "D_S3",
+      "type": "composes"
+    },
+    {
+      "from": "S_COMP_71_8",
+      "to": "D_S6",
+      "type": "composes"
+    },
+    {
+      "from": "D_S1",
+      "to": "D_S2",
+      "type": "via",
+      "via": "C_S1S2",
+      "label": "12 combos FX×Supply"
+    },
+    {
+      "from": "D_S1",
+      "to": "D_S3",
+      "type": "via",
+      "via": "C_S1S3",
+      "label": "h* 30%→91%"
+    },
+    {
+      "from": "D_S1",
+      "to": "D_S4",
+      "type": "via",
+      "via": "C_S1S4",
+      "label": "ratio 9,4×"
+    },
+    {
+      "from": "D_S3",
+      "to": "D_S4",
+      "type": "via",
+      "via": "C_S3S4",
+      "label": "ViE=10%"
+    },
+    {
+      "from": "D_S5",
+      "to": "D_S1",
+      "type": "via",
+      "via": "C_S5S1",
+      "label": "LP CATL"
+    },
+    {
+      "from": "D_S5",
+      "to": "D_S2",
+      "type": "via",
+      "via": "C_S5S2",
+      "label": "EVE qualif"
+    },
+    {
+      "from": "D_S5",
+      "to": "D_S3",
+      "type": "via",
+      "via": "C_S5S3",
+      "label": "Coalizão D"
+    },
+    {
+      "from": "D_S5",
+      "to": "D_S4",
+      "type": "via",
+      "via": "C_S5S4",
+      "label": "JV pricing"
+    },
+    {
+      "from": "D_S6",
+      "to": "D_S1",
+      "type": "via",
+      "via": "C_S6ALL",
+      "label": "×1.0/1.5/2.0"
+    },
+    {
+      "from": "D_S6",
+      "to": "D_S2",
+      "type": "via",
+      "via": "C_S6ALL",
+      "label": "×1.0/1.5/2.0"
+    },
+    {
+      "from": "D_S6",
+      "to": "D_S3",
+      "type": "via",
+      "via": "C_S6ALL",
+      "label": "×1.0/1.5/2.0"
+    },
+    {
+      "from": "D_S6",
+      "to": "D_S4",
+      "type": "via",
+      "via": "C_S6ALL",
+      "label": "×1.0/1.5/2.0"
+    },
+    {
+      "from": "D_S7",
+      "to": "D_S3",
+      "type": "via",
+      "via": "C_S7S3",
+      "label": "kill switch"
+    },
+    {
+      "from": "D_S7",
+      "to": "D_S9",
+      "type": "via",
+      "via": "C_S7S9",
+      "label": "absorve"
+    },
+    {
+      "from": "D_S8",
+      "to": "D_S1",
+      "type": "via",
+      "via": "C_S8S1",
+      "label": "FX 90%→15%"
+    },
+    {
+      "from": "D_S9",
+      "to": "D_S3",
+      "type": "via",
+      "via": "C_S9S3",
+      "label": "RB < 5%"
+    },
+    {
+      "from": "D_S10",
+      "to": "D_S1",
+      "type": "via",
+      "via": "C_S10S1",
+      "label": "compound"
+    },
+    {
+      "from": "D_S10",
+      "to": "D_S4",
+      "type": "via",
+      "via": "C_S10S4",
+      "label": "margin↓"
+    },
+    {
+      "from": "D_S11",
+      "to": "D_S4",
+      "type": "via",
+      "via": "C_S11S4",
+      "label": "Tier 2-3"
+    },
+    {
+      "from": "D_S7",
+      "to": "R_LISTA_SUJA",
+      "type": "risk"
+    },
+    {
+      "from": "D_S10",
+      "to": "R_TARIFF",
+      "type": "risk"
+    },
+    {
+      "from": "D_S11",
+      "to": "R_GUERRA",
+      "type": "risk"
+    },
+    {
+      "from": "D_S8",
+      "to": "R_OVERCAP",
+      "type": "risk"
+    },
+    {
+      "from": "D_S2",
+      "to": "R_LITIO",
+      "type": "risk"
+    },
+    {
+      "from": "R_LISTA_SUJA",
+      "to": "A_E3",
+      "type": "blocks",
+      "label": "bloqueia"
+    },
+    {
+      "from": "A_E3",
+      "to": "G_G8",
+      "type": "unlocks"
+    },
+    {
+      "from": "G_G8",
+      "to": "G_G7",
+      "type": "unlocks"
+    },
+    {
+      "from": "G_G7",
+      "to": "A_T2",
+      "type": "enables"
+    },
+    {
+      "from": "C_S1S3",
+      "to": "A_T1",
+      "type": "informs"
+    },
+    {
+      "from": "C_S1S2",
+      "to": "A_T1",
+      "type": "informs"
+    },
+    {
+      "from": "C_S1S4",
+      "to": "A_T3",
+      "type": "informs"
+    },
+    {
+      "from": "C_S3S4",
+      "to": "A_T3",
+      "type": "informs"
+    },
+    {
+      "from": "C_S5S1",
+      "to": "A_T6",
+      "type": "informs"
+    },
+    {
+      "from": "C_S5S2",
+      "to": "A_T6",
+      "type": "informs"
+    },
+    {
+      "from": "C_S5S3",
+      "to": "A_E5",
+      "type": "informs"
+    },
+    {
+      "from": "C_S6ALL",
+      "to": "A_T4",
+      "type": "informs"
+    },
+    {
+      "from": "C_S7S3",
+      "to": "A_E3",
+      "type": "informs"
+    },
+    {
+      "from": "C_S8S1",
+      "to": "A_T2",
+      "type": "informs"
+    },
+    {
+      "from": "C_S10S1",
+      "to": "A_T1",
+      "type": "informs"
+    },
+    {
+      "from": "C_S11S4",
+      "to": "A_T3",
+      "type": "informs"
+    },
+    {
+      "from": "A_T1",
+      "to": "G_G4",
+      "type": "satisfies"
+    },
+    {
+      "from": "A_T3",
+      "to": "G_G6",
+      "type": "satisfies"
+    },
+    {
+      "from": "A_E3",
+      "to": "G_G5",
+      "type": "satisfies"
+    },
+    {
+      "from": "A_T1",
+      "to": "M_VaR821",
+      "type": "mitigates",
+      "label": "-R$ 1,67bi"
+    },
+    {
+      "from": "A_T2",
+      "to": "M_VaR821",
+      "type": "mitigates",
+      "label": "-R$ 0,65bi"
+    },
+    {
+      "from": "A_T3",
+      "to": "M_VaR821",
+      "type": "mitigates",
+      "label": "-R$ 0,50bi"
+    },
+    {
+      "from": "A_E3",
+      "to": "M_VaR821",
+      "type": "mitigates",
+      "label": "libera R$ 0,8bi"
+    },
+    {
+      "from": "M_VaR821",
+      "to": "M_CVaR1014",
+      "type": "input"
+    },
+    {
+      "from": "M_Composite718",
+      "to": "M_VaR821",
+      "type": "feeds"
+    },
+    {
+      "from": "M_TP100",
+      "to": "M_ROI200",
+      "type": "supports"
+    },
+    {
+      "from": "M_ROI200",
+      "to": "M_NPV85",
+      "type": "supports"
+    },
+    {
+      "from": "A_E1",
+      "to": "P_CONSELHO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_E2",
+      "to": "P_BOARD",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_E3",
+      "to": "P_CEO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_E4",
+      "to": "P_BOARD",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_E5",
+      "to": "P_BOARD",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T1",
+      "to": "P_RISK",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T1",
+      "to": "P_CFO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T2",
+      "to": "P_COO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T3",
+      "to": "P_CMO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T4",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T5",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T6",
+      "to": "P_HEAD_PROC",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T7",
+      "to": "P_HEAD_STR",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T8",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T9",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T9",
+      "to": "P_ENG",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_T10",
+      "to": "P_HEAD_ESG",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O1",
+      "to": "P_RISK",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O2",
+      "to": "P_HEAD_PROC",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O3",
+      "to": "P_HEAD_ESG",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O4",
+      "to": "P_HEAD_PROC",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O5",
+      "to": "P_RISK",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O5",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O6",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O7",
+      "to": "P_GOV",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O8",
+      "to": "P_GOV",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O9",
+      "to": "P_RISK",
+      "type": "owned-by"
+    },
+    {
+      "from": "A_O10",
+      "to": "P_CSO",
+      "type": "owned-by"
+    },
+    {
+      "from": "D3_F1",
+      "to": "P_CONSELHO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F1",
+      "to": "P_CEO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F2",
+      "to": "P_CEO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F2",
+      "to": "P_CONSELHO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F2",
+      "to": "A_E1",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F3",
+      "to": "P_CEO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F3",
+      "to": "P_CMO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F4",
+      "to": "A_T1",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F4",
+      "to": "M_VaR821",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F5",
+      "to": "D_S2",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F5",
+      "to": "A_T9",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F6",
+      "to": "D_S1",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F6",
+      "to": "A_T1",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F7",
+      "to": "D_S4",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F7",
+      "to": "A_E3",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F8",
+      "to": "D_S3",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F9",
+      "to": "D_S6",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F9",
+      "to": "A_E5",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F10",
+      "to": "P_CMO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F12",
+      "to": "P_CONSELHO",
+      "type": "delegation_execution"
+    },
+    {
+      "from": "D3_F14",
+      "to": "A_E2",
+      "type": "delegation_execution"
+    }
   ],
   "tours": [
     {
       "id": "tour-onboarding",
       "title": "Tour de boas-vindas: o framework em 5 minutos",
-      "audience": ["conselho", "headhunter", "linkedin"],
+      "audience": [
+        "conselho",
+        "headhunter",
+        "linkedin"
+      ],
       "steps": [
-        {"node": "S_D2", "say": "Começamos pelo D2 Atlas — a fotografia preditiva original do programa. Ela olhava 6 frentes de risco em paralelo (câmbio, fornecedores, BNDES, preço, parcerias, macro) e gerava um documento de 65 KB com o composite em 71,8. Era boa como retrato, mas não dizia o que fazer quando a foto se mexesse."},
-        {"node": "S_COMP_71_8", "say": "O composite é a média ponderada de 4 daquelas dimensões — Câmbio, Regulatório, Supply e Macro, com pesos 30, 30, 20 e 20. Mas o número sozinho é inerte: sem o D3 por trás, ninguém sabe o que fazer quando ele muda."},
-        {"node": "D_S7", "say": "O detalhe que decide o jogo: a frente S7 (ESG e reputação) está em vermelho com nota 92, porque a BYD entrou na lista suja do trabalho escravo do Ministério Público do Trabalho em abril de 2026, com 163 trabalhadores resgatados. Isso é o que chamamos de 'kill switch' do BNDES: enquanto a lista suja estiver ativa, R$ 800 milhões de financiamento ficam congelados."},
-        {"node": "M_VaR821", "say": "Se nada for feito, a perda potencial em 6 meses se as 4 variáveis macro (câmbio, lítio, tarifa, demanda) piorarem juntas é de R$ 8,21 bilhões. Esse número vem de uma simulação com 10 mil futuros possíveis — não é chute, é estatística."},
-        {"node": "A_E3", "say": "Por isso a Ação E3 — resolver a lista suja — é a prioridade número 1. Custa R$ 25 milhões, tem prazo até 30 de setembro de 2026, e é responsabilidade direta do CEO. Sem ela, todas as outras ações travam."},
-        {"node": "M_ROI200", "say": "E o investimento total do framework? R$ 3 milhões. O retorno esperado é de 200 vezes — em outras palavras, uma única crise evitada paga o projeto inteiro. O payback é de menos de 1 mês."}
+        {
+          "node": "S_D2",
+          "say": "Começamos pelo D2 Atlas — a fotografia preditiva original do programa. Ela olhava 6 frentes de risco em paralelo (câmbio, fornecedores, BNDES, preço, parcerias, macro) e gerava um documento de 65 KB com o composite em 71,8. Era boa como retrato, mas não dizia o que fazer quando a foto se mexesse."
+        },
+        {
+          "node": "S_COMP_71_8",
+          "say": "O composite é a média ponderada de 4 daquelas dimensões — Câmbio, Regulatório, Supply e Macro, com pesos 30, 30, 20 e 20. Mas o número sozinho é inerte: sem o D3 por trás, ninguém sabe o que fazer quando ele muda."
+        },
+        {
+          "node": "D_S7",
+          "say": "O detalhe que decide o jogo: a frente S7 (ESG e reputação) está em vermelho com nota 92, porque a BYD entrou na lista suja do trabalho escravo do Ministério Público do Trabalho em abril de 2026, com 163 trabalhadores resgatados. Isso é o que chamamos de 'kill switch' do BNDES: enquanto a lista suja estiver ativa, R$ 800 milhões de financiamento ficam congelados."
+        },
+        {
+          "node": "M_VaR821",
+          "say": "Se nada for feito, a perda potencial em 6 meses se as 4 variáveis macro (câmbio, lítio, tarifa, demanda) piorarem juntas é de R$ 8,21 bilhões. Esse número vem de uma simulação com 10 mil futuros possíveis — não é chute, é estatística."
+        },
+        {
+          "node": "A_E3",
+          "say": "Por isso a Ação E3 — resolver a lista suja — é a prioridade número 1. Custa R$ 25 milhões, tem prazo até 30 de setembro de 2026, e é responsabilidade direta do CEO. Sem ela, todas as outras ações travam."
+        },
+        {
+          "node": "M_ROI200",
+          "say": "E o investimento total do framework? R$ 3 milhões. O retorno esperado é de 200 vezes — em outras palavras, uma única crise evitada paga o projeto inteiro. O payback é de menos de 1 mês."
+        }
       ]
     },
     {
       "id": "tour-couplings",
       "title": "As 20 conexões: como uma frente arrasta a outra",
-      "audience": ["cso", "cfo", "coo"],
+      "audience": [
+        "cso",
+        "cfo",
+        "coo"
+      ],
       "steps": [
-        {"node": "C_S1S3", "say": "A primeira conexão: o hedge cambial (proteção contra variação do dólar) muda de tamanho conforme o cenário do BNDES. Em Expansão, 30% é suficiente; em Rollback Total, é preciso 91%. Não é um valor fixo — é proporcional ao risco. Por isso o D2, que recomendava 50% fixo, estava errado."},
-        {"node": "C_S1S2", "say": "Câmbio e fornecedores andam juntos. Em um cenário de stress, o risco da cadeia de suprimentos é 2,5 vezes maior que o risco cambial sozinho. Por quê? Porque o lício é cotado em dólar — então quando o dólar sobe E o lítio sobe junto, o efeito se multiplica, não se soma."},
-        {"node": "C_S1S4", "say": "Hedge cambial versus desconto de preço: por cada R$ 1 gasto em hedge, você protege 9,4 vezes mais valor do que gastando o mesmo R$ 1 em desconto. Por isso o framework descartou a opção de dar desconto em todo o catálogo (o famoso 'catalog-wide') — ela tinha retorno de menos 67%."},
-        {"node": "C_S6ALL", "say": "A macroeconomia reescala todas as outras decisões. Quando o cenário macro está bom, mantemos as recomendações; quando está amarelo, aumentamos 50%; quando está vermelho, dobramos. É como o termostato de uma casa: ajusta a dose de proteção automaticamente."},
-        {"node": "C_S7S3", "say": "ESG é o interruptor geral do BNDES. Enquanto a frente S7 estiver em vermelho (lista suja), nenhuma ação acima de R$ 30 milhões destrava. Resolver a lista suja não é 'mais uma' tarefa — é pré-condição para o resto funcionar."},
-        {"node": "C_S10S1", "say": "Tarifa de importação mais câmbio formam o que chamamos de 'compound shock multiplicativo'. A tarifa de 35% em janeiro de 2027 mais um dólar alto somam R$ 4,5 a 6 bilhões em 6 meses — é o maior contribuinte isolado para o pior cenário."}
+        {
+          "node": "C_S1S3",
+          "say": "A primeira conexão: o hedge cambial (proteção contra variação do dólar) muda de tamanho conforme o cenário do BNDES. Em Expansão, 30% é suficiente; em Rollback Total, é preciso 91%. Não é um valor fixo — é proporcional ao risco. Por isso o D2, que recomendava 50% fixo, estava errado."
+        },
+        {
+          "node": "C_S1S2",
+          "say": "Câmbio e fornecedores andam juntos. Em um cenário de stress, o risco da cadeia de suprimentos é 2,5 vezes maior que o risco cambial sozinho. Por quê? Porque o lício é cotado em dólar — então quando o dólar sobe E o lítio sobe junto, o efeito se multiplica, não se soma."
+        },
+        {
+          "node": "C_S1S4",
+          "say": "Hedge cambial versus desconto de preço: por cada R$ 1 gasto em hedge, você protege 9,4 vezes mais valor do que gastando o mesmo R$ 1 em desconto. Por isso o framework descartou a opção de dar desconto em todo o catálogo (o famoso 'catalog-wide') — ela tinha retorno de menos 67%."
+        },
+        {
+          "node": "C_S6ALL",
+          "say": "A macroeconomia reescala todas as outras decisões. Quando o cenário macro está bom, mantemos as recomendações; quando está amarelo, aumentamos 50%; quando está vermelho, dobramos. É como o termostato de uma casa: ajusta a dose de proteção automaticamente."
+        },
+        {
+          "node": "C_S7S3",
+          "say": "ESG é o interruptor geral do BNDES. Enquanto a frente S7 estiver em vermelho (lista suja), nenhuma ação acima de R$ 30 milhões destrava. Resolver a lista suja não é 'mais uma' tarefa — é pré-condição para o resto funcionar."
+        },
+        {
+          "node": "C_S10S1",
+          "say": "Tarifa de importação mais câmbio formam o que chamamos de 'compound shock multiplicativo'. A tarifa de 35% em janeiro de 2027 mais um dólar alto somam R$ 4,5 a 6 bilhões em 6 meses — é o maior contribuinte isolado para o pior cenário."
+        }
       ]
     },
     {
       "id": "tour-actions",
       "title": "As 25 ações: o que fazer, em que ordem",
-      "audience": ["cfo", "coo", "cso"],
+      "audience": [
+        "cfo",
+        "coo",
+        "cso"
+      ],
       "steps": [
-        {"node": "A_E3", "say": "Primeira ação da lista: resolver a lista suja. Custa R$ 25 milhões, prazo até 30 de setembro de 2026, responsabilidade do CEO. Sem ela, o resto trava — e isso não é exagero."},
-        {"node": "A_T1", "say": "Segunda ação: montar o hedge cambial de 95% com 4 bancos diferentes (nunca mais de 30% em cada um, para não criar risco de contraparte). Custo: R$ 30 milhões. Prazo: 31 de outubro de 2026. A linha de base fica pronta em 31 de agosto."},
-        {"node": "A_T2", "say": "Terceira ação: acelerar a nacionalização de 45% (hoje) para 70% até outubro de 2027 — com meta intermediária de 45% em dezembro de 2026. Investimento: R$ 280 milhões. Benefício: R$ 650 milhões a menos de exposição ao câmbio."},
-        {"node": "A_T3", "say": "Quarta ação: o sistema de desconto em camadas (Tier 0 a 3). O modo 'cortar preço em tudo' foi descartado por destruir valor. Só descontos cirúrgicos, em modelos e cidades específicas. Custo máximo: R$ 22,5 milhões por ano. Responsabilidade do CMO."},
-        {"node": "A_O1", "say": "Quinta ação (e última deste tour): o monitoramento diário do dólar em 4 janelas por dia. Custo zero. Responsabilidade do Risk Officer. É a base que alimenta todos os outros alertas."}
+        {
+          "node": "A_E3",
+          "say": "Primeira ação da lista: resolver a lista suja. Custa R$ 25 milhões, prazo até 30 de setembro de 2026, responsabilidade do CEO. Sem ela, o resto trava — e isso não é exagero."
+        },
+        {
+          "node": "A_T1",
+          "say": "Segunda ação: montar o hedge cambial de 95% com 4 bancos diferentes (nunca mais de 30% em cada um, para não criar risco de contraparte). Custo: R$ 30 milhões. Prazo: 31 de outubro de 2026. A linha de base fica pronta em 31 de agosto."
+        },
+        {
+          "node": "A_T2",
+          "say": "Terceira ação: acelerar a nacionalização de 45% (hoje) para 70% até outubro de 2027 — com meta intermediária de 45% em dezembro de 2026. Investimento: R$ 280 milhões. Benefício: R$ 650 milhões a menos de exposição ao câmbio."
+        },
+        {
+          "node": "A_T3",
+          "say": "Quarta ação: o sistema de desconto em camadas (Tier 0 a 3). O modo 'cortar preço em tudo' foi descartado por destruir valor. Só descontos cirúrgicos, em modelos e cidades específicas. Custo máximo: R$ 22,5 milhões por ano. Responsabilidade do CMO."
+        },
+        {
+          "node": "A_O1",
+          "say": "Quinta ação (e última deste tour): o monitoramento diário do dólar em 4 janelas por dia. Custo zero. Responsabilidade do Risk Officer. É a base que alimenta todos os outros alertas."
+        }
       ]
     },
     {
       "id": "tour-risks",
       "title": "Os 5 riscos que podem quebrar o programa",
-      "audience": ["conselho", "ceo", "headhunter"],
+      "audience": [
+        "conselho",
+        "ceo",
+        "headhunter"
+      ],
       "steps": [
-        {"node": "R_LISTA_SUJA", "say": "Risco número 1: a lista suja do trabalho escravo do Ministério do Trabalho. É um 'kill switch' do BNDES — com ela ativa, R$ 800 milhões de financiamento ficam congelados. A probabilidade de acontecer de fato é alta (já está acontecendo desde abril de 2026)."},
-        {"node": "R_TARIFF", "say": "Risco número 2: a tarifa de importação de carros elétricos subindo para 35% em janeiro de 2027. A Camex (Câmara de Comércio Exterior) já rejeitou o pedido da BYD de manter em 25%. Se nada for feito, o valor presente líquido (NPV) do programa cai R$ 7,5 bilhões."},
-        {"node": "R_GUERRA", "say": "Risco número 3: a guerra de preços. A Stellantis está investindo R$ 30 bilhões no Brasil, a Geely está crescendo rápido, e qualquer movimento de baixar preços dispara uma reação em cadeia. Se entrar em guerra, o NPV agregado cai R$ 3 a 5 bilhões."},
-        {"node": "R_OVERCAP", "say": "Risco número 4: sobrecapacidade do setor. Em 2027, a capacidade de produção instalada de carros elétricos no Brasil será de 630 mil unidades, mas a demanda será de apenas 200 mil. Isso significa 68% das fábricas paradas — margem indo a zero."},
-        {"node": "R_LITIO", "say": "Risco número 5: o lítio voltando a subir. Em 5 meses, o preço da tonelada saltou de US$ 9 mil para US$ 22 mil. Déficit global esperado para 2026. A probabilidade é média, mas o impacto, se acontecer, é gigante para quem não tiver proteção."}
+        {
+          "node": "R_LISTA_SUJA",
+          "say": "Risco número 1: a lista suja do trabalho escravo do Ministério do Trabalho. É um 'kill switch' do BNDES — com ela ativa, R$ 800 milhões de financiamento ficam congelados. A probabilidade de acontecer de fato é alta (já está acontecendo desde abril de 2026)."
+        },
+        {
+          "node": "R_TARIFF",
+          "say": "Risco número 2: a tarifa de importação de carros elétricos subindo para 35% em janeiro de 2027. A Camex (Câmara de Comércio Exterior) já rejeitou o pedido da BYD de manter em 25%. Se nada for feito, o valor presente líquido (NPV) do programa cai R$ 7,5 bilhões."
+        },
+        {
+          "node": "R_GUERRA",
+          "say": "Risco número 3: a guerra de preços. A Stellantis está investindo R$ 30 bilhões no Brasil, a Geely está crescendo rápido, e qualquer movimento de baixar preços dispara uma reação em cadeia. Se entrar em guerra, o NPV agregado cai R$ 3 a 5 bilhões."
+        },
+        {
+          "node": "R_OVERCAP",
+          "say": "Risco número 4: sobrecapacidade do setor. Em 2027, a capacidade de produção instalada de carros elétricos no Brasil será de 630 mil unidades, mas a demanda será de apenas 200 mil. Isso significa 68% das fábricas paradas — margem indo a zero."
+        },
+        {
+          "node": "R_LITIO",
+          "say": "Risco número 5: o lítio voltando a subir. Em 5 meses, o preço da tonelada saltou de US$ 9 mil para US$ 22 mil. Déficit global esperado para 2026. A probabilidade é média, mas o impacto, se acontecer, é gigante para quem não tiver proteção."
+        }
       ]
     }
   ]

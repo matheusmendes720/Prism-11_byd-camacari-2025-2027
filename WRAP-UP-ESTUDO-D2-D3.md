@@ -192,4 +192,84 @@ Ambas as bases seguem a **mesma pedagogia em 6 camadas + transversais** e usam o
 
 > **Para usar como ponto de entrada**: comece pelo `00-INDEX.md` (D2) ou `D3-README.md` (D3) → escolha sua trilha de leitura (5 perfis) → marque o checklist de domínio conforme avança.
 
+---
+
+## §9. UPDATE 18-ago-2026 — Sessão Narrativa Audível + Delegation Plan
+
+> **Status:** Atualização incremental após 22 dias. O programa **evoluiu** para incluir entrega operacional, não só didática. Esta seção adiciona o que mudou desde 27/jul.
+
+### Novos artefatos entregues (sessão 18-ago-2026)
+
+#### 📚 Docs didáticos pt-br adicionados (12 arquivos em `analise-prescritiva/docs/`)
+
+| # | Doc | Função |
+|---|------|--------|
+| **Guia** | `LINHAS-GERAIS-COMUNICACAO-PERSUASIVA.md` | Sistema de tom (4 atos + 5+5+5) |
+| **07** | `07-cadeia-fabrica-byb.md` | 7 estágios físicos × 5 camadas D3 |
+| **08** | `08-decision-matrix-case-sensitive.md` | 12 cenários nomeados D-01..D-12 |
+| **09** | `09-alertas-personas-stakeholders.md` | Sistema nervoso (12 personas × 7 canais) |
+| **10** | `10-story-notes-s1-a-s11.md` | S1-S11 contadas como histórias |
+| **Hub** | `INDEX-NARRATIVO.md` | Ponto de entrada principal com 3 trilhas |
+| **Print** | `ONE-PAGER-EXECUTIVO.md` + `.html` + `.pdf` (256KB A4) | One-pager imprimível |
+
+#### 🎙️ Audio MP3s reais (12 arquivos em `audio/mp3/`, ~99 min total)
+
+Gerados via **eSpeak NG pt-br** + **ffmpeg libmp3lame 64k**. Workflow offline, reproduzível, zero API key. Script: `audio/generate-mp3s-espeak.py`.
+
+#### 📊 Apresentação + KG + Diagrams (5+1 artefatos)
+
+- `SLIDE-DECK-D3.html` (20 KB, 8 slides navegáveis) + `SLIDE-DECK-D3.pdf` (81 KB)
+- `D3-KNOWLEDGE-GRAPH.json` v2.0.2 — **96 → 110 nós**, **97 → 118 edges**, +1 categoria `delegation_plan`
+- `D3-UNDERSTAND-ANYTHING.html` (141 KB) — inline JSON atualizado
+- `D3-KNOWLEDGE-GRAPH-SNAPSHOT.html` (14 KB) — versão text-only A4 print-ready
+- `diagrams/INDEX-DIAGRAMS.md` — cross-refs dos 5 diagrams para os 12 docs
+
+#### 📋 Operacional
+
+- `presentation/DELEGATION-PLAN-ANALISE-PRESCRITIVA.md` (449 linhas) — **14 frentes × 5 ondas** com RACI + CS-A8
+- `outputs/linkdin-recruiter-jobs-csv.csv` (2.4 KB) — 4 vagas (CFO, CRO, CSO, Head ESG) prontas para LinkedIn Recruiter
+- `outputs/progress-report-2026-08-18.md` (14 KB) — relatório operacional consolidado
+- `d4-process-tracker/byd-tracker.db` — **20 decision_log rows** (era 6) + **16 process rows** (era 12)
+
+### Mudanças em outras frentes
+
+- **`CHANGELOG.md` §[0.2.0]** documenta a sessão 18-ago (72 linhas adicionadas)
+- **Composite recalibrado**: 50,3 (RED Modo Crise) — alvo ≥ 65 (AMBER) até Q4/2026
+- **Backtesting**: 5/5 PERFEITO (mantido)
+- **Knowledge Graph**: v2.0.1 → v2.0.2
+- **Métrica nova**: 14 Frentes delegation_plan + 12 cenários case-sensitive
+
+### Cross-links do ecossistema
+
+Total: **47 arquivos do escopo D3 narrativo + 0 broken links** (validador Python confirmou).
+Pontos de entrada recomendados para novo stakeholder:
+
+1. `outputs/SNAPSHOT-OPERACIONAL.md` (gerado na sessão continue) — 1 página A4 com números-âncora
+2. `analise-prescritiva/docs/INDEX-NARRATIVO.md` — 3 trilhas (audiência / tempo / perfil)
+3. `presentation/DELEGATION-PLAN-ANALISE-PRESCRITIVA.md` — operacional + RACI
+
+### Métricas finais (18-ago-2026 09:50)
+
+| Métrica | Antes (27-jul) | Depois (18-ago) |
+|---------|----------------|-----------------|
+| **MP3s reais** | 0 | 12 (99 min áudio, ~45 MB) |
+| **Diagrams HTML** | 5 | 5 + INDEX (cross-linked) |
+| **KG nodes** | 95 | 110 (+15.8%) |
+| **KG edges** | 142 | 118 (recontados c/ novas categorias) |
+| **Categorias KG** | 10 | 11 (+delegation_plan) |
+| **Decision rows D4** | 6 | 20 (+233%) |
+| **Process rows D4** | 12 | 16 (+33%) |
+| **Composite state** | 71,8 AMBER | 50,3 RED (recalibrado 2026-08-15) |
+| **VaR 4-shock** | R$ 8,21 bi | R$ 8,21 bi (mantido) |
+| **CVaR 95%** | R$ 10,14 bi | R$ 10,14 bi (mantido) |
+| **Backtesting** | 5/5 PERFEITO | 5/5 PERFEITO |
+| **Roster de Personas** | 17 (4 vagas) | 17 (4 vagas, agravou p/ 137d) |
+| **Plano 365d executado** | 0% | Pendente — DELEGATION-PLAN 14 frentes inicia Onda 1 |
+
+**Versão final**: 1.1 — WRAP-UP + UPDATE 18-ago
+**Data**: 27/jul/2026 (v1) + 18/ago/2026 (v1.1 update)
+**Status**: 🟡 **PROGRAMA ATIVO** — narrativa completa + operacionalização iniciada.
+
+> **Para entrar no projeto AGORA:** comece pelo `outputs/SNAPSHOT-OPERACIONAL.md` → `analise-prescritiva/docs/INDEX-NARRATIVO.md` → escolha trilho (Conselho/COO/New Joiner/Headhunter). Para a parte OPERACIONAL: `presentation/DELEGATION-PLAN-ANALISE-PRESCRITIVA.md` (449 linhas). Para a parte AUDÍVEL: 12 MP3s reais em `analise-prescritiva/docs/audio/mp3/`.
+
 > **Para contribuir**: a base tem gaps documentados (L2.3, L2.4, L2.5, L3.3, L3.4, L5.2 — sub-layers forward references). Crie esses docs e o validator detectará automaticamente.
